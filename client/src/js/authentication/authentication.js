@@ -1,8 +1,5 @@
 import { usersRef, firebaseAuth, groupRef } from '../firebase/firebase';
 
-
-
-
 // Sign Up Authentication
 export const auth = (username, email, pw) => {
   return firebaseAuth().createUserWithEmailAndPassword(email, pw)
