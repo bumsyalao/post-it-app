@@ -11,16 +11,17 @@ function setErrorMsg(error) {
 class Signup extends Component {
 
   state = { registerError: null }
+
   handleSubmit = (e) => {
     e.preventDefault()
-    auth(this.username.value, this.email.value, this.pw.value)
+    auth(this.username.value, this.email.value, this.password.value)
       .catch(e => this.setState(setErrorMsg(e)))
   }
 
     render() {
         return (
             <div>
-                {/* This is the Signup form */}
+               
                 <section>
                 <div>
         <h2>Signup Form</h2>
@@ -34,7 +35,7 @@ class Signup extends Component {
             <input type="text" placeholder="Email" name="email" ref={(email) => this.email = email} />
 
             <label><b>Password</b></label>
-            <input type="password" placeholder="Password" name="psw" ref={(pw) => this.pw = pw}/>
+            <input type="password" placeholder="Password" name="psw" ref={(password) => this.password = password}/>
            
              {
             this.state.registerError &&
