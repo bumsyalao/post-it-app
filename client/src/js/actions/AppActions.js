@@ -1,25 +1,16 @@
-// import {db, firebase, groupRef, usersRef } from '../firebase/firebase';
+const dispatcher = require('../dispatcher/AppDispatcher');
 
 
-const AppDispatcher = require('../dispatcher/AppDispatcher');
-const AppConstants = require('../constants/AppConstants');
+export function createUser(username, email, password){
+    dispatcher.dispatch({
+        type: "SIGN_UP",
+        username,
+        email,
+        password
+    })
 
-const AppActions = {
-  signUp: (email, password, username) => {
-    AppDispatcher.handleSignUp({
-      actionType: AppConstants.SIGN_UP,
-      item
-    });
-  }
-
-   signIn: (email, password) => {
-    AppDispatcher.handleSignUp({
-      actionType: AppConstants.SIGN_IN,
-      item
-    });
-  }
+}
 
 
-};
 
-module.exports = AppActions;
+

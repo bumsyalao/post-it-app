@@ -16,26 +16,43 @@ class AppStore extends EventEmitter {
   }
 
   createUser(username, email, password) {
-    this.signup.push({
-      username,
-      email,
-      password
-    });
 
+    axios({
+  method: 'post',
+  url:'user/signup',
+  data: {
+    username,
+    email,
+    password
+  }
+}).then(function(response){
+  console.log(response)
+  
+
+}).catch(function(error){
+    console.log(error);
+    // this.signup.push({
+    //   username,
+    //   email,
+    //   password
+    // });
+})
     this.emit('change');
   }
+
 
 
   handleActions(action) {
     switch (action.type) {
     case 'SIGN_UP':
-      this.createUser(action.data);
+      this.createUser(action.username, action.email, action.password);
       break;  
     }
   }
 }
 
 const appStore = new AppStore();
-window.appStore = appStore;
+
 dispatcher.register(appStore.handleActions.bind(appStore));
+window.dispatcher = dispatcher;
 export default appStore;

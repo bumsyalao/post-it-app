@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 
 
@@ -18,21 +19,17 @@ class Signup extends Component {
   }
 
   componentWillMount() {
-    TodoStore.on('change', () => {
+    AppStore.on('change', () => {
       this.setState({
         signup : AppStore.getAll()
-
       })
-    })
+    }) 
   }
 //2
-  handleSubmit = (e) => {
-    e.preventDefault()
-    
-    const { signup } = this.state;
-   
-    console.log(signup.username)
+  createUser(){
+    AppActions.createUser(username,email,password);
   }
+
 
 //3
     render() {
@@ -41,7 +38,7 @@ class Signup extends Component {
               <section>
                 <div>
                   <h2>Signup Form</h2>
-                    <form onSubmit={this.handleSubmit} style={{border: '1px solid #ccc'}}>
+                    <form onSubmit={this.createUser.bind(this)} style={{border: '1px solid #ccc'}}>
                       <div className="container">
 
                         <label><b>Username</b></label>
@@ -51,7 +48,7 @@ class Signup extends Component {
                         <input type="text" placeholder="Email" name="email" ref={(email) => this.email = email} />
 
                         <label><b>Password</b></label>
-                        <input type="password" placeholder="Password" name="psw" ref={(password) => this.password = password}/>
+                        <input type="password" placeholder="Password" name="password" ref={(password) => this.password = password}/>
                        
 
                           {
