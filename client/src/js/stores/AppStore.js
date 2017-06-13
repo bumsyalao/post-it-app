@@ -16,10 +16,9 @@ class AppStore extends EventEmitter {
   }
 
   createUser(username, email, password) {
-
     axios({
   method: 'post',
-  url:'user/signup',
+  url:'/user/signup',
   data: {
     username,
     email,
@@ -48,6 +47,7 @@ class AppStore extends EventEmitter {
       this.createUser(action.username, action.email, action.password);
       break;  
     }
+    default:
   }
 }
 
