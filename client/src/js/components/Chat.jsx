@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import { group } from '../authentication/authentication'
-import { groupRef } from '../firebase/firebase';
+// import { group } from '../authentication/authentication'
+// import { groupRef } from '../firebase/firebase';
 
 // Without Firebase
 class Group extends Component {
@@ -77,8 +77,8 @@ export default Group;
 // With Firebase
 import React, {Component} from 'react';
 
-import { group } from '../authentication/authentication'
-import { groupRef, firebase } from '../firebase/firebase';
+// import { group } from '../authentication/authentication'
+// import { groupRef, firebase } from '../firebase/firebase';
 
 class Group extends Component {
 
