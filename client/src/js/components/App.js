@@ -40,7 +40,7 @@ class App extends Component  {
     authed: false,
     loading: true,
   }
-  componentDidMount ()  {
+  componentWillMount ()  {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
