@@ -1,4 +1,4 @@
-const { firebase, usersRef } = require('../config');
+const { firebase, usersRef, firebaseAuth } = require('../config');
 
 
 class User {
@@ -6,8 +6,7 @@ class User {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    firebase
-    .auth()
+    firebaseAuth()
     .createUserWithEmailAndPassword(email, password)
     .then((user) => {
     // add element to database
@@ -16,7 +15,7 @@ class User {
         password,
         email: user.email
       });
-      res.send('Signup Successful');
+      console.log('Signup Successful');
     })
     .catch((error) => {
       res.send(error);
@@ -26,20 +25,23 @@ class User {
   static signin(req, res) {
     const email = req.body.email;
     const password = req.body.password;
-    firebase
-    .auth()
+    firebaseAuth()
     .signInWithEmailAndPassword(email, password)
-    .then((user) => {
-      res.send(user);
-    })
-   .catch((error) => {
-     res.send(error);
-   });
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      if (errorCode === 'auth/wrong-password') {
+        alert(error);
+      } else {
+        alert(errorMessage);
+      }
+    });
+
   }
 
   static signout(req, res) {
-    firebase
-    .auth()
+    firebaseAuth()
     .signOut()
     .then(() => {
       res.send('User signed out');
