@@ -11,27 +11,7 @@ import { logout } from '../authentication/authentication'
 import { firebaseAuth } from '../firebase/firebase'
 
 
-// function PrivateRoute ({component: Component, authed, ...rest}) {
-//   return (
-//     <Route
-//       {...rest}
-//       render={(props) => authed === true
-//         ? <Component {...props} />
-//         : <Redirect to={{pathname: '/user/signin', state: {from: props.location}}} />}
-//     />
-//   )
-// }
 
-// function PublicRoute ({component: Component, authed, ...rest}) {
-//   return (
-//     <Route
-//       {...rest}
-//       render={(props) => authed === false
-//         ? <Component {...props} />
-//         : <Redirect to='/messageBoard' />}
-//     />
-//   )
-// }
 
 export default class Navigation extends Component {
 
@@ -73,38 +53,25 @@ export default class Navigation extends Component {
                 <li>
                   <Link to='/'>Home</Link>
                 </li>
-          
-                
+                 
                 <li>
-                  {this.state.authed
-                    ? <span>
+                  {this.state.authed ? 
+                    <span>
                       <Link to='/messageBoard' >MessageBoard &nbsp;</Link>
-                      <Link to='/group' >Group&nbsp;</Link>
-                      
-                      
-
-                      <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => {
-                          logout()
-                        }}
-                        >Logout</button>
-                      
-                      </span>
-                        
-                    : <span>
+                      <Link to='/group' >Group&nbsp;</Link>                     
+                      <button style={{border: 'none', background: 'transparent'}} onClick={() => {logout()}}>Logout</button>
+                    </span>                       
+                    : 
+                    <span>
                         <Link to="/user/signin">SignIn</Link>
                         <Link to="/user/signup">SignUp</Link>     
                         <Link to='/dashboard' >Dashboard</Link>               
-                      </span>}
+                    </span>}
                 </li>                
               </ul>
-            </nav>
-            
+            </nav>           
           </div>
         </header>
-  
-
       </div>
 
     )

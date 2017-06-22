@@ -54,14 +54,11 @@ class User {
   static database(req, res){
     const rootRef = firebase.database().ref().child('users');
 
-    rootRef.on('child_added', snap => {
+    rootRef.on('value', snap => {
       const data = snap.val()
-      console.log(data) 
       res.send(data)    
     })
-
-    
-    
+   
   }
 }
 

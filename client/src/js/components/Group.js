@@ -87,15 +87,5 @@ class Group extends Component {
   }
 }
 
-var TodoItem = React.createClass({
-  render: function(){
-    return(
-      <li>
-        <div className="todo-item">
-          <span className="item-name">{this.props.item}</span>
-        </div>
-      </li>
-    )
-  }
-})
+
 export default Group;
