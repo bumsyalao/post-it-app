@@ -56,25 +56,11 @@ class User {
 
     rootRef.on('child_added', snap => {
       const data = snap.val()
-      // console.log(data)
-      const contacts = []
+      console.log(data) 
+      res.send(data)    
+    })
 
     
-  res.setHeader('Content-Type', 'application/json');
-
-      snap.forEach(function(childSnapshot){
-        const contact = {
-          password: childSnapshot.val().password,
-          username: childSnapshot.val().username
-        }
-        contacts.push(contact)    
-       
-        res.send(JSON.stringify({ contacts: contacts })); 
-      })
-     
-      
-      // res.end()
-    })
     
   }
 }

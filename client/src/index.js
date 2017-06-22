@@ -7,8 +7,8 @@ import AppAPI from './js/utils/appAPI'
 
 import {BrowserRouter} from 'react-router-dom';
 
-// import App from "./js/components/App";
-import App from './js/Contact/App'
+import App from "./js/components/App";
+
 
 AppAPI.getContacts();
 
