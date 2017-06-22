@@ -13,9 +13,9 @@ class User {
       usersRef.push({
         username,
         password,
-        email: user.email
+        email
       });
-      console.log('Signup Successful');
+      res.send('Signup Successful');
     })
     .catch((error) => {
       res.send(error);
@@ -49,6 +49,33 @@ class User {
     .catch((error) => {
       res.send(error);
     });
+  }
+
+  static database(req, res){
+    const rootRef = firebase.database().ref().child('users');
+
+    rootRef.on('child_added', snap => {
+      const data = snap.val()
+      // console.log(data)
+      const contacts = []
+
+    
+  res.setHeader('Content-Type', 'application/json');
+
+      snap.forEach(function(childSnapshot){
+        const contact = {
+          password: childSnapshot.val().password,
+          username: childSnapshot.val().username
+        }
+        contacts.push(contact)    
+       
+        res.send(JSON.stringify({ contacts: contacts })); 
+      })
+     
+      
+      // res.end()
+    })
+    
   }
 }
 

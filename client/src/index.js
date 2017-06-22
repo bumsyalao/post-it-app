@@ -2,14 +2,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AppAPI from './js/utils/appAPI'
 
 
 import {BrowserRouter} from 'react-router-dom';
 
-import App from "./js/components/App";
-import DashBoard from "./js/components/Dashboard/Dashboard";
+// import App from "./js/components/App";
+import App from './js/Contact/App'
+
+AppAPI.getContacts();
 
 ReactDOM.render(
   <BrowserRouter>
-  <DashBoard/>
+  <App />
 </BrowserRouter>, document.getElementById('root'));

@@ -6,6 +6,8 @@ import Signin from './Signin'
 import Signup from './Signup';
 import Group from './Group';
 import MessageBoard from './MessageBoard';
+import DashBoard from "./Dashboard/DashBoard";
+import Navigation from './Navigation'
 import Home from './Home';
 import { logout } from '../authentication/authentication'
 import { firebaseAuth } from '../firebase/firebase'
@@ -40,6 +42,9 @@ class App extends Component  {
     authed: false,
     loading: true,
   }
+
+
+
   componentWillMount ()  {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
@@ -54,6 +59,8 @@ class App extends Component  {
         })
       }
     })
+
+		
   }
   componentWillUnmount () {
     this.removeListener()
@@ -61,56 +68,20 @@ class App extends Component  {
 
   render() {
 
+		
+
     return this.state.loading === true ? <h1>Loading</h1> : (
         <div>
-             <header>
-          <div className="container">
-            <div id="branding">
-              <h1>
-                <span className="highlight">PostIt &nbsp;
-                </span>Messenger App</h1>
-            </div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to='/'>Home</Link>
-                </li>
-          
-                
-                <li>
-                  {this.state.authed
-                    ? <span>
-                      <Link to='/messageBoard' >MessageBoard &nbsp;</Link>
-                      <Link to='/group' >Group&nbsp;</Link>
-                      
-
-                      <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => {
-                          logout()
-                        }}
-                        >Logout</button>
-                      
-                      </span>
-                        
-                    : <span>
-                        <Link to="/user/signin">SignIn&nbsp;</Link>
-                        <Link to="/user/signup">SignUp</Link>                    
-                      </span>}
-                </li>                
-              </ul>
-            </nav>
-            
-          </div>
-        </header>
+            <Navigation />
 
         <Switch>
             <Route path='/' exact component={Home} />
-                <PublicRoute authed={this.state.authed} path='/user/signin' component={Signin} />
-                <PublicRoute authed={this.state.authed} path='/user/signup' component={Signup} />
-                <PrivateRoute authed={this.state.authed} path='/messageBoard' component={MessageBoard} />
-                 <PrivateRoute authed={this.state.authed} path='/group' component={Group} />
-                <Route render={() => <h3>You must be Logged In to see this page</h3>} />
+            <PublicRoute authed={this.state.authed} path='/user/signin' component={Signin} />
+            <PublicRoute authed={this.state.authed} path='/user/signup' component={Signup} />
+            <PrivateRoute authed={this.state.authed} path='/messageBoard' component={MessageBoard} />
+            <PrivateRoute authed={this.state.authed} path='/group' component={Group} />
+            <Route path='/dashboard' component={DashBoard} />
+            <Route render={() => <h3>You must be Logged In to see this page</h3>} />
           
         </Switch>
         

@@ -1,39 +1,34 @@
-import {usersRef, firebaseAuth, groupRef} from '../firebase/firebase';
+import { usersRef, firebaseAuth, groupRef } from '../firebase/firebase';
 import axios from 'axios';
 
-// SignUp 
-export const signup = (username, email, password) => {
-  return axios.post('/user/signup', {
+// Create Group
+export const group = (groupname) => { axios.post('/group', { groupname } )} 
+
+// SignUp
+export const signup = (username, email, password) => axios.post('/user/signup', {
     username,
     email,
     password
-  })
-};
+  });
 
 
-// SignIn 
+// SignIn
 export const login = (email, password) => {
-   axios.post('/user/signin', {
-    email,
-    password
-  })
+  axios.post('/user/signin', {
+     email,
+     password
+   });
 };
 
 
 // Logout
 export const logout = () => {
-  axios.post('/user/signout')
+  axios.post('/user/signout');
 };
 
 
 
-// Create Group
-export const group = (groupID) => {
 
-  axios.post('/group', {
-    groupID
-  })
-};
 
 // export const addUser = (groupID) => {   const groupID = req.params.groupID;
 //  // Firebase get all users     const uid = req.params.uid;     usersRef
