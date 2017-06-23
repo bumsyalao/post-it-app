@@ -29,7 +29,7 @@ export default class Navigation extends Component {
                         
                     <span>
                         <Link to="/user/signin">SignIn&nbsp;</Link>
-                        <Link to="/user/signup">SignUp</Link>  
+                        <Link to="/user/signup">SignUp&nbsp;</Link>  
                          <Link to="/logout">LogOut</Link>                   
                       </span>
                 </li>                

@@ -11,13 +11,13 @@ export default class Signup extends Component {
 
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className='form-group'>
-                    <input type="text" ref='username' className='form-control' placeholder='Username'/>
+                    <input type="text" ref='username' className='form-control' placeholder='Username' required/>
                 </div>
                  <div className='form-group'>
-                    <input type="text" ref='email' className='form-control' placeholder='Email'/>
+                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
                  <div className='form-group'>
-                    <input type="password" ref='password' className='form-control' placeholder='Password'/>
+                    <input type="password" ref='password' className='form-control' placeholder='Password' required/>
                 </div>              
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
