@@ -41,10 +41,10 @@ export default class Lhs extends Component {
         <h4>The Group Name</h4>
         <button className="btn btn-primary" onClick={this.showCreateGroup}>create group</button>
         
-        <div class="input-group">
-          <input type="text" class="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button" onClick={this.createGroup}>Submit</button>
+        <div className="input-group">
+          <input type="text" className="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
+          <span className="input-group-btn">
+            <button className="btn btn-secondary" type="button" onClick={this.createGroup}>Submit</button>
           </span>
         </div>
         

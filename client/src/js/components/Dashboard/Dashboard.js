@@ -10,17 +10,15 @@ export default class DashBoard extends Component {
   // handlesubmit = (e) => {   e.preventDefault() }
 
 
-  render() {
+  render() { 
     return (
-      <div id='dashboard'>
-        <NavDash/>
-           
+      <div id='dash'>
+        <NavDash/>         
         <Grid>
           <Row className="show-grid">
-            <Col md={3}> <LHS /> </Col>
+            <Col md={3} id='lhs'> <LHS /> </Col>
 
-            <Col sm={12} md={9}>
-              <MessageBoard /></Col>
+            <Col sm={12} md={9}> <MessageBoard /></Col>
 
           </Row>
         </Grid>

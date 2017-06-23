@@ -9,6 +9,10 @@ body{
   margin-top: 30px
 }
 
+#lhs{
+    background:#AB9BA9;
+    padding: 0px;
+}
 /* Global */
 .container{
   width: 80%;
@@ -19,7 +23,7 @@ body{
 ul{
   margin: 0;
   padding: 0;
-  list-style-type: none;
+  text-decoration-style: none;
 }
 
 /* Header */

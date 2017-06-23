@@ -21,6 +21,7 @@ export default class Routes extends Component {
                 <Route path='/user/signin' component={Signin} />
                 <Route  path='/user/signup' component={Signup} />
                  <Route path='/dashboard' component={DashBoard} />
+                 <Route path='/contact' component={ContactList} />
                 <Route render={() => <h3>You must be Logged In to see this page</h3>} />
             </Switch>
       </div>

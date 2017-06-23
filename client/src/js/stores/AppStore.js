@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events';
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import AppConstants from '../constants/AppConstants';
+import AppDispatcher from '../dispatcher/appDispatcher';
+import AppConstants from '../constants/appConstants';
 import assign from 'object-assign'
-import AppAPI from '../utils/AppAPI'
+import AppAPI from '../utils/appAPI'
 
 const CHANGE_EVENT = 'change'
 let _contacts = [];

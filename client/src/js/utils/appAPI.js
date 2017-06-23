@@ -1,4 +1,3 @@
-import Firebase from 'firebase'
 import AppActions from '../actions/AppActions'
 import axios from 'axios';
  
@@ -19,8 +18,8 @@ module.exports = {
     getContacts(){
         axios.get('/user/database')
             .then(function (contacts) {
-                console.log(contacts.data);
-                AppActions.recieveContacts(contacts.data)
+                
+                AppActions.receiveContact(contacts.data)
             })
             .catch(function (error) {
                 console.log(error);

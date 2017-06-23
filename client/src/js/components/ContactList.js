@@ -11,8 +11,7 @@ export default class ContactList extends Component {
   }
   
   render() {  
-     
-
+      console.log(this.state.contacts)
     return (  
         <div className='well'>  
             <h3>Add Contact</h3>
@@ -22,6 +21,8 @@ export default class ContactList extends Component {
                         <th>Name</th>
                         
                         <th>Email</th>
+                   
+                    
                     
                         
                     </tr>

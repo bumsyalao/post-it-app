@@ -72,12 +72,12 @@ export default class NavDash extends Component {
           </Modal.Header>
           <Modal.Body>
   
-          <div class="input-group">
-            <input type="text" class="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
-            <input type="text" class="form-control" value={this.state.userName} placeholder="User Name" onChange={this.setUserName} />
+          <div className="input-group">
+            <input type="text" className="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
+            <input type="text" className="form-control" value={this.state.userName} placeholder="User Name" onChange={this.setUserName} />
            
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button" onClick={this.createUser}>Submit</button>
+              <span className="input-group-btn">
+                <button className="btn btn-secondary" type="button" onClick={this.createUser}>Submit</button>
               </span>
           </div>
 

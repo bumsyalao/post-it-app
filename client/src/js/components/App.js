@@ -58,7 +58,6 @@ class App extends Component  {
 
 
     render() {
-          console.log(this.state.contacts)  
       return (
         <div>
         <Routes contacts={this.state.contacts} />      

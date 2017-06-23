@@ -12,7 +12,7 @@ export default class ContactList extends Component {
            <td>{this.props.contact.username}</td>
            <td>{this.props.contact.email}</td>
            <td>{this.props.contact.password}</td>
-           <td><a href="#" className="btn btn-default" onclick={this.handleEdit}>Edit</a></td>
+           <td><a href="#" className="btn btn-default" onClick={this.handleEdit}>Edit</a></td>
        </tr>
 
     )

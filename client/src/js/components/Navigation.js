@@ -18,9 +18,10 @@ export default class Navigation extends Component {
                 <li> <span>
                       <Link to="/user/signup">SignUp&nbsp;&nbsp;</Link>
                       <Link to="/user/signin">SignIn&nbsp;&nbsp;</Link>                 
-                      <Link to="/logout">LogOut&nbsp;&nbsp;&nbsp;&nbsp;</Link>                   
+                      <Link to="/logout">LogOut&nbsp;&nbsp;&nbsp;&nbsp;</Link>     
+                      <Link to="/contact">Contact&nbsp;&nbsp;&nbsp;&nbsp;</Link>                
                       </span>
-                      <span> <Link to='/dashboard' >Dashboard</Link></span>
+                      <span> <Link to='/dashboard' >Dasboard</Link></span>
                 </li>                
               </ul>
             </nav>

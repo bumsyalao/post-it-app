@@ -1,5 +1,5 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import AppConstants from '../constants/AppConstants';
+import AppDispatcher from '../dispatcher/appDispatcher';
+import AppConstants from '../constants/appConstants';
 
 const AppActions = { 
     saveContact(contact){
@@ -10,7 +10,7 @@ const AppActions = {
 
     },
 
-   recieveContact(contacts){
+   receiveContact(contacts){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.RECEIVE_CONTACT,
             contacts: contacts
