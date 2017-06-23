@@ -14,10 +14,10 @@ export default class Signup extends Component {
                     <input type="text" ref='username' className='form-control' placeholder='Username' required/>
                 </div>
                  <div className='form-group'>
-                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
+                    <input type="email" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
                  <div className='form-group'>
-                    <input type="password" ref='password' className='form-control' placeholder='Password' required/>
+                    <input type="password" ref='password' className='form-control' placeholder='Password'  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
                 </div>              
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
@@ -33,7 +33,8 @@ export default class Signup extends Component {
           username: this.refs.username.value.trim(),
           email: this.refs.email.value.trim(),
           password: this.refs.password.value.trim()
-      }      
+      }
+      alert('SignUp Successful')      
       AppActions.saveContact(contact);
 
   }

@@ -52,15 +52,17 @@ export default class Lhs extends Component {
         <h4>Groups</h4>
 
         <ul>
-          <li>fACEBOOK</li>
+          <li>Facebook</li>
           <li>Google</li>
-          <li>Add Room</li>
+          <li>Andela</li>
+          <li>Add Group</li>
         </ul><br/><br/>
 
-        <h4>Users</h4>
-        
+        <h4>Users</h4>        
         <ul>
           <li>Ebuka</li>
+          <li>Paul</li>
+          <li>Mike</li>
           <li>Kennedy</li>
           <li>Invite users</li>
         </ul>

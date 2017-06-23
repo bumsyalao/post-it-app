@@ -14,24 +14,13 @@ export default class Navigation extends Component {
             </div>
             <nav>
               <ul>
-                <li>
-                  <Link to='/'>Home</Link>
-                </li>
-          
-                
-                <li>
-               
-                    <span>
-                      <Link to='/messageBoard' >MessageBoard &nbsp;</Link>
-                      <Link to='/dashboard' >Dashboard&nbsp;</Link>
-                      
+                <li> <Link to='/'>Home</Link></li>
+                <li> <span>
+                      <Link to="/user/signup">SignUp&nbsp;&nbsp;</Link>
+                      <Link to="/user/signin">SignIn&nbsp;&nbsp;</Link>                 
+                      <Link to="/logout">LogOut&nbsp;&nbsp;&nbsp;&nbsp;</Link>                   
                       </span>
-                        
-                    <span>
-                        <Link to="/user/signin">SignIn&nbsp;</Link>
-                        <Link to="/user/signup">SignUp&nbsp;</Link>  
-                         <Link to="/logout">LogOut</Link>                   
-                      </span>
+                      <span> <Link to='/dashboard' >Dashboard</Link></span>
                 </li>                
               </ul>
             </nav>
