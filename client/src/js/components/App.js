@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 
 import {Switch, Route, Redirect, Link} from 'react-router-dom';
 
-import Signin from './Signin'
-import Signup from './Signup';
-import Group from './Group';
-import MessageBoard from './MessageBoard';
-import Home from './Home';
-import { logout } from '../authentication/authentication'
-import { firebaseAuth } from '../firebase/firebase'
+
+import Footer from './Footer'
+import Routes from './Routes'
+
+import AppStore from '../stores/AppStore'
 
 
 
@@ -36,93 +34,42 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 
 // Create App component
 class App extends Component  {
-   state = {
-    authed: false,
-    loading: true,
+      constructor(props){
+        super(props);
+        this.state ={
+           authed: false,
+           loading: true,
+           contacts: AppStore.getContacts()
+           
+        };
+         this._onChange= this._onChange.bind(this)
+    }
+
+   componentWillMount ()  {
+     AppStore.addChangeListener(this._onChange);
+    console.log("Will Mount")
   }
-  componentWillMount ()  {
-    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          authed: true,
-          loading: false,
-        })
-      } else {
-        this.setState({
-          authed: false,
-          loading: false
-        })
-      }
-    })
-  }
+
+
   componentWillUnmount () {
-    this.removeListener()
-  }
+    AppStore.removeChangeListener(this._onChange);
+    console.log("Will UnMount")
+  } 
 
-  render() {
 
-    return this.state.loading === true ? <h1>Loading</h1> : (
+    render() {
+          console.log(this.state.contacts)  
+      return (
         <div>
-             <header>
-          <div className="container">
-            <div id="branding">
-              <h1>
-                <span className="highlight">PostIt &nbsp;
-                </span>Messenger App</h1>
-            </div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to='/'>Home</Link>
-                </li>
-          
-                
-                <li>
-                  {this.state.authed
-                    ? <span>
-                      <Link to='/messageBoard' >MessageBoard &nbsp;</Link>
-                      <Link to='/group' >Group&nbsp;</Link>
-                      
-
-                      <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => {
-                          logout()
-                        }}
-                        >Logout</button>
-                      
-                      </span>
-                        
-                    : <span>
-                        <Link to="/user/signin">SignIn&nbsp;</Link>
-                        <Link to="/user/signup">SignUp</Link>                    
-                      </span>}
-                </li>                
-              </ul>
-            </nav>
-            
-          </div>
-        </header>
-
-        <Switch>
-            <Route path='/' exact component={Home} />
-                <PublicRoute authed={this.state.authed} path='/user/signin' component={Signin} />
-                <PublicRoute authed={this.state.authed} path='/user/signup' component={Signup} />
-                <PrivateRoute authed={this.state.authed} path='/messageBoard' component={MessageBoard} />
-                 <PrivateRoute authed={this.state.authed} path='/group' component={Group} />
-                <Route render={() => <h3>You must be Logged In to see this page</h3>} />
-          
-        </Switch>
-        
-     <footer>
-          <p>Andela, Copyright © 2017</p>
-        </footer>
-                  
+        <Routes contacts={this.state.contacts} />      
+        <Footer />
         </div>
-    )
-
-  }
-    
+      )
+    }
+      _onChange(){
+        this.setState({contacts: AppStore.getContacts()});
+        console.log(this.state.contacts) 
+    }    
 }
 
 export default App;

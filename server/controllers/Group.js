@@ -3,7 +3,7 @@ const { usersRef, groupRef } = require('../config');
 
 class Group {
   static createGroup(req, res) {
-    const groupID = req.body.groupname;
+    const groupID = req.body.groupname; 
 
     groupRef
     .child(groupID)
@@ -28,9 +28,10 @@ class Group {
   }
 
   static addUser(req, res) {
-    const groupID = req.params.groupID;
+      const groupID = req.params.groupID;
    // Firebase get all users
     const uid = req.params.uid;
+
     usersRef
     .child(uid)
     .once('value', (snapshot) => {
@@ -49,6 +50,8 @@ class Group {
  .catch((err) => {
    res.send(err);
  });
+ 
+
   }
 }
 

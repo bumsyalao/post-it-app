@@ -13,9 +13,9 @@ class User {
       usersRef.push({
         username,
         password,
-        email: user.email
+        email
       });
-      console.log('Signup Successful');
+      res.send('Signup Successful');
     })
     .catch((error) => {
       res.send(error);
@@ -32,9 +32,9 @@ class User {
       const errorMessage = error.message;
 
       if (errorCode === 'auth/wrong-password') {
-        alert(error);
+        res.send(error);
       } else {
-        alert(errorMessage);
+        res.send(errorMessage);
       }
     });
 
@@ -49,6 +49,31 @@ class User {
     .catch((error) => {
       res.send(error);
     });
+  }
+
+  static database(req, res){
+    const rootRef = firebase.database().ref().child('users');
+
+    rootRef.on('value', snap => {
+      const key = snap.key
+      const data = snap.val()
+      const contacts = []
+      let contact = {}
+
+      for (var i in data){
+
+        contact = {
+          uid: data[i].uid,
+          username: data[i].username,
+          email: data[i].email,
+          password: data[i].password
+        }
+        contacts.push(contact)
+       }
+       
+       res.send(contacts) 
+    })
+   
   }
 }
 

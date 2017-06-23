@@ -1,65 +1,40 @@
-import React, { Component } from 'react';
-import { signup } from '../authentication/authentication'
+import React, {Component} from 'react'
+import AppActions from '../actions/AppActions'
+import AppStore from '../stores/AppStore'
 
 
-function setErrorMsg(error) {
-  return {
-    registerError: error.message
+export default class Signup extends Component {
+ render() { 
+    return (  
+        <div className='well'>  
+            <h3>Sign Up</h3>
+
+            <form onSubmit={this.handleSubmit.bind(this)}>
+                <div className='form-group'>
+                    <input type="text" ref='username' className='form-control' placeholder='Username' required/>
+                </div>
+                 <div className='form-group'>
+                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
+                </div>
+                 <div className='form-group'>
+                    <input type="password" ref='password' className='form-control' placeholder='Password' required/>
+                </div>              
+                <button type='submit' className='btn btn-primary'>Submit</button>
+            </form>
+
+        </div>
+
+    )
+  }
+
+  handleSubmit(e){
+      e.preventDefault();    
+      const contact = {
+          username: this.refs.username.value.trim(),
+          email: this.refs.email.value.trim(),
+          password: this.refs.password.value.trim()
+      }      
+      AppActions.saveContact(contact);
+
   }
 }
-
-class Signup extends Component {
-
-  state = { registerError: null }
-  handleSubmit = (e) => {
-    e.preventDefault()
-    signup(this.username.value, this.email.value, this.password.value)
-      .catch(e => this.setState(setErrorMsg(e)))
-  }
-
-    render() {
-        return (
-            <div>
-                {/* This is the Signup form */}
-                <section>
-                <div>
-        <h2>Signup Form</h2>
-        <form onSubmit={this.handleSubmit} style={{border: '1px solid #ccc'}}>
-          <div className="container">
-
-            <label><b>Username</b></label>
-            <input type="text" placeholder="Username" name="username" ref={(username) => this.username = username}/>
-
-            <label><b>Email</b></label>
-            <input type="text" placeholder="Email" name="email" ref={(email) => this.email = email} />
-
-            <label><b>Password</b></label>
-            <input type="password" placeholder="Password" name="psw" ref={(password) => this.password = password}/>
-           
-             {
-            this.state.registerError &&
-            <div className="alert alert-danger" role="alert">
-              <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-              <span className="sr-only">Error:</span>
-              &nbsp;{this.state.registerError}
-            </div>
-          }
-            <div className="clearfix">              
-              <button type="submit"  className="btn btn-primary">Sign Up</button>
-              
-            </div>
-          </div>
-        </form>
-      
-      </div>
-        
-      </section>
-
-            </div>
-        )
-    }
-
-}
-
-
-export default Signup;

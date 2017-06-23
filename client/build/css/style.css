@@ -6,6 +6,7 @@ body{
   margin: 0 auto;
   background: #f4f4f4;
   width: 98%;
+  margin-top: 30px
 }
 
 /* Global */
@@ -156,4 +157,9 @@ button {
     .cancelbtn, .signupbtn {
        width: 100%;
     }
+}
+
+
+.label{
+  margin-right: 10px;
 }

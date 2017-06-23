@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { login, resetPassword } from '../authentication/authentication'
 
 function setErrorMsg(error) {
   return {
