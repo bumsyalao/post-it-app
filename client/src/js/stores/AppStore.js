@@ -1,58 +1,73 @@
 import { EventEmitter } from 'events';
-import dispatcher from '../dispatcher/AppDispatcher';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants from '../constants/AppConstants';
+import assign from 'object-assign'
+import AppAPI from '../utils/AppAPI'
 
-class AppStore extends EventEmitter {
-  constructor() {
-    super();
-    this.signup = [{
-      username: 'w',
-      email: 'rr',
-      password: 'er'
-    },];
-  }
-
-  getAll () {
-    return this.signup;
-  }
-
-  createUser(username, email, password) {
-    axios({
-  method: 'post',
-  url:'/user/signup',
-  data: {
-    username,
-    email,
-    password
-  }
-}).then(function(response){
-  console.log(response)
-  
-
-}).catch(function(error){
-    console.log(error);
-    // this.signup.push({
-    //   username,
-    //   email,
-    //   password
-    // });
-})
-    this.emit('change');
-  }
+const CHANGE_EVENT = 'change'
+let _contacts = [];
 
 
 
-  handleActions(action) {
-    switch (action.type) {
-    case 'SIGN_UP':
-      this.createUser(action.username, action.email, action.password);
-      break;  
+  const AppStore = assign({}, EventEmitter.prototype, {
+    getContacts(){
+      return _contacts;
+    },
+    saveContact(contact){
+      _contacts.push(contact);
+    },
+
+    setContacts(contacts){
+      _contacts = contacts;
+    },
+
+
+    emitChange(){
+      this.emit(CHANGE_EVENT)
+    },
+
+    addChangeListener(callback){
+      this.on('change', callback);
+    },
+
+    removeChangeListener(callback){
+      this.removeListener('change', callback)
     }
-    default:
-  }
-}
 
-const appStore = new AppStore();
+  });
 
-dispatcher.register(appStore.handleActions.bind(appStore));
-window.dispatcher = dispatcher;
-export default appStore;
+  AppDispatcher.register((payload) => {
+    const action = payload.action;
+
+    switch(action.actionType){
+      case AppConstants.SAVE_CONTACT:
+        console.log('Saving Contact...');
+
+        //Store Save
+        AppStore.saveContact(action.contact);
+
+        //Save to API
+        AppAPI.saveContact(action.contact)
+
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_CONTACT:
+        console.log('Receiving Contact...');
+
+        //Store Save
+        AppStore.setContacts(action.contacts);
+
+       
+
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+    }
+
+    return true;
+  });
+
+module.exports = AppStore;
