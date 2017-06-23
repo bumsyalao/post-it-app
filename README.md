@@ -30,15 +30,14 @@ PostIt is a simple application that allows friends and colleagues create groups 
   1. Clone this repository from a terminal git clone https://github.com/Charpell/post-it-app.git.
   2. Move into the project directory
   3. Install project dependencies npm install
-  4. Create an account of firebase and set up your app
-  5. Create an .env file and set the variables in .env-sample to your specified database connection
-  6. Run npm run start-server
-  7. Run npm webpack -w
+  4. Open 2 git bash terminal, one will run the server and the other runs webpack
+  6. Run 'npm start'
+  7. Run 'webpack -w'
 
 
-# Test
-  The mocha framework and supertest module are used for testing our routes
-    To test, run "mocha"
+# Testing the Routes
+  The mocha framework and supertest module are used for testing our routes.   
+  To test, Run "mocha"
  
 
  
