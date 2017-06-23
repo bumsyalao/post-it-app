@@ -8,7 +8,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 
 // Display State
-// AppAPI.getContacts();
+AppAPI.getContacts();
 
 
 

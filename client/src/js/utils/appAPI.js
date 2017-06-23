@@ -1,13 +1,13 @@
 import Firebase from 'firebase'
 import AppActions from '../actions/AppActions'
 import axios from 'axios';
-
+ 
 module.exports = {
     saveContact(contact){
         axios.post('/user/signup', {
-            username: contact.name,           
-            password: contact.phone,
-            email: contact.email
+            username: contact.username,                     
+            email: contact.email,
+            password: contact.password
             }).then(function (response) {
                 console.log(response);
                 
@@ -19,8 +19,8 @@ module.exports = {
     getContacts(){
         axios.get('/user/database')
             .then(function (contacts) {
-                console.log(contacts);
-                AppActions.recieveContacts(contacts)
+                console.log(contacts.data);
+                AppActions.recieveContacts(contacts.data)
             })
             .catch(function (error) {
                 console.log(error);

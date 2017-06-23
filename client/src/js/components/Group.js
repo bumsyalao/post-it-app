@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-// import { group } from '../authentication/authentication'
-// import { usersRef, firebaseAuth, groupRef } from '../firebase/firebase';
 
 class Group extends Component {
 
