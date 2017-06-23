@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 
 import {Switch, Route, Redirect, Link} from 'react-router-dom';
 
-import Signin from './Signin'
-import Signup from './Signup';
-import Group from './Group';
-import MessageBoard from './MessageBoard';
-import Home from './Home';
+
 import Footer from './Footer'
 import Routes from './Routes'
 

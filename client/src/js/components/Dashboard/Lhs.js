@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import { MenuItem, Clearfix } from 'react-bootstrap';
 
-import { group } from '../../authentication/authentication'
 
 
 

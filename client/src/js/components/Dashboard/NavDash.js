@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 
-import { group } from '../../authentication/authentication'
 
 
 export default class NavDash extends Component {
