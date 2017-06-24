@@ -30,7 +30,7 @@ export default class Signup extends Component {
 
     )
   }
-
+ 
   handleSubmit(e){
       e.preventDefault();    
       const contact = {
