@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import { MenuItem, Clearfix } from 'react-bootstrap';
+import Users from './Users'
 
 
 
@@ -58,13 +59,17 @@ export default class Lhs extends Component {
           <li>Add Group</li>
         </ul><br/><br/>
 
-        <h4>Users</h4>        
+       <h4>Users</h4>   
         <ul>
-          <li>Ebuka</li>
-          <li>Paul</li>
-          <li>Mike</li>
-          <li>Kennedy</li>
-          <li>Invite users</li>
+           {
+            this.props.contact.map(function(contact, index){
+              return(
+                <Users contact={contact} key={index} />
+                    )
+                })
+            }
+            <li><a href="#" className="btn btn-default" onClick={this.handleEdit}>Invite Users</a></li>
+  
         </ul>
       </div>
 

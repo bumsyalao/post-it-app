@@ -11,20 +11,16 @@ export default class ContactList extends Component {
   }
   
   render() {  
-      console.log(this.state.contacts)
+ console.log(this.state.contacts)
     return (  
         <div className='well'>  
             <h3>Add Contact</h3>
             <table className='table table-striped'>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        
-                        <th>Email</th>
-                   
-                    
-                    
-                        
+                        <th>Name</th>                        
+                       <th>Email</th>
+                       <th>Password</th>                        
                     </tr>
                 </thead>
 

@@ -7,7 +7,7 @@ import App from "./js/components/App";
 import {BrowserRouter} from 'react-router-dom';
 
 
-import Dashboard from "./js/components/Dashboard/Dashboard";
+// import Dashboard from "./js/components/Dashboard/Dashboard";
 
 // Display State
 AppAPI.getContacts();

@@ -13,7 +13,7 @@ class User {
       usersRef.push({
         username,
         password,
-        email
+        email:user.email
       });
       res.send('Signup Successful');
     })
@@ -54,7 +54,7 @@ class User {
   static database(req, res){
     const rootRef = firebase.database().ref().child('users');
 
-    rootRef.on('value', snap => {
+    rootRef.once('value', snap => {
       const key = snap.key
       const data = snap.val()
       const contacts = []
@@ -63,6 +63,7 @@ class User {
       for (var i in data){
 
         contact = {
+          id: i,
           uid: data[i].uid,
           username: data[i].username,
           email: data[i].email,
@@ -72,6 +73,7 @@ class User {
        }
        
        res.send(contacts) 
+
     })
    
   }

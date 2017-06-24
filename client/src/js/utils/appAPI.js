@@ -24,6 +24,18 @@ module.exports = {
             .catch(function (error) {
                 console.log(error);
             });
+    },
+
+        removeContact(){
+        axios.get('/user/database')
+            .then(function (contacts) {
+                
+                AppActions.receiveContact(contacts.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
+
 };
 

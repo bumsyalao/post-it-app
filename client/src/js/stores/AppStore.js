@@ -21,6 +21,12 @@ let _contacts = [];
       _contacts = contacts;
     },
 
+    removeContact(contactId){
+      var index = _contacts.findIndex(x => x.id === contactId);
+      _contacts.splice(index, 1)
+      
+    },
+
 
     emitChange(){
       this.emit(CHANGE_EVENT)
@@ -60,7 +66,20 @@ let _contacts = [];
         AppStore.setContacts(action.contacts);
 
        
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
 
+        case AppConstants.REMOVE_CONTACT:
+        console.log('Removing Contact...');
+
+        //Store Remove
+        AppStore.removeContact(action.contactId);
+
+        //API Remove
+        AppAPI.removeContact(action.contactId)
+
+       
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

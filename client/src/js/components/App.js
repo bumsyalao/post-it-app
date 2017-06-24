@@ -67,7 +67,7 @@ class App extends Component  {
     }
       _onChange(){
         this.setState({contacts: AppStore.getContacts()});
-        console.log(this.state.contacts) 
+
     }    
 }
 
