@@ -5,6 +5,7 @@ import { MenuItem, Clearfix } from 'react-bootstrap';
 import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 
 import Users from './Users'
+import Groups from './Groups'
 
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
@@ -16,10 +17,7 @@ import AppStore from '../../stores/AppStore'
 export default class Lhs extends Component {
 
   state= {     
-      groups: AppStore.getGroups(),
-      userName: '',
-      users : [],
-      showModal: false
+ 
   }
 
     close = () => {
@@ -38,7 +36,7 @@ export default class Lhs extends Component {
 
 
   render() {
-      console.log(this.state.groups)
+    
     return (
       <div>
          <Modal show={this.state.showModal} onHide={this.close}>
@@ -71,11 +69,16 @@ export default class Lhs extends Component {
        <h4>Groups</h4>
 
         <ul>
-          <li>Facebook</li>
-          <li>Google</li>
-          <li>Andela</li>
-          <li>Add Group</li>
+          {
+            this.props.group.map(function(group, index){
+              return(
+                <Groups group={group} key={index} />
+                    )
+                })
+            }
         </ul><br/><br/>
+
+        
 
        <h4>Users</h4>   
         <ul>
@@ -99,8 +102,5 @@ export default class Lhs extends Component {
         AppActions.saveGroup(group);
         console.log(group)
 }
- _onChange(){
-        this.setState({groups: AppStore.getGroups()});     
-    } 
 }
  

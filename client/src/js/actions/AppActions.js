@@ -32,7 +32,23 @@ const AppActions = {
         group: group
       })
         
-    }
+    },
+
+    receiveGroup(groups){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_GROUP,
+            groups: groups
+        })
+
+    },
+
+    saveGroupUser(addUsers){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.SAVE_GROUP_USER,
+            addUsers: addUsers
+        })
+        
+    },
 
 
 

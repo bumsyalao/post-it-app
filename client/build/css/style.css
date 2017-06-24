@@ -13,6 +13,10 @@ body{
    
     padding: 0px;
 }
+#transform{
+  text-transform: capitalize;
+
+}
 /* Global */
 .container{
   width: 80%;

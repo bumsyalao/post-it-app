@@ -36,6 +36,9 @@ router.post('/group', Group.createGroup);
 
 router.post('/group/:groupID/:uid', Group.addUser);
 
+// Retrive Groups from Database
+router.get('/group/database', Group.database);
+
 
 
 module.exports = router;

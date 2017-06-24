@@ -12,7 +12,8 @@ export default class DashBoard extends Component {
         this.state ={
            authed: false,
            loading: true,
-           contacts: AppStore.getContacts()
+           contacts: AppStore.getContacts(),
+           groups: AppStore.getGroups()
            
         };
          this._onChange= this._onChange.bind(this)
@@ -32,12 +33,13 @@ export default class DashBoard extends Component {
 
 
   render() { 
+
     return (
       <div id='dash'>
-        <NavDash/>         
+        <NavDash contact={this.state.contacts} group={this.state.groups}/>         
         <Grid>
           <Row className="show-grid">
-            <Col md={3} id='lhs'> <LHS contact={this.state.contacts}/> </Col>
+            <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups}/> </Col>
 
             <Col sm={12} md={9}> <MessageBoard /></Col>
 
@@ -49,6 +51,7 @@ export default class DashBoard extends Component {
   }
     _onChange(){
         this.setState({contacts: AppStore.getContacts()});
+        this.setState({contacts: AppStore.getGroups()});
       
     }  
 }

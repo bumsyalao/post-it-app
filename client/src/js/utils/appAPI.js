@@ -28,13 +28,39 @@ module.exports = {
 
     saveGroup(group){
         axios.post('/group', {
-            group                   
+            groupname:group                   
             }).then(function (response) {
                 console.log(response);              
             }).catch(function (error) {
                 console.log(error);
             });                  
-    }   
+    },
+
+     getGroups(){
+        axios.get('/group/database')
+            .then((groups) => {
+                console.log(groups)
+                AppActions.receiveGroup(groups.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },   
+
+     saveGroupUser(addUser){
+        axios.post('/group/:groupID/:uid', {
+             params: {
+            groupID: addUser.id,
+            uid: addUser.users,
+            } 
+
+            }).then(function (response) {
+                console.log(response);              
+            }).catch(function (error) {
+                console.log(error);
+            });                  
+    }
+    
 
 };
 

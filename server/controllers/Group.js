@@ -1,10 +1,10 @@
-const { usersRef, groupRef } = require('../config');
+const { usersRef, groupRef, firebase } = require('../config');
+
 
 
 class Group {
   static createGroup(req, res) {
     const groupID = req.body.groupname; 
-
     groupRef
     .child(groupID)
     .once('value', (snapshot) => {
@@ -28,30 +28,45 @@ class Group {
   }
 
   static addUser(req, res) {
-      const groupID = req.params.groupID;
+    const groupID = req.params.groupID;
    // Firebase get all users
     const uid = req.params.uid;
 
-    usersRef
-    .child(uid)
-    .once('value', (snapshot) => {
-      const userEmail = snapshot.exists() ? snapshot
-      .val()
-      .email : 'No email';
+    usersRef.child(uid).once('value', (snapshot) => {
+    const userEmail = snapshot.exists() ? snapshot.val().email : 'No email';
 
-      groupRef
-      .child(groupID)
-      .child('users')
-      .push(userEmail)
-      .then(() => {
+      groupRef.child(groupID).child('users').push(userEmail).then(() => {
         res.send('User added successfully');
       });
-    })
- .catch((err) => {
+    }).catch((err) => {
    res.send(err);
  });
  
 
+  }
+
+    static database(req, res){
+    const rootRef = firebase.database().ref().child('Groups');
+
+    rootRef.once('value', snap => {
+      const key = snap.key
+      const data = snap.val()
+      const groups = []
+      let group = {}
+
+      for (var i in data){
+        group = {
+          id: i,
+          users: data[i].users,
+        }
+        groups.push(group)
+       }
+       
+       res.send(groups) 
+
+
+    })
+   
   }
 }
 

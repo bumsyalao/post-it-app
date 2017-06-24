@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 
+import AppActions from '../../actions/AppActions'
+import AppStore from '../../stores/AppStore'
+
+
 
 
 export default class NavDash extends Component {
@@ -21,65 +25,26 @@ export default class NavDash extends Component {
     this.setState({ showModal: true });
   }
 
-
-  setGroupName = (groupName) => {
-    this.setState({groupName: groupName.target.value}) 
-  }
-
-   setUserName = (userName) => {
-    this.setState({userName: userName.target.value}) 
-  }
-
-   createGroup = (e) => {
-    e.preventDefault()
-    var groupID = this.state.groupName
-
-    group(groupID)
-
-    console.log(groupID)
-  }
-
-
-  createUser = (e) => {
-    e.preventDefault()
-    var uid = this.state.userName
-
-    group(uid)
-
-    console.log(uid)
-  }
-
-
-
   render() {
-
-    const popover = (
-      <Popover id="modal-popover" title="popover">
-        very popover. such engagement
-      </Popover>
-    );
-    const tooltip = (
-      <Tooltip id="modal-tooltip">
-        wow.
-      </Tooltip> 
-    );
 
     return (
       <Navbar inverse collapseOnSelect>
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Add a User</Modal.Title>
+            <Modal.Title>Add a User to this Group</Modal.Title>
           </Modal.Header>
           <Modal.Body>
   
-          <div className="input-group">
-            <input type="text" className="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
-            <input type="text" className="form-control" value={this.state.userName} placeholder="User Name" onChange={this.setUserName} />
-           
-              <span className="input-group-btn">
-                <button className="btn btn-secondary" type="button" onClick={this.createUser}>Submit</button>
-              </span>
-          </div>
+                <form onSubmit={this.addUser.bind(this)}>
+                  <div className='form-group'>
+                  <input type="text" ref='id' className='form-control' placeholder='Group Name' required/>
+                  </div>
+                  <div className='form-group'>
+                      <input type="text" ref='users' className='form-control' placeholder='Search for a User' required/>
+                  </div>
+                                
+                  <button type='submit' className='btn btn-primary'>Submit</button>
+            </form>
 
            
           </Modal.Body>
@@ -98,7 +63,7 @@ export default class NavDash extends Component {
         <Navbar.Collapse>
           <Nav>
             <NavItem eventKey={1} href="#">New Chat</NavItem>
-            <NavItem eventKey={2} href="#" onClick = {this.open}>Invite your team</NavItem>
+            <NavItem eventKey={2} href="#" onClick = {this.open}>Invite a friend</NavItem>
             
             <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
               <MenuItem eventKey={3.1}>Action</MenuItem>
@@ -117,5 +82,45 @@ export default class NavDash extends Component {
       </Navbar>
     )
   }
+
+    addUser(e){
+    e.preventDefault(); 
+      const addUser = {
+         id: this.refs.id.value.trim(), //group 
+         users: this.refs.users.value.trim()   //user
+      }   
+      const groupID = addUser.id 
+      const allUser = this.props.contact.map((contact, index) =>  contact)
+      var result = Object.keys(allUser).map(function(e) {
+                return [Number(e), allUser[e]];
+  });
+      var merged = [].concat.apply([], result);
+        var data = []
+      merged.forEach(function (user) {
+          if (typeof user === 'object') {
+              data.push(user);
+          }
+      });
+
+    for (let key in data) {      
+        if (data[key].username == addUser.users){
+       alert('exist')
+        var uniqueId = data[key].id
+        break;      
+     }
+    }
+    if (!uniqueId){
+      alert("The user dosen't exist")
+    }
+
+    const addUsers = {
+   
+      groupID: groupID,
+      uid: uniqueId
+    }
+
+AppActions.saveGroupUser(addUsers);
+
+}
 
 }

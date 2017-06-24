@@ -77,25 +77,34 @@ let _groups = [];
         AppStore.emit(CHANGE_EVENT);
         break;
 
-      case AppConstants.REMOVE_CONTACT:
-        console.log('Removing Contact...');
-        //Store Remove
-        AppStore.removeContact(action.contactId);
-        //API Remove
-        AppAPI.removeContact(action.contactId)      
-        //Emit Change
-        AppStore.emit(CHANGE_EVENT);
-        break;
-
       case AppConstants.SAVE_GROUP:
         console.log('Saving group...');
          //Store Save
         AppStore.saveGroup(action.group);
         // //Save to API
-        // AppAPI.saveGroup(action.group)      
+        AppAPI.saveGroup(action.group)      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
+
+      case AppConstants.RECEIVE_GROUP:
+        console.log('Receiving Groups...');
+        //Store Save
+        AppStore.setGroups(action.groups);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.SAVE_GROUP_USER:
+        console.log('Saving user into group...');
+         //Store Save
+        AppStore.saveGroup(action.addUsers);
+        // //Save to API
+        AppAPI.saveGroupUser(action.addUsers)      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
 
     }
 
