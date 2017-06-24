@@ -26,16 +26,15 @@ module.exports = {
             });
     },
 
-        removeContact(){
-        axios.get('/user/database')
-            .then(function (contacts) {
-                
-                AppActions.receiveContact(contacts.data)
-            })
-            .catch(function (error) {
+    saveGroup(group){
+        axios.post('/group', {
+            group                   
+            }).then(function (response) {
+                console.log(response);              
+            }).catch(function (error) {
                 console.log(error);
-            });
-    }
+            });                  
+    }   
 
 };
 

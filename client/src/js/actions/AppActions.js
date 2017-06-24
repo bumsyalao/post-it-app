@@ -24,7 +24,16 @@ const AppActions = {
             contactId: contactId
         })
 
+    },
+
+    saveGroup(group){
+        AppDispatcher.handleViewAction({
+        actionType: AppConstants.SAVE_GROUP,
+        group: group
+      })
+        
     }
+
 
 
 

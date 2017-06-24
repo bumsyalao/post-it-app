@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
-import Verify from './Verify'
 
 
 export default class Signup extends Component {

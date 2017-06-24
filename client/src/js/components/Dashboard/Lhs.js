@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 
 import { MenuItem, Clearfix } from 'react-bootstrap';
+
+import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
+
 import Users from './Users'
+
+import AppActions from '../../actions/AppActions'
+import AppStore from '../../stores/AppStore'
 
 
 
@@ -9,11 +15,19 @@ import Users from './Users'
 
 export default class Lhs extends Component {
 
-  state= {
-      groupName: '',
-      groups: [],
+  state= {     
+      groups: AppStore.getGroups(),
       userName: '',
       users : [],
+      showModal: false
+  }
+
+    close = () => {
+    this.setState({ showModal: false });
+  }
+
+  open = () => {
+    this.setState({ showModal: true });
   }
 
   setGroupName = (groupName) => {
@@ -22,35 +36,39 @@ export default class Lhs extends Component {
 
  
 
-  createGroup = (e) => {
-    e.preventDefault()
-    var groupID = this.state.groupName
-
-    group(groupID)
-
-    console.log(this.state.groupName)
-  }
 
   render() {
-
-    function onSelectAlert(eventKey) {
-      alert(`Alert from menu item.\neventKey: ${eventKey}`);
-    }
-
+      console.log(this.state.groups)
     return (
       <div>
-        <h4>The Group Name</h4>
-        <button className="btn btn-primary" onClick={this.showCreateGroup}>create group</button>
-        
-        <div className="input-group">
-          <input type="text" className="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
-          <span className="input-group-btn">
-            <button className="btn btn-secondary" type="button" onClick={this.createGroup}>Submit</button>
-          </span>
-        </div>
-        
+         <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create Group</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+  
+  
+               <form onSubmit={this.createGroup.bind(this)}>
+                <div className='form-group'>
+                    <input type="text" ref='group' className='form-control' placeholder='GroupName' required/>
+                </div>
+                               
+                <button type='submit' className='btn btn-primary'>Submit</button>
+            </form>
 
-        <h4>Groups</h4>
+           
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <div>
+            <h4>The Group Name</h4>
+        <a href="#" className="btn btn-default" onClick = {this.open}>Create Group</a>
+     
+        </div>       
+       <h4>Groups</h4>
 
         <ul>
           <li>Facebook</li>
@@ -75,6 +93,14 @@ export default class Lhs extends Component {
 
     )
   }
-
+    createGroup(e){
+      e.preventDefault();    
+        const group = this.refs.group.value.trim()        
+        AppActions.saveGroup(group);
+        console.log(group)
+}
+ _onChange(){
+        this.setState({groups: AppStore.getGroups()});     
+    } 
 }
  

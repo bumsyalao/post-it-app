@@ -32,7 +32,6 @@ export default class DashBoard extends Component {
 
 
   render() { 
-     console.log(this.state.contacts)
     return (
       <div id='dash'>
         <NavDash/>         
