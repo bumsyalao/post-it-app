@@ -41,4 +41,15 @@ router.get('/group/database', Group.database);
 
 
 
+// // Create Node for Note
+// router.post('/note', Group.createNote);
+// router.post('/base', Group.createBase);
+
+// router.post('/base/:groupID/:uid', Group.addbase);
+
+
+
+
+
+
 module.exports = router;

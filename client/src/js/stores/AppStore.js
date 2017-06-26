@@ -97,6 +97,7 @@ let _groups = [];
 
       case AppConstants.SAVE_GROUP_USER:
         console.log('Saving user into group...');
+        
          //Store Save
         AppStore.saveGroup(action.addUsers);
         // //Save to API

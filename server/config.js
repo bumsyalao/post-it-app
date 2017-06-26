@@ -16,11 +16,15 @@ const firebaseAuth = firebase.auth;
 const db = firebase.database();
 const usersRef = db.ref('users');
 const groupRef = db.ref('Groups');
+const notesRef = db.ref('Notes')
+const baseRef = db.ref('Base')
 
 module.exports = {
   firebase,
   db,
   usersRef,
   groupRef,
+  notesRef,
+  baseRef,
   firebaseAuth
 };

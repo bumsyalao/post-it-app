@@ -45,17 +45,14 @@ module.exports = {
             .catch(function (error) {
                 console.log(error);
             });
-    },   
-
-     saveGroupUser(addUser){
-        axios.post('/group/:groupID/:uid', {
-             params: {
-            groupID: addUser.id,
-            uid: addUser.users,
-            } 
-
-            }).then(function (response) {
-                console.log(response);              
+    },
+     saveGroupUser(addUsers){
+       const groupID = addUsers.groupID
+       const uid = addUsers.uid
+        axios.post('/group/'+ groupID +"/"+uid)
+        .then(function (response) {
+                console.log(response);
+                
             }).catch(function (error) {
                 console.log(error);
             });                  

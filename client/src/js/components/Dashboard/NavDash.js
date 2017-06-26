@@ -101,10 +101,10 @@ export default class NavDash extends Component {
               data.push(user);
           }
       });
-
+ 
     for (let key in data) {      
         if (data[key].username == addUser.users){
-       alert('exist')
+       alert('The User has been added to '+ addUser.id+ " group")
         var uniqueId = data[key].id
         break;      
      }
@@ -118,7 +118,7 @@ export default class NavDash extends Component {
       groupID: groupID,
       uid: uniqueId
     }
-
+console.log(addUsers)
 AppActions.saveGroupUser(addUsers);
 
 }
