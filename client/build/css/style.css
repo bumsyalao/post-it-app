@@ -17,6 +17,11 @@ body{
   text-transform: capitalize;
 
 }
+
+#messages_compose{
+  margin-bottom: 50px;
+}
+
 /* Global */
 .container{
   width: 80%;
@@ -28,6 +33,7 @@ ul{
   margin: 0;
   padding: 0;
   text-decoration-style: none;
+  text-decoration: none;
 }
 
 /* Header */

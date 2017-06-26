@@ -12,6 +12,7 @@ export default class NavDash extends Component {
 
   state = { 
     showModal: false,
+    showModal2: false,
     groupName: '',
     userName: '',
     users : []
@@ -24,17 +25,25 @@ export default class NavDash extends Component {
   open = () => {
     this.setState({ showModal: true });
   }
+  close2 = () => {
+    this.setState({ showModal2: false });
+  }
+
+  open2 = () => {
+    this.setState({ showModal2: true });
+  }
+
 
   render() {
 
     return (
       <Navbar inverse collapseOnSelect>
+
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>Add a User to this Group</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-  
                 <form onSubmit={this.addUser.bind(this)}>
                   <div className='form-group'>
                   <input type="text" ref='id' className='form-control' placeholder='Group Name' required/>
@@ -44,12 +53,27 @@ export default class NavDash extends Component {
                   </div>
                                 
                   <button type='submit' className='btn btn-primary'>Submit</button>
-            </form>
-
-           
+            </form >             
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
+         <Modal show={this.state.showModal2} onHide={this.close2}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create Group</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+             <form onSubmit={this.createGroup.bind(this)}>
+                <div className='form-group'>
+                    <input type="text" ref='group' className='form-control' placeholder='GroupName' required/>
+                </div>                             
+                <button type='submit' className='btn btn-primary'>Submit</button>
+            </form>             
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.close2}>Close</Button>
           </Modal.Footer>
         </Modal>
 
@@ -62,7 +86,7 @@ export default class NavDash extends Component {
 
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#">New Chat</NavItem>
+            <NavItem eventKey={2} href="#" onClick = {this.open2}>Create Group</NavItem>
             <NavItem eventKey={2} href="#" onClick = {this.open}>Invite a friend</NavItem>
             
             <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
@@ -121,6 +145,13 @@ export default class NavDash extends Component {
 console.log(addUsers)
 AppActions.saveGroupUser(addUsers);
 
+}
+
+createGroup(e){
+      e.preventDefault();    
+        const group = this.refs.group.value.trim()        
+        AppActions.saveGroup(group);
+        console.log(group)
 }
 
 }

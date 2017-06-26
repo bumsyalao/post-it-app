@@ -4,6 +4,7 @@ import NavDash from './NavDash';
 import LHS from './Lhs';
 import MessageBoard from './MessageBoard'
 
+
 import {Grid, Row, Col, Clearfix} from 'react-bootstrap';
 
 export default class DashBoard extends Component {
@@ -12,9 +13,14 @@ export default class DashBoard extends Component {
         this.state ={
            authed: false,
            loading: true,
-           contacts: AppStore.getContacts(),
-           groups: AppStore.getGroups()
-           
+            user : 'Ebuka',
+      
+            message : 'Hello World',
+            contacts: AppStore.getContacts(),
+            groups: AppStore.getGroups(),
+
+
+         
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -51,7 +57,7 @@ export default class DashBoard extends Component {
   }
     _onChange(){
         this.setState({contacts: AppStore.getContacts()});
-        this.setState({contacts: AppStore.getGroups()});
+        this.setState({groups: AppStore.getGroups()});
       
     }  
 }

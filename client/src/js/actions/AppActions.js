@@ -50,6 +50,21 @@ const AppActions = {
         
     },
 
+     saveMessage(message){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.SAVE_MESSAGE,
+            message: message
+        })
+        
+    },
+    receiveMessages(message){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_MESSAGE,
+            message: message
+        })
+
+    },
+
 
 
 

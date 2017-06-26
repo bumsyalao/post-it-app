@@ -5,12 +5,28 @@ import assign from 'object-assign'
 import AppAPI from '../utils/appAPI'
 
 const CHANGE_EVENT = 'change'
-let _contacts = [];
-let _groups = [];
+
+    let _user = '';
+    let _group = '';
+    let _messages = [];
+    let _contacts = [];
+    let _groups = [];
+ 
+
+
 
 
 
   const AppStore = assign({}, EventEmitter.prototype, {
+
+    getUser(){
+      return _user;
+    },
+
+    setUser(user){
+      _user = user;
+    },
+
     getContacts(){
       return _contacts;
     },
@@ -31,6 +47,17 @@ let _groups = [];
 
     setGroups(groups){
       _groups = groups;
+    },
+    
+    getMessages(){
+      return _messages;
+    },
+    saveMessages(message){
+      _messages.push(message);
+    },
+
+    setMessages(messages){
+      _messages = messages;
     },
 
     removeContact(contactId){
@@ -105,6 +132,25 @@ let _groups = [];
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
+
+      case AppConstants.SAVE_MESSAGE:
+        console.log('Saving Message...');
+        //Store Save
+        AppStore.saveMessages(action.message);
+        //Save to API
+        AppAPI.saveMessages(action.message)
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_MESSAGE:
+        console.log('Receving Message...');
+        //Store Save
+        AppStore.setMessages(action.message);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
 
 
     }

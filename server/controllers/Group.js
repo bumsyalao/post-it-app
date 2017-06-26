@@ -8,7 +8,7 @@ class Group {
     groupRef.child(groupID).once('value', (snapshot) => {
       if (!snapshot.exists()) {
           groupRef.child(groupID).set({
-            id: groupID,
+            ID: groupID,
             users: null
         }).then(() => {
           res.send(`Group ${groupID} created`);
@@ -28,7 +28,7 @@ static addUser(req, res) {
 		usersRef.child(uid).once('value', (snapshot) => {
 				const userName= snapshot.exists() ? snapshot.val().username : "No Username";
 
-				groupRef.child(groupID).child("users").push(userName).then(() => {
+				groupRef.child(groupID).child("Users").push(userName).then(() => {
 						res.send('User added successfully');
 					});
 			})
@@ -57,6 +57,50 @@ static addUser(req, res) {
     })
    
   }
+
+  static messages(req, res) {
+		const groupID = req.params.groupID;
+    const user = req.params.user;
+    const text = req.params.text;
+
+				groupRef.child(groupID).child("Messages").push(
+        {  
+          user,
+          text
+        }
+        ).then(() => {
+						res.send('Message added successfully');
+					}).catch((err) => {
+				res.send('Error');
+			});
+
+
+
+	}
+     static messageDatabase(req, res){
+       const groupID = req.params.groupID
+    const rootRef = firebase.database().ref().child('Groups').child(groupID).child('Messages');
+
+    rootRef.once('value', snap => {
+      const key = snap.key
+      const data = snap.val()
+      const messages = []
+      let message = {}
+
+      for (var i in data){
+        message = {
+          id: i,
+          user: data[i].user,
+          text: data[i].text,
+        }
+        messages.push(message)
+       }      
+       res.send(messages) 
+    })
+   
+  }
+
+
 
 }
 

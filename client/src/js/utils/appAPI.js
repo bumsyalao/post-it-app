@@ -56,7 +56,30 @@ module.exports = {
             }).catch(function (error) {
                 console.log(error);
             });                  
-    }
+    },
+    saveMessages(message){
+       const groupID = message.group;
+        // const groupID = addUsers.groupID
+       const user = message.user;
+       const text = message.text;
+        axios.post('/messages/'+ groupID +"/"+user+"/"+text)
+        .then(function (response) {
+                console.log(response);
+                
+            }).catch(function (error) {
+                console.log(error);
+            });                  
+    },
+      getMessages(){
+          const groupID = 'Andela'
+        axios.get('/messages/'+groupID+'/messages')
+            .then((message) => {
+                AppActions.receiveMessages(message.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
     
 
 };
