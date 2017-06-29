@@ -1,62 +1,55 @@
 import React, { Component } from 'react'
+import AppActions from '../actions/AppActions'
+import AppStore from '../stores/AppStore'
+import AppAPI from '../utils/appAPI'
 
-function setErrorMsg(error) {
-  return {
-    loginMessage: error
-  }
-}
+
 
 class Signin extends Component {
-  state = { loginMessage: null }
+ constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
 
-  handleSubmit = (e) => {
-    e.preventDefault()
-    login(this.email.value, this.password.value)
-     
+
+		// Bind Form values
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-
-  // resetPassword = () => {
-  //   resetPassword(this.email.value)
-  //     .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.email.value}.`)))
-  //     .catch((error) => this.setState(setErrorMsg(`Email address not found.`)))
-  // }
 
 
   render() {
+
+
     return (
-      <div>
-       {/* This is the SignIN form */}
-        <section>
-          <form onSubmit={this.handleSubmit} style={{border: '1px solid #ccc'}}>
-          <div className="container">
-
-            <label><b>Email</b></label>
-            <input type="text" placeholder="Email" name="email" ref={(email) => this.email = email}   required />
-
-            <label><b>Password</b></label>
-            <input type="password" placeholder="Password" name="psw" ref={(password) => this.password = password}  required />
-           
-            {
-            this.state.loginMessage &&
-            <div className="alert alert-danger" role="alert">
-              <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-              <span className="sr-only">Error:</span>
-              &nbsp;{this.state.loginMessage} <a href="#" onClick={this.resetPassword} className="alert-link">Forgot Password?</a>
-            </div>
-          }
-            <div className="clearfix">              
-              <button type="submit" className="btn btn-primary">Sign In</button>
-             
-            </div>
-          </div>
-        </form>
-      
-        </section>
-
-      </div>
+   <div className='well'>  
+            <h3>Sign In</h3>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+                 <div className='form-group'>
+                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
+                </div>
+                 <div className='form-group'>
+                    <input type="password" ref='password' className='form-control' placeholder='Password' />
+                </div>              
+                <button type='submit' className='btn btn-primary'>Submit</button>
+            </form>
+        </div>
     )
   }
+
+   handleSubmit(e){
+      e.preventDefault();    
+      const contact = {
+          email: this.refs.email.value.trim(),
+          password: this.refs.password.value.trim()
+      }
+      AppActions.login(contact);
+        this.refs.email.value = '';
+        this.refs.password.value = '';
+      // this.props.history.push('/dasboard');
+
+}
 }
 
 export default Signin;

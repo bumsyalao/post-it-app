@@ -6,21 +6,33 @@ import AppAPI from '../utils/appAPI'
 
 const CHANGE_EVENT = 'change'
 
-    let _user = '';
+    let _user = [];
+    let _authed = false;
     let _group = '';
     let _messages = [];
     let _contacts = [];
     let _groups = [];
  
 
-
-
-
-
   const AppStore = assign({}, EventEmitter.prototype, {
+
+    getAuthed(){
+      return _authed;
+    },
+
+     setAuthed(){
+      _authed = true;
+    },
+    setLogout(){
+      _authed = false;
+    },
 
     getUser(){
       return _user;
+    },
+
+    saveUser(user){
+      _user.push(user);
     },
 
     setUser(user){
@@ -151,8 +163,37 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
+      case AppConstants.SIGN_IN:
+   
+        //Save to API
+        AppAPI.login(action.contact)
+        
+        // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
 
+      case AppConstants.RECEIVE_LOGIN:
+         //Store Save
+        AppStore.saveUser(action.user);
+        AppStore.setAuthed();
+        // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
 
+      case AppConstants.LOGOUT:
+        AppStore.setLogout();
+        // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+        case AppConstants.GOOGLE:
+        // //Store Save
+        // AppStore.saveMessages(action.message);
+        //Save to API
+        AppAPI.google()
+        // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
     }
 
     return true;

@@ -51,7 +51,7 @@ const AppActions = {
     },
 
      saveMessage(message){
-        AppDispatcher.handleViewAction({
+        AppDispatcher.handleViewAction({ 
             actionType: AppConstants.SAVE_MESSAGE,
             message: message
         })
@@ -64,6 +64,34 @@ const AppActions = {
         })
 
     },
+     login(contact){
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.SIGN_IN,
+            contact:contact
+        })
+        
+    },
+      receiveLogin(user){
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.RECEIVE_LOGIN,
+            user
+        })
+        
+    },
+     google(){
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.GOOGLE
+            
+        })
+        
+    },
+      logout(){
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.LOGOUT
+            
+        })
+        
+    }
 
 
 

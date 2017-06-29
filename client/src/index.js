@@ -3,20 +3,25 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import AppAPI from './js/utils/appAPI'
-// import App from "./js/components/App";
-import {BrowserRouter} from 'react-router-dom';
+import App from "./js/components/App";
+import { BrowserRouter as Router, browserHistory, Route } from
+'react-router-dom';
+
+import {firebaseAuth, firebase}from '../../server/config'
 
 
-import Dashboard from "./js/components/Dashboard/Dashboard";
+
+// import Dashboard from "./js/components/Dashboard/Dashboard";
 
 // Display State
+
 AppAPI.getContacts();
 AppAPI.getGroups();
 AppAPI.getMessages()
 
 
-
 ReactDOM.render(
-  <BrowserRouter>
-  <Dashboard/>
-</BrowserRouter>, document.getElementById('root'));
+  <Router history={ browserHistory }>
+  <App/>
+  </Router>
+, document.getElementById('root'));

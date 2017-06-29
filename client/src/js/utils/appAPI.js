@@ -1,5 +1,6 @@
 import AppActions from '../actions/AppActions'
 import axios from 'axios';
+import firebase from '../../../../server/config'
  
 module.exports = {
     saveContact(contact){
@@ -7,9 +8,9 @@ module.exports = {
             username: contact.username,                     
             email: contact.email,
             password: contact.password
-            }).then(function (response) {
-                console.log(response);
-                
+            }).then((response) => {
+                console.log(response)
+            
             }).catch(function (error) {
                 console.log(error);
             });                  
@@ -39,7 +40,7 @@ module.exports = {
      getGroups(){
         axios.get('/group/database')
             .then((groups) => {
-                console.log(groups)
+                // console.log(groups)
                 AppActions.receiveGroup(groups.data)
             })
             .catch(function (error) {
@@ -80,6 +81,34 @@ module.exports = {
                 console.log(error);
             });
     },
+
+     login(contact){
+        axios.post('/user/signin', {               
+            email: contact.email,
+            password: contact.password
+            }).then(function (response) {
+                // console.log('signin ing')
+               const user = response.data.userData; 
+             
+             AppActions.receiveLogin(user)
+               
+                
+            }).catch(function (error) {
+                console.log(error);
+            });                  
+    },
+     google(){
+        //  console.log('rar')
+        // axios.post('/user/google', {               
+        //     }).then(function (response) {
+                         
+        //     }).catch(function (error) {
+        //         console.log(error);
+        //     });                  
+    },
+
+
+                
     
 
 };

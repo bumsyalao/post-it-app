@@ -71,13 +71,13 @@ console.log(this.state.getMessages)
             text: this.refs.message.value.trim()
           }       
          
-           AppActions.saveMessage(message)   
+         if(typeof message.text === 'string' && message.text.length > 0){           
+             AppActions.saveMessage(message)   
+            this.refs.message.value = '';
+         }                
       }
-
       _onChange(){
         this.setState({messages: AppStore.getMessages()});
-      
-    } 
-
+     } 
 }
  

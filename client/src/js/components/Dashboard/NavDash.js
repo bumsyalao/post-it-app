@@ -88,19 +88,12 @@ export default class NavDash extends Component {
           <Nav>
             <NavItem eventKey={2} href="#" onClick = {this.open2}>Create Group</NavItem>
             <NavItem eventKey={2} href="#" onClick = {this.open}>Invite a friend</NavItem>
-            
-            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Action</MenuItem>
-              <MenuItem eventKey={3.2}>Another action</MenuItem>
-              <MenuItem eventKey={3.3}>Something else here</MenuItem>
-              <MenuItem divider/>
-              <MenuItem eventKey={3.3}>Separated link</MenuItem>
-            </NavDropdown>
+
           </Nav>
 
           <Nav pullRight>
             <NavItem eventKey={1} href="#">Profile</NavItem>
-            <NavItem eventKey={2} href="#">Online Status</NavItem>
+            <NavItem eventKey={2} href="#" onClick={this.logout.bind(this)}>Logout</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -142,8 +135,10 @@ export default class NavDash extends Component {
       groupID: groupID,
       uid: uniqueId
     }
-console.log(addUsers)
-AppActions.saveGroupUser(addUsers);
+    console.log(addUsers)
+    AppActions.saveGroupUser(addUsers);
+      this.refs.id.value = ''; 
+      this.refs.users.value = '';
 
 }
 
@@ -151,7 +146,14 @@ createGroup(e){
       e.preventDefault();    
         const group = this.refs.group.value.trim()        
         AppActions.saveGroup(group);
-        console.log(group)
+        this.refs.group.value = '';
+      
+}
+
+logout(e){
+      e.preventDefault();    
+      AppActions.logout();
+      
 }
 
 }

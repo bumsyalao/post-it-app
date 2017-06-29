@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
 
 export default class Navigation extends Component {
+    state = {
+    authed: false,
+    loading: true,
+  }
   render() {
     return (
       <div>
@@ -15,14 +19,19 @@ export default class Navigation extends Component {
             <nav>
               <ul>
                 <li> <Link to='/'>Home</Link></li>
-                <li> <span>
-                      <Link to="/user/signup">SignUp&nbsp;&nbsp;</Link>
-                      <Link to="/user/signin">SignIn&nbsp;&nbsp;</Link>                 
-                      <Link to="/logout">LogOut&nbsp;&nbsp;&nbsp;&nbsp;</Link>     
-                      <Link to="/contact">Contact&nbsp;&nbsp;&nbsp;&nbsp;</Link>                
-                      </span>
-                      <span> <Link to='/dashboard' >Dasboard</Link></span>
-                </li>                
+                <li><span> <Link to='/dashboard' >Dasboard</Link></span></li>    
+             
+                 <li>
+                  {this.state.authed
+                    ? <button
+                        style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
+                    : <span>
+                      
+                      <Link to="/register">SignUp&nbsp;&nbsp;</Link>
+                      <Link to="/login">SignIn&nbsp;&nbsp;</Link>    
+                      </span>}
+                </li>   
+                
               </ul>
             </nav>
             
@@ -32,5 +41,9 @@ export default class Navigation extends Component {
       </div>
 
     )
+  }
+
+  handleSubmit(){
+      console.log("Logout")
   }
 }
