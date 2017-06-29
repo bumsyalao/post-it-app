@@ -2,70 +2,59 @@ import React, {Component} from 'react';
 
 import { MenuItem, Clearfix } from 'react-bootstrap';
 
+import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
+
+import Users from './Users'
+import Groups from './Groups'
+
+import AppActions from '../../actions/AppActions'
+import AppStore from '../../stores/AppStore'
+
 
 
 
 
 export default class Lhs extends Component {
 
-  state= {
-      groupName: '',
-      groups: [],
-      userName: '',
-      users : [],
-  }
-
-  setGroupName = (groupName) => {
-    this.setState({groupName: groupName.target.value}) 
-  }
-
- 
-
-  createGroup = (e) => {
-    e.preventDefault()
-    var groupID = this.state.groupName
-
-    group(groupID)
-
-    console.log(this.state.groupName)
-  }
-
-  render() {
-
-    function onSelectAlert(eventKey) {
-      alert(`Alert from menu item.\neventKey: ${eventKey}`);
+    state= {  
+      user : 'Ebuka',
+      group : 'Andela',  
+  
     }
 
+  render() {
     return (
       <div>
-        <h4>The Group Name</h4>
-        <button className="btn btn-primary" onClick={this.showCreateGroup}>create group</button>
-        
-        <div class="input-group">
-          <input type="text" class="form-control" value={this.state.groupName} placeholder="Group Name" onChange={this.setGroupName} />
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button" onClick={this.createGroup}>Submit</button>
-          </span>
-        </div>
-        
+        <div>
+            <h4>{this.state.user}</h4>   
+        </div>    
 
-        <h4>Groups</h4>
-
+       <h4>Groups</h4>
         <ul>
-          <li>Facebook</li>
-          <li>Google</li>
-          <li>Andela</li>
-          <li>Add Group</li>
+          {
+            this.props.group.map(function(group, index){
+              return(
+                <Groups group={group} key={index} />
+                    )
+                })
+            }
         </ul><br/><br/>
+         
 
-        <h4>Users</h4>        
+       <h4>Users</h4>   
         <ul>
-          <li>Ebuka</li>
-          <li>Paul</li>
-          <li>Mike</li>
-          <li>Kennedy</li>
-          <li>Invite users</li>
+           {
+            this.props.contact.map(function(contact, index){
+              return(
+                <Users contact={contact} key={index} />
+                    )
+                })
+            }
+            <li><a href="#" className="btn btn-default" onClick={this.handleEdit}>Invite Users</a></li>
+  
         </ul>
+     
+      
       </div>
 
     )

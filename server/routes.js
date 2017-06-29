@@ -7,7 +7,7 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  res.sendFile(path.join(__dirname, '../client/src/index.html'));
 });
 
 router.get('/er', (req, res) => {
@@ -17,6 +17,9 @@ router.get('/er', (req, res) => {
 
 // Sign Up
 router.post('/user/signup', User.signup);
+
+// Google Signup
+router.get('/user/google', User.google);
 
 // Sign In
 router.post('/user/signin', User.signin);
@@ -29,9 +32,16 @@ router.get('/user/database', User.database);
 
 // Route for creating Group
 router.post('/group', Group.createGroup);
-
 router.post('/group/:groupID/:uid', Group.addUser);
 
+// Retrive Groups from Database
+router.get('/group/database', Group.database);
+
+// Route To add a Message
+router.post('/messages/:groupID/:user/:text', Group.messages)
+
+// Retrive Message from Database
+router.get('/messages/:groupID/messages', Group.messageDatabase)
 
 
 module.exports = router;

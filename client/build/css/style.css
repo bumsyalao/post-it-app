@@ -9,6 +9,19 @@ body{
   margin-top: 30px
 }
 
+#lhs{
+   
+    padding: 0px;
+}
+#transform{
+  text-transform: capitalize;
+
+}
+
+#messages_compose{
+  margin-bottom: 50px;
+}
+
 /* Global */
 .container{
   width: 80%;
@@ -19,7 +32,8 @@ body{
 ul{
   margin: 0;
   padding: 0;
-  list-style-type: none;
+  text-decoration-style: none;
+  text-decoration: none;
 }
 
 /* Header */

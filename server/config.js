@@ -11,16 +11,22 @@ const config = {
 };
 firebase.initializeApp(config);
 
-const firebaseAuth = firebase.auth;
+const firebaseAuth = firebase.auth();
 
 const db = firebase.database();
 const usersRef = db.ref('users');
 const groupRef = db.ref('Groups');
+const notesRef = db.ref('Notes')
+const baseRef = db.ref('Base')
 
+const provider = new firebase.auth.GoogleAuthProvider();
 module.exports = {
   firebase,
   db,
   usersRef,
   groupRef,
-  firebaseAuth
+  notesRef,
+  baseRef,
+  firebaseAuth,
+  provider
 };
