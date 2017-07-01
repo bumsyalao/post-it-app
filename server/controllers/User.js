@@ -9,13 +9,15 @@ class User {
    firebase.auth()
     .createUserWithEmailAndPassword(email, password)
     .then((user) => {
+      const uid = user.uid
     // add element to database
       usersRef.push({
         username,
         password,
-        email:user.email
+        email:user.email,
+        uid
       });
-      res.send('Signup Successful');
+      res.send(user);
     })
     .catch((error) => {
       res.send(error);

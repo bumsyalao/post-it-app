@@ -1,34 +1,32 @@
-const { resolve } = require('path');
-
+const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: [
-    // 'react-hot-loader/patch',
-    // 'webpack-dev-server/client?http://localhost:8080',
-    // 'webpack/hot/only-dev-server',
+    // 'webpack-hot-middleware/./client',
     './client/src/index.js',
     './client/src/main.scss'
   ],
 
   output: {
     filename: 'bundle.js',
-    path: resolve(__dirname, 'client/build'),
+    path: path.join(__dirname, 'client/build'),
     publicPath: '/',
   },
 
-  // context: resolve(__dirname, 'app'),
 
-  // devServer: {
-  //   hot: true,
-  //   contentBase: resolve(__dirname, 'dist'),
-  //   publicPath: '/',
-  // },
+
+  devServer: {
+    hot: true,
+    contentBase: path.join(__dirname, 'client/build'),
+    publicPath: '/',
+    historyApiFallback: true
+  },
 
   module: {
     rules: [

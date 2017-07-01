@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import AppAPI from './js/utils/appAPI'
 import App from "./js/components/App";
-import { BrowserRouter as Router, browserHistory, Route } from
+import { BrowserRouter} from
 'react-router-dom';
 
 import {firebaseAuth, firebase}from '../../server/config'
@@ -21,7 +21,7 @@ AppAPI.getMessages()
 
 
 ReactDOM.render(
-  <Router history={ browserHistory }>
+  <BrowserRouter basename="/#">
   <App/>
-  </Router>
+  </BrowserRouter>
 , document.getElementById('root'));

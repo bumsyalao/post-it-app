@@ -79,7 +79,7 @@ export default class NavDash extends Component {
 
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">PostIt App</a>
+            <a href="#/dashboard">PostIt App</a>
           </Navbar.Brand>
           <Navbar.Toggle/>
         </Navbar.Header>

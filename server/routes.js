@@ -32,6 +32,7 @@ router.get('/user/database', User.database);
 
 // Route for creating Group
 router.post('/group', Group.createGroup);
+
 router.post('/group/:groupID/:uid', Group.addUser);
 
 // Retrive Groups from Database
