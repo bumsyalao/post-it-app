@@ -1,4 +1,4 @@
-const { usersRef, groupRef, firebase, notesRef, baseRef } = require('../config');
+const { usersRef, groupRef, firebase } = require('../config');
 
 
 
@@ -7,6 +7,7 @@ class Group {
     const groupID = req.body.groupname; 
     groupRef.child(groupID).once('value', (snapshot) => {
       if (!snapshot.exists()) {
+          
           groupRef.child(groupID).set({
             ID: groupID,
             users: null
@@ -106,3 +107,5 @@ static addUser(req, res) {
 
 
 module.exports = Group;
+
+

@@ -142,8 +142,8 @@ export default class NavDash extends Component {
 
 }
 
-createGroup(e){
-      e.preventDefault();    
+createGroup(){
+    
         const group = this.refs.group.value.trim()        
         AppActions.saveGroup(group);
         this.refs.group.value = '';

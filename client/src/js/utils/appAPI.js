@@ -9,9 +9,12 @@ module.exports = {
             email: contact.email,
             password: contact.password
             }).then((response) => {
-                console.log(response)
+                console.log(response.data)
+            const user = response.data; 
+             
+             AppActions.receiveLogin(user)
             
-            }).catch(function (error) {
+            }).catch(function (error) { 
                 console.log(error);
             });                  
     },

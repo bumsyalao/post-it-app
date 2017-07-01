@@ -67,7 +67,7 @@ const Uppercase = capitalizeFirstLetter(contact.username)
     if (allUser.indexOf(Uppercase) === -1) {
         AppActions.saveContact(contact);
         alert('Welcome, '+Uppercase+'. You have successful signed up') 
-         this.props.history.push('/dasboard');
+        
          this.refs.username.value = '';
          this.refs.email.value = '';
          this.refs.password.value = '';    

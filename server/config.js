@@ -16,8 +16,8 @@ const firebaseAuth = firebase.auth();
 const db = firebase.database();
 const usersRef = db.ref('users');
 const groupRef = db.ref('Groups');
-const notesRef = db.ref('Notes')
-const baseRef = db.ref('Base')
+
+
 
 const provider = new firebase.auth.GoogleAuthProvider();
 module.exports = {
@@ -25,8 +25,6 @@ module.exports = {
   db,
   usersRef,
   groupRef,
-  notesRef,
-  baseRef,
   firebaseAuth,
   provider
 };
