@@ -79,7 +79,7 @@ export default class NavDash extends Component {
 
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">PostIt App</a>
+            <a href="#/dashboard">PostIt App</a>
           </Navbar.Brand>
           <Navbar.Toggle/>
         </Navbar.Header>
@@ -142,8 +142,8 @@ export default class NavDash extends Component {
 
 }
 
-createGroup(){
-    
+createGroup(e){
+      e.preventDefault();    
         const group = this.refs.group.value.trim()        
         AppActions.saveGroup(group);
         this.refs.group.value = '';

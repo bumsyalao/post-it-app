@@ -18,9 +18,7 @@ export default class Navigation extends Component {
             </div>
             <nav>
               <ul>
-                <li> <Link to='/'>Home</Link></li>
-                <li><span> <Link to='/dashboard' >Dasboard</Link></span></li>    
-             
+                <li> <Link to='/'>Home</Link></li>            
                  <li>
                   {this.state.authed
                     ? <button
