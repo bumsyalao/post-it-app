@@ -1,16 +1,24 @@
 const { usersRef, groupRef, firebase } = require('../config');
-
+ 
 
 
 class Group {
   static createGroup(req, res) {
     const groupID = req.body.groupname; 
-    groupRef.child(groupID).once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-          
+
+    
+firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // user is signed in
+        const userName = user.displayName;
+        const db = firebase.database();
+
+        groupRef.child(groupID).once('value', (snapshot) => {
+      if (!snapshot.exists()) {         
           groupRef.child(groupID).set({
             ID: groupID,
-            users: null
+            Users: userName
+
         }).then(() => {
           res.send(`Group ${groupID} created`);
         }).catch((err) => {
@@ -19,7 +27,19 @@ class Group {
       } else {
         res.send('Group already exists');
       }
+    }).catch((err) => {
+            res.status(401).send({
+              message: `Something went wrong ${err.message}`,
+            });
+          });
+      } else {
+        res.status(403).send({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });
+      }
     });
+
   }
 
 static addUser(req, res) {
@@ -107,5 +127,4 @@ static addUser(req, res) {
 
 
 module.exports = Group;
-
 

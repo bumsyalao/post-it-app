@@ -16,13 +16,8 @@ import AppStore from '../../stores/AppStore'
 
 
 export default class Lhs extends Component {
-    state= {  
-      user : 'Ebuka',
-      group : 'Andela',    
-    }
 
-  render() {
-    
+  render() {   
     return (
       <div>
         <div>

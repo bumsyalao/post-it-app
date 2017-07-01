@@ -60,7 +60,7 @@ class User {
     const password = req.body.password;
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
-        console.log('signs in user');
+ 
         res.status(200).send({
           message: 'Welcome to Post it app',
           userData: user
