@@ -66,7 +66,7 @@ const Uppercase = capitalizeFirstLetter(contact.username)
 
     if (allUser.indexOf(Uppercase) === -1) {
         AppActions.saveContact(contact);
-        alert('Welcome, '+Uppercase+'. You have successful signed up') 
+        alert('Welcome, '+Uppercase+ '  An email has been sent to you') 
         
          this.refs.username.value = '';
          this.refs.email.value = '';

@@ -10,6 +10,17 @@ class User {
     .createUserWithEmailAndPassword(email, password)
     .then((user) => {
       const uid = user.uid
+
+      // update the username of the user
+         user.updateProfile({
+           displayName: username
+         });
+
+         // send verification email to user
+         user.sendEmailVerification().then(() => {
+           res.send(user);
+         });
+
     // add element to database
       usersRef.push({
         username,
@@ -17,7 +28,7 @@ class User {
         email:user.email,
         uid
       });
-      res.send(user);
+
     })
     .catch((error) => {
       res.send(error);

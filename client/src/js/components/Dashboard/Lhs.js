@@ -6,6 +6,7 @@ import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 
 import Users from './Users'
 import Groups from './Groups'
+import Name from './Name'
 
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
@@ -15,21 +16,26 @@ import AppStore from '../../stores/AppStore'
 
 
 export default class Lhs extends Component {
-
     state= {  
       user : 'Ebuka',
-      group : 'Andela',  
-  
+      group : 'Andela',    
     }
 
   render() {
+    
     return (
       <div>
         <div>
-            <h4>{this.state.user}</h4>   
+            {  
+            this.props.user.map((user, index) =>{
+              return(              
+                <Name user={user} key={index} />
+                   )
+             })
+          }  
         </div>    
 
-       <h4>Groups</h4>
+       <h5>Groups</h5>
         <ul>
           {
             this.props.group.map(function(group, index){
