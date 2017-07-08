@@ -15,7 +15,8 @@ export default class DashBoard extends Component {
             user : AppStore.getUser(),      
             message : 'Hello World',
             contacts: AppStore.getGroupUsers(),
-            groups: AppStore.getGroups()        
+            groups: AppStore.getGroups()    ,
+            currentGroup: AppStore.getCurrentGroup()    
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -41,7 +42,8 @@ export default class DashBoard extends Component {
           <Row className="show-grid">
             <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user}/> </Col>
 
-            <Col sm={12} md={9}> <MessageBoard /></Col>
+            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard />} </Col>
+            
 
           </Row>
         </Grid>
@@ -53,6 +55,7 @@ export default class DashBoard extends Component {
         this.setState({contacts: AppStore.getGroupUsers()});
         this.setState({groups: AppStore.getGroups()});
         this.setState({user: AppStore.getUser()});
+        this.setState({currentGroup: AppStore.getCurrentGroup()});
       
     }  
 }

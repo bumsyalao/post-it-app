@@ -29,9 +29,9 @@ export default class Lhs extends Component {
                    )
              })
           }  
-        </div>    
+        </div> <br/><br/>   
 
-       <h5>Groups</h5>
+       <h4>Groups</h4>
         <ul>
           <li>
             

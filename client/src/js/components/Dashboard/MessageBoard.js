@@ -9,7 +9,8 @@ export default class MessageBoard extends Component {
      constructor(props){
         super(props);
         this.state ={
-            group : 'Andela',     
+            user : AppStore.getUser(),
+            currentGroup : AppStore.getCurrentGroup(),     
             messages : AppStore.getMessages()
             // contacts: AppStore.getContacts(),
             // groups: AppStore.getGroups()       
@@ -66,17 +67,19 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();      
           const message = {
-            group: 'Andela',
-            user: 'Ebuka',
+            group: this.state.currentGroup,
+          
             text: this.refs.message.value.trim()
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           
-             AppActions.saveMessage(message)   
+            //  AppActions.saveMessage(message)  
+             console.log(message)   
             this.refs.message.value = '';
          }                
       }
       _onChange(){
+        this.setState({currentGroup: AppStore.getCurrentGroup()});
         this.setState({messages: AppStore.getMessages()});
      } 
 }

@@ -104,15 +104,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
       // get the group of a user 
       for (var i in data){           
-        // contact = {
-        //   uid: data[i].uid,
-        //   username: data[i].username,
-        //   groups: data[i].groups
-        // }
-        // contacts.push(contact)
-
-        if (userId == data[i].uid){
-        
+        if (userId == data[i].uid){     
           var groups = data[i].groups
         
         }

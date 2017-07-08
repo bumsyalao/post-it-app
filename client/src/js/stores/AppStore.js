@@ -8,9 +8,8 @@ const CHANGE_EVENT = 'change'
 
     let _user = [];
     let _authed = false;
-    let _group = '';
-    let _messages = [];
-    
+    let _currentGroup = '';
+    let _messages = [];  
     let _groups = [];
     let _groupUsers = []
  
@@ -56,6 +55,17 @@ const CHANGE_EVENT = 'change'
     setGroups(groups){
       _groups = groups;
     },
+
+
+    getCurrentGroup(){
+      return _currentGroup;
+    },
+
+    setCurrentGroup(keyName){
+      _currentGroup = keyName;
+    },
+
+
 
     getGroupUsers(){
       return _groupUsers;
@@ -202,7 +212,8 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.SEARCH_USER_MESSAGE:
         console.log('Searching for Users and Message...');
-               
+
+         AppStore.setCurrentGroup(action.keyName);          
          //Save to API
         AppAPI.searchUserMessage(action.keyName)
         //Emit Change

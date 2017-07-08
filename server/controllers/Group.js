@@ -64,6 +64,42 @@ static addUser(req, res) {
 			});
 	}
 
+
+  static addMessage(req, res) {
+		const groupName = req.params.groupName;
+    // const user = req.params.user;
+    const message = req.params.message;
+
+       firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+     
+        //Push the message into Group
+				groupRef.child(groupName).child("Messages").push(
+        {  
+          User: user.displayName,
+          Message,
+          Priority: 'Normal' 
+        }
+        ).then(() => {
+						res.send('Message added successfully');
+					}).catch((err) => {
+				res.send('Error');
+			});
+
+      } else {
+        res.status(403).send({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });
+      }
+    });
+
+
+  
+
+	}
+
+  
     static database(req, res){
       const groupName = req.params.groupName
 
@@ -73,26 +109,6 @@ static addUser(req, res) {
 
       })  
     }
-
-  static messages(req, res) {
-		const groupID = req.params.groupID;
-    const user = req.params.user;
-    const text = req.params.text;
-
-				groupRef.child(groupID).child("Messages").push(
-        {  
-          user,
-          text
-        }
-        ).then(() => {
-						res.send('Message added successfully');
-					}).catch((err) => {
-				res.send('Error');
-			});
-
-
-
-	}
      static messageDatabase(req, res){
        const groupID = req.params.groupID
     const rootRef = firebase.database().ref().child('Groups').child(groupID).child('Messages');
