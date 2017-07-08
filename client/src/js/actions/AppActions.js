@@ -79,8 +79,11 @@ const AppActions = {
         
     },
       searchUserMessage(keyName){
-       console.log(keyName)
-        
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.SEARCH_USER_MESSAGE,
+            keyName
+        })
+           
     }, 
      google(){
         AppDispatcher.handleViewAction({ 
@@ -95,7 +98,14 @@ const AppActions = {
             
         })
         
-    }
+    },
+       receiveUserMessage(users){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_USER_MESSAGE,
+            users
+        })
+
+    },
 
 
 

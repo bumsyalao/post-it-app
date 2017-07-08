@@ -30,6 +30,9 @@ router.post('/user/signout', User.signout);
 // Retrive Users for a particular Group
 router.get('/group/:groupID/Users', Group.database);
 
+// Retrive Users and Message from a particular Group
+router.get('/group/:groupName', Group.database);
+
 // Route for creating Group
 router.post('/group', Group.createGroup);
 

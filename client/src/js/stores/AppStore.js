@@ -10,8 +10,9 @@ const CHANGE_EVENT = 'change'
     let _authed = false;
     let _group = '';
     let _messages = [];
-    let _contacts = [];
+    
     let _groups = [];
+    let _groupUsers = []
  
 
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -20,11 +21,13 @@ const CHANGE_EVENT = 'change'
       return _authed;
     },
 
+      // If there is a user in local storage, set authentication true
      setAuthed(){
       _authed = true;
     },
     setLogout(){
       _authed = false;
+      localStorage.clear()
     },
 
     getUser(){
@@ -33,22 +36,15 @@ const CHANGE_EVENT = 'change'
 
     saveUser(user){
       _user.push(user);
+      localStorage.setItem(
+        'user', JSON.stringify(user)
+      )
     },
 
     setUser(user){
       _user = user;
     },
 
-    getContacts(){
-      return _contacts;
-    },
-    saveContact(contact){
-      _contacts.push(contact);
-    },
-
-    setContacts(contacts){
-      _contacts = contacts;
-    },
 
     getGroups(){
       return _groups;
@@ -59,6 +55,17 @@ const CHANGE_EVENT = 'change'
 
     setGroups(groups){
       _groups = groups;
+    },
+
+    getGroupUsers(){
+      return _groupUsers;
+    },
+    saveGroupUsers(users){
+      _groupUsers.push(users);
+    },
+
+    setGroupUsers(users){
+      _groupUsers = users;
     },
     
     getMessages(){
@@ -108,13 +115,7 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
-      case AppConstants.RECEIVE_CONTACT:
-        console.log('Receiving Contact...');
-        //Store Save
-        AppStore.setContacts(action.contacts);      
-        //Emit Change
-        AppStore.emit(CHANGE_EVENT);
-        break;
+
 
       case AppConstants.SAVE_GROUP:
         console.log('Saving group...');
@@ -190,12 +191,29 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
-        case AppConstants.GOOGLE:
+      case AppConstants.GOOGLE:
         // //Store Save
         // AppStore.saveMessages(action.message);
         //Save to API
         AppAPI.google()
         // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.SEARCH_USER_MESSAGE:
+        console.log('Searching for Users and Message...');
+               
+         //Save to API
+        AppAPI.searchUserMessage(action.keyName)
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_USER_MESSAGE:
+        console.log('Receiving Users and Message...');
+ 
+        AppStore.setGroupUsers(action.users);      
+        //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
     }

@@ -115,6 +115,22 @@ module.exports = {
             });                  
     },
 
+    searchUserMessage(keyName){
+        const groupName = keyName
+        axios.get('/group/'+groupName)
+            .then((users) => {  
+                const user = users.data.Users
+                console.log(user)
+                                    
+            AppActions.receiveUserMessage(user)
+           })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+
+
+
 
      google(){
         //  console.log('rar')

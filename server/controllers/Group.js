@@ -65,31 +65,14 @@ static addUser(req, res) {
 	}
 
     static database(req, res){
+      const groupName = req.params.groupName
 
-    const rootRef = firebase.database().ref().child('Groups');
+    const rootRef = firebase.database().ref().child('Groups').child(groupName);
      rootRef.once('value', (snapshot) => {
-          const groupKeys = [];
+        res.send(snapshot)
 
-          // get the keys for each user's group
-          snapshot.forEach((groupSnapshot) => {
-         
-            const idRef = firebase.database().ref().child('Groups').child(groupSnapshot.key);
-            idRef.orderByChild("Users").once("value", function(data) {
-                  console.log(data.val().Users);
-          });
-          // res.send(groupKeys)
-
- 
-         
-
-});
- 
-
-     })
-
- 
-   
-  }
+      })  
+    }
 
   static messages(req, res) {
 		const groupID = req.params.groupID;

@@ -14,7 +14,7 @@ export default class DashBoard extends Component {
            authed: false,
             user : AppStore.getUser(),      
             message : 'Hello World',
-            contacts: AppStore.getContacts(),
+            contacts: AppStore.getGroupUsers(),
             groups: AppStore.getGroups()        
         };
          this._onChange= this._onChange.bind(this)
@@ -50,7 +50,7 @@ export default class DashBoard extends Component {
     )
   }
     _onChange(){
-        this.setState({contacts: AppStore.getContacts()});
+        this.setState({contacts: AppStore.getGroupUsers()});
         this.setState({groups: AppStore.getGroups()});
         this.setState({user: AppStore.getUser()});
       

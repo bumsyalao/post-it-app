@@ -16,7 +16,9 @@ import AppStore from '../../stores/AppStore'
 
 
 export default class Lhs extends Component {
+
   render() {
+
   return (
       <div>
         <div>
@@ -40,11 +42,9 @@ export default class Lhs extends Component {
                 return(
                     <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
-                    </div>
-                   
-              
+                    </div>             
                 )
-})
+                })
             }
             </li>
         </ul><br/><br/>
@@ -52,13 +52,20 @@ export default class Lhs extends Component {
 
        <h4>Users</h4>   
         <ul>
+          <li>
            {
-            this.props.contact.map(function(contact, index){
-              return(
-                <Users contact={contact} key={index} />
-                    )
+          Object.keys(this.props.contact).map(function(keyName, keyIndex) {
+                var post = keyName
+                return(
+                    <div key={keyIndex} onClick={() => console.log(keyName)}>  
+                      <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
+                    </div>             
+                )
                 })
+              
+         
             }
+            </li>
             <li><a href="#" className="btn btn-default" onClick={this.handleEdit}>Invite Users</a></li>
   
         </ul>
