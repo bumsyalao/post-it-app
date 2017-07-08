@@ -5,9 +5,6 @@ import {firebaseAuth, firebase}from '../../../../server/config'
 
 
 export default class Signup extends Component {
-    state={
-    
-  }
  constructor(props) {
     super(props);
     this.state = {

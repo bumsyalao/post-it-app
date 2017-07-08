@@ -129,6 +129,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.RECEIVE_GROUP:
         console.log('Receiving Groups...');
         //Store Save
+      
         AppStore.setGroups(action.groups);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
@@ -138,9 +139,9 @@ const CHANGE_EVENT = 'change'
         console.log('Saving user into group...');
         
          //Store Save
-        AppStore.saveGroup(action.addUsers);
+        AppStore.saveGroup(action.addUser);
         // //Save to API
-        AppAPI.saveGroupUser(action.addUsers)      
+        AppAPI.saveGroupUser(action.addUser)      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -182,6 +183,9 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.LOGOUT:
         AppStore.setLogout();
+        // //Emit Change
+         //Save to API
+        AppAPI.setLogout()
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

@@ -1,26 +1,23 @@
 const { usersRef, groupRef, firebase } = require('../config');
- 
-
 
 class Group {
   static createGroup(req, res) {
-    const groupID = req.body.groupname; 
+    const groupName = req.body.groupName; 
+    const db = firebase.database();
 
-    
 firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // user is signed in
         const userName = user.displayName;
-        const db = firebase.database();
+        groupRef.child(groupName).once('value', (snapshot) => {
+      if (!snapshot.exists()) { 
+   // Create  and Group and Insert Username
+          groupRef.child(groupName).child('Users').child(userName).set(userName)
 
-        groupRef.child(groupID).once('value', (snapshot) => {
-      if (!snapshot.exists()) {         
-          groupRef.child(groupID).set({
-            ID: groupID,
-            Users: userName
+        //Push the user's details into Group/ Users
+        db.ref(`/users/${userName}/groups`).child(groupName).set(groupName).then(() => {
 
-        }).then(() => {
-          res.send(`Group ${groupID} created`);
+          res.send(`Group ${groupName} created`);
         }).catch((err) => {
           res.send(err);
         });
@@ -43,13 +40,22 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 
 static addUser(req, res) {
-		const groupID = req.params.groupID;
-		const uid = req.params.uid;
- 
-		usersRef.child(uid).once('value', (snapshot) => {
-				const userName= snapshot.exists() ? snapshot.val().username : "No Username";
+		const groupName = req.params.groupName;
+		const user = req.params.user;
 
-				groupRef.child(groupID).child("Users").push(userName).then(() => {
+     const db = firebase.database();
+ 
+		usersRef.child(user).once('value', (snapshot) => {
+				const userName= snapshot.exists() ? snapshot.val().username : null;
+
+        // //Push the user's details into Group/ Users
+        db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
+
+        //Push the user's details into Group
+				groupRef.child(groupName).child('Users').child(userName).set(userName)
+        
+       
+        .then(() => {
 						res.send('User added successfully');
 					});
 			})
@@ -59,23 +65,29 @@ static addUser(req, res) {
 	}
 
     static database(req, res){
+
     const rootRef = firebase.database().ref().child('Groups');
+     rootRef.once('value', (snapshot) => {
+          const groupKeys = [];
 
-    rootRef.once('value', snap => {
-      const key = snap.key
-      const data = snap.val()
-      const groups = []
-      let group = {}
+          // get the keys for each user's group
+          snapshot.forEach((groupSnapshot) => {
+         
+            const idRef = firebase.database().ref().child('Groups').child(groupSnapshot.key);
+            idRef.orderByChild("Users").once("value", function(data) {
+                  console.log(data.val().Users);
+          });
+          // res.send(groupKeys)
 
-      for (var i in data){
-        group = {
-          id: i,
-          users: data[i].users,
-        }
-        groups.push(group)
-       }      
-       res.send(groups) 
-    })
+ 
+         
+
+});
+ 
+
+     })
+
+ 
    
   }
 

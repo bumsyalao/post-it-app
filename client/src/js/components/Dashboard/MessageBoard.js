@@ -9,7 +9,7 @@ export default class MessageBoard extends Component {
      constructor(props){
         super(props);
         this.state ={
-            user : 'Ebuka',     
+            group : 'Andela',     
             messages : AppStore.getMessages()
             // contacts: AppStore.getContacts(),
             // groups: AppStore.getGroups()       
@@ -26,7 +26,7 @@ export default class MessageBoard extends Component {
 
   
   render() {
-console.log(this.state.getMessages)
+// console.log(this.state.getMessages)
     return (
        <div>
        <section id="showcase">

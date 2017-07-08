@@ -24,7 +24,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
 }
 
 function PublicRoute ({component: Component, authed, ...rest}) {
-  return (
+  return ( 
     <Route
       {...rest}
       render={(props) => authed === false

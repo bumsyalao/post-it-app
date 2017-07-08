@@ -27,22 +27,22 @@ router.post('/user/signin', User.signin);
 // Sign Out
 router.post('/user/signout', User.signout);
 
-// Retrive Users from Database
-router.get('/user/database', User.database);
+// Retrive Users for a particular Group
+router.get('/group/:groupID/Users', Group.database);
 
 // Route for creating Group
 router.post('/group', Group.createGroup);
 
-router.post('/group/:groupID/:uid', Group.addUser);
+router.post('/group/:groupName/:user', Group.addUser);
 
-// Retrive Groups from Database
-router.get('/group/database', Group.database);
+// Retrive Groups from Database, we go into the User databse
+router.get('/user/database/', User.database);
 
 // Route To add a Message
 router.post('/messages/:groupID/:user/:text', Group.messages)
 
 // Retrive Message from Database
-router.get('/messages/:groupID/messages', Group.messageDatabase)
+router.get('/group/:groupID/Messages', Group.messageDatabase)
 
 
 module.exports = router;

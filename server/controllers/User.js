@@ -6,9 +6,7 @@ class User {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-   firebase.auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then((user) => {
+   firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
       const uid = user.uid
 
       // update the username of the user
@@ -22,7 +20,7 @@ class User {
          });
 
     // add element to database
-      usersRef.push({
+      usersRef.child(username).set({
         username,
         password,
         email:user.email,
@@ -60,8 +58,8 @@ class User {
     const password = req.body.password;
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
- 
-        res.status(200).send({
+  
+       return res.status(200).send({
           message: 'Welcome to Post it app',
           userData: user
         });
@@ -71,7 +69,7 @@ class User {
       const errorMessage = error.message;
 
       if (errorCode === 'auth/wrong-password') { 
-        res.send(error);
+        return res.send(error);
       } else {
         res.send(errorMessage);
       }
@@ -80,42 +78,62 @@ class User {
   }
 
   static signout(req, res) {
-    firebase.auth()
-    .signOut()
-    .then(() => {
-      res.send('User signed out');
-    })
-    .catch((error) => {
-      res.send(error);
+
+      firebase.auth().signOut().then(() => {
+      res.send({
+        message: 'You are successfully signed out'
+      });
+    }).catch((error) => {
+      res.status(405).send({
+        message: `Sorry, ${error.message}. please try to sign out again`
+      });
     });
   }
 
-  static database(req, res){
-    const rootRef = firebase.database().ref().child('users');
+static database(req, res){
+firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // This means a user is signed in
+        const userId = user.uid;
+        const rootRef = firebase.database().ref().child('users');
 
     rootRef.once('value', snap => {
-      const key = snap.key
       const data = snap.val()
-      const contacts = []
-      let contact = {}
+      const contacts = [] 
+      let contact = {}   
 
-      for (var i in data){
+      // get the group of a user 
+      for (var i in data){           
+        // contact = {
+        //   uid: data[i].uid,
+        //   username: data[i].username,
+        //   groups: data[i].groups
+        // }
+        // contacts.push(contact)
 
-        contact = {
-          id: i,
-          uid: data[i].uid,
-          username: data[i].username,
-          email: data[i].email,
-          password: data[i].password
+        if (userId == data[i].uid){
+        
+          var groups = data[i].groups
+        
         }
-        contacts.push(contact)
-       }
        
-       res.send(contacts) 
+        }
+    
+   res.send(groups) 
 
     })
-   
+
+      } else {
+        console.log({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });
+       
+      }
+    });  
   }
+
+
 }
 
 

@@ -32,7 +32,7 @@ const AppActions = {
         group: group
       })
         
-    },
+    }, 
 
     receiveGroup(groups){
         AppDispatcher.handleViewAction({
@@ -42,10 +42,10 @@ const AppActions = {
 
     },
 
-    saveGroupUser(addUsers){
+    saveGroupUser(addUser){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.SAVE_GROUP_USER,
-            addUsers: addUsers
+            addUser
         })
         
     },
@@ -78,6 +78,10 @@ const AppActions = {
         })
         
     },
+      searchUserMessage(keyName){
+       console.log(keyName)
+        
+    }, 
      google(){
         AppDispatcher.handleViewAction({ 
             actionType: AppConstants.GOOGLE

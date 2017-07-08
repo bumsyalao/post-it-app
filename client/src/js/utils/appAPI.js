@@ -19,20 +19,20 @@ module.exports = {
             });                  
     },
 
-    getContacts(){
-        axios.get('/user/database')
-            .then(function (contacts) {
+    // getContacts(){
+    //     axios.get('/user/database')
+    //         .then(function (contacts) {
                 
-                AppActions.receiveContact(contacts.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    },
+    //             AppActions.receiveContact(contacts.data)
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // },
 
     saveGroup(group){
         axios.post('/group', {
-            groupname:group                   
+            groupName:group                   
             }).then(function (response) {
                 console.log(response);              
             }).catch(function (error) {
@@ -41,19 +41,22 @@ module.exports = {
     },
 
      getGroups(){
-        axios.get('/group/database')
-            .then((groups) => {
+        axios.get('/user/database')
+            .then((group) => {
                 // console.log(groups)
-                AppActions.receiveGroup(groups.data)
+                const groups = group.data
+                AppActions.receiveGroup(groups)
+                console.log(groups)
+            
             })
             .catch(function (error) {
                 console.log(error);
             });
     },
-     saveGroupUser(addUsers){
-       const groupID = addUsers.groupID
-       const uid = addUsers.uid
-        axios.post('/group/'+ groupID +"/"+uid)
+     saveGroupUser(addUser){
+       const groupName = addUser.groupname;
+       const user = addUser.user;
+        axios.post('/group/'+ groupName +"/"+user)
         .then(function (response) {
                 console.log(response);
                 
@@ -100,6 +103,19 @@ module.exports = {
                 console.log(error);
             });                  
     },
+     setLogout(){
+        axios.post('/user/signout').then(function (response) {
+              
+             
+             console.log(response)
+               
+                
+            }).catch(function (error) {
+                console.log(error);
+            });                  
+    },
+
+
      google(){
         //  console.log('rar')
         // axios.post('/user/google', {               

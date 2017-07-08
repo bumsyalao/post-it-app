@@ -15,9 +15,9 @@ import {firebaseAuth, firebase}from '../../server/config'
 
 // Display State
 
-AppAPI.getContacts();
+// AppAPI.getContacts();
 AppAPI.getGroups();
-AppAPI.getMessages()
+// AppAPI.getMessages()
 
 
 ReactDOM.render(

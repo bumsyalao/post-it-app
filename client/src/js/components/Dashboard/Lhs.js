@@ -16,9 +16,8 @@ import AppStore from '../../stores/AppStore'
 
 
 export default class Lhs extends Component {
-
-  render() {   
-    return (
+  render() {
+  return (
       <div>
         <div>
             {  
@@ -32,13 +31,22 @@ export default class Lhs extends Component {
 
        <h5>Groups</h5>
         <ul>
-          {
-            this.props.group.map(function(group, index){
-              return(
-                <Groups group={group} key={index} />
-                    )
-                })
+          <li>
+            
+          { 
+              
+              Object.keys(this.props.group).map(function(keyName, keyIndex) {
+                var post = keyName
+                return(
+                    <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  
+                      <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
+                    </div>
+                   
+              
+                )
+})
             }
+            </li>
         </ul><br/><br/>
          
 
@@ -60,6 +68,11 @@ export default class Lhs extends Component {
 
     )
   }
+  // handleSubmit(e){
+  //   e.preventDefault()
+  //   console.log()
+
+  // }
 
 }
  
