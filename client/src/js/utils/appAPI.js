@@ -65,11 +65,10 @@ module.exports = {
             });                  
     },
     saveMessages(message){
-       const groupID = message.group;
+       const groupName = message.group;
         // const groupID = addUsers.groupID
-       const user = message.user;
-       const text = message.text;
-        axios.post('/messages/'+ groupID +"/"+user+"/"+text)
+       const messages = message.text;
+        axios.post('/groups/'+ groupName +"/"+messages)
         .then(function (response) {
                 console.log(response);
                 

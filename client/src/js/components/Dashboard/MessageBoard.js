@@ -67,14 +67,13 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();      
           const message = {
-            group: this.state.currentGroup,
-          
+            group: this.state.currentGroup,         
             text: this.refs.message.value.trim()
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           
-            //  AppActions.saveMessage(message)  
-             console.log(message)   
+             AppActions.saveMessage(message)  
+            
             this.refs.message.value = '';
          }                
       }

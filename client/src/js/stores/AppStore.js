@@ -56,7 +56,7 @@ const CHANGE_EVENT = 'change'
       _groups = groups;
     },
 
-
+   // Get the Current Group When the User has Clicked on A Group
     getCurrentGroup(){
       return _currentGroup;
     },
@@ -160,7 +160,8 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SAVE_MESSAGE:
         console.log('Saving Message...');
         //Store Save
-        AppStore.saveMessages(action.message);
+        // AppStore.saveMessages(action.message);
+        
         //Save to API
         AppAPI.saveMessages(action.message)
         //Emit Change

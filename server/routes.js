@@ -37,7 +37,7 @@ router.post('/group/:groupName/:user', Group.addUser);
 router.get('/user/database/', User.database);
 
 // Route for Adding Message to A group
-router.post('/groups/:groupName/:message', Group.addMessage);
+router.post('/groups/:groupName/:messages', Group.addMessage);
 
 
 

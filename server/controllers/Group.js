@@ -68,7 +68,7 @@ static addUser(req, res) {
   static addMessage(req, res) {
 		const groupName = req.params.groupName;
     // const user = req.params.user;
-    const message = req.params.message;
+    const Message = req.params.messages;
 
        firebase.auth().onAuthStateChanged((user) => {
       if (user) {
