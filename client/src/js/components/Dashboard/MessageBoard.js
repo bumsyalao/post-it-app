@@ -27,7 +27,9 @@ export default class MessageBoard extends Component {
 
   
   render() {
-// console.log(this.state.getMessages)
+
+
+
     return (
        <div>
        <section id="showcase">
@@ -65,21 +67,26 @@ export default class MessageBoard extends Component {
   }
 
       handleSubmit(e){
-          e.preventDefault();      
+          e.preventDefault();  
+          
+
+    
           const message = {
             group: this.state.currentGroup,         
-            text: this.refs.message.value.trim()
+            text: this.refs.message.value.trim(),
+            user: this.state.user.displayName
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           
-             AppActions.saveMessage(message)  
-            
+          
+            AppActions.saveMessage(message)  
             this.refs.message.value = '';
          }                
       }
       _onChange(){
         this.setState({currentGroup: AppStore.getCurrentGroup()});
         this.setState({messages: AppStore.getMessages()});
+        this.setState({user: AppStore.getUser()});
      } 
 }
  

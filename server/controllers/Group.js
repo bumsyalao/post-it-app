@@ -93,37 +93,38 @@ static addUser(req, res) {
         });
       }
     });
-
-
-  
-
 	}
 
   
     static database(req, res){
       const groupName = req.params.groupName
 
-    const rootRef = firebase.database().ref().child('Groups').child(groupName);
-     rootRef.once('value', (snapshot) => {
-        res.send(snapshot)
+      const rootRef = firebase.database().ref().child('Groups').child(groupName);
+      rootRef.once('value', (snapshot) => {
+          res.send(snapshot)
 
-      })  
+        })  
     }
+
+
+
      static messageDatabase(req, res){
-       const groupID = req.params.groupID
-    const rootRef = firebase.database().ref().child('Groups').child(groupID).child('Messages');
+       const groupName = req.params.groupName
+      const rootRef = firebase.database().ref().child('Groups').child(groupName).child('Messages');
 
     rootRef.once('value', snap => {
       const key = snap.key
       const data = snap.val()
       const messages = []
       let message = {}
+     
 
       for (var i in data){
         message = {
           id: i,
-          user: data[i].user,
-          text: data[i].text,
+          user: data[i].User,
+          text: data[i].Message,
+          Priority: data[i].Priority
         }
         messages.push(message)
        }      

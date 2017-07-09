@@ -6,8 +6,9 @@ import AppAPI from '../utils/appAPI'
 
 const CHANGE_EVENT = 'change'
 
-    let _user = [];
+    let _user = '';
     let _authed = false;
+    let _contacts = [];
     let _currentGroup = '';
     let _messages = [];  
     let _groups = [];
@@ -34,7 +35,7 @@ const CHANGE_EVENT = 'change'
     },
 
     saveUser(user){
-      _user.push(user);
+      _user = user;
       localStorage.setItem(
         'user', JSON.stringify(user)
       )
@@ -42,6 +43,17 @@ const CHANGE_EVENT = 'change'
 
     setUser(user){
       _user = user;
+    },
+
+   getContacts(){
+      return _contacts;
+    },
+    saveContact(contact){
+      _contacts.push(contact);
+    },
+
+    setContacts(contacts){
+      _contacts = contacts;
     },
 
 
@@ -125,7 +137,13 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
-
+      case AppConstants.RECEIVE_CONTACT:
+        console.log('Receiving Contact...');
+        //Store Save
+        AppStore.setContacts(action.contacts);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
 
       case AppConstants.SAVE_GROUP:
         console.log('Saving group...');
@@ -160,7 +178,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SAVE_MESSAGE:
         console.log('Saving Message...');
         //Store Save
-        // AppStore.saveMessages(action.message);
+        AppStore.saveMessages(action.message);
         
         //Save to API
         AppAPI.saveMessages(action.message)
@@ -217,6 +235,8 @@ const CHANGE_EVENT = 'change'
          AppStore.setCurrentGroup(action.keyName);          
          //Save to API
         AppAPI.searchUserMessage(action.keyName)
+         //Save to API
+        AppAPI.getMessages(action.keyName)
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -228,6 +248,16 @@ const CHANGE_EVENT = 'change'
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
+
+      case AppConstants.DISPLAY_NAME:
+        console.log('Saving display NAme...');
+         //Store Save
+        console.log(action.displayName);    
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+
     }
 
     return true;

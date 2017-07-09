@@ -18,18 +18,13 @@ import AppStore from '../../stores/AppStore'
 export default class Lhs extends Component {
 
   render() {
+    // console.log(this.props.user.displayName)
 
   return (
       <div>
         <div>
-            {  
-            this.props.user.map((user, index) =>{
-              return(              
-                <Name user={user} key={index} />
-                   )
-             })
-          }  
-        </div> <br/><br/>   
+         <h4>Welcome, {this.props.user.displayName}</h4> 
+        </div> <br/>  
 
        <h4>Groups</h4>
         <ul>
@@ -47,7 +42,7 @@ export default class Lhs extends Component {
                 })
             }
             </li>
-        </ul><br/><br/>
+        </ul><br/>
          
 
        <h4>Users</h4>   

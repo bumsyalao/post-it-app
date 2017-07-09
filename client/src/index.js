@@ -17,7 +17,7 @@ import {firebaseAuth, firebase}from '../../server/config'
 
 // AppAPI.searchUserMessage();
 AppAPI.getGroups();
-// AppAPI.getMessages()
+AppAPI.getMessages()
 
 
 ReactDOM.render(

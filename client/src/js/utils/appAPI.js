@@ -19,16 +19,17 @@ module.exports = {
             });                  
     },
 
-    // getContacts(){
-    //     axios.get('/user/database')
-    //         .then(function (contacts) {
+    // Get all Contacts from database, this will use for validation
+    getContacts(){
+        axios.get('/user/database')
+            .then(function (contacts) {
                 
-    //             AppActions.receiveContact(contacts.data)
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // },
+                AppActions.receiveContact(contacts.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
 
     saveGroup(group){
         axios.post('/group', {
@@ -76,10 +77,12 @@ module.exports = {
                 console.log(error);
             });                  
     },
-      getMessages(){
-          const groupID = 'Andela'
-        axios.get('/messages/'+groupID+'/messages')
+
+      getMessages(keyName){
+        const groupName = keyName;
+        axios.get('/groups/'+groupName)
             .then((message) => {
+               
                 AppActions.receiveMessages(message.data)
             })
             .catch(function (error) {

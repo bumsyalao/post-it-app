@@ -42,18 +42,13 @@ router.post('/groups/:groupName/:messages', Group.addMessage);
 
 
 
-// Retrive Users and Message from a particular Group
+// Retrive Users from a particular Group
 router.get('/group/:groupName', Group.database);
 
 
 
-
-
-
-
-
-// Retrive Message from Database
-router.get('/group/:groupID/Messages', Group.messageDatabase)
+// Retrive Message from a particular Group
+router.get('/groups/:groupName', Group.messageDatabase)
 
 
 module.exports = router;

@@ -107,6 +107,14 @@ const AppActions = {
 
     },
 
+       displayName(displayName){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.DISPLAY_NAME,
+            displayName
+        })
+
+    },
+
 
 
 
