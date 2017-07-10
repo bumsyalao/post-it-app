@@ -22,7 +22,7 @@ class App extends Component  {
         super(props);
         this.state ={
            authed: AppStore.getAuthed(),
-           user: AppStore.getUser()          
+           user: AppStore.getUser(),         
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -36,21 +36,20 @@ class App extends Component  {
         AppStore.removeChangeListener(this._onChange);
     }
  
-    render() {
+    render() {    
       return(
         <div>
           {!this.state.authed ? <Navigation /> : ''}
-         <Routes authed={this.state.authed}/>
+         <Routes authed={this.state.authed} />
          <Footer />
         </div>
     );
-  }    
+  }  
+    
     _onChange(){
         this.setState({user: AppStore.getUser()});
-        this.setState({authed: AppStore.getAuthed()});
-        
-    }   
-   
+        this.setState({authed: AppStore.getAuthed()});      
+    }      
 }
 
 export default App;

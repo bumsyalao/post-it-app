@@ -14,10 +14,10 @@ import {firebaseAuth, firebase}from '../../server/config'
 // import Dashboard from "./js/components/Dashboard/Dashboard";
 
 // Display State
-
 AppAPI.searchUserMessage();
 AppAPI.getGroups();
 AppAPI.getMessages()
+AppAPI.getContacts()
 AppAPI.getContacts()
 
 ReactDOM.render(

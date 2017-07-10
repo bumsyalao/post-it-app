@@ -13,7 +13,6 @@ export default class DashBoard extends Component {
         this.state ={
            authed: false,
             user : AppStore.getUser(),      
-            message : 'Hello World',
             contacts: AppStore.getGroupUsers(),
             groups: AppStore.getGroups(),
             currentGroup: AppStore.getCurrentGroup(),
@@ -30,10 +29,6 @@ export default class DashBoard extends Component {
   componentWillUnmount () {
     AppStore.removeChangeListener(this._onChange);
   } 
-
-
-  // handlesubmit = (e) => {   e.preventDefault() }
-
 
   render() { 
     return (
@@ -57,7 +52,7 @@ export default class DashBoard extends Component {
         this.setState({groups: AppStore.getGroups()});
         this.setState({user: AppStore.getUser()});
         this.setState({currentGroup: AppStore.getCurrentGroup()});
-         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
+        this.setState({databaseUsers: AppStore.getdatabaseUsers()});
       
     }  
 }

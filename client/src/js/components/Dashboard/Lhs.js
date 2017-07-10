@@ -6,7 +6,7 @@ import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 
 import Users from './Users'
 import Groups from './Groups'
-import Name from './Name'
+
 
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
@@ -16,10 +16,7 @@ import AppStore from '../../stores/AppStore'
 
 
 export default class Lhs extends Component {
-
   render() {
-    // console.log(this.props.user.displayName)
-
   return (
       <div>
         <div>
@@ -28,12 +25,9 @@ export default class Lhs extends Component {
 
        <h4>Groups</h4>
         <ul>
-          <li>
-            
+          <li>           
           { 
-              
               Object.keys(this.props.group).map(function(keyName, keyIndex) {
-                var post = keyName
                 return(
                     <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
@@ -56,26 +50,15 @@ export default class Lhs extends Component {
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
                     </div>             
                 )
-                })
-              
-         
+                })       
             }
             </li>
             <br/>
             <li><a href="#" className="btn btn-default" onClick={this.handleEdit}>Invite Users</a></li>
   
-        </ul>
-     
-      
+        </ul>  
       </div>
-
     )
   }
-  // handleSubmit(e){
-  //   e.preventDefault()
-  //   console.log()
-
-  // }
-
 }
  

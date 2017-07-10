@@ -11,14 +11,14 @@ router.get('/', (req, res) => {
 });
 
 router.get('/er', (req, res) => {
-  res.send("Welcome here");
+  res.send('Welcome here');
 });
 
 
 // Sign Up
 router.post('/user/signup', User.signup);
 
-// Google Signup
+Google Sign Up
 router.get('/user/google', User.google);
 
 // Sign In
@@ -36,19 +36,11 @@ router.post('/group/:groupName/:user', Group.addUser);
 // Retrive Groups from Database, we go into the User databse
 router.get('/user/database/', User.database);
 
-// Route for Adding Message to A group
-router.post('/groups/:groupName/:messages', Group.addMessage);
-
-
-
-
 // Retrive Users from a particular Group
 router.get('/group/:groupName', Group.database);
 
-
-
 // Retrive Message from a particular Group
-router.get('/groups/:groupName', Group.messageDatabase)
+router.get('/groups/:groupName', Group.messageDatabase);
 
 // Retrive all Users from Database
 router.get('/users/allusers/', User.allUsers);

@@ -8,11 +8,17 @@ module.exports = {
             username: contact.username,                     
             email: contact.email,
             password: contact.password
-            }).then((response) => {
-                console.log(response.data)
+        }).then((response) => {
             const user = response.data; 
+
+            if (response.data.message == 'The email address is already in use by another account.') {
+                    alert(response.data.message)
+            }else{
+                
+                    AppActions.receiveLogin(user)
+                   
+            }
              
-             AppActions.receiveLogin(user)
             
             }).catch(function (error) { 
                 console.log(error);

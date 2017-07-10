@@ -1,47 +1,59 @@
 const { firebase, usersRef, provider } = require('../config');
 
-
+/** Class representing a the User Database. */
 class User {
+ /**
+     * The Sign Up method
+     * @param {string} req - User's Request
+     * @param {object} res - Server Response
+     * @return {object}  returns the user's details
+     */
   static signup(req, res) {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-   firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
-      const uid = user.uid
+    firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+      const uid = user.uid;
 
       // update the username of the user
-         user.updateProfile({
-           displayName: username
-         });
+      user.updateProfile({
+        displayName: username
+      });
 
          // send verification email to user
-         user.sendEmailVerification().then(() => {
-           res.send(user);
-         });
+      user.sendEmailVerification().then(() => {
+        res.send(user);
+      });
 
     // add element to database
       usersRef.child(username).set({
         username,
         password,
-        email:user.email,
+        email: user.email,
         uid
       });
-
     })
     .catch((error) => {
       res.send(error);
     });
   }
 
-  static google(req, res){
-    firebase.auth().signInWithPopup(provider).then(function(result) {
+
+ /**
+     * The Google Sign Up method
+     * @param {number} req - User's Request
+     * @param {number} res - Server Response
+     * @return {object}  returns the user's details
+     */
+  static google(req, res) {
+    firebase.auth().signInWithPopup(provider).then((result) => {
   // This gives you a Google Access Token. You can use it to access the Google API.
-  var token = result.credential.accessToken;
+      const token = result.credential.accessToken;
   // The signed-in user info.
-  var user = result.user;
-  res.send("Aith "+ result)
+      const user = result.user;
+      res.send('Successful' + result);
   // ...
-}).catch(function(error) {
+    }).catch((error) => {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
@@ -53,33 +65,42 @@ class User {
 });
   }
 
+ /**
+     * The Sign In method
+     * @param {number} req - User's Request
+     * @param {object} res - Server Response
+     * @return {object}  returns the user's details
+     */
   static signin(req, res) {
     const email = req.body.email;
     const password = req.body.password;
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
-  
-       return res.status(200).send({
-          message: 'Welcome to Post it app',
-          userData: user
-        });
-      })
+      res.status(200).send({
+        message: 'Welcome to Post it app',
+        userData: user
+      });
+    })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
 
-      if (errorCode === 'auth/wrong-password') { 
-        return res.send(error);
+      if (errorCode === 'auth/wrong-password') {
+        res.send(error);
       } else {
         res.send(errorMessage);
       }
     });
-
   }
 
+ /**
+     * The Sign Out method
+     * @param {null} req - User's Request
+     * @param {object} res - Server Response
+     * @return {object}  returns the user's details
+     */
   static signout(req, res) {
-
-      firebase.auth().signOut().then(() => {
+    firebase.auth().signOut().then(() => {
       res.send({
         message: 'You are successfully signed out'
       });
@@ -89,6 +110,8 @@ class User {
       });
     });
   }
+
+
 
 static database(req, res){
 firebase.auth().onAuthStateChanged((user) => {
@@ -105,8 +128,7 @@ firebase.auth().onAuthStateChanged((user) => {
       // get the group of a user 
       for (var i in data){           
         if (userId == data[i].uid){     
-          var groups = data[i].groups
-        
+          var groups = data[i].groups     
         }
        
         }
@@ -124,28 +146,19 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });  
   }
+  static allUsers(req, res){
+    const rootRef = firebase.database().ref().child('users');
 
-static allUsers(req, res){
+    rootRef.once('value', (snap) => {
+      const data = snap.val();
+      const users = [];
 
-        const rootRef = firebase.database().ref().child('users');
-
-    rootRef.once('value', snap => {
-      const data = snap.val()
-      const users = []
-  
-     
-    
-        for(var i in data){
-          users.push(data[i].username)
-        }
-       res.send(users)
-
-    })
-
-      
+      for(var i in data) {
+        users.push(data[i].username);
+      }
+      res.send(users);
+    });
   }
-
-
 
 }
 

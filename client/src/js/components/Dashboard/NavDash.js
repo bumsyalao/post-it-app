@@ -115,37 +115,6 @@ export default class NavDash extends Component {
       this.refs.groupname.value = ''; 
       this.refs.user.value = '';
 
-
-  //     const groupID = addUser.id 
-  //     const allUser = this.props.contact.map((contact, index) =>  contact)
-  //     var result = Object.keys(allUser).map(function(e) {
-  //               return [Number(e), allUser[e]];
-  // });
-  //     var merged = [].concat.apply([], result);
-  //       var data = []
-  //     merged.forEach(function (user) {
-  //         if (typeof user === 'object') {
-  //             data.push(user);
-  //         }
-  //     });
- 
-  //   for (let key in data) {      
-  //       if (data[key].username == addUser.users){
-  //      alert('The User has been added to '+ addUser.id+ " group")
-  //       var uniqueId = data[key].id
-  //       break;      
-  //    }
-  //   }
-  //   if (!uniqueId){
-  //     alert("The user dosen't exist")
-  //   }
-
-  //   const addUsers = {  
-  //     groupID: groupID,
-  //     uid: uniqueId,
-  //   }
-
-
 }
 
 createGroup(e){ 
