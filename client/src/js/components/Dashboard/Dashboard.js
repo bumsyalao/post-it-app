@@ -12,15 +12,11 @@ export default class DashBoard extends Component {
         super(props);
         this.state ={
            authed: false,
-           loading: true,
-            user : 'Ebuka',
-      
-            message : 'Hello World',
-            contacts: AppStore.getContacts(),
+            user : AppStore.getUser(),      
+            contacts: AppStore.getGroupUsers(),
             groups: AppStore.getGroups(),
-
-
-         
+            currentGroup: AppStore.getCurrentGroup(),
+            databaseUsers: AppStore.getdatabaseUsers()
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -34,20 +30,16 @@ export default class DashBoard extends Component {
     AppStore.removeChangeListener(this._onChange);
   } 
 
-
-  // handlesubmit = (e) => {   e.preventDefault() }
-
-
   render() { 
-
     return (
       <div id='dash'>
-        <NavDash contact={this.state.contacts} group={this.state.groups}/>         
+        <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers}/>         
         <Grid>
           <Row className="show-grid">
-            <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups}/> </Col>
+            <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user}/> </Col>
 
-            <Col sm={12} md={9}> <MessageBoard /></Col>
+            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard />} </Col>
+            
 
           </Row>
         </Grid>
@@ -56,8 +48,11 @@ export default class DashBoard extends Component {
     )
   }
     _onChange(){
-        this.setState({contacts: AppStore.getContacts()});
+        this.setState({contacts: AppStore.getGroupUsers()});
         this.setState({groups: AppStore.getGroups()});
+        this.setState({user: AppStore.getUser()});
+        this.setState({currentGroup: AppStore.getCurrentGroup()});
+        this.setState({databaseUsers: AppStore.getdatabaseUsers()});
       
     }  
 }

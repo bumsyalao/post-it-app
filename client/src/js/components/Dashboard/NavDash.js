@@ -46,10 +46,10 @@ export default class NavDash extends Component {
           <Modal.Body>
                 <form onSubmit={this.addUser.bind(this)}>
                   <div className='form-group'>
-                  <input type="text" ref='id' className='form-control' placeholder='Group Name' required/>
+                  <input type="text" ref='groupname' className='form-control' placeholder='Group Name' required/>
                   </div>
                   <div className='form-group'>
-                      <input type="text" ref='users' className='form-control' placeholder='Search for a User' required/>
+                      <input type="text" ref='user' className='form-control' placeholder='Search for a User' required/>
                   </div>
                                 
                   <button type='submit' className='btn btn-primary'>Submit</button>
@@ -103,47 +103,23 @@ export default class NavDash extends Component {
     addUser(e){
     e.preventDefault(); 
       const addUser = {
-         id: this.refs.id.value.trim(), //group 
-         users: this.refs.users.value.trim()   //user
+         groupname: this.refs.groupname.value.trim(), //group 
+         user: this.refs.user.value.trim()   //user
       }   
-      const groupID = addUser.id 
-      const allUser = this.props.contact.map((contact, index) =>  contact)
-      var result = Object.keys(allUser).map(function(e) {
-                return [Number(e), allUser[e]];
-  });
-      var merged = [].concat.apply([], result);
-        var data = []
-      merged.forEach(function (user) {
-          if (typeof user === 'object') {
-              data.push(user);
-          }
-      });
- 
-    for (let key in data) {      
-        if (data[key].username == addUser.users){
-       alert('The User has been added to '+ addUser.id+ " group")
-        var uniqueId = data[key].id
-        break;      
-     }
-    }
-    if (!uniqueId){
-      alert("The user dosen't exist")
-    }
 
-    const addUsers = {
-   
-      groupID: groupID,
-      uid: uniqueId
+    if (this.props.databaseUsers.includes(this.refs.user.value)){
+      AppActions.saveGroupUser(addUser);
+    }else{
+      alert("The User dosen't exist")
     }
-    console.log(addUsers)
-    AppActions.saveGroupUser(addUsers);
-      this.refs.id.value = ''; 
-      this.refs.users.value = '';
+      this.refs.groupname.value = ''; 
+      this.refs.user.value = '';
 
 }
 
-createGroup(e){
-      e.preventDefault();    
+createGroup(e){ 
+  e.preventDefault()
+
         const group = this.refs.group.value.trim()        
         AppActions.saveGroup(group);
         this.refs.group.value = '';

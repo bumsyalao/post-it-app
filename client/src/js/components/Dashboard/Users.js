@@ -4,7 +4,7 @@ export default class Users extends Component {
   render() {
     return (
       <div>
-        <li>{this.props.contact.username}</li>
+        <li>{this.props.contact.Users}</li>
          
       </div>
 

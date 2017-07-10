@@ -6,12 +6,14 @@ import AppAPI from '../utils/appAPI'
 
 const CHANGE_EVENT = 'change'
 
-    let _user = [];
+    let _user = '';
     let _authed = false;
-    let _group = '';
-    let _messages = [];
     let _contacts = [];
+    let _currentGroup = '';
+    let _messages = [];  
     let _groups = [];
+    let _groupUsers = [];
+    let _databaseUsers = []
  
 
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -20,11 +22,13 @@ const CHANGE_EVENT = 'change'
       return _authed;
     },
 
+      // If there is a user in local storage, set authentication true
      setAuthed(){
       _authed = true;
     },
     setLogout(){
       _authed = false;
+      localStorage.clear()
     },
 
     getUser(){
@@ -32,14 +36,17 @@ const CHANGE_EVENT = 'change'
     },
 
     saveUser(user){
-      _user.push(user);
+      _user = user;
+      localStorage.setItem(
+        'user', JSON.stringify(user)
+      )
     },
 
     setUser(user){
       _user = user;
     },
 
-    getContacts(){
+   getContacts(){
       return _contacts;
     },
     saveContact(contact){
@@ -48,6 +55,14 @@ const CHANGE_EVENT = 'change'
 
     setContacts(contacts){
       _contacts = contacts;
+    },
+    
+    getdatabaseUsers(){
+      return _databaseUsers;
+    },
+
+    setdatabaseUsers(contacts){
+      _databaseUsers = contacts;
     },
 
     getGroups(){
@@ -59,6 +74,28 @@ const CHANGE_EVENT = 'change'
 
     setGroups(groups){
       _groups = groups;
+    },
+
+   // Get the Current Group When the User has Clicked on A Group
+    getCurrentGroup(){
+      return _currentGroup;
+    },
+
+    setCurrentGroup(keyName){
+      _currentGroup = keyName;
+    },
+
+
+
+    getGroupUsers(){
+      return _groupUsers;
+    },
+    saveGroupUsers(users){
+      _groupUsers.push(users);
+    },
+
+    setGroupUsers(users){
+      _groupUsers = users;
     },
     
     getMessages(){
@@ -110,16 +147,19 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.RECEIVE_CONTACT:
         console.log('Receiving Contact...');
+
+        
         //Store Save
-        AppStore.setContacts(action.contacts);      
+        AppStore.setdatabaseUsers(action.contacts);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
 
       case AppConstants.SAVE_GROUP:
         console.log('Saving group...');
-         //Store Save
-        AppStore.saveGroup(action.group);
+        // console.log(action.group)
+        //  //Store Save
+        // AppStore.saveGroups(action.group);
         // //Save to API
         AppAPI.saveGroup(action.group)      
         //Emit Change
@@ -129,6 +169,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.RECEIVE_GROUP:
         console.log('Receiving Groups...');
         //Store Save
+      
         AppStore.setGroups(action.groups);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
@@ -137,10 +178,10 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SAVE_GROUP_USER:
         console.log('Saving user into group...');
         
-         //Store Save
-        AppStore.saveGroup(action.addUsers);
+        //  //Store Save
+        // AppStore.saveGroup(action.addUser);
         // //Save to API
-        AppAPI.saveGroupUser(action.addUsers)      
+        AppAPI.saveGroupUser(action.addUser)      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -149,6 +190,7 @@ const CHANGE_EVENT = 'change'
         console.log('Saving Message...');
         //Store Save
         AppStore.saveMessages(action.message);
+        
         //Save to API
         AppAPI.saveMessages(action.message)
         //Emit Change
@@ -183,10 +225,13 @@ const CHANGE_EVENT = 'change'
       case AppConstants.LOGOUT:
         AppStore.setLogout();
         // //Emit Change
+         //Save to API
+        AppAPI.setLogout()
+        // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
 
-        case AppConstants.GOOGLE:
+      case AppConstants.GOOGLE:
         // //Store Save
         // AppStore.saveMessages(action.message);
         //Save to API
@@ -194,6 +239,36 @@ const CHANGE_EVENT = 'change'
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
+
+      case AppConstants.SEARCH_USER_MESSAGE:
+        console.log('Searching for Users and Message...');
+
+         AppStore.setCurrentGroup(action.keyName);          
+         //Save to API
+        AppAPI.searchUserMessage(action.keyName)
+         //Save to API
+        AppAPI.getMessages(action.keyName)
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_USER_MESSAGE:
+        console.log('Receiving Users and Message...');
+ 
+        AppStore.setGroupUsers(action.users);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.DISPLAY_NAME:
+        console.log('Saving display NAme...');
+         //Store Save
+        console.log(action.displayName);    
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+
     }
 
     return true;

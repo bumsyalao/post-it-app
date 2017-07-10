@@ -5,20 +5,26 @@ import {firebaseAuth, firebase}from '../../../../server/config'
 
 
 export default class Signup extends Component {
-    state={
-    
-  }
  constructor(props) {
     super(props);
     this.state = {
-      contacts: AppStore.getContacts()
+      contacts: AppStore.getContacts(),
+       databaseUsers: AppStore.getdatabaseUsers() 
     };
-
-		// Bind Form values
-    this.handleSubmit = this.handleSubmit.bind(this);
+     this._onChange= this._onChange.bind(this)
   }
 
- render() { 
+   componentDidMount(){
+        AppStore.addChangeListener(this._onChange);
+    }
+
+    componentUnmount(){
+        AppStore.removeChangeListener(this._onChange);
+    }
+
+ 
+
+ render() {    
     return (  
         <div className='well'>  
             <h3>Sign Up</h3>
@@ -43,45 +49,46 @@ export default class Signup extends Component {
 
    handleGoogle(e){
       e.preventDefault();  
-      AppActions.google();
+    //   AppActions.google();
+    console.log('ee')
     
    }
  
 
   handleSubmit(e){
-      e.preventDefault();    
-      const contact = {
-          username: this.refs.username.value.trim(),
+      e.preventDefault();  
+      
+   // Function to convert first letter of each word to capital letter   
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+   } 
+
+    // Implements the function
+const Uppercase = capitalizeFirstLetter(this.refs.username.value)
+
+   const contact = {
+          username: Uppercase,
           email: this.refs.email.value.trim(),
           password: this.refs.password.value.trim()
       }
-    const allUser = this.state.contacts.map((user, index) =>  user.username)
 
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-const Uppercase = capitalizeFirstLetter(contact.username)
-
-
-
-    if (allUser.indexOf(Uppercase) === -1) {
+ if (this.state.databaseUsers.includes(Uppercase)){
+     alert("The username already exist")  
+    }else {
+       alert('Welcome, '+Uppercase+ '  An email has been sent to you') 
         AppActions.saveContact(contact);
-        alert('Welcome, '+Uppercase+'. You have successful signed up') 
         
-         this.refs.username.value = '';
+    this.refs.username.value = '';
          this.refs.email.value = '';
-         this.refs.password.value = '';    
-    }
-    else {
-        alert("The username already exist")
-        console.log("element found");
-    }
+         this.refs.password.value = ''; 
 
+    }
 
 }
 
    _onChange(){
-        this.setState({contacts: AppStore.getContacts()});
-      
-    }   
+        this.setState({databaseUsers: AppStore.getdatabaseUsers()});      
+    } 
+
+
 }

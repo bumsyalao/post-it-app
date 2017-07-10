@@ -24,7 +24,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
 }
 
 function PublicRoute ({component: Component, authed, ...rest}) {
-  return (
+  return ( 
     <Route
       {...rest}
       render={(props) => authed === false
@@ -37,7 +37,6 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 export default class Routes extends Component { 
 
   render() {  
-    // console.log(this.props.authed)
     return (   
        
            <div className="container">
@@ -45,7 +44,7 @@ export default class Routes extends Component {
               <Switch>
                 <Route path='/' exact component={Home} />
                 <PublicRoute authed={this.props.authed} path='/login' component={Signin} />
-                <PublicRoute authed={this.props.authed} path='/register' component={Signup} />
+                <PublicRoute authed={this.props.authed} path='/register'  component={Signup } />
                 <PrivateRoute authed={this.props.authed} path='/dashboard' component={DashBoard} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>

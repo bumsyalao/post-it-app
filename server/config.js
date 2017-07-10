@@ -18,7 +18,6 @@ const usersRef = db.ref('users');
 const groupRef = db.ref('Groups');
 
 
-
 const provider = new firebase.auth.GoogleAuthProvider();
 module.exports = {
   firebase,

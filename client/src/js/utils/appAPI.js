@@ -8,19 +8,26 @@ module.exports = {
             username: contact.username,                     
             email: contact.email,
             password: contact.password
-            }).then((response) => {
-                console.log(response.data)
+        }).then((response) => {
             const user = response.data; 
+
+            if (response.data.message == 'The email address is already in use by another account.') {
+                    alert(response.data.message)
+            }else{
+                
+                    AppActions.receiveLogin(user)
+                   
+            }
              
-             AppActions.receiveLogin(user)
             
             }).catch(function (error) { 
                 console.log(error);
             });                  
     },
 
+    // Get all Contacts from database, this will use for validation
     getContacts(){
-        axios.get('/user/database')
+        axios.get('/users/allusers')
             .then(function (contacts) {
                 
                 AppActions.receiveContact(contacts.data)
@@ -31,8 +38,9 @@ module.exports = {
     },
 
     saveGroup(group){
+        console.log(group)
         axios.post('/group', {
-            groupname:group                   
+            groupName:group                
             }).then(function (response) {
                 console.log(response);              
             }).catch(function (error) {
@@ -41,19 +49,22 @@ module.exports = {
     },
 
      getGroups(){
-        axios.get('/group/database')
-            .then((groups) => {
+        axios.get('/user/database')
+            .then((group) => {
                 // console.log(groups)
-                AppActions.receiveGroup(groups.data)
+                const groups = group.data
+                AppActions.receiveGroup(groups)
+                console.log(groups)
+            
             })
             .catch(function (error) {
                 console.log(error);
             });
     },
-     saveGroupUser(addUsers){
-       const groupID = addUsers.groupID
-       const uid = addUsers.uid
-        axios.post('/group/'+ groupID +"/"+uid)
+     saveGroupUser(addUser){
+       const groupName = addUser.groupname;
+       const user = addUser.user;
+        axios.post('/group/'+ groupName +"/"+user)
         .then(function (response) {
                 console.log(response);
                 
@@ -62,11 +73,10 @@ module.exports = {
             });                  
     },
     saveMessages(message){
-       const groupID = message.group;
+       const groupName = message.group;
         // const groupID = addUsers.groupID
-       const user = message.user;
-       const text = message.text;
-        axios.post('/messages/'+ groupID +"/"+user+"/"+text)
+       const messages = message.text;
+        axios.post('/groups/'+ groupName +"/"+messages)
         .then(function (response) {
                 console.log(response);
                 
@@ -74,10 +84,12 @@ module.exports = {
                 console.log(error);
             });                  
     },
-      getMessages(){
-          const groupID = 'Andela'
-        axios.get('/messages/'+groupID+'/messages')
+
+      getMessages(keyName){
+        const groupName = keyName;
+        axios.get('/groups/'+groupName)
             .then((message) => {
+               
                 AppActions.receiveMessages(message.data)
             })
             .catch(function (error) {
@@ -100,6 +112,35 @@ module.exports = {
                 console.log(error);
             });                  
     },
+     setLogout(){
+        axios.post('/user/signout').then(function (response) {
+              
+             
+             console.log(response)
+               
+                
+            }).catch(function (error) {
+                console.log(error);
+            });                  
+    },
+
+    searchUserMessage(keyName){
+        const groupName = keyName
+        axios.get('/group/'+groupName)
+            .then((users) => {  
+                const user = users.data.Users
+                console.log(user)
+                                    
+            AppActions.receiveUserMessage(user)
+           })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+
+
+
+
      google(){
         //  console.log('rar')
         // axios.post('/user/google', {               

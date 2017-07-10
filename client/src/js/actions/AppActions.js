@@ -32,7 +32,7 @@ const AppActions = {
         group: group
       })
         
-    },
+    }, 
 
     receiveGroup(groups){
         AppDispatcher.handleViewAction({
@@ -42,10 +42,10 @@ const AppActions = {
 
     },
 
-    saveGroupUser(addUsers){
+    saveGroupUser(addUser){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.SAVE_GROUP_USER,
-            addUsers: addUsers
+            addUser
         })
         
     },
@@ -78,6 +78,13 @@ const AppActions = {
         })
         
     },
+      searchUserMessage(keyName){
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.SEARCH_USER_MESSAGE,
+            keyName
+        })
+           
+    }, 
      google(){
         AppDispatcher.handleViewAction({ 
             actionType: AppConstants.GOOGLE
@@ -91,7 +98,22 @@ const AppActions = {
             
         })
         
-    }
+    },
+       receiveUserMessage(users){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_USER_MESSAGE,
+            users
+        })
+
+    },
+
+       displayName(displayName){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.DISPLAY_NAME,
+            displayName
+        })
+
+    },
 
 
 

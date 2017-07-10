@@ -11,14 +11,14 @@ router.get('/', (req, res) => {
 });
 
 router.get('/er', (req, res) => {
-  res.send("Welcome here");
+  res.send('Welcome here');
 });
 
 
 // Sign Up
 router.post('/user/signup', User.signup);
 
-// Google Signup
+Google Sign Up
 router.get('/user/google', User.google);
 
 // Sign In
@@ -27,22 +27,23 @@ router.post('/user/signin', User.signin);
 // Sign Out
 router.post('/user/signout', User.signout);
 
-// Retrive Users from Database
-router.get('/user/database', User.database);
-
-// Route for creating Group
+// Route for Creating Group
 router.post('/group', Group.createGroup);
 
-router.post('/group/:groupID/:uid', Group.addUser);
+// Route for Adding User to A group
+router.post('/group/:groupName/:user', Group.addUser);
 
-// Retrive Groups from Database
-router.get('/group/database', Group.database);
+// Retrive Groups from Database, we go into the User databse
+router.get('/user/database/', User.database);
 
-// Route To add a Message
-router.post('/messages/:groupID/:user/:text', Group.messages)
+// Retrive Users from a particular Group
+router.get('/group/:groupName', Group.database);
 
-// Retrive Message from Database
-router.get('/messages/:groupID/messages', Group.messageDatabase)
+// Retrive Message from a particular Group
+router.get('/groups/:groupName', Group.messageDatabase);
+
+// Retrive all Users from Database
+router.get('/users/allusers/', User.allUsers);
 
 
 module.exports = router;
