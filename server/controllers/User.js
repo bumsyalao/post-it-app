@@ -125,6 +125,27 @@ firebase.auth().onAuthStateChanged((user) => {
     });  
   }
 
+static allUsers(req, res){
+
+        const rootRef = firebase.database().ref().child('users');
+
+    rootRef.once('value', snap => {
+      const data = snap.val()
+      const users = []
+  
+     
+    
+        for(var i in data){
+          users.push(data[i].username)
+        }
+       res.send(users)
+
+    })
+
+      
+  }
+
+
 
 }
 

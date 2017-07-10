@@ -61,6 +61,7 @@ export default class Lhs extends Component {
          
             }
             </li>
+            <br/>
             <li><a href="#" className="btn btn-default" onClick={this.handleEdit}>Invite Users</a></li>
   
         </ul>

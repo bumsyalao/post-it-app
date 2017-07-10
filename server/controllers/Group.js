@@ -50,7 +50,8 @@ static addUser(req, res) {
 
         // //Push the user's details into Group/ Users
         db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
-
+        // usersRef.child(userName).child('Groups').child(userName).set(userName)
+        
         //Push the user's details into Group
 				groupRef.child(groupName).child('Users').child(userName).set(userName)
         

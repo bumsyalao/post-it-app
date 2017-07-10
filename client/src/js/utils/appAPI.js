@@ -21,7 +21,7 @@ module.exports = {
 
     // Get all Contacts from database, this will use for validation
     getContacts(){
-        axios.get('/user/database')
+        axios.get('/users/allusers')
             .then(function (contacts) {
                 
                 AppActions.receiveContact(contacts.data)
@@ -32,8 +32,9 @@ module.exports = {
     },
 
     saveGroup(group){
+        console.log(group)
         axios.post('/group', {
-            groupName:group                   
+            groupName:group                
             }).then(function (response) {
                 console.log(response);              
             }).catch(function (error) {

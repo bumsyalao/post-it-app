@@ -50,5 +50,8 @@ router.get('/group/:groupName', Group.database);
 // Retrive Message from a particular Group
 router.get('/groups/:groupName', Group.messageDatabase)
 
+// Retrive all Users from Database
+router.get('/users/allusers/', User.allUsers);
+
 
 module.exports = router;

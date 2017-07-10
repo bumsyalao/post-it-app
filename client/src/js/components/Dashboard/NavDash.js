@@ -106,8 +106,12 @@ export default class NavDash extends Component {
          groupname: this.refs.groupname.value.trim(), //group 
          user: this.refs.user.value.trim()   //user
       }   
-      console.log(addUser)
-    AppActions.saveGroupUser(addUser);
+
+    if (this.props.databaseUsers.includes(this.refs.user.value)){
+      AppActions.saveGroupUser(addUser);
+    }else{
+      alert("The User dosen't exist")
+    }
       this.refs.groupname.value = ''; 
       this.refs.user.value = '';
 
@@ -144,8 +148,9 @@ export default class NavDash extends Component {
 
 }
 
-createGroup(){ 
-  window.location.reload();
+createGroup(e){ 
+  e.preventDefault()
+
         const group = this.refs.group.value.trim()        
         AppActions.saveGroup(group);
         this.refs.group.value = '';

@@ -15,10 +15,10 @@ import {firebaseAuth, firebase}from '../../server/config'
 
 // Display State
 
-// AppAPI.searchUserMessage();
+AppAPI.searchUserMessage();
 AppAPI.getGroups();
 AppAPI.getMessages()
-
+AppAPI.getContacts()
 
 ReactDOM.render(
   <BrowserRouter basename="/#">

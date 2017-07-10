@@ -12,7 +12,8 @@ const CHANGE_EVENT = 'change'
     let _currentGroup = '';
     let _messages = [];  
     let _groups = [];
-    let _groupUsers = []
+    let _groupUsers = [];
+    let _databaseUsers = []
  
 
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -55,7 +56,14 @@ const CHANGE_EVENT = 'change'
     setContacts(contacts){
       _contacts = contacts;
     },
+    
+    getdatabaseUsers(){
+      return _databaseUsers;
+    },
 
+    setdatabaseUsers(contacts){
+      _databaseUsers = contacts;
+    },
 
     getGroups(){
       return _groups;
@@ -139,16 +147,19 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.RECEIVE_CONTACT:
         console.log('Receiving Contact...');
+
+        
         //Store Save
-        AppStore.setContacts(action.contacts);      
+        AppStore.setdatabaseUsers(action.contacts);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
 
       case AppConstants.SAVE_GROUP:
         console.log('Saving group...');
-         //Store Save
-        AppStore.saveGroup(action.group);
+        // console.log(action.group)
+        //  //Store Save
+        // AppStore.saveGroups(action.group);
         // //Save to API
         AppAPI.saveGroup(action.group)      
         //Emit Change
@@ -167,8 +178,8 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SAVE_GROUP_USER:
         console.log('Saving user into group...');
         
-         //Store Save
-        AppStore.saveGroup(action.addUser);
+        //  //Store Save
+        // AppStore.saveGroup(action.addUser);
         // //Save to API
         AppAPI.saveGroupUser(action.addUser)      
         //Emit Change
