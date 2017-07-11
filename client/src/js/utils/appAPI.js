@@ -38,9 +38,9 @@ module.exports = {
     },
 
     saveGroup(group){
-        console.log(group)
         axios.post('/group', {
-            groupName:group                
+            groupName: group.groupName,
+            userName: group.userName
             }).then(function (response) {
                 console.log(response);              
             }).catch(function (error) {
@@ -101,10 +101,9 @@ module.exports = {
         axios.post('/user/signin', {               
             email: contact.email,
             password: contact.password
-            }).then(function (response) {
-                // console.log('signin ing')
-               const user = response.data.userData; 
-             
+            }).then(function (response) {               
+               const user = response.data.userData;
+               
              AppActions.receiveLogin(user)
                
                 
@@ -141,14 +140,14 @@ module.exports = {
 
 
 
-     google(){
-        //  console.log('rar')
-        // axios.post('/user/google', {               
-        //     }).then(function (response) {
-        //                  console.log(response)
-        //     }).catch(function (error) {
-        //         console.log(error);
-        //     });                  
+     google(googleUser){
+        axios.post('/user/google', { googleUser            
+            }).then(function (response) {
+                const user = response.data
+                AppActions.receiveLogin(user)
+            }).catch(function (error) {
+                console.log(error);
+            });                  
     },
 
 

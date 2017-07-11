@@ -35,7 +35,6 @@ export default class NavDash extends Component {
 
 
   render() {
-
     return (
       <Navbar inverse collapseOnSelect>
 
@@ -100,6 +99,20 @@ export default class NavDash extends Component {
     )
   }
 
+    // Create Group
+    createGroup(e){ 
+      e.preventDefault()
+            const group = {
+              groupName: this.refs.group.value.trim(),
+              userName: this.props.user.displayName
+            }
+  
+            AppActions.saveGroup(group);
+            this.refs.group.value = '';
+          
+    }
+
+    // Add User to the Group
     addUser(e){
     e.preventDefault(); 
       const addUser = {
@@ -117,14 +130,7 @@ export default class NavDash extends Component {
 
 }
 
-createGroup(e){ 
-  e.preventDefault()
 
-        const group = this.refs.group.value.trim()        
-        AppActions.saveGroup(group);
-        this.refs.group.value = '';
-      
-}
 
 logout(e){
       e.preventDefault();    

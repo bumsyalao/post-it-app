@@ -232,10 +232,9 @@ const CHANGE_EVENT = 'change'
         break;
 
       case AppConstants.GOOGLE:
-        // //Store Save
-        // AppStore.saveMessages(action.message);
+    
         //Save to API
-        AppAPI.google()
+        AppAPI.google(action.googleUser)
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -256,14 +255,6 @@ const CHANGE_EVENT = 'change'
         console.log('Receiving Users and Message...');
  
         AppStore.setGroupUsers(action.users);      
-        //Emit Change
-        AppStore.emit(CHANGE_EVENT);
-        break;
-
-      case AppConstants.DISPLAY_NAME:
-        console.log('Saving display NAme...');
-         //Store Save
-        console.log(action.displayName);    
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

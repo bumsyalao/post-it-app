@@ -46,21 +46,23 @@ class User {
      * @return {object}  returns the user's details
      */
   static google(req, res) {
- 
-    // provider.addScope('profile');
-    // provider.addScope('email');
-    // firebase.auth().signInWithPopup(provider)
-    //   .then((result) => {
-    //     const token = result.credential.accessToken;
-    //     const user = result.user;
-    //     if (user) {
-    //       firebase.auth().onAuthStateChanged(() => {
-    //         res.send(user)
-    //       });
-    //     }
-    //     console.log(token);
-    //     console.log(user);
-    //   });
+    const googleUser = req.body.googleUser
+
+    const username = googleUser.username;
+    const email = googleUser.email;
+    const uid = googleUser.uid;
+    // add element to database
+      usersRef.child(username).set({
+        username,
+        email,
+        uid
+      });
+      const data = {
+        displayName: username,
+        email,
+        uid
+      }
+      res.send(data)
   }
 
  /**
