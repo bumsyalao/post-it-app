@@ -18,8 +18,8 @@ router.get('/er', (req, res) => {
 // Sign Up
 router.post('/user/signup', User.signup);
 
-Google Sign Up
-router.get('/user/google', User.google);
+//Google Sign Up
+router.post('/user/google', User.google);
 
 // Sign In
 router.post('/user/signin', User.signin);

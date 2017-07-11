@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AppActions from '../actions/AppActions' 
 import AppStore from '../stores/AppStore'
-import {firebaseAuth, firebase}from '../../../../server/config'
+
 
 
 export default class Signup extends Component {
@@ -40,19 +40,13 @@ export default class Signup extends Component {
                 </div>              
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
-            <h3>Login With Google Account</h3>
-            <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
+            
         </div>
 
     )
   }
 
-   handleGoogle(e){
-      e.preventDefault();  
-    //   AppActions.google();
-    console.log('ee')
-    
-   }
+
  
 
   handleSubmit(e){

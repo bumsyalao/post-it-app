@@ -145,7 +145,7 @@ module.exports = {
         //  console.log('rar')
         // axios.post('/user/google', {               
         //     }).then(function (response) {
-                         
+        //                  console.log(response)
         //     }).catch(function (error) {
         //         console.log(error);
         //     });                  
