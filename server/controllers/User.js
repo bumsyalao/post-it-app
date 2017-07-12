@@ -1,5 +1,6 @@
 const { firebase, usersRef, provider } = require('../config');
 
+
 /** Class representing a the User Database. */
 class User {
  /**
@@ -171,6 +172,7 @@ firebase.auth().onAuthStateChanged((user) => {
          res.send('Error: The email address does not exist')
     });
   }
+
 
 
 }

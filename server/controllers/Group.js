@@ -1,4 +1,6 @@
 const { usersRef, groupRef, firebase } = require('../config');
+const nodemailer = require('nodemailer');
+
 
 class Group {
   static createGroup(req, res) {
@@ -123,6 +125,36 @@ static addUser(req, res) {
        res.send(messages) 
     })
    
+  }
+
+
+    static mailer(req, res) {
+
+let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: 'wesumeh@gmail.com',
+        pass: 'dericoderico'
+    }
+});
+
+let mailOptions = {
+    from: '"Fred Foo 👻" <wesum@gmail.com>', // sender address
+    to: 'charpellumeh@gmail.com, bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world ?', // plain text body
+    html: '<b>Hello world ?</b>' // html body
+};
+
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+});
+
+
+
   }
 
 

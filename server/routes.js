@@ -48,5 +48,8 @@ router.get('/users/allusers/', User.allUsers);
 // Password Reset
 router.post('/user/reset/', User.resetPassword);
 
+// Nodemailer
+router.post('/user/mailer/', Group.mailer);
+
 
 module.exports = router;
