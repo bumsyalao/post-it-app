@@ -14,9 +14,12 @@ import AppStore from '../../stores/AppStore'
 
 
 
-
+// LHS: Left hand side
 export default class Lhs extends Component {
   render() {
+//     if (localStorage.getItem("user") !== null) {
+//     console.log("localstorage")
+// }
   return (
       <div>
         <div>

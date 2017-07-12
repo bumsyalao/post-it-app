@@ -68,11 +68,12 @@ export default class NavDash extends Component {
                 <div className='form-group'>
                     <input type="text" ref='group' className='form-control' placeholder='GroupName' required/>
                 </div>                             
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                <button  type='submit' className='btn btn-primary'>Submit</button>
             </form>             
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close2}>Close</Button>
+            {/*<Button href="#/dashboard" onClick={this.close2}>Close</Button>*/}
+            <a href="#/dashboard" onClick={this.close2}> Close</a>
           </Modal.Footer>
         </Modal>
 
@@ -99,14 +100,15 @@ export default class NavDash extends Component {
     )
   }
 
-    // Create Group
-    createGroup(e){ 
-      e.preventDefault()
+
+   // Create Group
+    createGroup(e){
+      e.preventDefault() 
             const group = {
               groupName: this.refs.group.value.trim(),
               userName: this.props.user.displayName
             }
-  
+     
             AppActions.saveGroup(group);
             this.refs.group.value = '';
           
@@ -131,7 +133,7 @@ export default class NavDash extends Component {
 }
 
 
-
+// Logout User
 logout(e){
       e.preventDefault();    
       AppActions.logout();

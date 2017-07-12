@@ -7,7 +7,7 @@ import AppAPI from '../utils/appAPI'
 const CHANGE_EVENT = 'change'
 
     let _user = '';
-    let _authed = localStorage["user"] ? false : true;
+    let _authed = false;
     let _contacts = [];
     let _currentGroup = '';
     let _messages = [];  
@@ -15,7 +15,7 @@ const CHANGE_EVENT = 'change'
     let _groupUsers = [];
     let _databaseUsers = []
  
-
+//localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
 
     getAuthed(){
@@ -24,10 +24,10 @@ const CHANGE_EVENT = 'change'
 
       // If there is a user in local storage, set authentication true
      setAuthed(){
-     
-          _authed = true;
-          
-        
+         if (localStorage.getItem("user") !== null) {
+    _authed = true;
+}
+  
     },
     
     setLogout(){
