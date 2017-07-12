@@ -166,9 +166,9 @@ firebase.auth().onAuthStateChanged((user) => {
     var auth = firebase.auth();
 
     auth.sendPasswordResetEmail(emailAddress).then(function() {
-     res.send('Email Sent')
+     res.send('An email has been sent for password reset. Log in after Reset')
     }, function(error) {
-         res.send('An Error Occurred')
+         res.send('Error: The email address does not exist')
     });
   }
 

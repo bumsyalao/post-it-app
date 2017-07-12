@@ -151,9 +151,7 @@ module.exports = {
     resetPassword(email){
         axios.post('/user/reset', { email           
         }).then(function (response) {
-            console.log(response)
-                // const user = response.data
-                // AppActions.receiveLogin(user)
+            alert(response.data)
             }).catch(function (error) {
                 console.log(error);
             });                  

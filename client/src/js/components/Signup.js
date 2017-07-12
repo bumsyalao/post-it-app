@@ -69,7 +69,7 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
  if (this.state.databaseUsers.includes(Uppercase)){
      alert("The username already exist")  
     }else {
-       alert('Welcome, '+Uppercase+ '  An email has been sent to you') 
+       alert('Welcome, '+Uppercase+ '  An email will be sent to you, please verify your account.') 
         AppActions.saveContact(contact);
         
     this.refs.username.value = '';
