@@ -7,7 +7,7 @@ import AppAPI from '../utils/appAPI'
 const CHANGE_EVENT = 'change'
 
     let _user = '';
-    let _authed = false;
+    let _authed = localStorage["user"] ? false : true;
     let _contacts = [];
     let _currentGroup = '';
     let _messages = [];  
@@ -24,8 +24,12 @@ const CHANGE_EVENT = 'change'
 
       // If there is a user in local storage, set authentication true
      setAuthed(){
-      _authed = true;
+     
+          _authed = true;
+          
+        
     },
+    
     setLogout(){
       _authed = false;
       localStorage.clear()

@@ -36,7 +36,8 @@ class App extends Component  {
         AppStore.removeChangeListener(this._onChange);
     }
  
-    render() {    
+    render() {  
+        console.log(this.state.authed)  
       return(
         <div>
           {!this.state.authed ? <Navigation /> : ''}
