@@ -28,12 +28,13 @@ class Signin extends Component {
             <h3>Sign In</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                  <div className='form-group'>
-                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
+                    <input type="email" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' />
-                </div>              
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                </div>  
+                <div><a href="#/reset">Forgot Password?</a></div>            
+                <button type='submit' className='btn btn-primary'>Log in</button>              
             </form>
         </div>
 
