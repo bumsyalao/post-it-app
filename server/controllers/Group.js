@@ -66,6 +66,7 @@ static addUser(req, res) {
 		const groupName = req.params.groupName;
     // const user = req.params.user;
     const Message = req.params.messages;
+    const emails = req.params.emails
 
        firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -82,6 +83,31 @@ static addUser(req, res) {
 					}).catch((err) => {
 				res.send('Error');
 			});
+
+      let transporter = nodemailer.createTransport(smtpTransport({
+    service: "gmail",
+    auth: {
+        user: 'wesumeh@gmail.com',
+        pass: 'dericoderico'
+    }
+      }));
+
+      let mailOptions = {
+          from: '"PostIt App" <admin@postit.com>', // sender address
+          to: emails, // list of receivers
+          subject: 'New Message Received', // Subject line
+          text: 'PostIt App ?', // plain text body
+          html: '<p>Hello</p><h5>This is to notify you that a message has been posted to '+ groupName +' group</h5>' // html body
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.log(error);
+          }
+          console.log('Message %s sent: %s', info);
+      });
+
+
 
       } else {
         res.status(403).send({
@@ -131,8 +157,8 @@ static addUser(req, res) {
   }
 
 
-    static mailer(req, res) {
-
+// Nodemailer Sample
+static mailer(req, res) {
 let transporter = nodemailer.createTransport(smtpTransport({
     service: "gmail",
     auth: {

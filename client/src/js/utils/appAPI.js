@@ -76,7 +76,8 @@ module.exports = {
        const groupName = message.group;
         // const groupID = addUsers.groupID
        const messages = message.text;
-        axios.post('/groups/'+ groupName +"/"+messages)
+       const emails = message.emails;
+        axios.post('/groups/'+ groupName +"/"+messages+"/"+emails)
         .then(function (response) {
                 console.log(response);
                 
