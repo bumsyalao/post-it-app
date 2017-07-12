@@ -14,6 +14,7 @@ export default class DashBoard extends Component {
            authed: false,
             user : AppStore.getUser(),      
             contacts: AppStore.getGroupUsers(),
+            emails: AppStore.getGroupEmails(),
             groups: AppStore.getGroups(),
             currentGroup: AppStore.getCurrentGroup(),
             databaseUsers: AppStore.getdatabaseUsers()
@@ -25,7 +26,6 @@ export default class DashBoard extends Component {
      AppStore.addChangeListener(this._onChange);
   }
 
-
   componentWillUnmount () {
     AppStore.removeChangeListener(this._onChange);
   } 
@@ -36,9 +36,9 @@ export default class DashBoard extends Component {
         <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers}/>         
         <Grid>
           <Row className="show-grid">
-            <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user}/> </Col>
+            <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>
 
-            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard />} </Col>
+            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard emails={this.state.emails} />} </Col>
             
 
           </Row>
@@ -53,6 +53,7 @@ export default class DashBoard extends Component {
         this.setState({user: AppStore.getUser()});
         this.setState({currentGroup: AppStore.getCurrentGroup()});
         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
+        this.setState({emails: AppStore.getGroupEmails()});
       
     }  
 }

@@ -107,6 +107,13 @@ const AppActions = {
         })
 
     },
+       receiveEmails(emails){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_EMAILS,
+            emails
+        })
+
+    },
 
        displayName(displayName){
         AppDispatcher.handleViewAction({

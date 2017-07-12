@@ -13,7 +13,8 @@ const CHANGE_EVENT = 'change'
     let _messages = [];  
     let _groups = [];
     let _groupUsers = [];
-    let _databaseUsers = []
+    let _groupEmails = [];
+    let _databaseUsers = [];
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -90,7 +91,7 @@ const CHANGE_EVENT = 'change'
     },
 
 
-
+    // Get Users in a Group
     getGroupUsers(){
       return _groupUsers;
     },
@@ -101,6 +102,21 @@ const CHANGE_EVENT = 'change'
     setGroupUsers(users){
       _groupUsers = users;
     },
+
+
+        // Get Emails in a Group
+    getGroupEmails(){
+      return _groupEmails;
+    },
+    saveGroupEmails(emails){
+      _groupEmails.push(emails);
+    },
+
+    setGroupEmails(emails){
+      _groupEmails = emails;
+    },
+
+
     
     getMessages(){
       return _messages;
@@ -159,11 +175,12 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
+
       case AppConstants.SAVE_GROUP:
         console.log('Saving group...');
-        // console.log(action.group)
-        //  //Store Save
-        // AppStore.saveGroups(action.group);
+
+        // //  //Store Save
+          AppStore.setGroups(action.groupy);    
         // //Save to API
         AppAPI.saveGroup(action.group)      
         //Emit Change
@@ -173,7 +190,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.RECEIVE_GROUP:
         console.log('Receiving Groups...');
         //Store Save
-      
+             
         AppStore.setGroups(action.groups);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
@@ -256,9 +273,15 @@ const CHANGE_EVENT = 'change'
         break;
 
       case AppConstants.RECEIVE_USER_MESSAGE:
-        console.log('Receiving Users and Message...');
- 
+        console.log('Receiving Users and Message...'); 
         AppStore.setGroupUsers(action.users);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_EMAILS:
+        console.log('Receiving Emails in a group...'); 
+        AppStore.setGroupEmails(action.emails);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

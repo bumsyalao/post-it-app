@@ -67,19 +67,18 @@ export default class MessageBoard extends Component {
   }
 
       handleSubmit(e){
-          e.preventDefault();  
-          
-
-    
+          e.preventDefault();   
           const message = {
             group: this.state.currentGroup,         
             text: this.refs.message.value.trim(),
-            user: this.state.user.displayName
+            user: this.state.user.displayName,
+            emails: Object.values(this.props.emails)
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           
           
-            AppActions.saveMessage(message)  
+            // AppActions.saveMessage(message)  
+            console.log(message)
             this.refs.message.value = '';
          }                
       }

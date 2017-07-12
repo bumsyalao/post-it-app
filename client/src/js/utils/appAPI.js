@@ -128,9 +128,12 @@ module.exports = {
         axios.get('/group/'+groupName)
             .then((users) => {  
                 const user = users.data.Users
+                const email = users.data.Email
                 console.log(user)
+                console.log(email)
                                     
             AppActions.receiveUserMessage(user)
+            AppActions.receiveEmails(email)
            })
             .catch(function (error) {
                 console.log(error);

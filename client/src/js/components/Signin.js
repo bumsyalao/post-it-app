@@ -21,7 +21,7 @@ class Signin extends Component {
 
 
   render() {
-      localStorage["user"] ? console.log('User Exist') : console.log('No user')
+      // localStorage["user"] ? console.log('User Exist') : console.log('No user')
     return (
       <div>  
            <div className='well'style={{float:'left'}} >  
