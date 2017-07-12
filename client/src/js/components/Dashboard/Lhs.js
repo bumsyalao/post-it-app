@@ -16,6 +16,9 @@ import AppStore from '../../stores/AppStore'
 
 
 export default class Lhs extends Component {
+  if (localStorage["user"]) {
+  console.log('There is a user')
+}
   render() {
   return (
       <div>
