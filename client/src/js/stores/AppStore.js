@@ -263,6 +263,16 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
+        
+      case AppConstants.RESET_PASSWORD:
+        console.log('Reseting Password...');
+
+        //Save to API
+        AppAPI.resetPassword(action.email)     
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
 
     }
 

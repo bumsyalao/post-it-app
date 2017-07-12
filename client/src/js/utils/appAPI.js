@@ -138,13 +138,22 @@ module.exports = {
     },
 
 
-
-
      google(googleUser){
         axios.post('/user/google', { googleUser            
             }).then(function (response) {
                 const user = response.data
                 AppActions.receiveLogin(user)
+            }).catch(function (error) {
+                console.log(error);
+            });                  
+    },
+
+    resetPassword(email){
+        axios.post('/user/reset', { email           
+        }).then(function (response) {
+            console.log(response)
+                // const user = response.data
+                // AppActions.receiveLogin(user)
             }).catch(function (error) {
                 console.log(error);
             });                  

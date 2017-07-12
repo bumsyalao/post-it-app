@@ -108,10 +108,10 @@ const AppActions = {
 
     },
 
-       displayName(displayName){
+       resetPassword(email){
         AppDispatcher.handleViewAction({
-            actionType: AppConstants.DISPLAY_NAME,
-            displayName
+            actionType: AppConstants.RESET_PASSWORD,
+            email
         })
 
     },
