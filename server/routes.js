@@ -18,8 +18,8 @@ router.get('/er', (req, res) => {
 // Sign Up
 router.post('/user/signup', User.signup);
 
-Google Sign Up
-router.get('/user/google', User.google);
+//Google Sign Up
+router.post('/user/google', User.google);
 
 // Sign In
 router.post('/user/signin', User.signin);
@@ -44,6 +44,9 @@ router.get('/groups/:groupName', Group.messageDatabase);
 
 // Retrive all Users from Database
 router.get('/users/allusers/', User.allUsers);
+
+// Password Reset
+router.post('/user/reset/', User.resetPassword);
 
 
 module.exports = router;

@@ -46,23 +46,23 @@ class User {
      * @return {object}  returns the user's details
      */
   static google(req, res) {
-    firebase.auth().signInWithPopup(provider).then((result) => {
-  // This gives you a Google Access Token. You can use it to access the Google API.
-      const token = result.credential.accessToken;
-  // The signed-in user info.
-      const user = result.user;
-      res.send('Successful' + result);
-  // ...
-    }).catch((error) => {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
+    const googleUser = req.body.googleUser
+
+    const username = googleUser.username;
+    const email = googleUser.email;
+    const uid = googleUser.uid;
+    // add element to database
+      usersRef.child(username).set({
+        username,
+        email,
+        uid
+      });
+      const data = {
+        displayName: username,
+        email,
+        uid
+      }
+      res.send(data)
   }
 
  /**
@@ -146,6 +146,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });  
   }
+
   static allUsers(req, res){
     const rootRef = firebase.database().ref().child('users');
 
@@ -159,6 +160,18 @@ firebase.auth().onAuthStateChanged((user) => {
       res.send(users);
     });
   }
+
+  static resetPassword(req, res) {
+    const emailAddress = req.body.email 
+    var auth = firebase.auth();
+
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+     res.send('An email has been sent for password reset. Log in after Reset')
+    }, function(error) {
+         res.send('Error: The email address does not exist')
+    });
+  }
+
 
 }
 

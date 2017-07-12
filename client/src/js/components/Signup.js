@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AppActions from '../actions/AppActions' 
 import AppStore from '../stores/AppStore'
-import {firebaseAuth, firebase}from '../../../../server/config'
+
 
 
 export default class Signup extends Component {
@@ -40,19 +40,13 @@ export default class Signup extends Component {
                 </div>              
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
-            <h3>Login With Google Account</h3>
-            <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
+            
         </div>
 
     )
   }
 
-   handleGoogle(e){
-      e.preventDefault();  
-    //   AppActions.google();
-    console.log('ee')
-    
-   }
+
  
 
   handleSubmit(e){
@@ -75,7 +69,7 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
  if (this.state.databaseUsers.includes(Uppercase)){
      alert("The username already exist")  
     }else {
-       alert('Welcome, '+Uppercase+ '  An email has been sent to you') 
+       alert('Welcome, '+Uppercase+ '  An email will be sent to you, please verify your account.') 
         AppActions.saveContact(contact);
         
     this.refs.username.value = '';

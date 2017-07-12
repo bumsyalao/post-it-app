@@ -5,7 +5,7 @@ const AppActions = {
     saveContact(contact){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.SAVE_CONTACT,
-            contact:contact
+            contact
         })
 
     },
@@ -13,7 +13,7 @@ const AppActions = {
    receiveContact(contacts){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.RECEIVE_CONTACT,
-            contacts: contacts
+            contacts
         })
 
     },
@@ -21,7 +21,7 @@ const AppActions = {
     removeContact(contactId){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.REMOVE_CONTACT,
-            contactId: contactId
+            contactId
         })
 
     },
@@ -29,7 +29,7 @@ const AppActions = {
     saveGroup(group){
         AppDispatcher.handleViewAction({
         actionType: AppConstants.SAVE_GROUP,
-        group: group
+        group
       })
         
     }, 
@@ -37,7 +37,7 @@ const AppActions = {
     receiveGroup(groups){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.RECEIVE_GROUP,
-            groups: groups
+            groups
         })
 
     },
@@ -53,21 +53,21 @@ const AppActions = {
      saveMessage(message){
         AppDispatcher.handleViewAction({ 
             actionType: AppConstants.SAVE_MESSAGE,
-            message: message
+            message
         })
         
     },
     receiveMessages(message){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.RECEIVE_MESSAGE,
-            message: message
+            message
         })
 
     },
      login(contact){
         AppDispatcher.handleViewAction({ 
             actionType: AppConstants.SIGN_IN,
-            contact:contact
+            contact
         })
         
     },
@@ -85,9 +85,10 @@ const AppActions = {
         })
            
     }, 
-     google(){
+     google(googleUser){
         AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.GOOGLE
+            actionType: AppConstants.GOOGLE,
+            googleUser
             
         })
         
@@ -111,6 +112,13 @@ const AppActions = {
         AppDispatcher.handleViewAction({
             actionType: AppConstants.DISPLAY_NAME,
             displayName
+        })
+
+    },
+       resetPassword(email){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RESET_PASSWORD,
+            email
         })
 
     },

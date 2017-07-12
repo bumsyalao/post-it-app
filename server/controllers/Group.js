@@ -3,13 +3,10 @@ const { usersRef, groupRef, firebase } = require('../config');
 class Group {
   static createGroup(req, res) {
     const groupName = req.body.groupName; 
+    const userName = req.body.userName
     const db = firebase.database();
-
-firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // user is signed in
-        const userName = user.displayName;
-        groupRef.child(groupName).once('value', (snapshot) => {
+    
+      groupRef.child(groupName).once('value', (snapshot) => {
       if (!snapshot.exists()) { 
    // Create  and Group and Insert Username
           groupRef.child(groupName).child('Users').child(userName).set(userName)
@@ -29,13 +26,7 @@ firebase.auth().onAuthStateChanged((user) => {
               message: `Something went wrong ${err.message}`,
             });
           });
-      } else {
-        res.status(403).send({
-          // user is not signed in
-          message: 'You are not signed in right now!'
-        });
-      }
-    });
+   
 
   }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 import AppAPI from '../utils/appAPI'
+import {firebaseAuth, firebase, provider}from '../../../../server/config'
 
 
 
@@ -20,21 +21,30 @@ class Signin extends Component {
 
 
   render() {
-
-
+      localStorage["user"] ? console.log('User Ex') : console.log('No user')
     return (
-   <div className='well'>  
+      <div>  
+           <div className='well'style={{float:'left'}} >  
             <h3>Sign In</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                  <div className='form-group'>
-                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
+                    <input type="email" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' />
-                </div>              
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                </div>  
+                <div><a href="#/reset">Forgot Password?</a></div>            
+                <button type='submit' className='btn btn-primary'>Log in</button>              
             </form>
         </div>
+
+           <div className='well' style={{float:'right'}}>  
+          <h3>Login With Google Account</h3>
+            <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
+        </div>
+
+      </div>
+
     )
   }
 
@@ -47,9 +57,33 @@ class Signin extends Component {
       AppActions.login(contact);
         this.refs.email.value = '';
         this.refs.password.value = '';
-      // this.props.history.push('/dasboard');
-
+     
 }
+   handleGoogle(e){
+      e.preventDefault();  
+    
+    provider.addScope('profile');
+    provider.addScope('email');
+    firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        const token = result.credential.accessToken;
+        const user = result.user;
+        if (user) {
+          firebase.auth().onAuthStateChanged(() => {
+            const googleUser = {
+               username: user.displayName,
+               email: user.email,
+               uid: user.uid
+            }
+            AppActions.google(googleUser);
+          });
+        }
+
+      });
+ 
+    
+   }
+
 }
 
 export default Signin;

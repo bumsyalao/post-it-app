@@ -8,6 +8,7 @@ import Signin from './Signin'
 import Signup from './Signup';
 import Home from './Home';
 import Footer from './Footer'
+import ResetPassword from './ResetPassword'
 
 import DashBoard from './Dashboard/Dashboard'
 
@@ -46,6 +47,7 @@ export default class Routes extends Component {
                 <PublicRoute authed={this.props.authed} path='/login' component={Signin} />
                 <PublicRoute authed={this.props.authed} path='/register'  component={Signup } />
                 <PrivateRoute authed={this.props.authed} path='/dashboard' component={DashBoard} />
+                <Route authed={this.props.authed} path='/reset' component={ResetPassword} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
