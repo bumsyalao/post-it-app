@@ -146,6 +146,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });  
   }
+
   static allUsers(req, res){
     const rootRef = firebase.database().ref().child('users');
 
@@ -159,6 +160,18 @@ firebase.auth().onAuthStateChanged((user) => {
       res.send(users);
     });
   }
+
+  static resetPassword(req, res) {
+    const emailAddress = req.body.email 
+    var auth = firebase.auth();
+
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+     res.send('Email Sent')
+    }, function(error) {
+         res.send('An Error Occurred')
+    });
+  }
+
 
 }
 

@@ -45,5 +45,8 @@ router.get('/groups/:groupName', Group.messageDatabase);
 // Retrive all Users from Database
 router.get('/users/allusers/', User.allUsers);
 
+// Password Reset
+router.post('/user/reset/', User.resetPassword);
+
 
 module.exports = router;

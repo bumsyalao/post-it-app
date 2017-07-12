@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import AppActions from '../actions/AppActions'
+import AppStore from '../stores/AppStore'
 
 export default class ResetPassword extends Component {
   render() {
