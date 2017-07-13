@@ -107,9 +107,9 @@ export default class NavDash extends Component {
             const group = {
               groupName: this.refs.group.value.trim(),
               userName: this.props.user.displayName
-            }
-     
-            AppActions.saveGroup(group);
+            }    
+             AppActions.saveGroup(group);
+            alert('The group '+group.groupName+' has been created. The page will need a refresh')
             this.refs.group.value = '';
           
     }

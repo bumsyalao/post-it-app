@@ -18,7 +18,7 @@ AppAPI.searchUserMessage();
 AppAPI.getGroups();
 AppAPI.getMessages()
 AppAPI.getContacts()
-AppAPI.getContacts()
+
 
 
 ReactDOM.render(

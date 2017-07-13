@@ -180,7 +180,7 @@ const CHANGE_EVENT = 'change'
         console.log('Saving group...');
 
         // //  //Store Save
-        AppStore.saveGroup(action.group);    
+        // AppStore.saveGroup(action.group);    
         // //Save to API
         AppAPI.saveGroup(action.group)      
         //Emit Change

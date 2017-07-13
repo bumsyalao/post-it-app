@@ -9,7 +9,9 @@ export default class Signup extends Component {
     super(props);
     this.state = {
       contacts: AppStore.getContacts(),
-       databaseUsers: AppStore.getdatabaseUsers() 
+       databaseUsers: AppStore.getdatabaseUsers(),
+       emails: AppStore.getGroupEmails()
+
     };
      this._onChange= this._onChange.bind(this)
   }
@@ -22,9 +24,8 @@ export default class Signup extends Component {
         AppStore.removeChangeListener(this._onChange);
     }
 
- 
-
  render() {    
+     console.log(this.state.emails)
     return (  
         <div className='well'>  
             <h3>Sign Up</h3>
@@ -86,7 +87,9 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
 }
 
    _onChange(){
-        this.setState({databaseUsers: AppStore.getdatabaseUsers()});      
+        this.setState({databaseUsers: AppStore.getdatabaseUsers()});
+        this.setState({emails: AppStore.getGroupEmails()});
+           
     } 
 
 

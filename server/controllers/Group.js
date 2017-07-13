@@ -54,7 +54,6 @@ static addUser(req, res) {
         groupRef.child(groupName).child('Email').push(email)
         groupRef.child(groupName).child('Phone Number').push(number)
         
-       
         .then(() => {
 						res.send('User added successfully');
 					});
