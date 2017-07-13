@@ -102,7 +102,7 @@ static addUser(req, res) {
           to: emails, // list of receivers
           subject: 'New Message Received', // Subject line
           text: 'PostIt App ?', // plain text body
-          html: '<p>Hello</p><h5>This is to notify you that a message has been posted in '+ groupName +' group</h5>' // html body
+          html: '<p>Hello</p><h2>This is to notify you that a message has been posted in '+ groupName +' group</h2>' // html body
       };
       transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
@@ -129,13 +129,8 @@ static addUser(req, res) {
               }
             }
         );
-        console.log(entry)
 
   });
-      
-
-
-
       } else {
         res.status(403).send({
           // user is not signed in
@@ -162,7 +157,7 @@ static addUser(req, res) {
        const groupName = req.params.groupName
       const rootRef = firebase.database().ref().child('Groups').child(groupName).child('Messages');
 
-    rootRef.once('value', snap => {
+      rootRef.once('value', snap => {
       const key = snap.key
       const data = snap.val()
       const messages = []

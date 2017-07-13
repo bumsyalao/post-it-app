@@ -13,24 +13,34 @@ export default class NavDash extends Component {
   state = { 
     showModal: false,
     showModal2: false,
+    showNotify: false,
     groupName: '',
     userName: '',
     users : []
   };
  
+ // Modal for add Users to the Group
   close = () => {
     this.setState({ showModal: false });
   }
-
   open = () => {
     this.setState({ showModal: true });
   }
-  close2 = () => {
+
+  // Modal for creating Group
+  closeGroup = () => {
     this.setState({ showModal2: false });
   }
-
-  open2 = () => {
+  openGroup = () => {
     this.setState({ showModal2: true });
+  }
+
+  // Modal for Notifications
+  closeNotify = () => {
+    this.setState({ showNotify: false });
+  }
+  openNotify = () => {
+    this.setState({ showNotify: true });
   }
 
 
@@ -59,7 +69,7 @@ export default class NavDash extends Component {
           </Modal.Footer>
         </Modal>
 
-         <Modal show={this.state.showModal2} onHide={this.close2}>
+         <Modal show={this.state.showModal2} onHide={this.closeGroup}>
           <Modal.Header closeButton>
             <Modal.Title>Create Group</Modal.Title>
           </Modal.Header>
@@ -73,26 +83,36 @@ export default class NavDash extends Component {
           </Modal.Body>
           <Modal.Footer>
             {/*<Button href="#/dashboard" onClick={this.close2}>Close</Button>*/}
-            <a href="#/dashboard" onClick={this.close2}> Close</a>
+            <a href="#/dashboard" onClick={this.closeGroup}> Close</a>
           </Modal.Footer>
         </Modal>
 
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href="#/dashboard">PostIt App</a>
-          </Navbar.Brand>
-          <Navbar.Toggle/>
-        </Navbar.Header>
+          <Modal show={this.state.showNotify} onHide={this.closeNotify}>
+          <Modal.Header closeButton>
+            <Modal.Title>Notifications</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           <ul>
+             <li>This is a notification</li>
+             <li>Another One</li>
+             </ul>           
+          </Modal.Body>
+          <Modal.Footer>
+            <a href="#/dashboard" onClick={this.closeNotify}> Close</a>
+          </Modal.Footer>
+        </Modal>
 
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={2} href="#" onClick = {this.open2}>Create Group</NavItem>
+            <NavItem eventKey={2} href="#" onClick = {this.openGroup}>Create Group</NavItem>
             <NavItem eventKey={2} href="#" onClick = {this.open}>Invite a friend</NavItem>
 
           </Nav>
 
           <Nav pullRight>
-            <NavItem eventKey={1} href="#">Profile</NavItem>
+            <NavItem eventKey={1} href="#" onClick = {this.openNotify}>Notification 
+                <span className="glyphicon glyphicon-envelope"></span>
+        </NavItem>
             <NavItem eventKey={2} href="#" onClick={this.logout.bind(this)}>Logout</NavItem>
           </Nav>
         </Navbar.Collapse>
