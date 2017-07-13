@@ -35,6 +35,9 @@ export default class Signup extends Component {
                  <div className='form-group'>
                     <input type="email" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
+                <div className='form-group'>
+                    <input type="number" ref='number' className='form-control' placeholder='Phone Number' required/>
+                </div>
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
                 </div>              
@@ -47,7 +50,6 @@ export default class Signup extends Component {
   }
 
 
- 
 
   handleSubmit(e){
       e.preventDefault();  
@@ -63,7 +65,8 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
    const contact = {
           username: Uppercase,
           email: this.refs.email.value.trim(),
-          password: this.refs.password.value.trim()
+          password: this.refs.password.value.trim(),
+          number: this.refs.number.value.trim()
       }
 
  if (this.state.databaseUsers.includes(Uppercase)){
@@ -75,6 +78,7 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
     this.refs.username.value = '';
          this.refs.email.value = '';
          this.refs.password.value = ''; 
+         this.refs.number.value = ''; 
 
     }
 

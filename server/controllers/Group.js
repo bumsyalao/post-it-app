@@ -98,18 +98,14 @@ static addUser(req, res) {
           to: emails, // list of receivers
           subject: 'New Message Received', // Subject line
           text: 'PostIt App ?', // plain text body
-          html: '<p>Hello</p><h5>This is to notify you that a message has been posted to '+ groupName +' group</h5>' // html body
+          html: '<p>Hello</p><h5>This is to notify you that a message has been posted in '+ groupName +' group</h5>' // html body
       };
-
       transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
               console.log(error);
           }
           console.log('Message %s sent: %s', info);
       });
-
-
-
       } else {
         res.status(403).send({
           // user is not signed in
@@ -158,7 +154,7 @@ static addUser(req, res) {
   }
 
 
-// Nodemailer Sample
+// Nodemailer Sample for sending Emails
 static mailer(req, res) {
 let transporter = nodemailer.createTransport(smtpTransport({
     service: "gmail",
@@ -187,7 +183,7 @@ transporter.sendMail(mailOptions, (error, info) => {
 
   }
 
-
+// Nexmo Sample for sending SMS
     static sms(req, res){
       const nexmo = new Nexmo({
       apiKey: '47f699b7',
