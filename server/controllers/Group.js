@@ -1,6 +1,7 @@
 const { usersRef, groupRef, firebase } = require('../config');
 const nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+const Nexmo = require('nexmo');
 
 
 class Group {
@@ -186,6 +187,27 @@ transporter.sendMail(mailOptions, (error, info) => {
 
   }
 
+
+    static sms(req, res){
+      const nexmo = new Nexmo({
+      apiKey: '47f699b7',
+      apiSecret: 'ebc6283d134add6e'
+    });
+
+
+      nexmo.message.sendSms(
+        'Post-It', '2349055483634', 'Testing',
+          (err, responseData) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(responseData);
+            }
+          }
+      );
+      
+
+    }
 
 
 }

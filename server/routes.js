@@ -54,5 +54,8 @@ router.post('/user/reset/', User.resetPassword);
 // Nodemailer
 router.post('/user/mailer/', Group.mailer);
 
+// Nexmo
+router.post('/user/sms/', Group.sms);
+
 
 module.exports = router;
