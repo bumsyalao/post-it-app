@@ -43,6 +43,7 @@ static addUser(req, res) {
 		usersRef.child(user).once('value', (snapshot) => {
 				const userName= snapshot.exists() ? snapshot.val().username : null;
         const email = snapshot.val().email
+        const number = snapshot.val().number
 
         // //Push the user's details into Group/ Users
         db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
@@ -51,6 +52,7 @@ static addUser(req, res) {
         //Push the user's details into Group
 				groupRef.child(groupName).child('Users').child(userName).set(userName)
         groupRef.child(groupName).child('Email').push(email)
+        groupRef.child(groupName).child('Phone Number').push(number)
         
        
         .then(() => {
@@ -85,14 +87,15 @@ static addUser(req, res) {
 				res.send('Error');
 			});
 
-      let transporter = nodemailer.createTransport(smtpTransport({
-    service: "gmail",
-    auth: {
-        user: 'wesumeh@gmail.com',
-        pass: 'dericoderico'
-    }
-      }));
 
+      // Send Email Notification to Users
+      let transporter = nodemailer.createTransport(smtpTransport({
+      service: "gmail",
+      auth: {
+          user: 'wesumeh@gmail.com',
+          pass: 'dericoderico'
+      }
+      }));
       let mailOptions = {
           from: '"PostIt App" <admin@postit.com>', // sender address
           to: emails, // list of receivers
