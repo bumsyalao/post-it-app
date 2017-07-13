@@ -114,6 +114,13 @@ const AppActions = {
         })
 
     },
+      receiveNumbers(numbers){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_NUMBERS,
+            numbers
+        })
+
+    },
 
        displayName(displayName){
         AppDispatcher.handleViewAction({

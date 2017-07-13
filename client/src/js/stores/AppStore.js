@@ -14,6 +14,7 @@ const CHANGE_EVENT = 'change'
     let _groups = [];
     let _groupUsers = [];
     let _groupEmails = [];
+    let _groupNumbers = [];
     let _databaseUsers = [];
  
 //localStorage["users"] ? false : true;
@@ -108,13 +109,20 @@ const CHANGE_EVENT = 'change'
     getGroupEmails(){
       return _groupEmails;
     },
-    saveGroupEmails(emails){
-      _groupEmails.push(emails);
-    },
 
     setGroupEmails(emails){
       _groupEmails = emails;
     },
+
+        // Get Numbers in a Group
+    getGroupNumbers(){
+      return _groupNumbers;
+    },
+
+    setGroupNumbers(numbers){
+      _groupNumbers = numbers;
+    },
+
 
 
     
@@ -282,6 +290,13 @@ const CHANGE_EVENT = 'change'
       case AppConstants.RECEIVE_EMAILS:
         console.log('Receiving Emails in a group...'); 
         AppStore.setGroupEmails(action.emails);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_NUMBERS:
+        console.log('Receiving Numbers in a group...'); 
+        AppStore.setGroupNumbers(action.numbers);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

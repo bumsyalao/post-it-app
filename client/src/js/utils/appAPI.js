@@ -43,7 +43,7 @@ module.exports = {
             groupName: group.groupName,
             userName: group.userName
             }).then(function (response) {
-                console.log(response);              
+                alert(response.data);              
             }).catch(function (error) {
                 console.log(error);
             });                  
@@ -67,7 +67,7 @@ module.exports = {
        const user = addUser.user;
         axios.post('/group/'+ groupName +"/"+user)
         .then(function (response) {
-                console.log(response);
+                alert(response.data);
                 
             }).catch(function (error) {
                 console.log(error);
@@ -131,11 +131,14 @@ module.exports = {
             .then((users) => {  
                 const user = users.data.Users
                 const email = users.data.Email
+                const number = users.data.Number
                 console.log(user)
                 console.log(email)
+                console.log(number)
                                     
             AppActions.receiveUserMessage(user)
             AppActions.receiveEmails(email)
+            AppActions.receiveNumbers(number)
            })
             .catch(function (error) {
                 console.log(error);

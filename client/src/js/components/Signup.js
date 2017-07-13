@@ -37,7 +37,7 @@ export default class Signup extends Component {
                     <input type="email" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
                 <div className='form-group'>
-                    <input type="text" ref='number' className='form-control' placeholder='Phone Number - 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
+                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
                 </div>
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
