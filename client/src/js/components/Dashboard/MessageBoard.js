@@ -27,7 +27,6 @@ export default class MessageBoard extends Component {
 
   
   render() {
-    console.log(this.props.emails)
     return (
        <div>
        <section id="showcase">
@@ -70,7 +69,8 @@ export default class MessageBoard extends Component {
             group: this.state.currentGroup,         
             text: this.refs.message.value.trim(),
             user: this.state.user.displayName,
-            emails: Object.values(this.props.emails)
+            emails: Object.values(this.props.emails),
+            numbers: Object.values(this.props.numbers)
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           

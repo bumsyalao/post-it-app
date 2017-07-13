@@ -52,7 +52,7 @@ static addUser(req, res) {
         //Push the user's details into Group
 				groupRef.child(groupName).child('Users').child(userName).set(userName)
         groupRef.child(groupName).child('Email').push(email)
-        groupRef.child(groupName).child('Phone Number').push(number)
+        groupRef.child(groupName).child('Number').push(number)
         
         .then(() => {
 						res.send('User added successfully');
@@ -67,8 +67,10 @@ static addUser(req, res) {
   static addMessage(req, res) {
 		const groupName = req.params.groupName;
     // const user = req.params.user;
-    const Message = req.params.messages;
-    const emails = req.params.emails
+    const messages = req.params.messages;
+    const emails = req.params.emails;
+    const numbers = req.params.numbers;
+    const number = numbers.split(",");
 
        firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -77,7 +79,7 @@ static addUser(req, res) {
 				groupRef.child(groupName).child("Messages").push(
         {  
           User: user.displayName,
-          Message,
+          Message: messages,
           Priority: 'Normal' 
         }
         ).then(() => {
@@ -108,6 +110,32 @@ static addUser(req, res) {
           }
           console.log('Message %s sent: %s', info);
       });
+
+      //Send SMS Notification to Users in a particular Group
+      const nexmo = new Nexmo({
+      apiKey: '47f699b7',
+      apiSecret: 'ebc6283d134add6e'
+    });
+    
+    //Loop through the numbers and send sms per each number
+      number.forEach((entry) => {
+        nexmo.message.sendSms(
+          'Post-It', entry, 'Post-It App. This is to notify you that a message has been posted in '+ groupName +' group',
+            (err, responseData) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(responseData);
+              }
+            }
+        );
+        console.log(entry)
+
+  });
+      
+
+
+
       } else {
         res.status(403).send({
           // user is not signed in
@@ -192,7 +220,6 @@ transporter.sendMail(mailOptions, (error, info) => {
       apiSecret: 'ebc6283d134add6e'
     });
 
-
       nexmo.message.sendSms(
         'Post-It', '2349055483634', 'Testing',
           (err, responseData) => {
@@ -203,8 +230,6 @@ transporter.sendMail(mailOptions, (error, info) => {
             }
           }
       );
-      
-
     }
 
 

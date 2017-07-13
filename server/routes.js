@@ -40,7 +40,7 @@ router.get('/user/database/', User.database);
 router.get('/group/:groupName', Group.database);
 
 // Add Message from a particular Group
-router.post('/groups/:groupName/:messages/:emails', Group.addMessage);
+router.post('/groups/:groupName/:messages/:emails/:numbers', Group.addMessage);
 
 // Retrive Message from a particular Group
 router.get('/groups/:groupName', Group.messageDatabase);
