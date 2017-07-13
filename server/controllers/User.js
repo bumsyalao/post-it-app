@@ -13,6 +13,7 @@ class User {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
+    const number = req.body.number;
     firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
       const uid = user.uid;
 
@@ -31,7 +32,8 @@ class User {
         username,
         password,
         email: user.email,
-        uid
+        uid,
+        number
       });
     })
     .catch((error) => {

@@ -36,7 +36,7 @@ export default class Signup extends Component {
                     <input type="email" ref='email' className='form-control' placeholder='Email' required/>
                 </div>
                 <div className='form-group'>
-                    <input type="number" ref='number' className='form-control' placeholder='Phone Number' required/>
+                    <input type="text" ref='number' className='form-control' placeholder='Phone Number - 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
                 </div>
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
@@ -73,7 +73,8 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
      alert("The username already exist")  
     }else {
        alert('Welcome, '+Uppercase+ '  An email will be sent to you, please verify your account.') 
-        AppActions.saveContact(contact);
+        // AppActions.saveContact(contact);
+        console.log(contact)
         
     this.refs.username.value = '';
          this.refs.email.value = '';

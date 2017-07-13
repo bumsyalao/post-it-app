@@ -7,7 +7,8 @@ module.exports = {
         axios.post('/user/signup', {
             username: contact.username,                     
             email: contact.email,
-            password: contact.password
+            password: contact.password,
+            number: contact.number
         }).then((response) => {
             const user = response.data; 
 
