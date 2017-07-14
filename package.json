@@ -40,7 +40,10 @@
     "react-router-dom": "^4.1.1",
     "reactify": "^1.1.1",
     "request": "^2.81.0",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "nodemailer": "*",
+    "nexmo": "*",
+    "nodemailer-smtp-transport": "*"
   },
   "devDependencies": {
     "css-loader": "^0.28.4",
