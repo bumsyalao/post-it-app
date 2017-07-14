@@ -36,8 +36,17 @@ router.post('/group/:groupName/:user', Group.addUser);
 // Retrive Groups from Database, we go into the User databse
 router.get('/user/database/', User.database);
 
-// Retrive Users from a particular Group
+// Retrive Notifications from Database, we go into the User databse
+router.get('/user/notification/', User.notification);
+
+// Retrive Users and Email from a particular Group
 router.get('/group/:groupName', Group.database);
+
+// Add Message to a particular Group
+router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification', Group.addMessage);
+
+// // Add Notification to a particular Group
+// router.post('/groups/:groupName/:notification', Group.notification);
 
 // Retrive Message from a particular Group
 router.get('/groups/:groupName', Group.messageDatabase);
@@ -45,8 +54,17 @@ router.get('/groups/:groupName', Group.messageDatabase);
 // Retrive all Users from Database
 router.get('/users/allusers/', User.allUsers);
 
+// Retrive all Phone Numbers from Database
+router.get('/users/allnumbers/', User.allNumbers);
+
 // Password Reset
 router.post('/user/reset/', User.resetPassword);
+
+// Nodemailer
+router.post('/user/mailer/', Group.mailer);
+
+// Nexmo
+router.post('/user/sms/', Group.sms);
 
 
 module.exports = router;

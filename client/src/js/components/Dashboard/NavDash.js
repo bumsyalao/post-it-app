@@ -13,28 +13,42 @@ export default class NavDash extends Component {
   state = { 
     showModal: false,
     showModal2: false,
+    showNotify: false,
     groupName: '',
     userName: '',
     users : []
   };
  
+ // Modal for add Users to the Group
   close = () => {
     this.setState({ showModal: false });
   }
-
   open = () => {
     this.setState({ showModal: true });
   }
-  close2 = () => {
+
+  // Modal for creating Group
+  closeGroup = () => {
     this.setState({ showModal2: false });
   }
-
-  open2 = () => {
+  openGroup = () => {
     this.setState({ showModal2: true });
+  }
+
+  // Modal for Notifications
+  closeNotify = () => {
+    this.setState({ showNotify: false });
+  }
+  openNotify = () => {
+    this.setState({ showNotify: true });
   }
 
 
   render() {
+  //   this.props.notification.map(function(item, i){
+  // console.log({item});
+//})
+       
     return (
       <Navbar inverse collapseOnSelect>
 
@@ -59,7 +73,7 @@ export default class NavDash extends Component {
           </Modal.Footer>
         </Modal>
 
-         <Modal show={this.state.showModal2} onHide={this.close2}>
+         <Modal show={this.state.showModal2} onHide={this.closeGroup}>
           <Modal.Header closeButton>
             <Modal.Title>Create Group</Modal.Title>
           </Modal.Header>
@@ -68,30 +82,49 @@ export default class NavDash extends Component {
                 <div className='form-group'>
                     <input type="text" ref='group' className='form-control' placeholder='GroupName' required/>
                 </div>                             
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                <button  type='submit' className='btn btn-primary'>Submit</button>
             </form>             
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close2}>Close</Button>
+            {/*<Button href="#/dashboard" onClick={this.close2}>Close</Button>*/}
+            <a href="#/dashboard" onClick={this.closeGroup}> Close</a>
           </Modal.Footer>
         </Modal>
 
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href="#/dashboard">PostIt App</a>
-          </Navbar.Brand>
-          <Navbar.Toggle/>
-        </Navbar.Header>
+          
+          <Modal show={this.state.showNotify} onHide={this.closeNotify}>
+          <Modal.Header closeButton>
+            <Modal.Title>Notifications</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           <ul>
+             {
+            
+                Object.keys(this.props.notification).map(function(keyName, keyIndex) {
+             
+                return <li key={keyIndex}>{keyName}</li>          
+                
+                }) 
+           
+              }
+             </ul>           
+          </Modal.Body>
+          <Modal.Footer>
+            <a href="#/dashboard" onClick={this.closeNotify}> Close</a>
+          </Modal.Footer>
+        </Modal>
 
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={2} href="#" onClick = {this.open2}>Create Group</NavItem>
+            <NavItem eventKey={2} href="#" onClick = {this.openGroup}>Create Group</NavItem>
             <NavItem eventKey={2} href="#" onClick = {this.open}>Invite a friend</NavItem>
 
           </Nav>
 
           <Nav pullRight>
-            <NavItem eventKey={1} href="#">Profile</NavItem>
+            <NavItem eventKey={1} href="#" onClick = {this.openNotify}>Notification 
+                <span className="glyphicon glyphicon-envelope"></span>
+        </NavItem>
             <NavItem eventKey={2} href="#" onClick={this.logout.bind(this)}>Logout</NavItem>
           </Nav>
         </Navbar.Collapse>
@@ -99,15 +132,15 @@ export default class NavDash extends Component {
     )
   }
 
-    // Create Group
-    createGroup(e){ 
-      e.preventDefault()
+
+   // Create Group
+    createGroup(e){
+      e.preventDefault() 
             const group = {
               groupName: this.refs.group.value.trim(),
               userName: this.props.user.displayName
-            }
-  
-            AppActions.saveGroup(group);
+            }    
+             AppActions.saveGroup(group);
             this.refs.group.value = '';
           
     }
@@ -115,12 +148,21 @@ export default class NavDash extends Component {
     // Add User to the Group
     addUser(e){
     e.preventDefault(); 
+
+    // Function to convert first letter of each word to capital letter   
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+   } 
+
+    // Implements the function
+const Uppercase = capitalizeFirstLetter(this.refs.user.value)
+
       const addUser = {
          groupname: this.refs.groupname.value.trim(), //group 
-         user: this.refs.user.value.trim()   //user
+         user: Uppercase   //user
       }   
 
-    if (this.props.databaseUsers.includes(this.refs.user.value)){
+    if (this.props.databaseUsers.includes(Uppercase)){
       AppActions.saveGroupUser(addUser);
     }else{
       alert("The User dosen't exist")
@@ -131,7 +173,7 @@ export default class NavDash extends Component {
 }
 
 
-
+// Logout User
 logout(e){
       e.preventDefault();    
       AppActions.logout();

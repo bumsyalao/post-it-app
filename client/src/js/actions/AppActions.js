@@ -18,6 +18,14 @@ const AppActions = {
 
     },
 
+    receiveNumber(number){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_ALLUSERS_NUMBER,
+            number
+        })
+
+    },
+
     removeContact(contactId){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.REMOVE_CONTACT,
@@ -38,6 +46,13 @@ const AppActions = {
         AppDispatcher.handleViewAction({
             actionType: AppConstants.RECEIVE_GROUP,
             groups
+        })
+
+    },
+       receiveNotification(notification){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_NOTIFICATION,
+            notification
         })
 
     },
@@ -107,6 +122,20 @@ const AppActions = {
         })
 
     },
+       receiveEmails(emails){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_EMAILS,
+            emails
+        })
+
+    },
+      receiveNumbers(numbers){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_NUMBERS,
+            numbers
+        })
+
+    },
 
        displayName(displayName){
         AppDispatcher.handleViewAction({
@@ -122,6 +151,15 @@ const AppActions = {
         })
 
     },
+
+        notification(notify){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.NOTIFICATION,
+            notify
+        })
+
+    },
+
 
 
 

@@ -14,9 +14,10 @@ import AppStore from '../../stores/AppStore'
 
 
 
-
+// LHS: Left hand side
 export default class Lhs extends Component {
   render() {
+    // console.log(Object.values(this.props.emails))
   return (
       <div>
         <div>

@@ -21,7 +21,7 @@ class Signin extends Component {
 
 
   render() {
-      localStorage["user"] ? console.log('User Ex') : console.log('No user')
+      // localStorage["user"] ? console.log('User Exist') : console.log('No user')
     return (
       <div>  
            <div className='well'style={{float:'left'}} >  
@@ -33,7 +33,7 @@ class Signin extends Component {
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' />
                 </div>  
-                <div><a href="#/reset">Forgot Password?</a></div>            
+              <div><a href="#/reset">Forgot Password?</a></div>            
                 <button type='submit' className='btn btn-primary'>Log in</button>              
             </form>
         </div>

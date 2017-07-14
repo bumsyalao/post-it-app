@@ -27,9 +27,7 @@ export default class MessageBoard extends Component {
 
   
   render() {
-
-
-
+    console.log(this.props.emails)
     return (
        <div>
        <section id="showcase">
@@ -67,19 +65,22 @@ export default class MessageBoard extends Component {
   }
 
       handleSubmit(e){
-          e.preventDefault();  
-          
-
-    
+          e.preventDefault();   
           const message = {
             group: this.state.currentGroup,         
             text: this.refs.message.value.trim(),
-            user: this.state.user.displayName
+            user: this.state.user.displayName,
+            emails: Object.values(this.props.emails),
+            numbers: Object.values(this.props.numbers),
+            allUsers: Object.values(this.props.contact),
+            notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group'  
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           
           
             AppActions.saveMessage(message)  
+         
+      
             this.refs.message.value = '';
          }                
       }

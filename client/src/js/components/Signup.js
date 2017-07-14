@@ -9,7 +9,10 @@ export default class Signup extends Component {
     super(props);
     this.state = {
       contacts: AppStore.getContacts(),
-       databaseUsers: AppStore.getdatabaseUsers() 
+       databaseUsers: AppStore.getdatabaseUsers(),
+       emails: AppStore.getGroupEmails(),
+       numbers: AppStore.getAllUsersNumber()
+
     };
      this._onChange= this._onChange.bind(this)
   }
@@ -22,8 +25,6 @@ export default class Signup extends Component {
         AppStore.removeChangeListener(this._onChange);
     }
 
- 
-
  render() {    
     return (  
         <div className='well'>  
@@ -34,6 +35,9 @@ export default class Signup extends Component {
                 </div>
                  <div className='form-group'>
                     <input type="email" ref='email' className='form-control' placeholder='Email' required/>
+                </div>
+                <div className='form-group'>
+                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
                 </div>
                  <div className='form-group'>
                     <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
@@ -47,7 +51,6 @@ export default class Signup extends Component {
   }
 
 
- 
 
   handleSubmit(e){
       e.preventDefault();  
@@ -63,25 +66,30 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
    const contact = {
           username: Uppercase,
           email: this.refs.email.value.trim(),
-          password: this.refs.password.value.trim()
+          password: this.refs.password.value.trim(),
+          number: this.refs.number.value.trim()
       }
 
- if (this.state.databaseUsers.includes(Uppercase)){
+      // Checks if Username and Phone number already exist
+    if (this.state.databaseUsers.includes(Uppercase)){
      alert("The username already exist")  
-    }else {
-       alert('Welcome, '+Uppercase+ '  An email will be sent to you, please verify your account.') 
+    }else if(this.state.numbers.includes(this.refs.number.value)){
+        alert("The phone number already exist")
+     }else {      
         AppActions.saveContact(contact);
-        
-    this.refs.username.value = '';
+
+        this.refs.username.value = '';
          this.refs.email.value = '';
          this.refs.password.value = ''; 
-
+         this.refs.number.value = ''; 
     }
-
 }
 
    _onChange(){
-        this.setState({databaseUsers: AppStore.getdatabaseUsers()});      
+        this.setState({databaseUsers: AppStore.getdatabaseUsers()});
+        this.setState({emails: AppStore.getGroupEmails()});
+        this.setState({numbers: AppStore.getAllUsersNumber()});
+                     
     } 
 
 

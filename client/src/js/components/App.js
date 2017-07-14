@@ -37,7 +37,6 @@ class App extends Component  {
     }
  
     render() {  
-        console.log(this.state.authed)  
       return(
         <div>
           {!this.state.authed ? <Navigation /> : ''}
