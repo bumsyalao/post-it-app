@@ -143,9 +143,9 @@ const CHANGE_EVENT = 'change'
     saveNotification(notify){
       _notification.push(notify);
     },
-    // setMessages(messages){
-    //   _messages = messages;
-    // },
+    setNotification(notify){
+      _notification = notify;
+    },
 
     removeContact(contactId){
       var index = _contacts.findIndex(x => x.id === contactId);
@@ -210,6 +210,14 @@ const CHANGE_EVENT = 'change'
         //Store Save
              
         AppStore.setGroups(action.groups);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_NOTIFICATION:
+        console.log('Receiving NOTIFICATION...');
+        //Store Save            
+        AppStore.setNotification(action.notification);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

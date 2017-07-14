@@ -33,6 +33,7 @@ export default class DashBoard extends Component {
   } 
 
   render() { 
+ 
     return (
       <div id='dash'>
         <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers} notification={this.state.notification}/>         

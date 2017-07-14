@@ -41,6 +41,13 @@ const AppActions = {
         })
 
     },
+       receiveNotification(notification){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_NOTIFICATION,
+            notification
+        })
+
+    },
 
     saveGroupUser(addUser){
         AppDispatcher.handleViewAction({

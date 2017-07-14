@@ -45,9 +45,10 @@ export default class NavDash extends Component {
 
 
   render() {
-    this.props.notification.map(function(item, i){
-  console.log({item});
-})
+  //   this.props.notification.map(function(item, i){
+  // console.log({item});
+//})
+       
     return (
       <Navbar inverse collapseOnSelect>
 
@@ -98,10 +99,13 @@ export default class NavDash extends Component {
           <Modal.Body>
            <ul>
              {
-                  this.props.notification.map(function(item, i){
-              
-                    return <li key={i}>{item}</li>
-                  })
+            
+                Object.keys(this.props.notification).map(function(keyName, keyIndex) {
+             
+                return <li key={keyIndex}>{keyName}</li>          
+                
+                }) 
+           
               }
              </ul>           
           </Modal.Body>

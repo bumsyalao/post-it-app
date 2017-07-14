@@ -48,15 +48,26 @@ module.exports = {
                 console.log(error);
             });                  
     },
-
+        // Get list of Groups from Database
      getGroups(){
         axios.get('/user/database')
             .then((group) => {
                 // console.log(groups)
                 const groups = group.data
                 AppActions.receiveGroup(groups)
-                console.log(groups)
-            
+                console.log(groups)          
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+        //Get Notifications from Database
+      getNotifications(){
+        axios.get('/user/notification')
+            .then((response) => {
+                const notification = response.data
+                AppActions.receiveNotification(notification)
+                console.log(notification)          
             })
             .catch(function (error) {
                 console.log(error);

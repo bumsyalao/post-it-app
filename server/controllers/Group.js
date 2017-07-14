@@ -79,17 +79,14 @@ static addUser(req, res) {
     //Converts the list of allUsers into array
     const allUser = allUsers.split(",");
 
-   
-
-       firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
        
        // loop through the user names in user database and add notifications
         allUser.forEach((entry) => {
            db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
         })
-       
-     
+         
         //Push the message into Group
 				groupRef.child(groupName).child("Messages").push(
         {  

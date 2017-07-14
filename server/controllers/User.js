@@ -131,7 +131,8 @@ firebase.auth().onAuthStateChanged((user) => {
       // get the group of a user 
       for (var i in data){           
         if (userId == data[i].uid){     
-          var groups = data[i].groups     
+          var groups = data[i].groups 
+
         }
        
         }
@@ -150,6 +151,34 @@ firebase.auth().onAuthStateChanged((user) => {
     });  
   }
 
+static notification(req, res){
+firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // This means a user is signed in
+        const userId = user.uid;
+        const rootRef = firebase.database().ref().child('users');
+
+    rootRef.once('value', snap => {
+      const data = snap.val()
+ 
+      for (var i in data){           
+        if (userId == data[i].uid){     
+          var notification = data[i].Notifications              
+        }      
+        }  
+   res.send(notification) 
+
+    })
+
+      } else {
+        console.log({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });
+       
+      }
+    });  
+  }
   static allUsers(req, res){
     const rootRef = firebase.database().ref().child('users');
 

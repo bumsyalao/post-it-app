@@ -16,6 +16,7 @@ import {firebaseAuth, firebase}from '../../server/config'
 // Display State
 AppAPI.searchUserMessage();
 AppAPI.getGroups();
+AppAPI.getNotifications();
 AppAPI.getMessages()
 AppAPI.getContacts()
 AppAPI.searchUserMessage()

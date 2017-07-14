@@ -36,6 +36,9 @@ router.post('/group/:groupName/:user', Group.addUser);
 // Retrive Groups from Database, we go into the User databse
 router.get('/user/database/', User.database);
 
+// Retrive Notifications from Database, we go into the User databse
+router.get('/user/notification/', User.notification);
+
 // Retrive Users and Email from a particular Group
 router.get('/group/:groupName', Group.database);
 
