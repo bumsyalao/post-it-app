@@ -137,6 +137,15 @@ const AppActions = {
 
     },
 
+        notification(notify){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.NOTIFICATION,
+            notify
+        })
+
+    },
+
+
 
 
 

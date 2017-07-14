@@ -39,8 +39,11 @@ router.get('/user/database/', User.database);
 // Retrive Users and Email from a particular Group
 router.get('/group/:groupName', Group.database);
 
-// Add Message from a particular Group
-router.post('/groups/:groupName/:messages/:emails/:numbers', Group.addMessage);
+// Add Message to a particular Group
+router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification', Group.addMessage);
+
+// // Add Notification to a particular Group
+// router.post('/groups/:groupName/:notification', Group.notification);
 
 // Retrive Message from a particular Group
 router.get('/groups/:groupName', Group.messageDatabase);

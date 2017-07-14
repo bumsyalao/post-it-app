@@ -16,6 +16,7 @@ const CHANGE_EVENT = 'change'
     let _groupEmails = [];
     let _groupNumbers = [];
     let _databaseUsers = [];
+    let _notification = [];
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -124,18 +125,27 @@ const CHANGE_EVENT = 'change'
     },
 
 
-
-    
+    // Get Messages
     getMessages(){
       return _messages;
     },
     saveMessages(message){
       _messages.push(message);
     },
-
     setMessages(messages){
       _messages = messages;
     },
+
+    // Get Notification
+    getNotification(){
+      return _notification;
+    },
+    saveNotification(notify){
+      _notification.push(notify);
+    },
+    // setMessages(messages){
+    //   _messages = messages;
+    // },
 
     removeContact(contactId){
       var index = _contacts.findIndex(x => x.id === contactId);
@@ -310,6 +320,27 @@ const CHANGE_EVENT = 'change'
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
+
+      case AppConstants.NOTIFICATION:
+        console.log('Saving Notification...');
+        //Store Save
+        AppStore.saveNotification(action.notify);
+        
+        //Save to API
+        AppAPI.saveNotification(action.notify)
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      // case AppConstants.RECEIVE_MESSAGE:
+      //   console.log('Receving Message...');
+      //   //Store Save
+      //   AppStore.setMessages(action.message);
+      //   //Emit Change
+      //   AppStore.emit(CHANGE_EVENT);
+      //   break;
+
+
 
 
     }

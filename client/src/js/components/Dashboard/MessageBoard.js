@@ -70,12 +70,16 @@ export default class MessageBoard extends Component {
             text: this.refs.message.value.trim(),
             user: this.state.user.displayName,
             emails: Object.values(this.props.emails),
-            numbers: Object.values(this.props.numbers)
+            numbers: Object.values(this.props.numbers),
+            allUsers: Object.values(this.props.contact),
+            notification: this.refs.message.value+' posted in '+ this.state.currentGroup +' group'  
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){           
           
             AppActions.saveMessage(message)  
+            const notify = message.user+' posted in '+ message.group +' group'      
+            //  AppActions.notification(notify)
             this.refs.message.value = '';
          }                
       }

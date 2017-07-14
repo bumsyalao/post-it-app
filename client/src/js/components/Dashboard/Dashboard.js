@@ -18,7 +18,8 @@ export default class DashBoard extends Component {
             numbers:AppStore.getGroupNumbers(),
             groups: AppStore.getGroups(),
             currentGroup: AppStore.getCurrentGroup(),
-            databaseUsers: AppStore.getdatabaseUsers()
+            databaseUsers: AppStore.getdatabaseUsers(),
+            notification: AppStore.getNotification(),
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -34,14 +35,13 @@ export default class DashBoard extends Component {
   render() { 
     return (
       <div id='dash'>
-        <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers}/>         
+        <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers} notification={this.state.notification}/>         
         <Grid>
           <Row className="show-grid">
             <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>
 
-            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard emails={this.state.emails} numbers={this.state.numbers}/>} </Col>
+            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}/>} </Col>
             
-
           </Row>
         </Grid>
       </div>
@@ -56,6 +56,8 @@ export default class DashBoard extends Component {
         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
         this.setState({emails: AppStore.getGroupEmails()});
         this.setState({numbers:AppStore.getGroupNumbers()});
+        this.setState({notification: AppStore.getNotification()});
+        
       
     }  
 }

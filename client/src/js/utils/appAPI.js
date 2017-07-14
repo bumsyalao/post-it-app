@@ -79,7 +79,10 @@ module.exports = {
        const messages = message.text;
        const emails = message.emails;
         const numbers = message.numbers;
-        axios.post('/groups/'+ groupName +"/"+messages+"/"+emails+"/"+numbers)
+        const allUsers = message.allUsers;
+        const notification = message.notification
+         
+        axios.post('/groups/'+ groupName +"/"+messages+"/"+emails+"/"+numbers+"/"+allUsers+"/"+notification)
         .then(function (response) {
                 console.log(response);
                 
@@ -99,6 +102,33 @@ module.exports = {
                 console.log(error);
             });
     },
+
+        saveNotification(notify){
+    //    const groupName = message.group;
+    //     // const groupID = addUsers.groupID
+    //    const messages = message.text;
+    //    const emails = message.emails;
+    //     const numbers = message.numbers;
+    //     axios.post('/groups/'+ groupName +"/"+messages+"/"+emails+"/"+numbers)
+    //     .then(function (response) {
+    //             console.log(response);
+                
+    //         }).catch(function (error) {
+    //             console.log(error);
+    //         });                  
+    },
+
+    //   getMessages(keyName){
+    //     const groupName = keyName;
+    //     axios.get('/groups/'+groupName)
+    //         .then((message) => {
+               
+    //             AppActions.receiveMessages(message.data)
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // },
 
      login(contact){
         axios.post('/user/signin', {               
