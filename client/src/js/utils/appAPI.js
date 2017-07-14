@@ -42,7 +42,6 @@ module.exports = {
         axios.get('/users/allnumbers')
             .then(function (response) {               
                 AppActions.receiveNumber(response.data)
-                console.log(response.data)
             })
             .catch(function (error) {
                 console.log(error);
@@ -77,8 +76,7 @@ module.exports = {
         axios.get('/user/notification')
             .then((response) => {
                 const notification = response.data
-                AppActions.receiveNotification(notification)
-                console.log(notification)          
+                AppActions.receiveNotification(notification)         
             })
             .catch(function (error) {
                 console.log(error);

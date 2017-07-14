@@ -45,10 +45,9 @@ export default class NavDash extends Component {
 
 
   render() {
-  //   this.props.notification.map(function(item, i){
-  // console.log({item});
-//})
-       
+
+
+    
     return (
       <Navbar inverse collapseOnSelect>
 
@@ -59,7 +58,15 @@ export default class NavDash extends Component {
           <Modal.Body>
                 <form onSubmit={this.addUser.bind(this)}>
                   <div className='form-group'>
-                  <input type="text" ref='groupname' className='form-control' placeholder='Group Name' required/>
+                      <select className="form-control" ref="type">
+                        <option></option>
+                        {
+                             Object.keys(this.props.group).map(function(keyName, keyIndex) {
+                              return <option key={keyIndex} value={keyName}>{keyName}</option>
+                                  })  
+                        }
+
+                      </select>
                   </div>
                   <div className='form-group'>
                       <input type="text" ref='user' className='form-control' placeholder='Search for a User' required/>
@@ -133,7 +140,7 @@ export default class NavDash extends Component {
   }
 
 
-   // Create Group
+  // Create Group
     createGroup(e){
       e.preventDefault() 
             const group = {
@@ -144,8 +151,9 @@ export default class NavDash extends Component {
             this.refs.group.value = '';
           
     }
+    
 
-    // Add User to the Group
+ // Add User to the Group
     addUser(e){
     e.preventDefault(); 
 
@@ -157,17 +165,22 @@ export default class NavDash extends Component {
     // Implements the function
 const Uppercase = capitalizeFirstLetter(this.refs.user.value)
 
+
+
       const addUser = {
-         groupname: this.refs.groupname.value.trim(), //group 
+         groupname: this.refs.type.value.trim(), //group 
          user: Uppercase   //user
       }   
 
-    if (this.props.databaseUsers.includes(Uppercase)){
-      AppActions.saveGroupUser(addUser);
-    }else{
-      alert("The User dosen't exist")
-    }
-      this.refs.groupname.value = ''; 
+      if(this.refs.type.value === ''){
+        alert("Select a group name from the drop down list")
+      }
+      else if (this.props.databaseUsers.includes(Uppercase)){
+        AppActions.saveGroupUser(addUser);
+      }else{
+        alert("The User dosen't exist")
+      }
+      this.refs.type.value = ''; 
       this.refs.user.value = '';
 
 }
