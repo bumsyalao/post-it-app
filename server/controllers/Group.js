@@ -116,7 +116,7 @@ static addUser(req, res) {
           to: emails, // list of receivers
           subject: 'New Message Received', // Subject line
           text: 'PostIt App ?', // plain text body
-          html: '<p>Hello</p><h2>This is to notify you that a message has been posted in '+ groupName +' group</h2>' // html body
+          html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in '+ groupName +' group</h2>' // html body
       };
       transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
@@ -137,7 +137,7 @@ static addUser(req, res) {
       //Loop through the numbers and send sms per each number
         number.forEach((entry) => {
           nexmo.message.sendSms(
-            'Post-It', entry, 'Post-It App. This is to notify you that a message has been posted in '+ groupName +' group',
+            'Post-It', entry, 'Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in '+ groupName +' group',
               (err, responseData) => {
                 if (err) {
                   console.log(err);
