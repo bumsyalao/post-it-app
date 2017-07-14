@@ -27,6 +27,7 @@ export default class MessageBoard extends Component {
 
   
   render() {
+    console.log(this.props.emails)
     return (
        <div>
        <section id="showcase">
@@ -78,8 +79,8 @@ export default class MessageBoard extends Component {
          if(typeof message.text === 'string' && message.text.length > 0){           
           
             AppActions.saveMessage(message)  
-            const notify = message.user+' posted in '+ message.group +' group'      
-            //  AppActions.notification(notify)
+         
+      
             this.refs.message.value = '';
          }                
       }

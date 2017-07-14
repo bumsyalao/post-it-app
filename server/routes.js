@@ -54,6 +54,9 @@ router.get('/groups/:groupName', Group.messageDatabase);
 // Retrive all Users from Database
 router.get('/users/allusers/', User.allUsers);
 
+// Retrive all Phone Numbers from Database
+router.get('/users/allnumbers/', User.allNumbers);
+
 // Password Reset
 router.post('/user/reset/', User.resetPassword);
 

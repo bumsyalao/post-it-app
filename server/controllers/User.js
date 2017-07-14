@@ -179,6 +179,8 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });  
   }
+
+  //Get All Users in the Database
   static allUsers(req, res){
     const rootRef = firebase.database().ref().child('users');
 
@@ -192,6 +194,22 @@ firebase.auth().onAuthStateChanged((user) => {
       res.send(users);
     });
   }
+
+  //Get All Phone Numbers in the database
+    static allNumbers(req, res){
+    const rootRef = firebase.database().ref().child('users');
+
+    rootRef.once('value', (snap) => {
+      const data = snap.val();
+      const numbers = [];
+
+      for(var i in data) {
+        numbers.push(data[i].number);
+      }
+      res.send(numbers);
+    });
+  }
+
 
   static resetPassword(req, res) {
     const emailAddress = req.body.email 

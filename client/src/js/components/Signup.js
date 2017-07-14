@@ -10,7 +10,8 @@ export default class Signup extends Component {
     this.state = {
       contacts: AppStore.getContacts(),
        databaseUsers: AppStore.getdatabaseUsers(),
-       emails: AppStore.getGroupEmails()
+       emails: AppStore.getGroupEmails(),
+       numbers: AppStore.getAllUsersNumber()
 
     };
      this._onChange= this._onChange.bind(this)
@@ -25,7 +26,6 @@ export default class Signup extends Component {
     }
 
  render() {    
-     console.log(this.state.emails)
     return (  
         <div className='well'>  
             <h3>Sign Up</h3>
@@ -70,26 +70,26 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
           number: this.refs.number.value.trim()
       }
 
- if (this.state.databaseUsers.includes(Uppercase)){
+      // Checks if Username and Phone number already exist
+    if (this.state.databaseUsers.includes(Uppercase)){
      alert("The username already exist")  
-    }else {
-       alert('Welcome, '+Uppercase+ '  An email will be sent to you, please verify your account.') 
-       AppActions.saveContact(contact);
+    }else if(this.state.numbers.includes(this.refs.number.value)){
+        alert("The phone number already exist")
+     }else {      
+        AppActions.saveContact(contact);
 
-        
-    this.refs.username.value = '';
+        this.refs.username.value = '';
          this.refs.email.value = '';
          this.refs.password.value = ''; 
          this.refs.number.value = ''; 
-
     }
-
 }
 
    _onChange(){
         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
         this.setState({emails: AppStore.getGroupEmails()});
-           
+        this.setState({numbers: AppStore.getAllUsersNumber()});
+                     
     } 
 
 

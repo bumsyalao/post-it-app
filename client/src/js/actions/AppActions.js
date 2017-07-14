@@ -18,6 +18,14 @@ const AppActions = {
 
     },
 
+    receiveNumber(number){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_ALLUSERS_NUMBER,
+            number
+        })
+
+    },
+
     removeContact(contactId){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.REMOVE_CONTACT,

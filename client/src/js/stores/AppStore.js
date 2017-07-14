@@ -17,6 +17,7 @@ const CHANGE_EVENT = 'change'
     let _groupNumbers = [];
     let _databaseUsers = [];
     let _notification = [];
+    let _allUsersNumber = []
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -63,7 +64,16 @@ const CHANGE_EVENT = 'change'
     setContacts(contacts){
       _contacts = contacts;
     },
-    
+
+    // Get All Users in the database
+    getAllUsersNumber(){
+      return _allUsersNumber;
+    },
+    setAllUsersNumber(number){
+      _allUsersNumber = number;
+    },
+
+     
     getdatabaseUsers(){
       return _databaseUsers;
     },
@@ -184,11 +194,17 @@ const CHANGE_EVENT = 'change'
         break;
 
       case AppConstants.RECEIVE_CONTACT:
-        console.log('Receiving Contact...');
-
-        
+        console.log('Receiving Contact...');        
         //Store Save
         AppStore.setdatabaseUsers(action.contacts);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_ALLUSERS_NUMBER:
+        console.log('Receiving all the numbers in a the database...');        
+        //Store Save
+        AppStore.setAllUsersNumber(action.number);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -340,13 +356,6 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
-      // case AppConstants.RECEIVE_MESSAGE:
-      //   console.log('Receving Message...');
-      //   //Store Save
-      //   AppStore.setMessages(action.message);
-      //   //Emit Change
-      //   AppStore.emit(CHANGE_EVENT);
-      //   break;
 
 
 

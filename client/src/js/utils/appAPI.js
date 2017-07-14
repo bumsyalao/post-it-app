@@ -14,13 +14,13 @@ module.exports = {
 
             if (response.data.message == 'The email address is already in use by another account.') {
                     alert(response.data.message)
+            }else if(response.data.message == 'The email address is badly formatted.'){               
+                    alert(response.data.message)        
             }else{
-                
-                    AppActions.receiveLogin(user)
-                   
+                 console.log(user) 
+                 AppActions.receiveLogin(user)
+                  alert('Welcome,  An email will be sent to you, please verify your account.') 
             }
-             
-            
             }).catch(function (error) { 
                 console.log(error);
             });                  
@@ -29,9 +29,20 @@ module.exports = {
     // Get all Contacts from database, this will use for validation
     getContacts(){
         axios.get('/users/allusers')
-            .then(function (contacts) {
-                
+            .then(function (contacts) {               
                 AppActions.receiveContact(contacts.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+
+       // Get all Numbers from database, this will use for validation
+    getNumbers(){
+        axios.get('/users/allnumbers')
+            .then(function (response) {               
+                AppActions.receiveNumber(response.data)
+                console.log(response.data)
             })
             .catch(function (error) {
                 console.log(error);

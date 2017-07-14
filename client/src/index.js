@@ -19,6 +19,7 @@ AppAPI.getGroups();
 AppAPI.getNotifications();
 AppAPI.getMessages()
 AppAPI.getContacts()
+AppAPI.getNumbers()
 AppAPI.searchUserMessage()
 
 
