@@ -71,7 +71,9 @@ static addUser(req, res) {
     const numbers = req.params.numbers;
     const allUsers = req.params.allUsers;
     const notification = req.params.notification;
+    const priority = req.params.priority;
     const db = firebase.database();
+    console.log(priority)
 
     //Converts the list of numbers into array
     const number = numbers.split(",");
@@ -92,7 +94,7 @@ static addUser(req, res) {
         {  
           User: user.displayName,
           Message: messages,
-          Priority: 'Normal' 
+          Priority: priority 
         }
         ).then(() => {
 						res.send('Message added successfully');
@@ -100,8 +102,8 @@ static addUser(req, res) {
 				res.send('Error');
 			});
 
-
-      // Send Email Notification to Users
+      if((priority === 'Urgent') || (priority === 'Critical')){
+         // Send Email Notification to Users
       let transporter = nodemailer.createTransport(smtpTransport({
       service: "gmail",
       auth: {
@@ -123,26 +125,32 @@ static addUser(req, res) {
           console.log('Message %s sent: %s', info);
       });
 
-      //Send SMS Notification to Users in a particular Group
-      const nexmo = new Nexmo({
-      apiKey: '47f699b7',
-      apiSecret: 'ebc6283d134add6e'
-    });
+    }
     
-    //Loop through the numbers and send sms per each number
-      number.forEach((entry) => {
-        nexmo.message.sendSms(
-          'Post-It', entry, 'Post-It App. This is to notify you that a message has been posted in '+ groupName +' group',
-            (err, responseData) => {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log(responseData);
+    if(priority === 'Critical'){
+        //Send SMS Notification to Users in a particular Group
+        const nexmo = new Nexmo({
+        apiKey: '47f699b7',
+        apiSecret: 'ebc6283d134add6e'
+      });
+      
+      //Loop through the numbers and send sms per each number
+        number.forEach((entry) => {
+          nexmo.message.sendSms(
+            'Post-It', entry, 'Post-It App. This is to notify you that a message has been posted in '+ groupName +' group',
+              (err, responseData) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(responseData);
+                }
               }
-            }
-        );
+          );
 
-  });
+    });
+
+    }
+
       } else {
         res.status(403).send({
           // user is not signed in

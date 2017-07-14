@@ -27,7 +27,7 @@ export default class MessageBoard extends Component {
 
   
   render() {
-    console.log(this.props.emails)
+    // console.log(this.props.emails)
     return (
        <div>
        <section id="showcase">

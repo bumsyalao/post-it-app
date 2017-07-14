@@ -100,9 +100,10 @@ module.exports = {
        const emails = message.emails;
         const numbers = message.numbers;
         const allUsers = message.allUsers;
-        const notification = message.notification
+        const notification = message.notification;
+        const priority = message.priority;
          
-        axios.post('/groups/'+ groupName +"/"+messages+"/"+emails+"/"+numbers+"/"+allUsers+"/"+notification)
+        axios.post('/groups/'+ groupName + "/" + messages + "/"+ emails +"/" + numbers + "/" + allUsers + "/"+ notification + "/" +priority)
         .then(function (response) {
                 console.log(response);
                 
