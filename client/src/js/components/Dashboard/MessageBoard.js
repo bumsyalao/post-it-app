@@ -27,7 +27,7 @@ export default class MessageBoard extends Component {
 
   
   render() {
-    console.log(this.props.emails)
+    // console.log(this.props.emails)
     return (
        <div>
        <section id="showcase">
@@ -48,14 +48,20 @@ export default class MessageBoard extends Component {
        
           <div className="col-md-12">
             <div className="chat" id="chat" />
-
             <form id="messageForm" onSubmit={this.handleSubmit.bind(this)}>
+        
               <div className="form-group">
                 <label>Enter Message</label>
                 <textarea className="form-control" id="message" ref='message' placeholder="Enter Message"/>
+                <select ref="type" style={{color:'black',float:'left'}}>
+                        <option value='Normal'>Normal</option>
+                        <option value='Urgent'>Urgent</option>
+                        <option value='Critical'>Critical</option>
+                </select> 
                 <br />
-                <input type="submit" className="btn btn-primary" defaultValue="Send Message" />
+                <input type="submit" className="btn btn-primary" defaultValue="Send Message" />           
               </div>
+
             </form>
          </div>
         </div>
@@ -66,6 +72,7 @@ export default class MessageBoard extends Component {
 
       handleSubmit(e){
           e.preventDefault();   
+          //trim() removes white spaces around a string
           const message = {
             group: this.state.currentGroup,         
             text: this.refs.message.value.trim(),
@@ -73,16 +80,14 @@ export default class MessageBoard extends Component {
             emails: Object.values(this.props.emails),
             numbers: Object.values(this.props.numbers),
             allUsers: Object.values(this.props.contact),
-            notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group'  
+            notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group',
+            priority: this.refs.type.value  
           }       
          
-         if(typeof message.text === 'string' && message.text.length > 0){           
-          
+         if(typeof message.text === 'string' && message.text.length > 0){                    
             AppActions.saveMessage(message)  
-         
-      
             this.refs.message.value = '';
-         }                
+         }             
       }
       _onChange(){
         this.setState({currentGroup: AppStore.getCurrentGroup()});

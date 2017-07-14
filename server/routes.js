@@ -43,7 +43,7 @@ router.get('/user/notification/', User.notification);
 router.get('/group/:groupName', Group.database);
 
 // Add Message to a particular Group
-router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification', Group.addMessage);
+router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification/:priority', Group.addMessage);
 
 // // Add Notification to a particular Group
 // router.post('/groups/:groupName/:notification', Group.notification);
