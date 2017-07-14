@@ -65,14 +65,13 @@ static addUser(req, res) {
 
 
   static addMessage(req, res) {
-		const groupName = req.params.groupName;
-    // const user = req.params.user;
+		  const groupName = req.params.groupName;
     const messages = req.params.messages;
     const emails = req.params.emails;
     const numbers = req.params.numbers;
     const allUsers = req.params.allUsers;
     const notification = req.params.notification;
-     const db = firebase.database();
+    const db = firebase.database();
 
     //Converts the list of numbers into array
     const number = numbers.split(",");
@@ -82,76 +81,78 @@ static addUser(req, res) {
 
    
 
-  //      firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
+       firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
        
-  //      // Find a user and add notification
-  //       const theuser = user.displayName;
-  //       db.ref(`/users/${theuser}/Notifications`).child(notification).set(notification);
+       // loop through the user names in user database and add notifications
+        allUser.forEach((entry) => {
+           db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
+        })
+       
      
-  //       //Push the message into Group
-	// 			groupRef.child(groupName).child("Messages").push(
-  //       {  
-  //         User: user.displayName,
-  //         Message: messages,
-  //         Priority: 'Normal' 
-  //       }
-  //       ).then(() => {
-	// 					res.send('Message added successfully');
-	// 				}).catch((err) => {
-	// 			res.send('Error');
-	// 		});
+        //Push the message into Group
+				groupRef.child(groupName).child("Messages").push(
+        {  
+          User: user.displayName,
+          Message: messages,
+          Priority: 'Normal' 
+        }
+        ).then(() => {
+						res.send('Message added successfully');
+					}).catch((err) => {
+				res.send('Error');
+			});
 
 
-  //     // Send Email Notification to Users
-  //     let transporter = nodemailer.createTransport(smtpTransport({
-  //     service: "gmail",
-  //     auth: {
-  //         user: 'wesumeh@gmail.com',
-  //         pass: 'dericoderico'
-  //     }
-  //     }));
-  //     let mailOptions = {
-  //         from: '"PostIt App" <admin@postit.com>', // sender address
-  //         to: emails, // list of receivers
-  //         subject: 'New Message Received', // Subject line
-  //         text: 'PostIt App ?', // plain text body
-  //         html: '<p>Hello</p><h2>This is to notify you that a message has been posted in '+ groupName +' group</h2>' // html body
-  //     };
-  //     transporter.sendMail(mailOptions, (error, info) => {
-  //         if (error) {
-  //             console.log(error);
-  //         }
-  //         console.log('Message %s sent: %s', info);
-  //     });
+      // Send Email Notification to Users
+      let transporter = nodemailer.createTransport(smtpTransport({
+      service: "gmail",
+      auth: {
+          user: 'wesumeh@gmail.com',
+          pass: 'dericoderico'
+      }
+      }));
+      let mailOptions = {
+          from: '"PostIt App" <admin@postit.com>', // sender address
+          to: emails, // list of receivers
+          subject: 'New Message Received', // Subject line
+          text: 'PostIt App ?', // plain text body
+          html: '<p>Hello</p><h2>This is to notify you that a message has been posted in '+ groupName +' group</h2>' // html body
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.log(error);
+          }
+          console.log('Message %s sent: %s', info);
+      });
 
-  //     //Send SMS Notification to Users in a particular Group
-  //     const nexmo = new Nexmo({
-  //     apiKey: '47f699b7',
-  //     apiSecret: 'ebc6283d134add6e'
-  //   });
+      //Send SMS Notification to Users in a particular Group
+      const nexmo = new Nexmo({
+      apiKey: '47f699b7',
+      apiSecret: 'ebc6283d134add6e'
+    });
     
-  //   //Loop through the numbers and send sms per each number
-  //     number.forEach((entry) => {
-  //       nexmo.message.sendSms(
-  //         'Post-It', entry, 'Post-It App. This is to notify you that a message has been posted in '+ groupName +' group',
-  //           (err, responseData) => {
-  //             if (err) {
-  //               console.log(err);
-  //             } else {
-  //               console.log(responseData);
-  //             }
-  //           }
-  //       );
+    //Loop through the numbers and send sms per each number
+      number.forEach((entry) => {
+        nexmo.message.sendSms(
+          'Post-It', entry, 'Post-It App. This is to notify you that a message has been posted in '+ groupName +' group',
+            (err, responseData) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(responseData);
+              }
+            }
+        );
 
-  // });
-  //     } else {
-  //       res.status(403).send({
-  //         // user is not signed in
-  //         message: 'You are not signed in right now!'
-  //       });
-  //     }
-  //   });
+  });
+      } else {
+        res.status(403).send({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });
+      }
+    });
 	}
 
   
