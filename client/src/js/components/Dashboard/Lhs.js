@@ -17,7 +17,7 @@ import AppStore from '../../stores/AppStore'
 // LHS: Left hand side
 export default class Lhs extends Component {
   render() {
-    // console.log(Object.values(this.props.emails))
+    // console.log(Object.values(this.props.group))
   return (
       <div>
         <div>
@@ -28,13 +28,15 @@ export default class Lhs extends Component {
         <ul>
           <li>           
           { 
-              Object.keys(this.props.group).map(function(keyName, keyIndex) {
+              Object.keys(this.props.group).forEach(function(keyName, keyIndex) {
+        
                 return(
                     <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
                     </div>             
                 )
                 })
+
             }
             </li>
         </ul><br/>
