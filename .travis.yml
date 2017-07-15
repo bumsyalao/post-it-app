@@ -4,6 +4,4 @@ node_js:
 before_install:
   - travis_wait npm install
 script:
-  - npm start
-  - webpack 
   - npm test
