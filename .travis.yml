@@ -1,11 +1,10 @@
 language: node_js
 node_js:
-  - "iojs"
   - "7"
   - "6"
-  - "5"
 before_install:
-  - npm i -g npm
+  - npm install
 script:
   - npm start
+  - webpack 
   - npm test

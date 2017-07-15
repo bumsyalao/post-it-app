@@ -51,7 +51,7 @@ class User {
   static google(req, res) {
     const googleUser = req.body.googleUser
 
-    const username = googleUser.username;
+    const username = googleUser.username || 'null';
     const email = googleUser.email;
     const uid = googleUser.uid;
     // add element to database
