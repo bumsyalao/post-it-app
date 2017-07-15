@@ -6,6 +6,3 @@ before_install:
 script:
   - npm start &
   - npm test
-cache:
-  directories:
-    - "node_modules"
