@@ -7,7 +7,7 @@
     "test": "mocha --timeout 15000",
     "start": "node ./server/app",
     "dev": "webpack-dev-server",
-    "coverage": "babel-node cover _mocha test.js"
+    "coverage": "nyc --require babel-core/register mocha ./test/test.js"
   },
   "repository": {
     "type": "git",
