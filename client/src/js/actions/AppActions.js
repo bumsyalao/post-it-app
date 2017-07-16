@@ -57,6 +57,14 @@ const AppActions = {
 
     },
 
+        receivePersonalMessage(message){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_PERSONAL_MESSAGE,
+            message
+        })
+
+    },
+
     saveGroupUser(addUser){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.SAVE_GROUP_USER,

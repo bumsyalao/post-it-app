@@ -17,7 +17,8 @@ const CHANGE_EVENT = 'change'
     let _groupNumbers = [];
     let _databaseUsers = [];
     let _notification = [];
-    let _allUsersNumber = []
+    let _personalMessage = [];
+    let _allUsersNumber = [];
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -155,6 +156,17 @@ const CHANGE_EVENT = 'change'
       _notification = notify;
     },
 
+    // Get Personal Message
+    getPersonalMessage(){
+      return _personalMessage;
+    },
+ 
+    setPersonalMessage(message){
+      _personalMessage = message;
+    },
+
+    
+
     removeContact(contactId){
       var index = _contacts.findIndex(x => x.id === contactId);
       _contacts.splice(index, 1)
@@ -232,6 +244,14 @@ const CHANGE_EVENT = 'change'
         console.log('Receiving NOTIFICATION...');
         //Store Save            
         AppStore.setNotification(action.notification);      
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_PERSONAL_MESSAGE:
+        console.log('Receiving Personal Message...');
+        //Store Save            
+        AppStore.setPersonalMessage(action.message);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

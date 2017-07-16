@@ -89,7 +89,7 @@ module.exports = {
             .then((response) => {
                 const message = response.data
                 console.log(message)
-                // AppActions.receiveNotification(message)         
+                AppActions.receivePersonalMessage(message)         
             })
             .catch(function (error) {
                 console.log(error);
