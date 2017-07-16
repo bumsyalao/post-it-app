@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --timeout 15000",
     "start": "node ./server/app",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "coverage": "babel-node cover _mocha test.js"
   },
   "repository": {
     "type": "git",
