@@ -42,24 +42,6 @@ export default class Lhs extends Component {
         </ul><br/>
          
 
-       <h4>Users</h4>   
-        <ul>
-          <li>
-           {
-          Object.keys(this.props.contact).map(function(keyName, keyIndex) {
-                var post = keyName
-                return(
-                    <div key={keyIndex} onClick={() => console.log(keyName)}>  
-                      <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
-                    </div>             
-                )
-                })       
-            }
-            </li>
-            <br/>
-            <li><a href="#" className="btn btn-default" onClick={this.handleEdit}>Invite Users</a></li>
-  
-        </ul>  
       </div>
     )
   }
