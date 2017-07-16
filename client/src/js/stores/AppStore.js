@@ -29,8 +29,8 @@ const CHANGE_EVENT = 'change'
       // If there is a user in local storage, set authentication true
      setAuthed(){
          if (localStorage.getItem("user") !== null) {
-    _authed = true;
-}
+          _authed = true;
+          }
   
     },
     
@@ -45,9 +45,7 @@ const CHANGE_EVENT = 'change'
 
     saveUser(user){
       _user = user;
-      localStorage.setItem(
-        'user', JSON.stringify(user)
-      )
+      localStorage.setItem('user', JSON.stringify(user))
     },
 
     setUser(user){
@@ -214,7 +212,7 @@ const CHANGE_EVENT = 'change'
         console.log('Saving group...');
 
         // //  //Store Save
-        // AppStore.saveGroup(action.group);    
+        AppStore.saveGroup(action.group);    
         // //Save to API
         AppAPI.saveGroup(action.group)      
         //Emit Change
@@ -225,7 +223,7 @@ const CHANGE_EVENT = 'change'
         console.log('Receiving Groups...');
         //Store Save
              
-        AppStore.setGroups(action.groups);      
+        //AppStore.setGroups(action.groups);      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

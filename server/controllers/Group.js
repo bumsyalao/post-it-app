@@ -41,16 +41,16 @@ static addUser(req, res) {
      const db = firebase.database();
  
 		usersRef.child(user).once('value', (snapshot) => {
-				const userName= snapshot.exists() ? snapshot.val().username : null;
-        const email = snapshot.val().email
-        const number = snapshot.val().number
+				const username = snapshot.exists() ? snapshot.val().username : "null";
+        const email = snapshot.exists() ? snapshot.val().email : "null";
+        const number = snapshot.exists() ? snapshot.val().number : "null";
 
         // //Push the user's details into Group/ Users
         db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
        
         
         //Push the user's details into Group
-				groupRef.child(groupName).child('Users').child(userName).set(userName)
+				groupRef.child(groupName).child('Users').child(username).set(username)
         groupRef.child(groupName).child('Email').push(email)
         groupRef.child(groupName).child('Number').push(number)
         

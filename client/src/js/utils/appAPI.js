@@ -183,11 +183,7 @@ module.exports = {
             .then((users) => {  
                 const user = users.data.Users
                 const email = users.data.Email
-                const number = users.data.Number
-                console.log(user)
-                console.log(email)
-                console.log(number)
-                                    
+                const number = users.data.Number                                   
             AppActions.receiveUserMessage(user)
             AppActions.receiveEmails(email)
             AppActions.receiveNumbers(number)

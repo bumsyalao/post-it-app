@@ -13,7 +13,7 @@ const userSignIn = {
 };
 
 const group = {
-  groupname : "Andela"
+  groupName : "Andela"
 }
  
 describe('PostIt-app:', () => {
@@ -44,6 +44,25 @@ describe('SignUp Route', () => {
       });
   });
 });
+
+// describe('Google SignUp Route', () => {
+//   it('This user should signup with Google', (done) => {
+//     request(app)
+//       .post('/user/google')
+//       .send({
+//         googleUser: 'Test',
+//         username: 'Test',
+//         email: 'Test',
+//         uid: 'Test',
+//       })
+//       .set('Accept', 'application/json')
+//       .expect(200)
+//       .end((err) => {
+//         if (err) return done(err);
+//         done();
+//       });
+//   });
+// });
 
 describe('SignIn Route', () => {
   it('The user should be able to signin', (done) => {
@@ -76,7 +95,10 @@ describe('Create Group', () => {
   it('The user should be able to create a group', (done) => {
     request(app)
       .post('/group')
-      .send(group)
+      .send({     
+          groupName: "Andela",
+          userName: 'Ebuka'
+      })
       .set('Accept', 'application/json')
       .expect(200)
       .end((err) => {
@@ -87,15 +109,15 @@ describe('Create Group', () => {
 });
 
 
-describe('Add User to the Group', () => {
-  it('The user should add other users to the group', (done) => {
-    request(app)
-      .post('/group/:groupID/:uid')
-      .set('Accept', 'application/json')
-      .expect(200)
-      .end((err) => {
-        if (err) return done(err);
-        done();
-      });
-  });
-});
+// describe('Add User to the Group', () => {
+//   it('The user should add other users to the group', (done) => {
+//     request(app)
+//       .post('/group/:groupName/:user')
+//       .set('Accept', 'application/json')
+//       .expect(200)
+//       .end((err) => {
+//         if (err) return done(err);
+//         done();
+//       });
+//   });
+// });
