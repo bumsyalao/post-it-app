@@ -28,7 +28,7 @@ export default class Lhs extends Component {
         <ul>
           <li>           
           { 
-              Object.keys(this.props.group).forEach(function(keyName, keyIndex) {
+              Object.keys(this.props.group).map(function(keyName, keyIndex) {
         
                 return(
                     <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  

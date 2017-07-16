@@ -73,11 +73,14 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();   
           //trim() removes white spaces around a string
+
+
+
           const message = {
             group: this.state.currentGroup,         
             text: this.refs.message.value.trim(),
             user: this.state.user.displayName,
-            emails: Object.values(this.props.emails),
+            emails: Object.values(this.props.emails ? this.props.emails : alert("Add atleast one person to this Group") ),
             numbers: Object.values(this.props.numbers),
             allUsers: Object.values(this.props.contact),
             notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group',
