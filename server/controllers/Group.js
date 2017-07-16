@@ -87,6 +87,7 @@ static addUser(req, res) {
        // loop through the user names in user database and add notifications
         allUser.forEach((entry) => {
            db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
+           db.ref(`/users/${entry}/Messages`).child(messages).set(messages);
         })
          
         //Push the message into Group

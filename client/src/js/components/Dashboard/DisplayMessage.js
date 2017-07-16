@@ -4,7 +4,7 @@ export default class DisplayMessage extends Component {
   render() {
     return (
       <div>
-      <h1>Mees</h1>
+      <h2>Message Board</h2>
 
       </div>
 

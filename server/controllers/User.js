@@ -180,6 +180,35 @@ firebase.auth().onAuthStateChanged((user) => {
     });  
   }
 
+  static personalMessage(req, res){
+firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // This means a user is signed in
+        const userId = user.uid;
+        const rootRef = firebase.database().ref().child('users');
+
+    rootRef.once('value', snap => {
+      const data = snap.val()
+ 
+      for (var i in data){           
+        if (userId == data[i].uid){     
+          var messages = data[i].Messages             
+        }      
+        }  
+   res.send(messages) 
+
+    })
+
+      } else {
+        console.log({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });
+       
+      }
+    });  
+  }
+
   //Get All Users in the Database
   static allUsers(req, res){
     const rootRef = firebase.database().ref().child('users');
