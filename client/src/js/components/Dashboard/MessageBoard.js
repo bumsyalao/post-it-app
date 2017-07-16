@@ -34,13 +34,12 @@ export default class MessageBoard extends Component {
         <div id="messageArea" className="row">
 
           
-       <h4 style={{color:'black'}}>Users</h4>   
+       <h4 style={{color:'black',float:'right'}}>  Users in {this.state.currentGroup} group who have read the message</h4><br/>
      
            {
           Object.keys(this.props.contact).map(function(keyName, keyIndex) {
-                var post = keyName
                 return(
-                    <div style={{float:'left'}} key={keyIndex} onClick={() => console.log(keyName)}>  
+                    <div style={{float:'right'}} key={keyIndex} onClick={() => console.log(keyName)}>  
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
                     </div>             
                 )
