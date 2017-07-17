@@ -3,7 +3,6 @@ import ReadMessage from './ReadMessage'
 
 export default class DisplayMessage extends Component {
   render() {
-      console.log(this.props.personalMessage)
     return (
       <div>     
        <ul>
