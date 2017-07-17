@@ -79,10 +79,33 @@ class User {
     const password = req.body.password;
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
-      res.status(200).send({
+      const userName = user.displayName
+
+      const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
+      rootRef.once('value', snap => {
+      const data = snap.val()
+      const messages = []
+      let message = {}
+  
+      for (var i in data){
+        message = {
+          user: data[i].User,
+          text: data[i].Message,
+          group: data[i].Group      
+        }
+        messages.push(message)
+       }   
+
+            res.status(200).send({
         message: 'Welcome to Post it app',
-        userData: user
+        userData: user,
+        message: messages
       });
+
+    })
+
+
+ 
     })
     .catch((error) => {
       const errorCode = error.code;

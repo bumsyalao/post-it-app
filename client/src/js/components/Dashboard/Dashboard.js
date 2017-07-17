@@ -3,6 +3,7 @@ import AppStore from '../../stores/AppStore'
 import NavDash from './NavDash';
 import LHS from './Lhs';
 import MessageBoard from './MessageBoard'
+import DisplayMessage from './DisplayMessage'
 
 
 import {Grid, Row, Col, Clearfix} from 'react-bootstrap';
@@ -20,6 +21,7 @@ export default class DashBoard extends Component {
             currentGroup: AppStore.getCurrentGroup(),
             databaseUsers: AppStore.getdatabaseUsers(),
             notification: AppStore.getNotification(),
+            personalMessage: AppStore.getPersonalMessage()
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -33,15 +35,15 @@ export default class DashBoard extends Component {
   } 
 
   render() { 
- 
     return (
       <div id='dash'>
-        <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers} notification={this.state.notification}/>         
+        <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers} notification={this.state.notification}/>  
+        <button type='onClick' className='btn btn-primary'>Message Board</button>       
         <Grid>
           <Row className="show-grid">
             <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>
 
-            <Col sm={12} md={9}> {!this.state.currentGroup ? '' : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}/>} </Col>
+            <Col sm={12} md={9}> {!this.state.currentGroup ? <DisplayMessage personalMessage={this.state.personalMessage}/> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}/>} </Col>
             
           </Row>
         </Grid>
@@ -58,6 +60,9 @@ export default class DashBoard extends Component {
         this.setState({emails: AppStore.getGroupEmails()});
         this.setState({numbers:AppStore.getGroupNumbers()});
         this.setState({notification: AppStore.getNotification()});
+        this.setState({personalMessage: AppStore.getPersonalMessage()});
+
+        
         
       
     }  

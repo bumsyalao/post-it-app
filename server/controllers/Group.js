@@ -87,6 +87,13 @@ static addUser(req, res) {
        // loop through the user names in user database and add notifications
         allUser.forEach((entry) => {
            db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
+           db.ref(`/users/${entry}/Messages`).push(
+             {
+                User: user.displayName,
+                Message: messages,
+                Group: groupName
+             }
+           )
         })
          
         //Push the message into Group
@@ -173,30 +180,30 @@ static addUser(req, res) {
 
 
 
-     static messageDatabase(req, res){
-       const groupName = req.params.groupName
-      const rootRef = firebase.database().ref().child('Groups').child(groupName).child('Messages');
+  static messageDatabase(req, res){
+    const groupName = req.params.groupName
+  const rootRef = firebase.database().ref().child('Groups').child(groupName).child('Messages');
 
-      rootRef.once('value', snap => {
-      const key = snap.key
-      const data = snap.val()
-      const messages = []
-      let message = {}
-     
+  rootRef.once('value', snap => {
+  const key = snap.key
+  const data = snap.val()
+  const messages = []
+  let message = {}
+  
 
-      for (var i in data){
-        message = {
-          id: i,
-          user: data[i].User,
-          text: data[i].Message,
-          Priority: data[i].Priority
-        }
-        messages.push(message)
-       }      
-       res.send(messages) 
-    })
-   
-  }
+  for (var i in data){
+    message = {
+      id: i,
+      user: data[i].User,
+      text: data[i].Message,
+      Priority: data[i].Priority
+    }
+    messages.push(message)
+    }      
+    res.send(messages) 
+})
+
+}
 
 
 // Nodemailer Sample for sending Emails
