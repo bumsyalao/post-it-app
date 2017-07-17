@@ -18,11 +18,19 @@ import AppStore from '../../stores/AppStore'
 export default class Lhs extends Component {
   render() {
     // console.log(Object.values(this.props.group))
+    
   return (
       <div>
         <div>
          <h4>Welcome, {this.props.user.displayName}</h4> 
-        </div> <br/>  
+        </div> 
+       
+          <div >
+                <div><a href="#/reset">Inbox</a></div>
+                <div><a href="#/reset">Archive</a></div>
+                <div><a href="#/reset">Trash</a></div>
+          </div>
+   
 
        <h4>Groups</h4>
         <ul>

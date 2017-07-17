@@ -19,6 +19,8 @@ module.exports = {
             }else{
                  console.log(user) 
                  AppActions.receiveLogin(user)
+
+
                   alert('Welcome,  An email will be sent to you, please verify your account.') 
             }
             }).catch(function (error) { 
@@ -88,8 +90,8 @@ module.exports = {
         axios.get('/user/personalMessage')
             .then((response) => {
                 const message = response.data
-                console.log(message)
-                AppActions.receivePersonalMessage(message)         
+                console.log(response)
+                // AppActions.receivePersonalMessage(message)         
             })
             .catch(function (error) {
                 console.log(error);
@@ -130,7 +132,7 @@ module.exports = {
         const groupName = keyName;
         axios.get('/groups/'+groupName)
             .then((message) => {
-               
+                console.log(message.data)
                 AppActions.receiveMessages(message.data)
             })
             .catch(function (error) {
@@ -162,7 +164,7 @@ module.exports = {
     //         })
     //         .catch(function (error) {
     //             console.log(error);
-    //         });
+    //         });s
     // },
 
      login(contact){
@@ -171,8 +173,11 @@ module.exports = {
             password: contact.password
             }).then(function (response) {               
                const user = response.data.userData;
-               
-             AppActions.receiveLogin(user)
+               const message = response.data.message;
+               console.log(message)
+
+              AppActions.receiveLogin(user)
+              AppActions.receivePersonalMessage(message)  
                
                 
             }).catch(function (error) {

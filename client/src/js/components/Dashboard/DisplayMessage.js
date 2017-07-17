@@ -1,27 +1,37 @@
 import React, {Component} from 'react'
+import ReadMessage from './ReadMessage'
 
 export default class DisplayMessage extends Component {
   render() {
+      console.log(this.props.personalMessage)
     return (
-      <div>
-      <h4>Message Board</h4>
-      
-        <ul>
-            <li>
+      <div>     
+       <ul>
+            {/*<div>
             { 
               Object.keys(this.props.personalMessage).map(function(keyName, keyIndex) {
-                return(
-                    <div key={keyIndex} onClick={() => console.log(keyName)}>  
-                   {keyName}
-                    </div>             
-                )
+       
+                  return(
+                       <ReadMessage keyName={keyName} key={keyIndex}/>
+                     ) 
                 })
             }
-            </li>
+            </div>*/}
+
+               <div>
+                {
+                  this.props.personalMessage.map((message, index) => {
+                     return(
+                       <ReadMessage message={message} key={index}/>
+                     ) 
+                  })
+                }                            
+              </div>
           
         </ul>
 
       </div>
+
 
     )
   }

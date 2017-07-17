@@ -28,6 +28,7 @@ export default class MessageBoard extends Component {
   
   render() {
     // console.log(this.props.emails)
+    // console.log(this.state.messages)
     return (
        <div>
        <section id="showcase">
@@ -93,7 +94,7 @@ export default class MessageBoard extends Component {
 
           const message = {
             group: this.state.currentGroup,         
-            text: this.refs.message.value.trim()+'                                  posted by '+ this.state.user.displayName+' in '+ this.state.currentGroup +' group',
+            text: this.refs.message.value.trim(),
             user: this.state.user.displayName,
             emails: Object.values(this.props.emails ? this.props.emails : alert("Add atleast one person to this Group") ),
             numbers: Object.values(this.props.numbers),

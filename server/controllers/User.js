@@ -79,10 +79,33 @@ class User {
     const password = req.body.password;
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
-      res.status(200).send({
+      const userName = user.displayName
+
+      const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
+      rootRef.once('value', snap => {
+      const data = snap.val()
+      const messages = []
+      let message = {}
+  
+      for (var i in data){
+        message = {
+          user: data[i].User,
+          text: data[i].Message,
+          group: data[i].Group      
+        }
+        messages.push(message)
+       }   
+
+            res.status(200).send({
         message: 'Welcome to Post it app',
-        userData: user
+        userData: user,
+        message: messages
       });
+
+    })
+
+
+ 
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -180,33 +203,32 @@ firebase.auth().onAuthStateChanged((user) => {
     });  
   }
 
-  static personalMessage(req, res){
-firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // This means a user is signed in
-        const userId = user.uid;
-        const rootRef = firebase.database().ref().child('users');
+ static personalMessage(req, res){
+        const userName = 'Pp'
+       const db = firebase.database();
 
-    rootRef.once('value', snap => {
+      // const df = db.ref(`/users/${userName}/Messages`)
+      // df.once('value', snap => {
+      //   res.send(snap)
+      // })
+
+      const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
+      rootRef.once('value', snap => {
       const data = snap.val()
- 
-      for (var i in data){           
-        if (userId == data[i].uid){     
-          var messages = data[i].Messages             
-        }      
-        }  
-   res.send(messages) 
-
+      const messages = []
+      let message = {}
+  
+      for (var i in data){
+        message = {
+          user: data[i].User,
+          text: data[i].Message,
+          group: data[i].Group      
+        }
+        messages.push(message)
+       }      
+       res.send(messages) 
     })
-
-      } else {
-        console.log({
-          // user is not signed in
-          message: 'You are not signed in right now!'
-        });
-       
-      }
-    });  
+   
   }
 
   //Get All Users in the Database
