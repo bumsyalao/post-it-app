@@ -85,19 +85,6 @@ module.exports = {
             });
     },
 
-       //Get Personal Message from Database
-      getpersonalMessage(){
-        axios.get('/user/personalMessage')
-            .then((response) => {
-                const message = response.data
-                console.log(response)
-                // AppActions.receivePersonalMessage(message)         
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    },
-
      saveGroupUser(addUser){
        const groupName = addUser.groupname;
        const user = addUser.user;

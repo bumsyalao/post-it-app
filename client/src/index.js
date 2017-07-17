@@ -21,7 +21,7 @@ AppAPI.getMessages()
 AppAPI.getContacts()
 AppAPI.getNumbers()
 AppAPI.searchUserMessage()
-AppAPI.getpersonalMessage()
+
 
 
 ReactDOM.render(

@@ -39,8 +39,6 @@ router.get('/user/database/', User.database);
 // Retrive Notifications from Database, we go into the User database
 router.get('/user/notification/', User.notification);
 
-// Retrive Personal Messages from Database, we go into the User database
-router.get('/user/personalMessage/', User.personalMessage);
 
 // Retrive Users and Email from a particular Group
 router.get('/group/:groupName', Group.database);

@@ -203,34 +203,6 @@ firebase.auth().onAuthStateChanged((user) => {
     });  
   }
 
- static personalMessage(req, res){
-        const userName = 'Pp'
-       const db = firebase.database();
-
-      // const df = db.ref(`/users/${userName}/Messages`)
-      // df.once('value', snap => {
-      //   res.send(snap)
-      // })
-
-      const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
-      rootRef.once('value', snap => {
-      const data = snap.val()
-      const messages = []
-      let message = {}
-  
-      for (var i in data){
-        message = {
-          user: data[i].User,
-          text: data[i].Message,
-          group: data[i].Group      
-        }
-        messages.push(message)
-       }      
-       res.send(messages) 
-    })
-   
-  }
-
   //Get All Users in the Database
   static allUsers(req, res){
     const rootRef = firebase.database().ref().child('users');
