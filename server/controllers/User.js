@@ -181,7 +181,7 @@ class User {
     })
     })
       } else {
-        res.send({
+       console.log({
           // user is not signed in
           message: 'You are not signed in right now!'
         });      

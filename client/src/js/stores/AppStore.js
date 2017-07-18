@@ -182,13 +182,15 @@ const CHANGE_EVENT = 'change'
       _archiveMessage = message;
     },
 
-    // Open Archive link
+    // Open and Close Archive link
     getOpenArchive(){
       return _openArchive;
     },
-
     openArchive(){
       _openArchive = true
+    },
+    closeArchive(){
+      _openArchive = false
     },
 
     emitChange(){
@@ -305,7 +307,7 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.REMOVE_MESSAGE:
         console.log('Removing Message...');        
-        // AppStore.removeMessage(action.messageId);
+        AppStore.removeMessage(action.messageId);
         AppAPI.removeMessage(action.messageId)
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
@@ -313,7 +315,7 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.ARCHIVE_MESSAGE:
         console.log('Receving Archives...');        
-        AppStore.archiveMessage(action.message);
+        AppStore.setArchiveMessage(action.message);
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -321,6 +323,13 @@ const CHANGE_EVENT = 'change'
       case AppConstants.OPEN_ARCHIVE:
         console.log('Opening Archives...');        
         AppStore.openArchive();
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.CLOSE_ARCHIVE:
+        console.log('Closing Archives...');        
+        AppStore.closeArchive();
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

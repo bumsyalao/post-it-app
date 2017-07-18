@@ -27,17 +27,16 @@ export default class DisplayMessage extends Component {
         if(this.state.displayArchives) { 
             var display = <ArchivedBox />     
         } else {      
-           var display =  <ul>
-        {
-          this.props.personalMessage.map((message, index) => {
-              return(
-              
-                <ReadMessage message={message} key={index}/>
-       
-              ) 
-          })
-        }                                  
-        </ul>
+           var display =  
+                  <ul>
+                  {
+                    this.props.personalMessage.map((message, index) => {
+                        return(             
+                          <ReadMessage message={message} key={index}/>      
+                        ) 
+                    })
+                  }                                  
+                  </ul>
         } 
 
     return (

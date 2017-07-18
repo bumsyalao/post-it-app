@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import AppStore from '../../stores/AppStore'
+import ArchiveMessage from './ArchiveMessage'
 
 export default class ArchivedBox extends Component {
         constructor(props){
@@ -18,9 +19,18 @@ export default class ArchivedBox extends Component {
     } 
 
   render() {
+      console.log(this.state.archives)
     return (
       <div>
-        <h1> Archive</h1>
+            <ul>
+                {
+                this.state.archives.map((message, index) => {
+                    return(             
+                        <ArchiveMessage message={message} key={index}/>      
+                    ) 
+                })
+                }                                  
+                </ul>
 
       </div>
 

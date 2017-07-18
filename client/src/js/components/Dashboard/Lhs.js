@@ -18,7 +18,7 @@ export default class Lhs extends Component {
         </div> 
        
           <div >
-                <div><a href="#">Inbox</a></div>
+                <div onClick={this.handleInbox.bind(this)}><a href="#">Inbox</a></div>
                 <div onClick={this.handleArchive.bind(this)}><a href="#">Archive</a></div>
           </div>
    
@@ -44,6 +44,11 @@ export default class Lhs extends Component {
       </div>
     )
   }
+
+  handleInbox(e){
+  e.preventDefault()
+  AppActions.closeArchive()
+}
 
 handleArchive(e){
   e.preventDefault()

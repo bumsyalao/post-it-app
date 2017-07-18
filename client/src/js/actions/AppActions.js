@@ -34,7 +34,7 @@ const AppActions = {
 
     },
 
-     archiveMessage(message){
+    archiveMessages(message){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.ARCHIVE_MESSAGE,
             message
@@ -44,6 +44,12 @@ const AppActions = {
     openArchive(){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.OPEN_ARCHIVE
+        })
+    },
+
+     closeArchive(){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.CLOSE_ARCHIVE
         })
     },
 

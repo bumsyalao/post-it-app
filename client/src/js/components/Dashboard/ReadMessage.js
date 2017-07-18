@@ -10,10 +10,10 @@ export default class ReadMessage extends Component {
   render() {
        if(this.state.showMe) { 
               //  var message = <ReadMessage message={this.props.message.text}/>
-               var message = <li> <input type="checkbox" name="messa" defaultChecked />  <div> <div> {this.props.message.text}</div><br/> </div></li>
+               var message = <li>   <div onClick={() => AppActions.removeMessage(this.props.message.id)} > <div><input type="checkbox" name="messa" defaultChecked /> {this.props.message.text} <br/> posted by  {this.props.message.user} in <strong>{this.props.message.group}</strong> group  <a href="#/dashboard">Archive</a></div><br/> </div></li>
               // var message = <div><li>{this.props.message.text}</li><br/></div>     
         } else {      
-           var message = <div  onClick={() => AppActions.removeMessage(this.props.message.id)}> <input type="checkbox" name="messa" />  <li style={{textDecoration:'none'}} onClick={this.readMessage.bind(this)}> <a href="#" className="btn btn-default">  {this.props.message.user} posted in <strong>{this.props.message.group}</strong> group</a> </li></div> 
+           var message = <div> <li onClick={this.readMessage.bind(this)}> <a href="#" className="btn btn-default"> {this.props.message.text} </a> </li></div> 
         } 
     return (
       <div>
