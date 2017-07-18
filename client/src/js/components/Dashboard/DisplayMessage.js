@@ -1,34 +1,22 @@
 import React, {Component} from 'react'
 import ReadMessage from './ReadMessage'
+import ShowMessage from './ShowMessage'
 
 export default class DisplayMessage extends Component {
   render() {
     return (
-      <div>     
+      <div style={{border:'1px solid LightBlue'}}>     
        <ul>
-            {/*<div>
-            { 
-              Object.keys(this.props.personalMessage).map(function(keyName, keyIndex) {
+        {
+          this.props.personalMessage.map((message, index) => {
+              return(
+              
+                <ReadMessage message={message} key={index}/>
        
-                  return(
-                       <ReadMessage keyName={keyName} key={keyIndex}/>
-                     ) 
-                })
-            }
-            </div>*/}
-
-               <div>
-                {
-                  this.props.personalMessage.map((message, index) => {
-                     return(
-                       <ReadMessage message={message} key={index}/>
-                     ) 
-                  })
-                }                            
-              </div>
-          
+              ) 
+          })
+        }                                  
         </ul>
-
       </div>
 
 

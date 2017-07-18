@@ -30,7 +30,7 @@ export default class MessageBoard extends Component {
     // console.log(this.props.emails)
     // console.log(this.state.messages)
     return (
-       <div>
+       <div style={{border:'1px solid LightBlue'}}>
        <section id="showcase">
         <div id="messageArea" className="row">
 

@@ -4,7 +4,7 @@ export default class ShowMessage extends Component {
   render() {
     return (
       <div>
-        <h1>See me</h1>
+        <li>{this.props.message.text}</li>
 
       </div>
 
