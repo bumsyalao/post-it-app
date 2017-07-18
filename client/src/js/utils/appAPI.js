@@ -127,6 +127,18 @@ module.exports = {
             });
     },
 
+       removeMessage(messageId){
+        const groupName = keyName;
+        axios.get('/groups/'+groupName)
+            .then((message) => {
+                console.log(message.data)
+                AppActions.receiveMessages(message.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+
         saveNotification(notify){
     //    const groupName = message.group;
     //     // const groupID = addUsers.groupID
@@ -171,13 +183,10 @@ module.exports = {
                 console.log(error);
             });                  
     },
+
      setLogout(){
         axios.post('/user/signout').then(function (response) {
-              
-             
-             console.log(response)
-               
-                
+             console.log(response)       
             }).catch(function (error) {
                 console.log(error);
             });                  

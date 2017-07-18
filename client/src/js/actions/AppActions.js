@@ -26,10 +26,10 @@ const AppActions = {
 
     },
 
-    removeContact(contactId){
+    removeMessage(messageId){
         AppDispatcher.handleViewAction({
-            actionType: AppConstants.REMOVE_CONTACT,
-            contactId
+            actionType: AppConstants.REMOVE_MESSAGE,
+            messageId
         })
 
     },

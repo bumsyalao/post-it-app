@@ -164,15 +164,12 @@ const CHANGE_EVENT = 'change'
     setPersonalMessage(message){
       _personalMessage = message;
     },
-
-    
-
-    removeContact(contactId){
-      var index = _contacts.findIndex(x => x.id === contactId);
-      _contacts.splice(index, 1)
+   
+    removeMessage(messageId){
+      var index = _personalMessage.findIndex(x => x.id === messageId);
+      _personalMessage.splice(index, 1)
       
     },
-
 
     emitChange(){
       this.emit(CHANGE_EVENT)
@@ -282,6 +279,14 @@ const CHANGE_EVENT = 'change'
         console.log('Receving Message...');
         //Store Save
         AppStore.setMessages(action.message);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.REMOVE_MESSAGE:
+        console.log('Removing Message...');        
+        // AppStore.removeMessage(action.messageId);
+        AppAPI.removeMessage(action.messageId)
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

@@ -21,7 +21,6 @@ class Signin extends Component {
 
 
   render() {
-      // localStorage["user"] ? console.log('User Exist') : console.log('No user')
     return (
       <div>  
            <div className='well'style={{float:'left'}} >  
@@ -59,9 +58,9 @@ class Signin extends Component {
         this.refs.password.value = '';
      
 }
+
    handleGoogle(e){
-      e.preventDefault();  
-    
+      e.preventDefault();      
     provider.addScope('profile');
     provider.addScope('email');
     firebase.auth().signInWithPopup(provider)

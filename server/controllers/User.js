@@ -89,6 +89,7 @@ class User {
   
       for (var i in data){
         message = {
+          id: i,
           user: data[i].User,
           text: data[i].Message,
           group: data[i].Group      
