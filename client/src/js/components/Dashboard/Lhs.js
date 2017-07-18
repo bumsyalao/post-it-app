@@ -3,22 +3,14 @@ import React, {Component} from 'react';
 import { MenuItem, Clearfix } from 'react-bootstrap';
 
 import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
-
 import Users from './Users'
 import Groups from './Groups'
-
-
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
-
-
-
 
 // LHS: Left hand side
 export default class Lhs extends Component {
   render() {
-    // console.log(Object.values(this.props.group))
-    
   return (
       <div>
         <div>
@@ -26,9 +18,8 @@ export default class Lhs extends Component {
         </div> 
        
           <div >
-                <div><a href="#/reset">Inbox</a></div>
-                <div><a href="#/reset">Archive</a></div>
-                <div><a href="#/reset">Trash</a></div>
+                <div><a href="#">Inbox</a></div>
+                <div onClick={this.handleArchive.bind(this)}><a href="#">Archive</a></div>
           </div>
    
 
@@ -53,5 +44,11 @@ export default class Lhs extends Component {
       </div>
     )
   }
+
+handleArchive(e){
+  e.preventDefault()
+  AppActions.openArchive()
+}
+
 }
  

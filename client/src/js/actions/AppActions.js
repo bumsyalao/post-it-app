@@ -34,6 +34,19 @@ const AppActions = {
 
     },
 
+     archiveMessage(message){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.ARCHIVE_MESSAGE,
+            message
+        })
+    },
+
+    openArchive(){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.OPEN_ARCHIVE
+        })
+    },
+
     saveGroup(group){
         AppDispatcher.handleViewAction({
         actionType: AppConstants.SAVE_GROUP,

@@ -19,6 +19,8 @@ const CHANGE_EVENT = 'change'
     let _notification = [];
     let _personalMessage = [];
     let _allUsersNumber = [];
+    let _archiveMessage = [];
+    let _openArchive = false;
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -171,6 +173,24 @@ const CHANGE_EVENT = 'change'
       
     },
 
+      // Get Archive Message
+    getArchiveMessage(){
+      return _archiveMessage;
+    },
+ 
+    setArchiveMessage(message){
+      _archiveMessage = message;
+    },
+
+    // Open Archive link
+    getOpenArchive(){
+      return _openArchive;
+    },
+
+    openArchive(){
+      _openArchive = true
+    },
+
     emitChange(){
       this.emit(CHANGE_EVENT)
     },
@@ -287,6 +307,20 @@ const CHANGE_EVENT = 'change'
         console.log('Removing Message...');        
         // AppStore.removeMessage(action.messageId);
         AppAPI.removeMessage(action.messageId)
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.ARCHIVE_MESSAGE:
+        console.log('Receving Archives...');        
+        AppStore.archiveMessage(action.message);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.OPEN_ARCHIVE:
+        console.log('Opening Archives...');        
+        AppStore.openArchive();
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

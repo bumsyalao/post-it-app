@@ -61,10 +61,6 @@ export default class DashBoard extends Component {
         this.setState({numbers:AppStore.getGroupNumbers()});
         this.setState({notification: AppStore.getNotification()});
         this.setState({personalMessage: AppStore.getPersonalMessage()});
-
-        
-        
-      
     }  
 }
 
