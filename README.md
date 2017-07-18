@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=master)](https://travis-ci.org/Charpell/post-it-app)
 
-[![Code Climate](https://img.shields.io/codeclimate/Charpell/post-it-app/flow.svg)]()
-
-[![Coveralls](https://img.shields.io/coveralls/Charpell/post-it-app.svg)]()
+[![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=master)](https://coveralls.io/github/Charpell/post-it-app?branch=master)
 
 
 
