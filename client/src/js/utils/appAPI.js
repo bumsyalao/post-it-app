@@ -128,11 +128,10 @@ module.exports = {
     },
 
        removeMessage(messageId){
-        const groupName = keyName;
-        axios.get('/groups/'+groupName)
+        axios.post('/user/archive/'+messageId)
             .then((message) => {
                 console.log(message.data)
-                AppActions.receiveMessages(message.data)
+                // AppActions.receiveMessages(message.data)
             })
             .catch(function (error) {
                 console.log(error);

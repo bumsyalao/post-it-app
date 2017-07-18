@@ -104,9 +104,6 @@ class User {
       });
 
     })
-
-
- 
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -138,6 +135,59 @@ class User {
     });
   }
 
+
+ static messageArchive(req, res){
+   const messageId = req.params.messageId
+   firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const userName = user.displayName
+        const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
+        rootRef.once('value', snap => { 
+        const data = snap.val()   
+        const messages = []
+        let message = {}
+  
+        // Find the data for the messageId
+        for (var i in data){
+          if(i === messageId){
+            // This will Store The message inside User/Archive Object before its been removed
+            firebase.database().ref().child('users').child(userName).child('Archives').push({
+            user: data[i].User,
+            text: data[i].Message,
+            group: data[i].Group   
+          })
+        }   
+      }  
+      //This will remove the message from the User/Message Object
+       firebase.database().ref().child('users').child(userName).child('Messages').child(messageId).remove();
+      //This will return back the archived messages to the User
+      const archiveRef = firebase.database().ref().child('users').child(userName).child('Archives');
+      archiveRef.once('value', snap => {
+      const archive = snap.val()
+      const messages = []
+      let message = {}
+  
+      for (var i in archive){
+        message = {
+          id: i,
+          user: archive[i].user,          
+          text: archive[i].text,
+          group: archive[i].group      
+        }
+        messages.push(message)
+       }   
+        // Return back the archived Message
+        res.send(messages);
+    })
+    })
+      } else {
+        res.send({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });      
+      }
+    });
+}
 
 
 static database(req, res){
