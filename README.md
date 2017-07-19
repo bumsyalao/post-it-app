@@ -1,6 +1,6 @@
 # Post-it-app
 
-[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=master)](https://travis-ci.org/Charpell/post-it-app)
+[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=develop)](https://travis-ci.org/Charpell/post-it-app)
 
 
 
