@@ -162,6 +162,9 @@ const CHANGE_EVENT = 'change'
     getPersonalMessage(){
       return _personalMessage;
     },
+    savePersonalMessage(message){
+      _personalMessage.push(message);
+    },
  
     setPersonalMessage(message){
       _personalMessage = message;
@@ -176,6 +179,9 @@ const CHANGE_EVENT = 'change'
       // Get Archive Message
     getArchiveMessage(){
       return _archiveMessage;
+    },
+    saveArchiveMessage(message){
+      _archiveMessage.push(message)
     },
  
     setArchiveMessage(message){
@@ -292,7 +298,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SAVE_MESSAGE:
         console.log('Saving Message...');
         //Store Save
-        AppStore.saveMessages(action.message);
+        AppStore.savePersonalMessage(action.message);
         
         //Save to API
         AppAPI.saveMessages(action.message)
@@ -309,9 +315,13 @@ const CHANGE_EVENT = 'change'
         break;
 
       case AppConstants.REMOVE_MESSAGE:
-        console.log('Removing Message...');        
-        AppStore.removeMessage(action.messageId);
-        AppAPI.removeMessage(action.messageId)
+        console.log('Removing Message...');
+          AppStore.saveArchiveMessage(action.messageId)        
+          AppStore.removeMessage(action.messageId.id);
+        // console.log(action.messageId.id)
+        console.log(action.messageId)
+        
+         AppAPI.removeMessage(action.messageId.id)
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

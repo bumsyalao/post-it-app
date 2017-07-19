@@ -39,7 +39,7 @@ export default class MessageBoard extends Component {
            var display =         
            <section id="showcase">
             <div id="messageArea" className="row">          
-            <h4 style={{color:'black',float:'right'}}>  Users in {this.state.currentGroup} group who have read the message</h4><br/>     
+            <h4 style={{color:'black',float:'left'}}>  Users in {this.state.currentGroup} group </h4><br/>     
                 {
           Object.keys(this.props.contact).map(function(keyName, keyIndex) {
                 return(
