@@ -4,6 +4,7 @@ import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
+import GroupOptions from './GroupOptions'
 
 
 
@@ -61,8 +62,11 @@ export default class NavDash extends Component {
                       <select className="form-control" ref="type">
                         <option></option>
                         {
-                             Object.keys(this.props.group).map(function(keyName, keyIndex) {
-                              return <option key={keyIndex} value={keyName}>{keyName}</option>
+                             this.props.group.map(function(keyName, keyIndex) {
+                              return (
+                                 <GroupOptions keyName={keyName} key={keyIndex} />
+                                    )
+                                      
                                   })  
                         }
 

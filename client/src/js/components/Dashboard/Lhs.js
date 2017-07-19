@@ -9,6 +9,7 @@ import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
 
 
+
 // LHS: Left hand side
 export default class Lhs extends Component {
   render() {
@@ -27,13 +28,13 @@ export default class Lhs extends Component {
                   <ul>
           <li>           
           { 
-              Object.keys(this.props.group).map(function(keyName, keyIndex) {       
-                return(
-                    <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  
-                      <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
-                    </div>             
-                )
-                })
+
+                 this.props.group.map((KeyName, KeyIndex) => {
+                        return(             
+                           
+                    <Groups KeyName={KeyName} key={KeyIndex}/>      
+                        ) 
+                    }) 
             }
             </li>
         </ul>

@@ -16,8 +16,10 @@ class Group {
           groupRef.child(groupName).child('Users').child(userName).set(userName)
 
         //Push the user's details into Group/ Users
-        db.ref(`/users/${userName}/groups`).child(groupName).set(groupName).then(() => {
-
+        db.ref(`/users/${userName}/Groups`).push({
+          groupName,
+          userName
+        }).then(() => {
           res.send(`Group ${groupName} created`);
         }).catch((err) => {
           res.send(err);

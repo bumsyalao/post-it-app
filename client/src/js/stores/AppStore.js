@@ -252,9 +252,10 @@ const CHANGE_EVENT = 'change'
         console.log('Saving group...');
 
         // //  //Store Save
-        AppStore.saveGroup(action.group);    
+        AppStore.saveGroup(action.group);   
+        console.log(action.group) 
         // //Save to API
-        AppAPI.saveGroup(action.group)      
+         AppAPI.saveGroup(action.group)      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -318,7 +319,6 @@ const CHANGE_EVENT = 'change'
         console.log('Removing Message...');
           AppStore.saveArchiveMessage(action.messageId)        
           AppStore.removeMessage(action.messageId.id);
-        // console.log(action.messageId.id)
         console.log(action.messageId)
         
          AppAPI.removeMessage(action.messageId.id)

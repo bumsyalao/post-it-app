@@ -189,29 +189,27 @@ class User {
     });
 }
 
-
 static database(req, res){
 firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // This means a user is signed in
-        const userId = user.uid;
-        const rootRef = firebase.database().ref().child('users');
+      const userName = user.displayName
 
-    rootRef.once('value', snap => {
+   const groupRef = firebase.database().ref().child('users').child(userName).child('Groups');
+      groupRef.once('value', snap => {
       const data = snap.val()
-      const contacts = [] 
-      let contact = {}   
-
-      // get the group of a user 
-      for (var i in data){           
-        if (userId == data[i].uid){     
-          var groups = data[i].groups 
-
+      const groups = []
+      let group = {}
+  
+      for (var i in data){
+        group = {            
+          groupName: data[i].groupName,
+          userName: data[i].userName      
         }
-       
-        }
-    
-   res.send(groups) 
+        groups.push(group)
+       }   
+        // Return back the archived Message
+        res.send(groups);
 
     })
 
