@@ -21,7 +21,7 @@ export default class DashBoard extends Component {
             currentGroup: AppStore.getCurrentGroup(),
             databaseUsers: AppStore.getdatabaseUsers(),
             notification: AppStore.getNotification(),
-            personalMessage: AppStore.getPersonalMessage()
+            displayArchives: AppStore.getOpenArchive()  
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -43,7 +43,8 @@ export default class DashBoard extends Component {
           <Row className="show-grid">
             <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>
 
-            <Col sm={12} md={9}> {!this.state.currentGroup ? <DisplayMessage personalMessage={this.state.personalMessage}/> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}/>} </Col>
+              <h4>Message</h4>
+            <Col sm={12} md={9}> {!this.state.currentGroup ? <DisplayMessage /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </Col>
             
           </Row>
         </Grid>
@@ -60,11 +61,8 @@ export default class DashBoard extends Component {
         this.setState({emails: AppStore.getGroupEmails()});
         this.setState({numbers:AppStore.getGroupNumbers()});
         this.setState({notification: AppStore.getNotification()});
-        this.setState({personalMessage: AppStore.getPersonalMessage()});
-
+        this.setState({displayArchives: AppStore.getOpenArchive()  });
         
-        
-      
     }  
 }
 

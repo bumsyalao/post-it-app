@@ -46,6 +46,8 @@ router.get('/group/:groupName', Group.database);
 // Add Message to a particular Group
 router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification/:priority', Group.addMessage);
 
+// Archive a message and store in the user database 
+router.post('/user/archive/:messageId', User.messageArchive);
 // // Add Notification to a particular Group
 // router.post('/groups/:groupName/:notification', Group.notification);
 
@@ -61,10 +63,10 @@ router.get('/users/allnumbers/', User.allNumbers);
 // Password Reset
 router.post('/user/reset/', User.resetPassword);
 
-// Nodemailer
+// Nodemailer Sample
 router.post('/user/mailer/', Group.mailer);
 
-// Nexmo
+// Nexmo Sample
 router.post('/user/sms/', Group.sms);
 
 

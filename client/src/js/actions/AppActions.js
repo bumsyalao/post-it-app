@@ -26,11 +26,35 @@ const AppActions = {
 
     },
 
-    removeContact(contactId){
+    removeMessage(messageId){
         AppDispatcher.handleViewAction({
-            actionType: AppConstants.REMOVE_CONTACT,
-            contactId
+            actionType: AppConstants.REMOVE_MESSAGE,
+            messageId
         })
+
+    },
+
+    archiveMessages(message){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.ARCHIVE_MESSAGE,
+            message
+        })
+    },
+
+    openArchive(){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.OPEN_ARCHIVE
+        })
+    },
+
+     closeArchive(){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.CLOSE_ARCHIVE
+        })
+    },
+
+    inboxMessage(messageId){
+        alert('This feauture is not yet available, coming soon')
 
     },
 

@@ -17,10 +17,11 @@ import {firebaseAuth, firebase}from '../../server/config'
 AppAPI.searchUserMessage();
 AppAPI.getGroups();
 AppAPI.getNotifications();
-AppAPI.getMessages()
-AppAPI.getContacts()
-AppAPI.getNumbers()
-AppAPI.searchUserMessage()
+AppAPI.getMessages();
+AppAPI.getContacts();
+AppAPI.getNumbers();
+AppAPI.searchUserMessage();
+AppAPI.removeMessage();
 
 
 

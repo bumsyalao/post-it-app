@@ -127,6 +127,17 @@ module.exports = {
             });
     },
 
+       removeMessage(messageId){
+        axios.post('/user/archive/'+messageId)
+            .then((message) => {
+                console.log(message.data)
+                 AppActions.archiveMessages(message.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+
         saveNotification(notify){
     //    const groupName = message.group;
     //     // const groupID = addUsers.groupID
@@ -162,22 +173,29 @@ module.exports = {
                const user = response.data.userData;
                const message = response.data.message;
                console.log(message)
+                
 
-              AppActions.receiveLogin(user)
-              AppActions.receivePersonalMessage(message)  
+            if (response.data == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+                    alert(response.data)
+            }else if(response.data.message == 'The password is invalid or the user does not have a password.'){               
+                    alert(response.data.message)        
+            }else{              
+                 AppActions.receiveLogin(user)
+                 AppActions.receivePersonalMessage(message)  
+                  alert('Welcome') 
+            }
+
+            
                
                 
             }).catch(function (error) {
                 console.log(error);
             });                  
     },
+
      setLogout(){
         axios.post('/user/signout').then(function (response) {
-              
-             
-             console.log(response)
-               
-                
+             console.log(response)       
             }).catch(function (error) {
                 console.log(error);
             });                  

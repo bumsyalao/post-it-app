@@ -89,6 +89,7 @@ class User {
   
       for (var i in data){
         message = {
+          id: i,
           user: data[i].User,
           text: data[i].Message,
           group: data[i].Group      
@@ -103,9 +104,6 @@ class User {
       });
 
     })
-
-
- 
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -138,29 +136,80 @@ class User {
   }
 
 
+ static messageArchive(req, res){
+   const messageId = req.params.messageId
+   firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const userName = user.displayName
+        const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
+        rootRef.once('value', snap => { 
+        const data = snap.val()   
+        const messages = []
+        let message = {}
+  
+        // Find the data for the messageId
+        for (var i in data){
+          if(i === messageId){
+            // This will Store The message inside User/Archive Object before its been removed
+            firebase.database().ref().child('users').child(userName).child('Archives').push({
+            user: data[i].User,
+            text: data[i].Message,
+            group: data[i].Group   
+          })
+        }   
+      }  
+      //This will remove the message from the User/Message Object
+       firebase.database().ref().child('users').child(userName).child('Messages').child(messageId).remove();
+      //This will return back the archived messages to the User
+      const archiveRef = firebase.database().ref().child('users').child(userName).child('Archives');
+      archiveRef.once('value', snap => {
+      const archive = snap.val()
+      const messages = []
+      let message = {}
+  
+      for (var i in archive){
+        message = {
+          id: i,
+          user: archive[i].user,          
+          text: archive[i].text,
+          group: archive[i].group      
+        }
+        messages.push(message)
+       }   
+        // Return back the archived Message
+        res.send(messages);
+    })
+    })
+      } else {
+       console.log({
+          // user is not signed in
+          message: 'You are not signed in right now!'
+        });      
+      }
+    });
+}
 
 static database(req, res){
 firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // This means a user is signed in
-        const userId = user.uid;
-        const rootRef = firebase.database().ref().child('users');
+      const userName = user.displayName
 
-    rootRef.once('value', snap => {
+   const groupRef = firebase.database().ref().child('users').child(userName).child('Groups');
+      groupRef.once('value', snap => {
       const data = snap.val()
-      const contacts = [] 
-      let contact = {}   
-
-      // get the group of a user 
-      for (var i in data){           
-        if (userId == data[i].uid){     
-          var groups = data[i].groups 
-
+      const groups = []
+      let group = {}
+  
+      for (var i in data){
+        group = {            
+          groupName: data[i].groupName,
+          userName: data[i].userName      
         }
-       
-        }
-    
-   res.send(groups) 
+        groups.push(group)
+       }   
+        // Return back the archived Message
+        res.send(groups);
 
     })
 

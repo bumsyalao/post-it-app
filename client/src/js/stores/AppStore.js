@@ -19,6 +19,8 @@ const CHANGE_EVENT = 'change'
     let _notification = [];
     let _personalMessage = [];
     let _allUsersNumber = [];
+    let _archiveMessage = [];
+    let _openArchive = 'inbox';
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -160,19 +162,45 @@ const CHANGE_EVENT = 'change'
     getPersonalMessage(){
       return _personalMessage;
     },
+    savePersonalMessage(message){
+      _personalMessage.push(message);
+    },
  
     setPersonalMessage(message){
       _personalMessage = message;
     },
-
-    
-
-    removeContact(contactId){
-      var index = _contacts.findIndex(x => x.id === contactId);
-      _contacts.splice(index, 1)
+   
+    removeMessage(messageId){
+      var index = _personalMessage.findIndex(x => x.id === messageId);
+      _personalMessage.splice(index, 1)
       
     },
 
+      // Get Archive Message
+    getArchiveMessage(){
+      return _archiveMessage;
+    },
+    saveArchiveMessage(message){
+      _archiveMessage.push(message)
+    },
+ 
+    setArchiveMessage(message){
+      _archiveMessage = message;
+    },
+
+    // Open and Close Archive link
+    getOpenArchive(){
+      return _openArchive;
+    },
+    openArchive(){
+      _openArchive = 'archive'
+    },
+    closeArchive(){
+      _openArchive = 'inbox'
+    },
+    openGroup(){
+      _openArchive = 'group'
+    },
 
     emitChange(){
       this.emit(CHANGE_EVENT)
@@ -224,9 +252,10 @@ const CHANGE_EVENT = 'change'
         console.log('Saving group...');
 
         // //  //Store Save
-        AppStore.saveGroup(action.group);    
+        AppStore.saveGroup(action.group);   
+        console.log(action.group) 
         // //Save to API
-        AppAPI.saveGroup(action.group)      
+         AppAPI.saveGroup(action.group)      
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -270,7 +299,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SAVE_MESSAGE:
         console.log('Saving Message...');
         //Store Save
-        AppStore.saveMessages(action.message);
+        AppStore.savePersonalMessage(action.message);
         
         //Save to API
         AppAPI.saveMessages(action.message)
@@ -282,6 +311,38 @@ const CHANGE_EVENT = 'change'
         console.log('Receving Message...');
         //Store Save
         AppStore.setMessages(action.message);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.REMOVE_MESSAGE:
+        console.log('Removing Message...');
+          AppStore.saveArchiveMessage(action.messageId)        
+          AppStore.removeMessage(action.messageId.id);
+        console.log(action.messageId)
+        
+         AppAPI.removeMessage(action.messageId.id)
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.ARCHIVE_MESSAGE:
+        console.log('Receving Archives...');        
+        AppStore.setArchiveMessage(action.message);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.OPEN_ARCHIVE:
+        console.log('Opening Archives...');        
+        AppStore.openArchive();
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.CLOSE_ARCHIVE:
+        console.log('Closing Archives...');        
+        AppStore.closeArchive();
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;
@@ -323,7 +384,8 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SEARCH_USER_MESSAGE:
         console.log('Searching for Users and Message...');
 
-         AppStore.setCurrentGroup(action.keyName);          
+         AppStore.setCurrentGroup(action.keyName); 
+         AppStore.openGroup()         
          //Save to API
         AppAPI.searchUserMessage(action.keyName)
          //Save to API
