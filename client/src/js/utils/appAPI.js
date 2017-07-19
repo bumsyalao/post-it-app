@@ -173,9 +173,19 @@ module.exports = {
                const user = response.data.userData;
                const message = response.data.message;
                console.log(message)
+                
 
-              AppActions.receiveLogin(user)
-              AppActions.receivePersonalMessage(message)  
+            if (response.data == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+                    alert(response.data)
+            }else if(response.data.message == 'The password is invalid or the user does not have a password.'){               
+                    alert(response.data.message)        
+            }else{              
+                 AppActions.receiveLogin(user)
+                 AppActions.receivePersonalMessage(message)  
+                  alert('Welcome') 
+            }
+
+            
                
                 
             }).catch(function (error) {
