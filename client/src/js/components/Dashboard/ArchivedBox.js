@@ -19,18 +19,21 @@ export default class ArchivedBox extends Component {
     } 
 
   render() {
-      console.log(this.state.archives)
-    return (
-      <div>
-            <ul>
-                {
-                this.state.archives.map((message, index) => {
+      if(this.state.archives == ''){
+          var display =   <li> You Currently do not have any Archived Message</li>
+              
+      }else{
+          var display =   this.state.archives.map((message, index) => {
                     return(             
                         <ArchiveMessage message={message} key={index}/>      
                     ) 
                 })
-                }                                  
-                </ul>
+      }
+    return (
+      <div>
+            <ul>
+                {display}                 
+           </ul>
 
       </div>
 

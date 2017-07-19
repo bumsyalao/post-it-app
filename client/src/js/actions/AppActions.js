@@ -53,6 +53,11 @@ const AppActions = {
         })
     },
 
+    inboxMessage(messageId){
+        alert('This feauture is not yet available, coming soon')
+
+    },
+
     saveGroup(group){
         AppDispatcher.handleViewAction({
         actionType: AppConstants.SAVE_GROUP,

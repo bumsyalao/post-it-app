@@ -3,6 +3,8 @@ import Message from './Message'
 
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
+import DisplayMessage from './DisplayMessage'
+import ArchivedBox from './ArchivedBox'
 
 
 export default class MessageBoard extends Component {
@@ -29,40 +31,25 @@ export default class MessageBoard extends Component {
   render() {
     // console.log(this.props.emails)
     // console.log(this.state.messages)
-    return (
-       <div>
-       <section id="showcase">
-        <div id="messageArea" className="row">
-
-          
-       <h4 style={{color:'black',float:'right'}}>  Users in {this.state.currentGroup} group who have read the message</h4><br/>
-     
-           {
+        if(this.props.displayArchives == 'archive') { 
+          var display = <ArchivedBox />  
+        }else if(this.props.displayArchives == 'inbox') { 
+          var display = <DisplayMessage />   
+        } else if(this.props.displayArchives == 'group') {      
+           var display =         
+           <section id="showcase">
+            <div id="messageArea" className="row">          
+            <h4 style={{color:'black',float:'right'}}>  Users in {this.state.currentGroup} group who have read the message</h4><br/>     
+                {
           Object.keys(this.props.contact).map(function(keyName, keyIndex) {
                 return(
                     <div style={{float:'right'}} key={keyIndex} onClick={() => console.log(keyName)}>  
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
                     </div>             
                 )
-                })       
+               })       
             }
-   
-
-             {/*<div className="jumbotron">
-              <ul style={{color: 'black', textAlign: 'left'}}>
-                <ul>
-                {
-                  this.state.messages.map((message, index) => {
-                     return(
-                       <Message message={message} key={index}/>
-                     ) 
-                  })
-                }                            
-              </ul>
-              </ul>
-            </div>*/}
-       
-          <div className="col-md-12">
+                     <div className="col-md-12">
             <div className="chat" id="chat" />
             <form id="messageForm" onSubmit={this.handleSubmit.bind(this)}>
         
@@ -82,6 +69,25 @@ export default class MessageBoard extends Component {
          </div>
         </div>
       </section>
+
+        } 
+    return (
+       <div>
+      {display}
+             {/*<div className="jumbotron">
+              <ul style={{color: 'black', textAlign: 'left'}}>
+                <ul>
+                {
+                  this.state.messages.map((message, index) => {
+                     return(
+                       <Message message={message} key={index}/>
+                     ) 
+                  })
+                }                            
+              </ul>
+              </ul>
+            </div>*/}
+ 
       </div>
     )
   }
@@ -89,9 +95,6 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();   
           //trim() removes white spaces around a string
-
-
-
           const message = {
             group: this.state.currentGroup,         
             text: this.refs.message.value.trim(),

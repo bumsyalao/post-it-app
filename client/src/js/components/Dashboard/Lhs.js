@@ -8,6 +8,7 @@ import Groups from './Groups'
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
 
+
 // LHS: Left hand side
 export default class Lhs extends Component {
   render() {
@@ -15,8 +16,7 @@ export default class Lhs extends Component {
       <div>
         <div>
          <h4>Welcome, {this.props.user.displayName}</h4> 
-        </div> 
-       
+        </div>       
           <div >
                 <div onClick={this.handleInbox.bind(this)}><a href="#">Inbox</a></div>
                 <div onClick={this.handleArchive.bind(this)}><a href="#">Archive</a></div>
@@ -24,21 +24,20 @@ export default class Lhs extends Component {
    
 
        <h4>Groups</h4>
-        <ul>
+                  <ul>
           <li>           
           { 
-              Object.keys(this.props.group).map(function(keyName, keyIndex) {
-        
+              Object.keys(this.props.group).map(function(keyName, keyIndex) {       
                 return(
                     <div key={keyIndex} onClick={() => AppActions.searchUserMessage(keyName)}>  
                       <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
                     </div>             
                 )
                 })
-
             }
             </li>
-        </ul><br/>
+        </ul>
+        <br/>
          
 
       </div>

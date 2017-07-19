@@ -20,7 +20,7 @@ const CHANGE_EVENT = 'change'
     let _personalMessage = [];
     let _allUsersNumber = [];
     let _archiveMessage = [];
-    let _openArchive = false;
+    let _openArchive = 'inbox';
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -187,10 +187,13 @@ const CHANGE_EVENT = 'change'
       return _openArchive;
     },
     openArchive(){
-      _openArchive = true
+      _openArchive = 'archive'
     },
     closeArchive(){
-      _openArchive = false
+      _openArchive = 'inbox'
+    },
+    openGroup(){
+      _openArchive = 'group'
     },
 
     emitChange(){
@@ -371,7 +374,8 @@ const CHANGE_EVENT = 'change'
       case AppConstants.SEARCH_USER_MESSAGE:
         console.log('Searching for Users and Message...');
 
-         AppStore.setCurrentGroup(action.keyName);          
+         AppStore.setCurrentGroup(action.keyName); 
+         AppStore.openGroup()         
          //Save to API
         AppAPI.searchUserMessage(action.keyName)
          //Save to API
