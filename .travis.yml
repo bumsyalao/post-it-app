@@ -6,3 +6,6 @@ before_install:
 script:
   - npm test
   - make test-coveralls
+after_success:
+  - npm run coverage
+
