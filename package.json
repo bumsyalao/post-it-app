@@ -47,7 +47,8 @@
     "nodemailer": "*",
     "nexmo": "*",
     "nodemailer-smtp-transport": "*",
-    "nyc": "*"
+    "nyc": "*",
+    "codeclimate-test-reporter": "*"
   },
   "devDependencies": {
     "css-loader": "^0.28.4",
