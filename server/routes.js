@@ -46,6 +46,9 @@ router.get('/group/:groupName', Group.database);
 // Add Message to a particular Group
 router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification/:priority', Group.addMessage);
 
+// Update a message with the users that have seen it 
+router.get('/user/seen', User.seenMessage);
+
 // Archive a message and store in the user database 
 router.post('/user/archive/:messageId', User.messageArchive);
 // // Add Notification to a particular Group

@@ -31,10 +31,7 @@ const CHANGE_EVENT = 'change'
 
       // If there is a user in local storage, set authentication true
      setAuthed(){
-         if (localStorage.getItem("user") !== null) {
           _authed = true;
-          }
-  
     },
     
     setLogout(){
@@ -48,7 +45,7 @@ const CHANGE_EVENT = 'change'
 
     saveUser(user){
       _user = user;
-      localStorage.setItem('user', JSON.stringify(user))
+      // localStorage.setItem('user', JSON.stringify(user))
     },
 
     setUser(user){
@@ -329,6 +326,13 @@ const CHANGE_EVENT = 'change'
       case AppConstants.ARCHIVE_MESSAGE:
         console.log('Receving Archives...');        
         AppStore.setArchiveMessage(action.message);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.SEEN_MESSAGE:
+        console.log('User who have seen message..');        
+        AppAPI.seenMessage(action.user);
         //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

@@ -147,13 +147,20 @@ export default class NavDash extends Component {
   // Create Group
     createGroup(e){
       e.preventDefault() 
+         // Function to convert first letter of each word to capital letter   
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      } 
+
+    // Implements the function
+      const Uppercase = capitalizeFirstLetter(this.refs.group.value.trim())
             const group = {
-              groupName: this.refs.group.value.trim(),
+              groupName: Uppercase,
               userName: this.props.user.displayName
             }    
              AppActions.saveGroup(group);
             this.refs.group.value = '';
-          
+        
     }
     
 

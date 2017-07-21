@@ -138,6 +138,18 @@ module.exports = {
             });
     },
 
+        seenMessage(user){
+        // axios.post('/user/archive/'+messageId)
+        //     .then((message) => {
+        //         console.log(message.data)
+        //          AppActions.archiveMessages(message.data)
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        console.log(user)
+    },
+
         saveNotification(notify){
     //    const groupName = message.group;
     //     // const groupID = addUsers.groupID

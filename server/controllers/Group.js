@@ -75,7 +75,6 @@ static addUser(req, res) {
     const notification = req.params.notification;
     const priority = req.params.priority;
     const db = firebase.database();
-    console.log(priority)
 
     //Converts the list of numbers into array
     const number = numbers.split(",");
@@ -93,7 +92,8 @@ static addUser(req, res) {
              {
                 User: user.displayName,
                 Message: messages,
-                Group: groupName
+                Group: groupName,
+                Seen: [user.displayName, "Abaham" ]
              }
            )
         })
@@ -110,6 +110,7 @@ static addUser(req, res) {
 					}).catch((err) => {
 				res.send('Error');
 			});
+      
 
       if((priority === 'Urgent') || (priority === 'Critical')){
          // Send Email Notification to Users

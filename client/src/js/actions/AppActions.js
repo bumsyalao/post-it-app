@@ -40,6 +40,12 @@ const AppActions = {
             message
         })
     },
+    seenMessage(user){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.SEEN_MESSAGE,
+            user
+        })
+    },
 
     openArchive(){
         AppDispatcher.handleViewAction({

@@ -80,7 +80,8 @@ class User {
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
       const userName = user.displayName
-
+      
+      // Get all user's personal message while signing in
       const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
       rootRef.once('value', snap => {
       const data = snap.val()
@@ -92,12 +93,13 @@ class User {
           id: i,
           user: data[i].User,
           text: data[i].Message,
-          group: data[i].Group      
+          group: data[i].Group,
+          seen: data[i].Seen      
         }
         messages.push(message)
        }   
 
-            res.status(200).send({
+        res.status(200).send({
         message: 'Welcome to Post it app',
         userData: user,
         message: messages
@@ -117,6 +119,8 @@ class User {
     });
   }
 
+
+
  /**
      * The Sign Out method
      * @param {null} req - User's Request
@@ -135,6 +139,60 @@ class User {
     });
   }
 
+
+
+ static seenMessage(req, res){
+  // const groupName = req.params.groupName;
+  // const userName = req.params.userName
+  const userName = 'Cc'
+  const db = firebase.database();
+
+  // Get an array of all the group names in the Group database
+  const rootRef = db.ref().child('Groups')
+    rootRef.once('value', snap => { 
+        const data = snap.val()   
+        const groups = []
+
+        // Loop through the Group database to get all groups
+         Object.keys(data).map((keyName, keyIndex) => {
+          groups.push(keyName)          
+        }) 
+
+      // Wipe out all child Messages from the User's database
+       firebase.database().ref().child('users').child(userName).child('Messages').remove();
+
+        // Loop through every user inside every group
+        //if the username match, output  all messages from every group
+        groups.forEach((entry) => {
+          db.ref().child('Groups').child(entry).child('Users').once('value', snap => { 
+          const data = snap.val() 
+           
+        for (var i in data){
+          if(i === userName){             
+            db.ref().child('Groups').child(entry).child('Messages').once('value', snap => {
+              const allMessage = snap.val()  
+              var messages = []   
+              var message = {}
+                                     
+              Object.keys(allMessage).map((keyName, keyIndex) => {
+
+                db.ref().child('users').child(userName).child('Messages').push({                                   
+                  User: allMessage[keyName].User,
+                  Message: allMessage[keyName].Message,
+                  Group: entry,
+                  Seen: [allMessage[keyName].User, "Abaham" ]
+                })                   
+              })            
+            })
+        }  
+
+      }  
+
+  })   
+        })       
+    })
+   
+ }
 
  static messageArchive(req, res){
    const messageId = req.params.messageId
