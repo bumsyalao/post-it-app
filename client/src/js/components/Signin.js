@@ -66,10 +66,7 @@ class Signin extends Component {
       } else {
         alert('Invalid Email Address')
       }
-
-
     
-     
 }
 
    handleGoogle(e){

@@ -138,60 +138,6 @@ class User {
   }
 
 
-
-//  static updateInbox(req, res){
-//    const userName = req.params.user
-//   const db = firebase.database();
-
-//   // Get an array of all the group names in the Group database
-//   const rootRef = db.ref().child('Groups')
-//     rootRef.once('value', snap => { 
-//         const data = snap.val()   
-//         const groups = []
-
-//         // Loop through the Group database to get all groups
-//          Object.keys(data).map((keyName, keyIndex) => {
-//           groups.push(keyName)          
-//         }) 
-
-//       // Wipe out all child Messages from the User's database
-//        firebase.database().ref().child('users').child(userName).child('Messages').remove();
-
-//         // Loop through every user inside every group
-//         //if the username match, output  all messages from every group
-//         groups.forEach((entry) => {
-//           db.ref().child('Groups').child(entry).child('Users').once('value', snap => { 
-//           const data = snap.val() 
-           
-//         for (var i in data){
-//           if(i === userName){             
-//             db.ref().child('Groups').child(entry).child('Messages').once('value', snap => {
-//               const allMessage = snap.val()  
-//               var messages = []
-//               var message = {}
-                                     
-//               Object.keys(allMessage).map((keyName, keyIndex) => {
-
-//                 // db.ref().child('users').child(userName).child('Messages').push({
-//                 //   uid: keyName,                                   
-//                 //   User: allMessage[keyName].User,
-//                 //   Message: allMessage[keyName].Message,
-//                 //   Group: entry,
-        
-                  
-//                 // })    
-//                 console.log(allMessage)               
-//               })            
-//             })
-//         }  
-
-//       }  
-//   })   
-//         })       
-//     })
-   
-//  }
-
  static seenMessage(req, res){
   const uid = req.params.uid;
   const userName = req.params.userName
