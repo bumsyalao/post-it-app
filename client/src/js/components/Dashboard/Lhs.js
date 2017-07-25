@@ -48,6 +48,7 @@ export default class Lhs extends Component {
   handleInbox(e){
   e.preventDefault()
   AppActions.closeArchive()
+  AppActions.updateInbox(this.props.user.displayName)
 }
 
 handleArchive(e){

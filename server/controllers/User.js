@@ -1,4 +1,4 @@
-const { firebase, usersRef, provider } = require('../config');
+const { firebase, usersRef, groupRef, provider } = require('../config');
 
 
 /** Class representing a the User Database. */
@@ -80,7 +80,8 @@ class User {
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
       const userName = user.displayName
-
+      
+      // Get all user's personal message while signing in
       const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
       rootRef.once('value', snap => {
       const data = snap.val()
@@ -89,21 +90,20 @@ class User {
   
       for (var i in data){
         message = {
-          id: i,
+          uid: data[i].uid,
           user: data[i].User,
           text: data[i].Message,
-          group: data[i].Group      
+          group: data[i].Group,  
         }
         messages.push(message)
        }   
-
-            res.status(200).send({
+        res.status(200).send({
         message: 'Welcome to Post it app',
         userData: user,
         message: messages
       });
-
     })
+
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -116,6 +116,8 @@ class User {
       }
     });
   }
+
+
 
  /**
      * The Sign Out method
@@ -135,6 +137,32 @@ class User {
     });
   }
 
+
+ static seenMessage(req, res){
+  const uid = req.params.uid;
+  const userName = req.params.userName
+  const groupName = req.params.groupName
+   
+   groupRef.child(groupName).child('Messages').child(uid).child("Seen").push({Seen: userName})
+   groupRef.child(groupName).child('Messages').child(uid).child("Seen").once('value', snap => {
+      const data = snap.val()
+      const users = []
+      let user = {}
+  
+    
+        Object.keys(data).map((keyName, keyIndex) =>{
+            user = {            
+            Seen: data[keyName].Seen     
+          }
+          users.push(user)
+        })     
+        // Return back the archived Message
+        res.send(users);
+
+    })
+   console.log('Done')
+
+ }
 
  static messageArchive(req, res){
    const messageId = req.params.messageId
@@ -267,7 +295,77 @@ firebase.auth().onAuthStateChanged((user) => {
     });
   }
 
-  //Get All Phone Numbers in the database
+    //Get All Personal Message
+  static personalMessage(req, res){
+      firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              // This means a user is signed in
+              const userName = user.displayName;
+      
+               // Get an array of all the group names in the Group database
+           
+                firebase.database().ref().child('Groups').once('value', snap => { 
+                    const data = snap.val()   
+                    const groups = []
+
+                    // Loop through the Group database to get all groups
+                    Object.keys(data).map((keyName, keyIndex) => {
+                      groups.push(keyName)          
+                    }) 
+
+    
+
+        // Loop through every user inside every group
+        //if the username match, output  all messages from every group
+        groups.forEach((entry) => {
+          firebase.database().ref().child('Groups').child(entry).child('Users').once('value', snap => { 
+          const data = snap.val() 
+           
+        for (var i in data){
+     
+          if(i === userName){             
+            firebase.database().ref().child('Groups').child(entry).child('Messages').once('value', snap => {
+              const allMessage = snap.val()  
+              var messages = []
+              var message = {}
+                                     
+              Object.keys(allMessage).map((keyName, keyIndex) => {
+
+                      message = {
+                            uid: keyName,
+                            user: allMessage[keyName].User,
+                            text: allMessage[keyName].Message,
+                            group: entry,
+                    
+                            }
+                            messages.push(message)
+                            
+                                             
+                 })    
+                ``
+                          
+              })  
+          }
+
+
+        }          
+            })
+        } ) 
+
+      }  )
+
+            } else {
+              console.log({
+                // user is not signed in
+                message: 'You are not signed in right now!'
+              });
+            
+            }
+          }); 
+  }
+
+
+ //Get All Phone Numbers in the database
     static allNumbers(req, res){
     const rootRef = firebase.database().ref().child('users');
 
@@ -293,6 +391,10 @@ firebase.auth().onAuthStateChanged((user) => {
          res.send('Error: The email address does not exist')
     });
   }
+
+
+  
+  
 
 
 

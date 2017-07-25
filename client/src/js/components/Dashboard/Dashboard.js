@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AppStore from '../../stores/AppStore'
+import AppStore from '../../stores/AppStore';
 import NavDash from './NavDash';
 import LHS from './Lhs';
 import MessageBoard from './MessageBoard'

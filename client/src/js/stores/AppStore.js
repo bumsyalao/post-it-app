@@ -21,6 +21,7 @@ const CHANGE_EVENT = 'change'
     let _allUsersNumber = [];
     let _archiveMessage = [];
     let _openArchive = 'inbox';
+    let _seenUsers = [];
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -31,10 +32,7 @@ const CHANGE_EVENT = 'change'
 
       // If there is a user in local storage, set authentication true
      setAuthed(){
-         if (localStorage.getItem("user") !== null) {
           _authed = true;
-          }
-  
     },
     
     setLogout(){
@@ -48,7 +46,7 @@ const CHANGE_EVENT = 'change'
 
     saveUser(user){
       _user = user;
-      localStorage.setItem('user', JSON.stringify(user))
+      // localStorage.setItem('user', JSON.stringify(user))
     },
 
     setUser(user){
@@ -186,6 +184,15 @@ const CHANGE_EVENT = 'change'
  
     setArchiveMessage(message){
       _archiveMessage = message;
+    },
+
+       // Get Archive Message
+    getSeenUsers(){
+      return _seenUsers;
+    },
+
+    setSeenUsers(users){
+      _seenUsers = users;
     },
 
     // Open and Close Archive link
@@ -333,6 +340,20 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
+      case AppConstants.SEEN_MESSAGE:
+        console.log('User who have seen message..');        
+        AppAPI.seenMessage(action.user);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.RECEIVE_SEEN_USERS:
+        console.log('Receiving users who have seen message..');        
+        AppStore.setSeenUsers(action.users);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
       case AppConstants.OPEN_ARCHIVE:
         console.log('Opening Archives...');        
         AppStore.openArchive();
@@ -347,8 +368,15 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
-      case AppConstants.SIGN_IN:
-   
+      case AppConstants.UPDATE_INBOX:
+        console.log('Updating Inbox...');        
+        AppAPI.updateInbox(action.user);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+
+      case AppConstants.SIGN_IN:  
         //Save to API
         AppAPI.login(action.contact)
         

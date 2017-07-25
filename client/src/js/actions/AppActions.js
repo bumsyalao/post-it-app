@@ -41,6 +41,20 @@ const AppActions = {
         })
     },
 
+    seenMessage(user){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.SEEN_MESSAGE,
+            user
+        })
+    },
+
+     receiveSeenUsers(users){
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.RECEIVE_SEEN_USERS,
+            users
+        })
+    },
+
     openArchive(){
         AppDispatcher.handleViewAction({
             actionType: AppConstants.OPEN_ARCHIVE
@@ -57,6 +71,15 @@ const AppActions = {
         alert('This feauture is not yet available, coming soon')
 
     },
+
+     updateInbox(user){
+        AppDispatcher.handleViewAction({
+        actionType: AppConstants.UPDATE_INBOX,
+        user
+      })
+        
+    },
+
 
     saveGroup(group){
         AppDispatcher.handleViewAction({

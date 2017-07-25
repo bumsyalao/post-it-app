@@ -46,6 +46,12 @@ router.get('/group/:groupName', Group.database);
 // Add Message to a particular Group
 router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification/:priority', Group.addMessage);
 
+// // Update a message when the user clicks inbox
+// router.post('/user/inbox/:user', User.updateInbox);
+
+// Update the message array with the users that have seen it 
+router.post('/seen/:groupName/:uid/:userName', User.seenMessage);
+
 // Archive a message and store in the user database 
 router.post('/user/archive/:messageId', User.messageArchive);
 // // Add Notification to a particular Group
@@ -56,6 +62,9 @@ router.get('/groups/:groupName', Group.messageDatabase);
 
 // Retrive all Users from Database
 router.get('/users/allusers/', User.allUsers);
+
+// Retrive all Personal Message from Database
+router.get('/users/personalMessage/', User.personalMessage);
 
 // Retrive all Phone Numbers from Database
 router.get('/users/allnumbers/', User.allNumbers);

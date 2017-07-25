@@ -138,6 +138,29 @@ module.exports = {
             });
     },
 
+        seenMessage(user){
+            const uid = user.uid;
+            const userName = user.userName;
+            const groupName = user.groupName
+        axios.post('/seen/'+ groupName +'/'+ uid + '/'+ userName)
+            .then((message) => {
+               
+                AppActions.receiveSeenUsers(message.data)
+                 
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+   
+    },
+
+       updateInbox(user){
+        axios.post('/user/inbox/'+user)
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+
         saveNotification(notify){
     //    const groupName = message.group;
     //     // const groupID = addUsers.groupID
@@ -172,8 +195,7 @@ module.exports = {
             }).then(function (response) {               
                const user = response.data.userData;
                const message = response.data.message;
-               console.log(message)
-                
+
 
             if (response.data == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
                     alert(response.data)
@@ -182,6 +204,7 @@ module.exports = {
             }else{              
                  AppActions.receiveLogin(user)
                  AppActions.receivePersonalMessage(message)  
+                console.log(message)
                   alert('Welcome') 
             }
 
