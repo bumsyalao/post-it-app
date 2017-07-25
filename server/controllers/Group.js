@@ -84,18 +84,19 @@ static addUser(req, res) {
 
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+          const userName = user.displayName
        
        // loop through the user names in user database and add notifications
         allUser.forEach((entry) => {
            db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
-           db.ref(`/users/${entry}/Messages`).push(
-             {
-                User: user.displayName,
-                Message: messages,
-                Group: groupName,
-                Seen: [user.displayName, "Abaham" ]
-             }
-           )
+          //  db.ref(`/users/${entry}/Messages`).push(
+          //    {
+          //       User: user.displayName,
+          //       Message: messages,
+          //       Group: groupName,
+          //       Seen: [user.displayName, "Abaham" ]
+          //    }
+          //  )
         })
          
         //Push the message into Group
@@ -103,14 +104,76 @@ static addUser(req, res) {
         {  
           User: user.displayName,
           Message: messages,
-          Priority: priority 
+          Priority: priority,
+
+        })
+        
+firebase.database().ref().child('Groups').once('value', snap => { 
+    const data = snap.val()   
+    const groups = []
+        Object.keys(data).map((keyName, keyIndex) => {
+        groups.push(keyName)          
+        }) 
+
+    groups.forEach((entry) => {
+        firebase.database().ref().child('Groups').child(entry).child('Users').once('value', snap => { 
+        const data = snap.val() 
+
+        for (var i in data){
+            if(i === userName){             
+                firebase.database().ref().child('Groups').child(entry).child('Messages').once('value', snap => {
+                const allMessage = snap.val()  
+                var messages = []
+                var message = {}
+                        
+            Object.keys(allMessage).map((keyName, keyIndex) => {
+
+          message ={
+            uid: keyName,
+                User: allMessage[keyName].User,
+                Message: allMessage[keyName].Message,
+                Group: entry,
+              
+            
+          }
+         messages.push(message)
+
+            })  
+             db.ref(`/users/${userName}/Messages`).push(message)
+      
+            })
+        }          
         }
-        ).then(() => {
+    }) 
+})
+})
+        
+        .then(() => {
 						res.send('Message added successfully');
 					}).catch((err) => {
 				res.send('Error');
 			});
-      
+       
+    //   groupRef.child(groupName).child("Messages").once('value', snap => {
+    //   const data = snap.val()
+    //   const messages = []
+    //   let message = {}
+  
+    //   for (var i in data){
+    //     message = {   
+    //       uid: i,         
+    //       User: data[i].User,
+    //       Message: data[i].Message,
+    //       Group: data[i].Message   
+    //     }
+    //     messages.push(message)
+    //    }   
+
+    //   console.log(messages)
+
+    // })
+
+
 
       if((priority === 'Urgent') || (priority === 'Critical')){
          // Send Email Notification to Users

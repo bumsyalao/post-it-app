@@ -21,6 +21,7 @@ const CHANGE_EVENT = 'change'
     let _allUsersNumber = [];
     let _archiveMessage = [];
     let _openArchive = 'inbox';
+    let _seenUsers = [];
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -185,6 +186,15 @@ const CHANGE_EVENT = 'change'
       _archiveMessage = message;
     },
 
+       // Get Archive Message
+    getSeenUsers(){
+      return _seenUsers;
+    },
+
+    setSeenUsers(users){
+      _seenUsers = users;
+    },
+
     // Open and Close Archive link
     getOpenArchive(){
       return _openArchive;
@@ -337,6 +347,13 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
+      case AppConstants.RECEIVE_SEEN_USERS:
+        console.log('Receiving users who have seen message..');        
+        AppStore.setSeenUsers(action.users);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
       case AppConstants.OPEN_ARCHIVE:
         console.log('Opening Archives...');        
         AppStore.openArchive();
@@ -351,8 +368,15 @@ const CHANGE_EVENT = 'change'
         AppStore.emit(CHANGE_EVENT);
         break;
 
-      case AppConstants.SIGN_IN:
-   
+      case AppConstants.UPDATE_INBOX:
+        console.log('Updating Inbox...');        
+        AppAPI.updateInbox(action.user);
+        //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+
+      case AppConstants.SIGN_IN:  
         //Save to API
         AppAPI.login(action.contact)
         

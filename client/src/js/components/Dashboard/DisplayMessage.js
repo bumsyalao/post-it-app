@@ -12,7 +12,8 @@ export default class DisplayMessage extends Component {
         super(props);
         this.state ={
            displayArchives: AppStore.getOpenArchive(),
-           personalMessage: AppStore.getPersonalMessage()    
+           personalMessage: AppStore.getPersonalMessage(),
+           seenUsers: AppStore.getSeenUsers()     
         };
          this._onChange= this._onChange.bind(this)
     }
@@ -30,7 +31,7 @@ export default class DisplayMessage extends Component {
         } else if (this.state.displayArchives == 'inbox'){      
            var display =   this.state.personalMessage.map((message, index) => {
                         return(             
-                          <ReadMessage message={message} key={index}/>      
+                          <ReadMessage message={message} key={index} seenUsers={this.state.seenUsers}/>      
                         ) 
                     })            
         } else if(this.state.displayArchives == 'group'){
@@ -49,5 +50,7 @@ export default class DisplayMessage extends Component {
   _onChange(){
         this.setState({displayArchives: AppStore.getOpenArchive()});
         this.setState({personalMessage: AppStore.getPersonalMessage()});
+        this.setState({seenUsers: AppStore.getSeenUsers()});
+          
     } 
 }
