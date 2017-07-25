@@ -48,14 +48,27 @@ class Signin extends Component {
   }
 
    handleSubmit(e){
-      e.preventDefault();    
-      const contact = {
+      e.preventDefault(); 
+       const contact = {
           email: this.refs.email.value.trim(),
           password: this.refs.password.value.trim()
       }
-      AppActions.login(contact);
-        this.refs.email.value = '';
+        // Validate Email Address
+      function validateEmail(email) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }  
+
+      if (validateEmail(this.refs.email.value.trim())) {
+        AppActions.login(contact);
+         this.refs.email.value = '';
         this.refs.password.value = '';
+      } else {
+        alert('Invalid Email Address')
+      }
+
+
+    
      
 }
 

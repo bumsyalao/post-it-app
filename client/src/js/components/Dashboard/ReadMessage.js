@@ -11,7 +11,6 @@ export default class ReadMessage extends Component {
       }
 
   render() {
-    console.log(this.props.seenUsers)
        if(this.state.showMe) { 
                var message = <li>   <div> <div><input type="checkbox" name="messa" defaultChecked /> {this.props.message.text} <br/> posted by  {this.props.message.user} in <strong>{this.props.message.group}</strong> group &nbsp; Seen by<select> {this.props.seenUsers.map((seen, index) => {
                         return(             
