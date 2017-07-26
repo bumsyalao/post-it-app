@@ -142,7 +142,7 @@ class User {
   const uid = req.params.uid;
   const userName = req.params.userName
   const groupName = req.params.groupName
-   
+
    groupRef.child(groupName).child('Messages').child(uid).child("Seen").push({Seen: userName})
    groupRef.child(groupName).child('Messages').child(uid).child("Seen").once('value', snap => {
       const data = snap.val()

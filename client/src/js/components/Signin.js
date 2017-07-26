@@ -87,10 +87,7 @@ class Signin extends Component {
             AppActions.google(googleUser);
           });
         }
-
-      });
- 
-    
+      });   
    }
 
 }

@@ -151,7 +151,7 @@ module.exports = {
             .catch(function (error) {
                 console.log(error);
             });
-   
+  
     },
 
        updateInbox(user){
@@ -242,13 +242,14 @@ module.exports = {
 
 
      google(googleUser){
-        axios.post('/user/google', { googleUser            
-            }).then(function (response) {
-                const user = response.data
-                AppActions.receiveLogin(user)
-            }).catch(function (error) {
-                console.log(error);
-            });                  
+        // axios.post('/user/google', { googleUser            
+        //     }).then(function (response) {
+        //         const user = response.data
+        //         AppActions.receiveLogin(user)
+        //     }).catch(function (error) {
+        //         console.log(error);
+        //     });   
+        console.log(googleUser)               
     },
 
     resetPassword(email){

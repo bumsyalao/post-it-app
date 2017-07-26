@@ -16,7 +16,7 @@ export default class Lhs extends Component {
   return (
       <div>
         <div>
-         <h4>Welcome, {this.props.user.displayName}</h4> 
+         <h4>Hello, {this.props.user.displayName}</h4> 
         </div>       
           <div >
                 <div onClick={this.handleInbox.bind(this)}><a href="#">Inbox</a></div>

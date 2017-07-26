@@ -129,7 +129,7 @@ firebase.database().ref().child('Groups').once('value', snap => {
             Object.keys(allMessage).map((keyName, keyIndex) => {
 
           message ={
-            uid: keyName,
+                uid: keyName,
                 User: allMessage[keyName].User,
                 Message: allMessage[keyName].Message,
                 Group: entry,
