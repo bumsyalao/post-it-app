@@ -413,12 +413,16 @@ const CHANGE_EVENT = 'change'
 
       case AppConstants.GOOGLE:
         console.log('Google Signing Up...');
-        AppStore.setGoogleSignup(action.googleUser);
-        
-
-    
+        AppStore.setGoogleSignup(action.googleUser);   
         // //Save to API
          AppAPI.google(action.googleUser)
+        // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.GOOGLE_LOGIN:
+        console.log('Google LOGIN...');
+         AppAPI.googleLogin(action.googleUser)
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

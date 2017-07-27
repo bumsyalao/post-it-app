@@ -205,11 +205,7 @@ module.exports = {
                  AppActions.receivePersonalMessage(message)  
                 console.log(message)
                   alert('Welcome') 
-            }
-
-            
-               
-                
+            }     
             }).catch(function (error) {
                 console.log(error);
             });                  
@@ -256,6 +252,31 @@ module.exports = {
                 console.log(error);
             }); 
          }           
+    },
+
+    googleLogin(googleUser){
+        axios.post('/google/login', {               
+            email: googleUser,
+             })
+            //  .then(function (response) {               
+            //    const user = response.data.userData;
+            //    const message = response.data.message;
+    
+            // if (response.data == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+            //         alert(response.data)
+            // }else if(response.data.message == 'The password is invalid or the user does not have a password.'){               
+            //         alert(response.data.message)        
+            // }else{              
+            //      AppActions.receiveLogin(user)
+            //      AppActions.receivePersonalMessage(message)  
+            //     console.log(message)
+            //       alert('Welcome') 
+            // }     
+            // }).catch(function (error) {
+            //     console.log(error);
+            // }); 
+        
+            console.log(googleUser)                 
     },
 
     resetPassword(email){

@@ -50,20 +50,7 @@ class User {
      */
 
   static google(req, res) {
-      const googleUser = req.body.googleUser
-    //     if (user) {
-    //       firebase.auth().onAuthStateChanged(() => {
-    //         const googleUser = {
-    //            username: user.displayName,
-    //            email: user.email,
-    //            uid: user.uid
-    //         }
-    //         console.log(googleUser)
-  
-    //       });
-    //     }
-    //   }); 
-
+    const googleUser = req.body.googleUser
     const username = googleUser.username;
     const email = googleUser.email;
     const uid = googleUser.uid;
@@ -96,7 +83,7 @@ class User {
        const user = {
          displayName: username
        }
-       
+
         res.status(200).send({
         message: 'Welcome to Post it app',
         userData: user,
@@ -108,8 +95,10 @@ class User {
   }
 
 
-
-
+  static googleLogin(req, res) {
+      const userName = req.body.displayName
+      console.log(userName)     
+  }
 
 
  /**
@@ -385,12 +374,9 @@ firebase.auth().onAuthStateChanged((user) => {
                             messages.push(message)
                             
                                              
-                 })    
-                ``
-                          
+                 })                              
               })  
           }
-
 
         }          
             })
@@ -412,7 +398,6 @@ firebase.auth().onAuthStateChanged((user) => {
  //Get All Phone Numbers in the database
     static allNumbers(req, res){
     const rootRef = firebase.database().ref().child('users');
-
     rootRef.once('value', (snap) => {
       const data = snap.val();
       const numbers = [];
@@ -437,12 +422,5 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 
 
-  
-  
-
-
-
 }
-
-
 module.exports = User;
