@@ -161,32 +161,6 @@ module.exports = {
             });
     },
 
-        saveNotification(notify){
-    //    const groupName = message.group;
-    //     // const groupID = addUsers.groupID
-    //    const messages = message.text;
-    //    const emails = message.emails;
-    //     const numbers = message.numbers;
-    //     axios.post('/groups/'+ groupName +"/"+messages+"/"+emails+"/"+numbers)
-    //     .then(function (response) {
-    //             console.log(response);
-                
-    //         }).catch(function (error) {
-    //             console.log(error);
-    //         });                  
-    },
-
-    //   getMessages(keyName){
-    //     const groupName = keyName;
-    //     axios.get('/groups/'+groupName)
-    //         .then((message) => {
-               
-    //             AppActions.receiveMessages(message.data)
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });s
-    // },
 
      login(contact){
         axios.post('/user/signin', {               
@@ -256,26 +230,8 @@ module.exports = {
 
     googleLogin(googleUser){
         axios.post('/google/login', {               
-            email: googleUser,
+            userName: googleUser,
              })
-            //  .then(function (response) {               
-            //    const user = response.data.userData;
-            //    const message = response.data.message;
-    
-            // if (response.data == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
-            //         alert(response.data)
-            // }else if(response.data.message == 'The password is invalid or the user does not have a password.'){               
-            //         alert(response.data.message)        
-            // }else{              
-            //      AppActions.receiveLogin(user)
-            //      AppActions.receivePersonalMessage(message)  
-            //     console.log(message)
-            //       alert('Welcome') 
-            // }     
-            // }).catch(function (error) {
-            //     console.log(error);
-            // }); 
-        
             console.log(googleUser)                 
     },
 
