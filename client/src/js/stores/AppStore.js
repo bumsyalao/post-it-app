@@ -418,7 +418,7 @@ const CHANGE_EVENT = 'change'
 
     
         // //Save to API
-        // AppAPI.google(action.googleUser)
+         AppAPI.google(action.googleUser)
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

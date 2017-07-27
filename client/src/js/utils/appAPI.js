@@ -195,8 +195,7 @@ module.exports = {
             }).then(function (response) {               
                const user = response.data.userData;
                const message = response.data.message;
-
-
+    
             if (response.data == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
                     alert(response.data)
             }else if(response.data.message == 'The password is invalid or the user does not have a password.'){               
@@ -242,14 +241,21 @@ module.exports = {
 
 
      google(googleUser){
-        // axios.post('/user/google', { googleUser            
-        //     }).then(function (response) {
-        //         const user = response.data
-        //         AppActions.receiveLogin(user)
-        //     }).catch(function (error) {
-        //         console.log(error);
-        //     });   
-        console.log(googleUser)               
+         if(googleUser.number){
+            axios.post('/user/google', { googleUser            
+            }).then(function (response) {
+            const user = response.data.userData;
+               const message = response.data.message;
+               console.log(user)
+               console.log(message)
+               AppActions.receiveLogin(user)
+                 AppActions.receivePersonalMessage(message)
+                 alert('WARNING: Google Sign Up feature is incomplete ')
+    
+            }).catch(function (error) {
+                console.log(error);
+            }); 
+         }           
     },
 
     resetPassword(email){
@@ -260,10 +266,6 @@ module.exports = {
                 console.log(error);
             });                  
     },
-
-
-                
-    
 
 };
 

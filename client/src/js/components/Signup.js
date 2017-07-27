@@ -27,10 +27,9 @@ export default class Signup extends Component {
         AppStore.removeChangeListener(this._onChange);
     }
 
- render() { 
-     console.log(this.state.googleUser)   
+ render() {  
      if (this.state.googleUser){
-         var display = <GoogleWelcome />
+         var display = <GoogleWelcome googleUser={this.state.googleUser}/>
      } else {
          var display = <div>
                         <h3>Sign Up</h3>
@@ -110,16 +109,13 @@ const Uppercase = capitalizeFirstLetter(this.refs.username.value)
       .then((result) => {
         const token = result.credential.accessToken;
         const user = result.user;
-        if (user) {
-          firebase.auth().onAuthStateChanged(() => {
-            const googleUser = {
+        const googleUser = {
                username: user.displayName,
                email: user.email,
                uid: user.uid
             }
-            AppActions.google(googleUser);
-          });
-        }
+  
+         AppActions.google(googleUser);
       });   
    }
 

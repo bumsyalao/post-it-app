@@ -84,7 +84,7 @@ class Signin extends Component {
                email: user.email,
                uid: user.uid
             }
-            AppActions.google(googleUser);
+            // AppActions.google(googleUser);
           });
         }
       });   

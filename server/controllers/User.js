@@ -48,25 +48,69 @@ class User {
      * @param {number} res - Server Response
      * @return {object}  returns the user's details
      */
+
   static google(req, res) {
-    const googleUser = req.body.googleUser
+      const googleUser = req.body.googleUser
+    //     if (user) {
+    //       firebase.auth().onAuthStateChanged(() => {
+    //         const googleUser = {
+    //            username: user.displayName,
+    //            email: user.email,
+    //            uid: user.uid
+    //         }
+    //         console.log(googleUser)
+  
+    //       });
+    //     }
+    //   }); 
 
     const username = googleUser.username;
     const email = googleUser.email;
     const uid = googleUser.uid;
+    const number = googleUser.number;
     // add element to database
       usersRef.child(username).set({
         username,
         email,
-        uid
+        uid,
+        number
       });
-      const data = {
-        displayName: username,
-        email,
-        uid
-      }
-      res.send(data)
+
+           // Get all user's personal message while signing in
+      const rootRef = firebase.database().ref().child('users').child(username).child('Messages');
+      rootRef.once('value', snap => {
+      const data = snap.val()
+      const messages = []
+      let message = {}
+  
+      for (var i in data){
+        message = {
+          uid: data[i].uid,
+          user: data[i].User,
+          text: data[i].Message,
+          group: data[i].Group,  
+        }
+        messages.push(message)
+       }   
+
+       const user = {
+         displayName: username
+       }
+       
+        res.status(200).send({
+        message: 'Welcome to Post it app',
+        userData: user,
+        message: messages
+      });
+    })
+
+
   }
+
+
+
+
+
 
  /**
      * The Sign In method
