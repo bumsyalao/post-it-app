@@ -36,12 +36,19 @@ export default class ReadMessage extends Component {
   readMessage(e){
     e.preventDefault()
     this.setState({ showMe : true} );
+    
     const seenMesage = {
       uid: this.props.message.uid,
       userName: this.state.user.displayName,
       groupName: this.props.message.group 
     }
-    AppActions.seenMessage(seenMesage)
+
+    if(this.props.message.uid === undefined){
+      console.log('Undefined')
+    }else{
+      AppActions.seenMessage(seenMesage)
+    }
+    
   }
 
  

@@ -48,25 +48,58 @@ class User {
      * @param {number} res - Server Response
      * @return {object}  returns the user's details
      */
+
   static google(req, res) {
     const googleUser = req.body.googleUser
-
     const username = googleUser.username;
     const email = googleUser.email;
     const uid = googleUser.uid;
+    const number = googleUser.number;
     // add element to database
       usersRef.child(username).set({
         username,
         email,
-        uid
+        uid,
+        number
       });
-      const data = {
-        displayName: username,
-        email,
-        uid
-      }
-      res.send(data)
+
+           // Get all user's personal message while signing in
+      const rootRef = firebase.database().ref().child('users').child(username).child('Messages');
+      rootRef.once('value', snap => {
+      const data = snap.val()
+      const messages = []
+      let message = {}
+  
+      for (var i in data){
+        message = {
+          uid: data[i].uid,
+          user: data[i].User,
+          text: data[i].Message,
+          group: data[i].Group,  
+        }
+        messages.push(message)
+       }   
+
+       const user = {
+         displayName: username
+       }
+
+        res.status(200).send({
+        message: 'Welcome to Post it app',
+        userData: user,
+        message: messages
+      });
+    })
+
+
   }
+
+
+  static googleLogin(req, res) {
+      const userName = req.body.displayName
+      console.log(userName)     
+  }
+
 
  /**
      * The Sign In method
@@ -142,7 +175,7 @@ class User {
   const uid = req.params.uid;
   const userName = req.params.userName
   const groupName = req.params.groupName
-   
+
    groupRef.child(groupName).child('Messages').child(uid).child("Seen").push({Seen: userName})
    groupRef.child(groupName).child('Messages').child(uid).child("Seen").once('value', snap => {
       const data = snap.val()
@@ -341,12 +374,9 @@ firebase.auth().onAuthStateChanged((user) => {
                             messages.push(message)
                             
                                              
-                 })    
-                ``
-                          
+                 })                              
               })  
           }
-
 
         }          
             })
@@ -368,7 +398,6 @@ firebase.auth().onAuthStateChanged((user) => {
  //Get All Phone Numbers in the database
     static allNumbers(req, res){
     const rootRef = firebase.database().ref().child('users');
-
     rootRef.once('value', (snap) => {
       const data = snap.val();
       const numbers = [];
@@ -393,12 +422,5 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 
 
-  
-  
-
-
-
 }
-
-
 module.exports = User;

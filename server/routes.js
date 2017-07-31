@@ -21,6 +21,9 @@ router.post('/user/signup', User.signup);
 //Google Sign Up
 router.post('/user/google', User.google);
 
+//Google Login
+router.post('/google/login', User.googleLogin);
+
 // Sign In
 router.post('/user/signin', User.signin);
 

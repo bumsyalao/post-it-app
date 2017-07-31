@@ -22,6 +22,7 @@ const CHANGE_EVENT = 'change'
     let _archiveMessage = [];
     let _openArchive = 'inbox';
     let _seenUsers = [];
+    let _googleSignup = null
  
 //localStorage["users"] ? false : true;
   const AppStore = assign({}, EventEmitter.prototype, {
@@ -79,6 +80,15 @@ const CHANGE_EVENT = 'change'
 
     setdatabaseUsers(contacts){
       _databaseUsers = contacts;
+    },
+
+       // Get the Current User who signed up with Google
+    getGoogleSignup(){
+      return _googleSignup;
+    },
+
+    setGoogleSignup(googleUser){
+      _googleSignup = googleUser;
     },
 
     getGroups(){
@@ -402,9 +412,17 @@ const CHANGE_EVENT = 'change'
         break;
 
       case AppConstants.GOOGLE:
-    
-        //Save to API
-        AppAPI.google(action.googleUser)
+        console.log('Google Signing Up...');
+        AppStore.setGoogleSignup(action.googleUser);   
+        // //Save to API
+         AppAPI.google(action.googleUser)
+        // //Emit Change
+        AppStore.emit(CHANGE_EVENT);
+        break;
+
+      case AppConstants.GOOGLE_LOGIN:
+        console.log('Google LOGIN...');
+         AppAPI.googleLogin(action.googleUser)
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

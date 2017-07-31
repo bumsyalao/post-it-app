@@ -158,10 +158,16 @@ const AppActions = {
      google(googleUser){
         AppDispatcher.handleViewAction({ 
             actionType: AppConstants.GOOGLE,
+            googleUser           
+        })       
+    },
+
+     googleLogin(googleUser){
+        AppDispatcher.handleViewAction({ 
+            actionType: AppConstants.GOOGLE_LOGIN,
             googleUser
             
-        })
-        
+        })        
     },
       logout(){
         AppDispatcher.handleViewAction({ 

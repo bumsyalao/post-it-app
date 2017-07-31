@@ -89,14 +89,6 @@ static addUser(req, res) {
        // loop through the user names in user database and add notifications
         allUser.forEach((entry) => {
            db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
-          //  db.ref(`/users/${entry}/Messages`).push(
-          //    {
-          //       User: user.displayName,
-          //       Message: messages,
-          //       Group: groupName,
-          //       Seen: [user.displayName, "Abaham" ]
-          //    }
-          //  )
         })
          
         //Push the message into Group
@@ -129,7 +121,7 @@ firebase.database().ref().child('Groups').once('value', snap => {
             Object.keys(allMessage).map((keyName, keyIndex) => {
 
           message ={
-            uid: keyName,
+                uid: keyName,
                 User: allMessage[keyName].User,
                 Message: allMessage[keyName].Message,
                 Group: entry,
@@ -154,26 +146,6 @@ firebase.database().ref().child('Groups').once('value', snap => {
 				res.send('Error');
 			});
        
-    //   groupRef.child(groupName).child("Messages").once('value', snap => {
-    //   const data = snap.val()
-    //   const messages = []
-    //   let message = {}
-  
-    //   for (var i in data){
-    //     message = {   
-    //       uid: i,         
-    //       User: data[i].User,
-    //       Message: data[i].Message,
-    //       Group: data[i].Message   
-    //     }
-    //     messages.push(message)
-    //    }   
-
-    //   console.log(messages)
-
-    // })
-
-
 
       if((priority === 'Urgent') || (priority === 'Critical')){
          // Send Email Notification to Users

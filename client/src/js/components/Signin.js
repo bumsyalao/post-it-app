@@ -23,7 +23,7 @@ class Signin extends Component {
   render() {
     return (
       <div>  
-           <div className='well'style={{float:'left'}} >  
+           <div className='well'style={{width: '70%'}} >  
             <h3>Sign In</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                  <div className='form-group'>
@@ -37,10 +37,10 @@ class Signin extends Component {
             </form>
         </div>
 
-           <div className='well' style={{float:'right'}}>  
+           {/*<div className='well' style={{float:'right'}}>  
           <h3>Login With Google Account</h3>
             <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
-        </div>
+        </div>*/}
 
       </div>
 
@@ -77,20 +77,17 @@ class Signin extends Component {
       .then((result) => {
         const token = result.credential.accessToken;
         const user = result.user;
+        console.log(user)
         if (user) {
           firebase.auth().onAuthStateChanged(() => {
             const googleUser = {
-               username: user.displayName,
-               email: user.email,
-               uid: user.uid
+               userName: user.email            
             }
-            AppActions.google(googleUser);
+           
+             AppActions.googleLogin(user.displayName);
           });
         }
-
-      });
- 
-    
+      });   
    }
 
 }
