@@ -1,8 +1,8 @@
 # Post-it-app
 
-[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=Badges)](https://travis-ci.org/Charpell/post-it-app)
+[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=Google_Signup_Refactor)](https://travis-ci.org/Charpell/post-it-app)
 
-[![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=Badges)](https://coveralls.io/github/Charpell/post-it-app?branch=Badges)
+[![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=Google_Signup_Refactor)](https://coveralls.io/github/Charpell/post-it-app?branch=Badges)
 
 
 
