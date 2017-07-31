@@ -31,8 +31,10 @@ export default class Signup extends Component {
      if (this.state.googleUser){
          var display = <GoogleWelcome googleUser={this.state.googleUser}/>
      } else {
-         var display = <div>
-                        <h3>Sign Up</h3>
+         var display = <div >
+
+                        <div style={{width: '50%'}}>
+                            <h3>Sign Up</h3>
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             <div className='form-group'>
                                 <input type="text" ref='username' className='form-control' placeholder='Username' required/>
@@ -48,8 +50,9 @@ export default class Signup extends Component {
                             </div>              
                             <button type='submit' className='btn btn-primary'>Submit</button>
                         </form>
-
-                          <div className='well' style={{float:'right'}}>  
+                        </div>
+                        
+                          <div style={{float:'right', marginTop: '-345px'}}>  
                                 <h3>Login With Google Account</h3>
                                     <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
                          </div>

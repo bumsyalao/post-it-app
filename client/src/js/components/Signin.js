@@ -23,7 +23,7 @@ class Signin extends Component {
   render() {
     return (
       <div>  
-           <div className='well'style={{float:'left'}} >  
+           <div className='well'style={{width: '70%'}} >  
             <h3>Sign In</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                  <div className='form-group'>
