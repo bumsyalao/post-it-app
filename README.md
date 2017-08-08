@@ -43,10 +43,28 @@ PostIt is a simple application that allows friends and colleagues create groups 
   7. Run 'webpack -w'
 
 
-# Testing the Routes
+# To Run Test
   The mocha framework and supertest module are used for testing our routes.   
   To test, Run "mocha"
  
+### To test the API with postman:
+- run ```npm start```
+- then visit ```http://localhost:3000```, you should see 'PostIt API running...' 
+
+It is also hosted on heroku at <a href="https://post-it-app35.herokuapp.com//" target="_blank">PostIt API</a>.
+
+The API contains different endpoints with their respective payloads as stated below:
+
+| Endpoints                    | Functions                                                               | Payloads                 | Request Methods |
+|------------------------------|-------------------------------------------------------------------------|--------------------------|-----------------|
+| /user/signup             | It allows users to register                                             | username, email and password    | POST            |
+| /user/google             | It allows users to register                                             | google auth    | POST            |
+| /user/signin             | It gives users access to login                                          | email and password    | POST            |
+| /group                   | It allows users to create group for notifications                       | groupName and userName | POST            |
+| /group/:groupName/:user     | It allows users to add another user to a created group of id groupID    | username                 | POST            |
+| /group/:groupID/message  | It allows users to post message to a created group of id groupID        | message and postedBy     | POST            |
+| /group/:groupID/messages | It allows users to retrieve messages from a created group of id groupID | No payload               | GET             |
+
 
  
    
