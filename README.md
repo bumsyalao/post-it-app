@@ -60,7 +60,10 @@ The API contains different endpoints with their respective payloads as stated be
 | /user/signin             | It gives users access to login                                          | email and password    | POST            |
 | /group                   | It allows users to create group for notifications                       | groupName and userName | POST            |
 | /group/:groupName/:user     | It allows users to add another user to a created group of id groupID    | username                 | POST            |
-| /groups/:groupName/:messages/:emails/:numbers/:allUsers/:notification/:priority/group/:groupID/message  | It allows users to post message to a created group of id groupID        | message and postedBy     | POST            |
+| /groups/:groupName/:messages
+/:emails/:numbers/:allUsers
+/:notification/:priority/group
+/:groupID/message  | It allows users to post message to a created group of id groupID        | message and postedBy     | POST            |
 | /group/:groupID/messages | It allows users to retrieve messages from a created group of id groupID | No payload               | GET             |
 
 
