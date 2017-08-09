@@ -145,49 +145,51 @@ it('should return an error message if username is undefined', (done) => {
 //   });
 // });
 
-// describe('SignIn Route', () => {
-//   it('The user should be able to signin', (done) => {
-//     request(app)
-//       .post('/user/signin')
-//       .send(userSignIn)
-//       .set('Accept', 'application/json')
-//       .expect(200)
-//       .end((err) => {
-//         if (err) return done(err);
-//         done();
-//       });
-//   });
-// });
+describe('SignIn Route', () => {
+  const email = 'asss@gmail.com';
+  const password = 'ebukao70@gmail.com';
+  it('The user should be able to signin', (done) => {
+    request(app)
+      .post('/user/signin')
+      .send({email, password})
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
 
-// describe('SignOut Route', () => {
-//   it('The user should be able to signout', (done) => {
-//     request(app)
-//       .post('/user/signout')
-//       .set('Accept', 'application/json')
-//       .expect(200)
-//       .end((err) => {
-//         if (err) return done(err);
-//         done();
-//       });
-//   });
-// });
+describe('SignOut Route', () => {
+  it('The user should be able to signout', (done) => {
+    request(app)
+      .post('/user/signout')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
 
-// describe('Create Group', () => {
-//   it('The user should be able to create a group', (done) => {
-//     request(app)
-//       .post('/group')
-//       .send({     
-//           groupName: "Andela",
-//           userName: 'Ebuka'
-//       })
-//       .set('Accept', 'application/json')
-//       .expect(200)
-//       .end((err) => {
-//         if (err) return done(err);
-//         done();
-//       });
-//   });
-// });
+describe('Create Group', () => {
+  it('The user should be able to create a group', (done) => {
+    request(app)
+      .post('/group')
+      .send({     
+          groupName: "Andela",
+          userName: 'Ebuka'
+      })
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
 
 
 // // describe('Add User to the Group', () => {
