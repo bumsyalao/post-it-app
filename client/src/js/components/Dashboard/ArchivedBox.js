@@ -20,7 +20,7 @@ export default class ArchivedBox extends Component {
 
   render() {
       if(this.state.archives == ''){
-          var display =   <li> You Currently do not have any Archived Message</li>
+          var display = <li> You Currently do not have any Archived Message</li>
               
       }else{
           var display =   this.state.archives.map((message, index) => {

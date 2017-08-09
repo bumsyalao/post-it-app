@@ -4,9 +4,9 @@
   "description": "Messsaging app",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 15000",
+    "test": "nyc mocha --timeout 15000",
     "start": "node ./server/app",
-    "dev": "webpack-dev-server",
+    "dev": "webpack -w & node ./server/app",
     "coverage": "nyc --require babel-core/register mocha ./test/test.js && nyc report --reporter=text-lcov | coveralls",
     "showcoverage": "coverage/lcov-report/index.html"
   },

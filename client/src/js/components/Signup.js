@@ -16,17 +16,75 @@ export default class Signup extends Component {
        googleUser: AppStore.getGoogleSignup()
 
     };
-     this._onChange= this._onChange.bind(this)
+     this.onChange= this.onChange.bind(this)
   }
 
    componentDidMount(){
-        AppStore.addChangeListener(this._onChange);
+        AppStore.addChangeListener(this.onChange);
     }
 
-    componentUnmount(){
-        AppStore.removeChangeListener(this._onChange);
+    componentWillUnmount(){
+        AppStore.removeChangeListener(this.onChange);
     }
 
+    capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+   }
+    onChange(){
+        this.setState({
+            databaseUsers: AppStore.getdatabaseUsers(),
+            emails: AppStore.getGroupEmails(),
+            numbers: AppStore.getAllUsersNumber(),
+            googleUser: AppStore.getGoogleSignup()
+        });
+        
+    } 
+    handleGoogleSignin(e){
+      e.preventDefault();      
+        provider.addScope('profile');
+        provider.addScope('email');
+        firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            const token = result.credential.accessToken;
+            const user = result.user;
+            const googleUser = {
+                 username: user.displayName,
+                 email: user.email,
+                 uid: user.uid
+            }
+
+         AppActions.google(googleUser);
+      });   
+   }
+ 
+    handleSubmit(e){
+      e.preventDefault();  
+
+    // Implements the function
+    const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
+
+   const contact = {
+          username: userNameToUppercase,
+          email: this.refs.email.value.trim(),
+          password: this.refs.password.value.trim(),
+          number: this.refs.number.value.trim()
+      }
+
+      // Checks if Username and Phone number already exist
+    if (this.state.databaseUsers.includes(Uppercase)){
+     alert("The username already exist")  
+    }else if(this.state.numbers.includes(this.refs.number.value)){
+        alert("The phone number already exist")
+     }else {      
+        AppActions.saveContact(contact);
+
+        this.refs.username.value = '';
+         this.refs.email.value = '';
+         this.refs.password.value = ''; 
+         this.refs.number.value = ''; 
+    }
+}
+   
  render() {  
      if (this.state.googleUser){
          var display = <GoogleWelcome googleUser={this.state.googleUser}/>
@@ -54,7 +112,7 @@ export default class Signup extends Component {
                         
                           <div style={{float:'right', marginTop: '-345px'}}>  
                                 <h3>Login With Google Account</h3>
-                                    <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
+                                    <button onClick={this.handleGoogleSignin.bind(this)}>Login with Gooogle</button>
                          </div>
 
          </div>
@@ -70,66 +128,7 @@ export default class Signup extends Component {
 
 
 
-  handleSubmit(e){
-      e.preventDefault();  
-      
-   // Function to convert first letter of each word to capital letter   
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-   } 
-
-    // Implements the function
-const Uppercase = capitalizeFirstLetter(this.refs.username.value)
-
-   const contact = {
-          username: Uppercase,
-          email: this.refs.email.value.trim(),
-          password: this.refs.password.value.trim(),
-          number: this.refs.number.value.trim()
-      }
-
-      // Checks if Username and Phone number already exist
-    if (this.state.databaseUsers.includes(Uppercase)){
-     alert("The username already exist")  
-    }else if(this.state.numbers.includes(this.refs.number.value)){
-        alert("The phone number already exist")
-     }else {      
-        AppActions.saveContact(contact);
-
-        this.refs.username.value = '';
-         this.refs.email.value = '';
-         this.refs.password.value = ''; 
-         this.refs.number.value = ''; 
-    }
-}
-
-
-   handleGoogle(e){
-      e.preventDefault();      
-    provider.addScope('profile');
-    provider.addScope('email');
-    firebase.auth().signInWithPopup(provider)
-      .then((result) => {
-        const token = result.credential.accessToken;
-        const user = result.user;
-        const googleUser = {
-               username: user.displayName,
-               email: user.email,
-               uid: user.uid
-            }
   
-         AppActions.google(googleUser);
-      });   
-   }
-
-   _onChange(){
-        this.setState({databaseUsers: AppStore.getdatabaseUsers()});
-        this.setState({emails: AppStore.getGroupEmails()});
-        this.setState({numbers: AppStore.getAllUsersNumber()});
-        this.setState({googleUser: AppStore.getGoogleSignup()});
-        
-                     
-    } 
 
 
 }

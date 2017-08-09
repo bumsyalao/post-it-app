@@ -36,9 +36,8 @@ PostIt is a simple application that allows friends and colleagues create groups 
   1. Clone this repository from a terminal git clone https://github.com/Charpell/post-it-app.git.
   2. Move into the project directory
   3. Install project dependencies npm install
-  4. Open 2 git bash terminal, one will run the server and the other runs webpack
-  6. Run 'npm start'
-  7. Run 'webpack -w'
+  4. Run ```npm run dev```
+  
 
 
 # To Run Test

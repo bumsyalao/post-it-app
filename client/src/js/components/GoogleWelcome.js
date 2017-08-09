@@ -11,6 +11,7 @@ export default class GoogleWelcome extends Component {
 
     };
      this._onChange= this._onChange.bind(this)
+     this.onChange = this.onChange.bind(this)
   }
 
 
@@ -21,36 +22,8 @@ export default class GoogleWelcome extends Component {
     componentUnmount(){
         AppStore.removeChangeListener(this._onChange);
     }
-
-  render() {
-    return (
-      <div>
-     <h3> Welcome {this.props.googleUser.username} </h3>
-       <p>One more step, we need your phone number</p>
-       <div className='well'>            
-            <form onSubmit={this.handleSubmit.bind(this)}>
-                <div className='form-group' >
-                    <input type="text" ref='username' className='form-control' value= {this.props.googleUser.username} onChange={(e)=>this.props.onChange(e.target.value)} required/>
-                </div>
-                 <div className='form-group'>
-                    <input type="email" ref='email' className='form-control' value= {this.props.googleUser.email} required/>
-                </div>
-                <div className='form-group'>
-                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
-                </div>
-                  
-                <button type='submit' className='btn btn-primary'>Submit</button>
-            </form>
-            
-        </div>
-    
-      </div>
-
-    )
-  }
-  onChange(e){
+    onChange(e){
     e.preventDefault()
-    console.log('handle change called');
     this.setState({username: e.target.value})
   }
 
@@ -86,11 +59,37 @@ export default class GoogleWelcome extends Component {
             this.refs.number.value = ''; 
         }
     }
-    
-  
 
-     _onChange(){
+    _onChange(){
         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
         this.setState({numbers: AppStore.getAllUsersNumber()});                  
     } 
+
+  render() {
+    return (
+      <div>
+     <h3> Welcome {this.props.googleUser.username} </h3>
+       <p>One more step, we need your phone number</p>
+       <div className='well'>            
+            <form onSubmit={this.handleSubmit.bind(this)}>
+                <div className='form-group' >
+                    <input type="text" ref='username' className='form-control' value= {this.props.googleUser.username} onChange={this.onChange} required/>
+                </div>
+                 <div className='form-group'>
+                    <input type="email" ref='email' className='form-control' value= {this.props.googleUser.email}  onChange={(e)=>this.props.onChange(e.target.value)} required/>
+                </div>
+                <div className='form-group'>
+                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
+                </div>
+                  
+                <button type='submit' className='btn btn-primary'>Submit</button>
+            </form>
+            
+        </div>
+    
+      </div>
+
+    )
+  }
+  
 }
