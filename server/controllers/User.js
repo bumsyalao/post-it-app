@@ -14,9 +14,16 @@ class User {
     const password = req.body.password;
     const email = req.body.email;
     const number = req.body.number;
+
+      if (username === undefined || password === undefined || email === undefined) {
+    res.json({ message: 'You need to provide username, password and email' });
+  } else if (username === '' || password === '' || email === '') {
+    res.json({ message: 'Username, password or email cannot be empty' });
+  } else {
     firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
       const uid = user.uid;
 
+      if(user.email !== email){
       // update the username of the user
       user.updateProfile({
         displayName: username
@@ -35,11 +42,20 @@ class User {
         uid,
         number
       });
+
+      } else {
+          res.json({ message: 'You already have an existing account. Kindly go and login' });
+
+      }
+
+  
     })
     .catch((error) => {
       res.send(error);
     });
   }
+
+  } 
 
 
  /**
