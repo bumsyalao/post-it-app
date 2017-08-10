@@ -75,11 +75,4 @@ router.get('/users/allnumbers/', User.allNumbers);
 // Password Reset
 router.post('/user/reset/', User.resetPassword);
 
-// Nodemailer Sample
-router.post('/user/mailer/', Group.mailer);
-
-// Nexmo Sample
-router.post('/user/sms/', Group.sms);
-
-
 module.exports = router;
