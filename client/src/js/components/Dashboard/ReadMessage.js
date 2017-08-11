@@ -4,6 +4,14 @@ import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore';
 import SeenUsers from './SeenUsers'
 
+
+/**
+ * Show list of Users who have seen the message
+ * 
+ * @export
+ * @class ReadMessage
+ * @extends {Component}
+ */
 export default class ReadMessage extends Component {
       state = {
         showMe : false,

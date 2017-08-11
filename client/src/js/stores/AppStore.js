@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
-import AppDispatcher from '../dispatcher/appDispatcher';
-import AppConstants from '../constants/appConstants';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants from '../constants/AppConstants';
 import assign from 'object-assign'
 import AppAPI from '../utils/appAPI'
 

@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
 
+
+/**
+ * The Index page 
+ * 
+ * @class Home
+ * @extends {Component}
+ */
 class Home extends Component {
   render() {
     return (

@@ -2,6 +2,14 @@ import React, {Component} from 'react'
 import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 
+
+/**
+ * Resets the passwrod of a user
+ * 
+ * @export
+ * @class ResetPassword
+ * @extends {Component}
+ */
 export default class ResetPassword extends Component {
   render() {
     return (
@@ -21,6 +29,13 @@ export default class ResetPassword extends Component {
     )
   }
 
+
+  /**
+   * Makes an action to Reset Password
+   * 
+   * @param {any} e 
+   * @memberof ResetPassword
+   */
   handleSubmit(e){
       e.preventDefault()
       const email = this.refs.email.value.trim()

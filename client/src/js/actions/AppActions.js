@@ -1,229 +1,210 @@
-import AppDispatcher from '../dispatcher/appDispatcher';
-import AppConstants from '../constants/appConstants';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants from '../constants/AppConstants';
 
-const AppActions = { 
-    saveContact(contact){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.SAVE_CONTACT,
-            contact
-        })
+const AppActions = {
+  saveContact(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SAVE_CONTACT,
+      contact
+    });
+  },
 
-    },
+  receiveContact(contacts) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_CONTACT,
+      contacts
+    });
+  },
 
-   receiveContact(contacts){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_CONTACT,
-            contacts
-        })
+  receiveNumber(number) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_ALLUSERS_NUMBER,
+      number
+    });
+  },
 
-    },
+  removeMessage(messageId) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.REMOVE_MESSAGE,
+      messageId
+    });
+  },
 
-    receiveNumber(number){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_ALLUSERS_NUMBER,
-            number
-        })
+  archiveMessages(message) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.ARCHIVE_MESSAGE,
+      message
+    });
+  },
 
-    },
+  seenMessage(user) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SEEN_MESSAGE,
+      user
+    });
+  },
 
-    removeMessage(messageId){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.REMOVE_MESSAGE,
-            messageId
-        })
+  receiveSeenUsers(users) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_SEEN_USERS,
+      users
+    });
+  },
 
-    },
+  openArchive() {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.OPEN_ARCHIVE
+    });
+  },
 
-    archiveMessages(message){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.ARCHIVE_MESSAGE,
-            message
-        })
-    },
+  closeArchive() {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.CLOSE_ARCHIVE
+    });
+  },
 
-    seenMessage(user){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.SEEN_MESSAGE,
-            user
-        })
-    },
+  inboxMessage() {
+    // alert('This feauture is not yet available, coming soon')
+  },
 
-     receiveSeenUsers(users){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_SEEN_USERS,
-            users
-        })
-    },
+  updateInbox(user) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_INBOX,
+      user
+    });
+  },
 
-    openArchive(){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.OPEN_ARCHIVE
-        })
-    },
+  saveGroup(group) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SAVE_GROUP,
+      group
+    });
+  },
 
-     closeArchive(){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.CLOSE_ARCHIVE
-        })
-    },
+  receiveGroup(groups) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_GROUP,
+      groups
+    });
+  },
 
-    inboxMessage(messageId){
-        alert('This feauture is not yet available, coming soon')
+  receiveNotification(notification) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_NOTIFICATION,
+      notification
+    });
+  },
 
-    },
+  receivePersonalMessage(message) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_PERSONAL_MESSAGE,
+      message
+    });
+  },
 
-     updateInbox(user){
-        AppDispatcher.handleViewAction({
-        actionType: AppConstants.UPDATE_INBOX,
-        user
-      })
-        
-    },
+  saveGroupUser(addUser) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SAVE_GROUP_USER,
+      addUser
+    });
+  },
 
+  saveMessage(message) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SAVE_MESSAGE,
+      message
+    });
+  },
 
-    saveGroup(group){
-        AppDispatcher.handleViewAction({
-        actionType: AppConstants.SAVE_GROUP,
-        group
-      })
-        
-    }, 
+  receiveMessages(message) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_MESSAGE,
+      message
+    });
+  },
 
-    receiveGroup(groups){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_GROUP,
-            groups
-        })
+  login(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SIGN_IN,
+      contact
+    });
+  },
 
-    },
-       receiveNotification(notification){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_NOTIFICATION,
-            notification
-        })
+  receiveLogin(user) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_LOGIN,
+      user
+    });
+  },
 
-    },
+  searchUserMessage(keyName) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.SEARCH_USER_MESSAGE,
+      keyName
+    });
+  },
 
-        receivePersonalMessage(message){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_PERSONAL_MESSAGE,
-            message
-        })
+  google(googleUser) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.GOOGLE,
+      googleUser
+    });
+  },
 
-    },
+  googleLogin(googleUser) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.GOOGLE_LOGIN,
+      googleUser
+    });
+  },
 
-    saveGroupUser(addUser){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.SAVE_GROUP_USER,
-            addUser
-        })
-        
-    },
+  logout() {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.LOGOUT
+    });
+  },
 
-     saveMessage(message){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.SAVE_MESSAGE,
-            message
-        })
-        
-    },
-    receiveMessages(message){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_MESSAGE,
-            message
-        })
+  receiveUserMessage(users) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_USER_MESSAGE,
+      users
+    });
+  },
 
-    },
-     login(contact){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.SIGN_IN,
-            contact
-        })
-        
-    },
-      receiveLogin(user){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.RECEIVE_LOGIN,
-            user
-        })
-        
-    },
-      searchUserMessage(keyName){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.SEARCH_USER_MESSAGE,
-            keyName
-        })
-           
-    }, 
-     google(googleUser){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.GOOGLE,
-            googleUser           
-        })       
-    },
+  receiveEmails(emails) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_EMAILS,
+      emails
+    });
+  },
 
-     googleLogin(googleUser){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.GOOGLE_LOGIN,
-            googleUser
-            
-        })        
-    },
-      logout(){
-        AppDispatcher.handleViewAction({ 
-            actionType: AppConstants.LOGOUT
-            
-        })
-        
-    },
-       receiveUserMessage(users){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_USER_MESSAGE,
-            users
-        })
+  receiveNumbers(numbers) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_NUMBERS,
+      numbers
+    });
+  },
 
-    },
-       receiveEmails(emails){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_EMAILS,
-            emails
-        })
+  displayName(displayName) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.DISPLAY_NAME,
+      displayName
+    });
+  },
 
-    },
-      receiveNumbers(numbers){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RECEIVE_NUMBERS,
-            numbers
-        })
+  resetPassword(email) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RESET_PASSWORD,
+      email
+    });
+  },
 
-    },
+  notification(notify) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.NOTIFICATION,
+      notify
+    });
+  },
 
-       displayName(displayName){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.DISPLAY_NAME,
-            displayName
-        })
-
-    },
-       resetPassword(email){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.RESET_PASSWORD,
-            email
-        })
-
-    },
-
-        notification(notify){
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.NOTIFICATION,
-            notify
-        })
-
-    },
-
-
-
-
-
-}
+};
 module.exports = AppActions;

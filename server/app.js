@@ -12,11 +12,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Serve bundled client files
-app.use(express.static(path.join(__dirname, '../client/build')));
 
 
 // Root API endpoint
 app.use('/', routes);
+app.use(express.static(path.join(__dirname, '../dist')));
+
+
+app.get('*', (req, res) => {
+  res.sendFile(`${process.cwd()}/dist/index.html`);
+});
 
 
 // This gets route for webpage

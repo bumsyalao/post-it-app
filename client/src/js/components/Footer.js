@@ -1,5 +1,13 @@
 import React, {Component} from 'react'
 
+
+/**
+ * Footer Component
+ * 
+ * @export
+ * @class Welcome
+ * @extends {Component}
+ */
 export default class Welcome extends Component {
   render() {
     return (

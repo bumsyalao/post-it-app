@@ -6,6 +6,14 @@ import {firebaseAuth, firebase, provider}from '../../../../server/config'
 
 
 
+/**
+ * Gets user data and persits with firebase
+ * 
+ * @export
+ * @param {object} props
+ * @class Signin
+ * @extends {Component}
+ */
 class Signin extends Component {
  constructor(props) {
     super(props);
@@ -19,20 +27,26 @@ class Signin extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
+  /**
+   * @method render
+   * Render react component
+   * 
+   * @returns {String} The HTML markup for the Register
+   * @memberof Signin
+   */
   render() {
     return (
       <div>  
-           <div className='well'style={{width: '70%'}} >  
+           <div className='well col-md-8 col-md-offset-2'>  
             <h3>Sign In</h3>
             <form onSubmit={this.handleSubmit.bind(this)}>
                  <div className='form-group'>
-                    <input type="email" ref='email' className='form-control' placeholder='Email' required/>
-                </div>
-                 <div className='form-group'>
-                    <input type="password" ref='password' className='form-control' placeholder='Password' />
-                </div>  
-              <div><a href="#/reset">Forgot Password?</a></div>            
+                      <input type="email" ref='email' className='form-control' placeholder='  Email' required/>
+                  </div>
+                  <div className='form-group'>
+                      <input type="password" ref='password' className='form-control' placeholder='Password' />
+                  </div>  
+                <div><a href="#/reset">Forgot Password?</a></div>            
                 <button type='submit' className='btn btn-primary'>Log in</button>              
             </form>
         </div>
@@ -47,6 +61,12 @@ class Signin extends Component {
     )
   }
 
+/**
+   * Makes an action call to Sign in a user with email and password
+   * @param {object} e
+   * @returns {void}
+   * @memberof Signin
+*/
    handleSubmit(e){
       e.preventDefault(); 
        const contact = {
@@ -69,6 +89,12 @@ class Signin extends Component {
     
 }
 
+   /**
+   * Makes an action call to Sign in a user with google account
+   * @param {object} e
+   * @returns {void}
+   * @memberof Signin
+*/
    handleGoogle(e){
       e.preventDefault();      
     provider.addScope('profile');

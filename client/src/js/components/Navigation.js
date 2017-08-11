@@ -1,40 +1,88 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
 
+
+/**
+ * Navigation Component gives the user access to navigate the app
+ * 
+ * @export
+ * @class Navigation
+ * @extends {Component}
+ */
 export default class Navigation extends Component {
     state = {
     authed: false,
     loading: true,
   }
+
+
+  /**
+   * Makes an action call to to lets users navigate
+   * 
+   * @returns 
+   * @memberof Navigation
+   */
   render() {
     return (
       <div>
-           <header>
-          <div className="container">
+           {/* <header>
+            <div className="container">
             <div id="branding">
               <h1>
                 <span className="highlight">PostIt &nbsp;
-                </span>Messenger App</h1>
+                </span> </h1>
             </div>
             <nav>
-              <ul>
-                <li> <Link to='/'>Home</Link></li>            
+              <ul>           
                  <li>
+                  <Link to='/'>Home&nbsp;&nbsp;</Link>
                   {this.state.authed
                     ? <button
                         style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
                     : <span>
                       
-                      <Link to="/register">SignUp&nbsp;&nbsp;</Link>
-                      <Link to="/login">SignIn&nbsp;&nbsp;</Link>    
+                      <Link to="/register">Register&nbsp;&nbsp;</Link>
+                      <Link to="/login">Login&nbsp;&nbsp;</Link>    
                       </span>}
                 </li>   
                 
               </ul>
-            </nav>
-            
-          </div>
-        </header>
+            </nav>           
+            </div>
+          </header> */}
+          <nav className="navbar navbar-inverse" style={{ borderRadius: '0px'}}>
+            <div className="container-fluid">
+              <div className="navbar-header">
+                <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span className="icon-bar"></span>
+                  <span className="icon-bar"></span>
+                  <span className="icon-bar"></span> 
+                </button>
+                <a className="navbar-brand low-red" href="#">POSTIT</a>
+              </div>
+              <div className="collapse navbar-collapse" id="myNavbar">
+
+                   
+                <ul className="nav navbar-nav">
+                  <li><Link to='/'>Home</Link></li>
+                </ul>
+                <ul className="nav navbar-nav navbar-right">
+
+                     {this.state.authed
+                    ? <button
+                        style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
+                    : <span>
+                  
+                  <li><a href="#"><span className="glyphicon glyphicon-user"></span> <Link to="/register">Sign Up</Link></a></li>
+                  <li><a href="#"><span className="glyphicon glyphicon-log-in"></span> <Link to="/login">Login </Link> </a></li>
+                      
+                         
+                      </span>}
+          
+                </ul>
+              </div>
+            </div>
+          </nav>
 
       </div>
 

@@ -10,7 +10,14 @@ import AppStore from '../../stores/AppStore'
 
 
 
-// LHS: Left hand side
+
+/**
+ * The Left hand Side of the 
+ * 
+ * @export
+ * @class Lhs
+ * @extends {Component}
+ */
 export default class Lhs extends Component {
   render() {
   return (

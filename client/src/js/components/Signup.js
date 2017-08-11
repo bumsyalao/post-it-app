@@ -5,6 +5,14 @@ import GoogleWelcome from './GoogleWelcome'
 import {firebaseAuth, firebase, provider}from '../../../../server/config'
 
 
+/**
+ * Gets user data and persits with firebase
+ * 
+ * @export
+ * @param {object} props
+ * @class Signup
+ * @extends {Component}
+ */
 export default class Signup extends Component {
  constructor(props) {
     super(props);
@@ -19,17 +27,38 @@ export default class Signup extends Component {
      this.onChange= this.onChange.bind(this)
   }
 
+
+   /**
+    * @method componentDidMount
+    * Adds an event Listener to the Store and fires when the component is fully mounted.
+    *
+    * @return {void}
+    * @memberof Signup
+    */
    componentDidMount(){
         AppStore.addChangeListener(this.onChange);
     }
 
+    /**
+    * @method componentWillUnmount
+    * Removes event Listener from the Store
+    * 
+    * @memberof Signup
+    */
     componentWillUnmount(){
         AppStore.removeChangeListener(this.onChange);
     }
 
-    capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-   }
+
+ 
+
+
+    /**
+     * @method setSignUp
+     * Monitors changes in the components and change the state
+     * 
+     * @memberof Signup
+     */
     onChange(){
         this.setState({
             databaseUsers: AppStore.getdatabaseUsers(),
@@ -39,6 +68,14 @@ export default class Signup extends Component {
         });
         
     } 
+
+
+    /**
+     * Handles Google Sign in
+     * 
+     * @param {any} e 
+     * @memberof Signup
+     */
     handleGoogleSignin(e){
       e.preventDefault();      
         provider.addScope('profile');
@@ -57,8 +94,25 @@ export default class Signup extends Component {
       });   
    }
  
+   /**
+   * Makes an action call to Sign up a user with username, email, phone number  and password
+   * @param {object} e
+   * @returns {void}
+   * @memberof Signup
+*/
     handleSubmit(e){
       e.preventDefault();  
+
+         /**
+     * @method function
+     * 
+     * @param {any} string 
+     * @returns 
+     * @memberof Signup
+     */
+    function capitalizeFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+   }
 
     // Implements the function
     const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
@@ -71,7 +125,7 @@ export default class Signup extends Component {
       }
 
       // Checks if Username and Phone number already exist
-    if (this.state.databaseUsers.includes(Uppercase)){
+    if (this.state.databaseUsers.includes(userNameToUppercase)){
      alert("The username already exist")  
     }else if(this.state.numbers.includes(this.refs.number.value)){
         alert("The phone number already exist")
@@ -84,51 +138,52 @@ export default class Signup extends Component {
          this.refs.number.value = ''; 
     }
 }
-   
+  
+  /**
+   * @method render
+   * Render react component
+   * 
+   * @returns {String} The HTML markup for the Register
+   * @memberof Signup
+   */
  render() {  
      if (this.state.googleUser){
          var display = <GoogleWelcome googleUser={this.state.googleUser}/>
      } else {
-         var display = <div >
+         var display = <div className="container" >
 
-                        <div style={{width: '50%'}}>
+                        <div className="col-md-6 col-sm-6 col-xs-12">
                             <h3>Sign Up</h3>
-                        <form onSubmit={this.handleSubmit.bind(this)}>
-                            <div className='form-group'>
-                                <input type="text" ref='username' className='form-control' placeholder='Username' required/>
-                            </div>
-                            <div className='form-group'>
-                                <input type="email" ref='email' className='form-control' placeholder='Email' required/>
-                            </div>
-                            <div className='form-group'>
-                                <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
-                            </div>
-                            <div className='form-group'>
-                                <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
-                            </div>              
-                            <button type='submit' className='btn btn-primary'>Submit</button>
-                        </form>
+                            <form onSubmit={this.handleSubmit.bind(this)}>
+                                <div className='form-group'>
+                                    <input type="text" ref='username' className='form-control' placeholder='Username' required/>
+                                </div>
+                                <div className='form-group'>
+                                    <input type="email" ref='email' className='form-control' placeholder='  Email' required/>
+                                </div>
+                                <div className='form-group'>
+                                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
+                                </div>
+                                <div className='form-group'>
+                                    <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
+                                </div>              
+                                <button type='submit' className='btn btn-primary'>Submit</button>
+                            </form>
                         </div>
                         
-                          <div style={{float:'right', marginTop: '-345px'}}>  
+                          <div className="col-md-6 col-sm-6 col-xs-12">  
                                 <h3>Login With Google Account</h3>
-                                    <button onClick={this.handleGoogleSignin.bind(this)}>Login with Gooogle</button>
+                                <button onClick={this.handleGoogleSignin.bind(this)}>Login with Gooogle</button>
                          </div>
 
-         </div>
+                    </div>
      }
     return (  
         <div className='well'>  
-            {display}
-            
+            {display}          
         </div>
 
     )
   }
-
-
-
-  
-
 
 }

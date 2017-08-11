@@ -2,6 +2,14 @@ import React, {Component} from 'react'
 import AppStore from '../stores/AppStore'
 import AppActions from '../actions/AppActions' 
 
+
+/**
+ * This component allows users to complete the Registration form after sign in with Google
+ * 
+ * @export
+ * @class GoogleWelcome
+ * @extends {Component}
+ */
 export default class GoogleWelcome extends Component {
    constructor(props) {
     super(props);
@@ -14,14 +22,27 @@ export default class GoogleWelcome extends Component {
      this.onChange = this.onChange.bind(this)
   }
 
-
+   /**
+    * @method componentWillMount
+    * Adds an event Listener to the Store and fires when the component is fully mounted.
+    *
+    * @return {void}
+    * @memberof GoogleWelcome
+    */
    componentDidMount(){
         AppStore.addChangeListener(this._onChange);
     }
 
+   /**
+    * @method componentWillUnmount
+    * Removes event Listener from the Store
+    * 
+    * @memberof GoogleWelcome
+    */
     componentUnmount(){
         AppStore.removeChangeListener(this._onChange);
     }
+
     onChange(e){
     e.preventDefault()
     this.setState({username: e.target.value})
@@ -60,11 +81,24 @@ export default class GoogleWelcome extends Component {
         }
     }
 
+    /**
+     * @method setSignUp
+     * Monitors changes in the components and change the state
+     * 
+     * @memberof Signup
+     */
     _onChange(){
         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
         this.setState({numbers: AppStore.getAllUsersNumber()});                  
     } 
 
+/**
+   * @method render
+   * Render react component
+   * 
+   * @returns {String} The HTML markup for the Register
+   * @memberof GoogleWelcome
+   */
   render() {
     return (
       <div>

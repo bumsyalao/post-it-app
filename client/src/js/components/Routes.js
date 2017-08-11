@@ -16,6 +16,12 @@ import NavDash from './Dashboard/NavDash'
 import Lhs from './Dashboard/Lhs'
 
 
+/**
+ * Create a Route for users who have been authenticated by firebase
+ * 
+ * @param {any} {component: Component, authed, ...rest} 
+ * @returns 
+ */
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
     <Route
@@ -27,6 +33,13 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
   )
 }
 
+
+/**
+ * Route for users who aren't authenticated
+ * 
+ * @param {any} {component: Component, authed, ...rest} 
+ * @returns 
+ */
 function PublicRoute ({component: Component, authed, ...rest}) {
   return ( 
     <Route
@@ -38,6 +51,14 @@ function PublicRoute ({component: Component, authed, ...rest}) {
   )
 }
 
+
+/**
+ * Route for rendering componets in the main App
+ * 
+ * @export
+ * @class Routes
+ * @extends {Component}
+ */
 export default class Routes extends Component { 
 
   render() {  

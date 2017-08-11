@@ -1,16 +1,19 @@
 import React, {Component} from 'react'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
-
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
 import GroupOptions from './GroupOptions'
 
 
-
-
+/**
+ * Displays the navigation of the dashboard
+ * 
+ * @export
+ * @class NavDash
+ * @extends {Component}
+ */
 export default class NavDash extends Component {
-
   state = { 
     showModal: false,
     showModal2: false,

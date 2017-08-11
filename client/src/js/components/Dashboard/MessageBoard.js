@@ -7,15 +7,20 @@ import DisplayMessage from './DisplayMessage'
 import ArchivedBox from './ArchivedBox'
 
 
+/**
+ * The Presentation component that servers all message activities
+ * 
+ * @export
+ * @class MessageBoard
+ * @extends {Component}
+ */
 export default class MessageBoard extends Component {
      constructor(props){
         super(props);
         this.state ={
             user : AppStore.getUser(),
             currentGroup : AppStore.getCurrentGroup(),     
-            messages : AppStore.getMessages()
-            // contacts: AppStore.getContacts(),
-            // groups: AppStore.getGroups()       
+            messages : AppStore.getMessages()     
         };
          this._onChange= this._onChange.bind(this)
     }

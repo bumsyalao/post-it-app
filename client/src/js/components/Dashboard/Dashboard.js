@@ -7,7 +7,15 @@ import DisplayMessage from './DisplayMessage'
 
 
 import {Grid, Row, Col, Clearfix} from 'react-bootstrap';
+ 
 
+/**
+ * Creates a react Component
+ * 
+ * @export
+ * @class DashBoard
+ * @extends {Component}
+ */
 export default class DashBoard extends Component {
       constructor(props){
         super(props);
@@ -26,14 +34,39 @@ export default class DashBoard extends Component {
          this._onChange= this._onChange.bind(this)
     }
 
+
+   /**
+    * @method componentWillMount
+    * Adds an event Listener to the Store and fires when the component is fully mounted.
+    *
+    * @return {void}
+    * @memberof DashBoard
+    */
    componentWillMount ()  {
      AppStore.addChangeListener(this._onChange);
   }
 
+
+   /**
+    * @method componentWillUnmount
+    * Removes event Listener from the Store
+    *
+    * @return {void}
+    * @memberof DashBoard
+    */
   componentWillUnmount () {
     AppStore.removeChangeListener(this._onChange);
   } 
 
+
+
+  /**
+   * @method render
+   * Render react component
+   * 
+   * @returns {void}
+   * @memberof DashBoard
+   */
   render() { 
     return (
       <div id='dash'>
@@ -52,16 +85,27 @@ export default class DashBoard extends Component {
 
     )
   }
+
+
+    /**
+     * @method setDashboard
+     * Monitors changes in the components and change the state
+     * 
+     * @return {void}
+     * @memberof DashBoard
+     */
     _onChange(){
-        this.setState({contacts: AppStore.getGroupUsers()});
-        this.setState({groups: AppStore.getGroups()});
-        this.setState({user: AppStore.getUser()});
-        this.setState({currentGroup: AppStore.getCurrentGroup()});
-        this.setState({databaseUsers: AppStore.getdatabaseUsers()});
-        this.setState({emails: AppStore.getGroupEmails()});
-        this.setState({numbers:AppStore.getGroupNumbers()});
-        this.setState({notification: AppStore.getNotification()});
-        this.setState({displayArchives: AppStore.getOpenArchive()  });
+        this.setState({
+          contacts: AppStore.getGroupUsers(),
+          groups: AppStore.getGroups(),
+          user: AppStore.getUser(),
+          currentGroup: AppStore.getCurrentGroup(),
+          databaseUsers: AppStore.getdatabaseUsers(),
+          emails: AppStore.getGroupEmails(),
+          numbers:AppStore.getGroupNumbers(),
+          notification: AppStore.getNotification(),
+          displayArchives: AppStore.getOpenArchive()
+        });
         
     }  
 }

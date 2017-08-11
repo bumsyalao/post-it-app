@@ -6,22 +6,14 @@ const path = require('path');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/src/index.html'));
-});
-
-router.get('/er', (req, res) => {
-  res.send('Welcome here');
-});
-
 
 // Sign Up
 router.post('/user/signup', User.signup);
 
-//Google Sign Up
+// Google Sign Up
 router.post('/user/google', User.google);
 
-//Google Login
+// Google Login
 router.post('/google/login', User.googleLogin);
 
 // Sign In
@@ -52,10 +44,10 @@ router.post('/groups/:groupName/:messages/:emails/:numbers/:allUsers/:notificati
 // // Update a message when the user clicks inbox
 // router.post('/user/inbox/:user', User.updateInbox);
 
-// Update the message array with the users that have seen it 
+// Update the message array with the users that have seen it
 router.post('/seen/:groupName/:uid/:userName', User.seenMessage);
 
-// Archive a message and store in the user database 
+// Archive a message and store in the user database
 router.post('/user/archive/:messageId', User.messageArchive);
 // // Add Notification to a particular Group
 // router.post('/groups/:groupName/:notification', Group.notification);

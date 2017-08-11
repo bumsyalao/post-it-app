@@ -3,11 +3,11 @@ const app = require('../server/app');
 
 describe('Home Page', () => {
     //  Unit test for the App Homepage route
-        it('welcome user`s to its page', (done) => {
-            request(app)
-                .get('/')
-                .set('Accept', 'application/json')
-                 .expect(200)
+  it('welcome user`s to its page', (done) => {
+    request(app)
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(200)
       .end((err) => {
         if (err) return done(err);
         done();
@@ -17,18 +17,16 @@ describe('Home Page', () => {
 
 
 describe('EndPoint: signUp', () => {
- const username = 'Hohn';
-  const secondUser = 'Mark';
-  const thirdUser = 'Ese';
+  const username = 'Hohn';
   const password = 'ebuka12345';
   const email = 'asss@gmail.com';
   const secondEmail = 'ebukao70@gmail.com';
 
 
-it('should return an error message if username is undefined', (done) => {
+  it('should return an error message if username is undefined', (done) => {
     request(app)
       .post('/user/signup')
-      .send({password, email})
+      .send({ password, email })
       .set('Accept', 'application/json')
       .expect({ message: 'You need to provide username, password and email' })
       .end((err) => {
@@ -40,7 +38,7 @@ it('should return an error message if username is undefined', (done) => {
   it('should return an error message if password is undefined', (done) => {
     request(app)
       .post('/user/signup')
-      .send({username, email})
+      .send({ username, email })
       .set('Accept', 'application/json')
       .expect({ message: 'You need to provide username, password and email' })
       .end((err) => {
@@ -52,7 +50,7 @@ it('should return an error message if username is undefined', (done) => {
   it('should return an error message if email is undefined', (done) => {
     request(app)
       .post('/user/signup')
-      .send({username, password})
+      .send({ username, password })
       .set('Accept', 'application/json')
       .expect({ message: 'You need to provide username, password and email' })
       .end((err) => {
@@ -64,7 +62,7 @@ it('should return an error message if username is undefined', (done) => {
   it('should return an error message if username is empty', (done) => {
     request(app)
       .post('/user/signup')
-      .send({username: '', password, email})
+      .send({ username: '', password, email })
       .set('Accept', 'application/json')
       .expect({ message: 'Username, password or email cannot be empty' })
       .end((err) => {
@@ -76,7 +74,7 @@ it('should return an error message if username is undefined', (done) => {
   it('should return an error message if email is empty', (done) => {
     request(app)
       .post('/user/signup')
-      .send({username, password, email: ''})
+      .send({ username, password, email: ''})
       .set('Accept', 'application/json')
       .expect({ message: 'Username, password or email cannot be empty' })
       .end((err) => {
@@ -88,7 +86,7 @@ it('should return an error message if username is undefined', (done) => {
   it('should return an error message if password is empty', (done) => {
     request(app)
       .post('/user/signup')
-      .send({username, password: '', email})
+      .send({ username, password: '', email })
       .set('Accept', 'application/json')
       .expect({ message: 'Username, password or email cannot be empty' })
       .end((err) => {
@@ -98,11 +96,10 @@ it('should return an error message if username is undefined', (done) => {
   });
 
   it('should return a success message if username, password and email are supplied', (done) => {
-   
     setTimeout(done, 15000);
     request(app)
       .post('/user/signup')
-      .send({username, password, email})
+      .send({ username, password, email })
       .set('Accept', 'application/json')
       .expect(200)
       .end((err) => {
@@ -114,7 +111,7 @@ it('should return an error message if username is undefined', (done) => {
   it('should return an error message if a user has already registered', (done) => {
     request(app)
       .post('/user/signup')
-      .send({username, password, secondEmail})
+      .send({ username, password, secondEmail })
       .set('Accept', 'application/json')
       .expect(200)
       .end((err) => {
@@ -122,8 +119,6 @@ it('should return an error message if username is undefined', (done) => {
         done();
       });
   });
-
-
 });
 
 // describe('Google SignUp Route', () => {
@@ -151,7 +146,7 @@ describe('SignIn Route', () => {
   it('The user should be able to signin', (done) => {
     request(app)
       .post('/user/signin')
-      .send({email, password})
+      .send({ email, password })
       .set('Accept', 'application/json')
       .expect(200)
       .end((err) => {
@@ -178,9 +173,9 @@ describe('Create Group', () => {
   it('The user should be able to create a group', (done) => {
     request(app)
       .post('/group')
-      .send({     
-          groupName: "Andela",
-          userName: 'Ebuka'
+      .send({
+        groupName: 'Andela',
+        userName: 'Ebuka'
       })
       .set('Accept', 'application/json')
       .expect(200)
