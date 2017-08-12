@@ -1,4 +1,4 @@
-body{
+body {
   font: {
    family: Arial, Helvetica, sans-serif;
    size:15px;
@@ -8,27 +8,24 @@ body{
   margin: 0;
   background: #f4f4f4;
 }
-#lhs{
-   
-    padding: 0px;
-}
-#transform{
+
+
+#transform {
   text-transform: capitalize;
-
 }
 
-#messages_compose{
+#messages_compose {
   margin-bottom: 50px;
 }
 
 /* Global */
-.container{
+.container {
   width: 80%;
-  margin:auto;
+  margin: auto;
   overflow: hidden;
 }
 
-ul{
+ul {
   margin: 0;
   padding: 0;
   text-decoration-style: none;
@@ -36,7 +33,7 @@ ul{
 }
 
 /* Header */
-header{
+header {
   background: #35424a;
   color: #ffffff;
   padding: 20px;
@@ -72,7 +69,8 @@ header{
   font-weight: bold;
   }
 }
-#showcase{
+
+#showcase{ 
   min-height: 400px;
   text-align: center;
   color: #ffffff;
@@ -85,10 +83,12 @@ header{
      font-size: 20px;
   }
 }
+
 .box {
   float: right;
 }
-footer{
+
+footer {
   padding: 20px;
   margin-top: 100px;
   color: #ffffff;
@@ -96,14 +96,12 @@ footer{
   text-align: center
 }
 
-.centralize{
+.centralize {
    margin: auto;
-    width: 70%;  
-    padding: 10px;    
+   width: 70%;  
+   padding: 10px;    
 
 }
-/* Styling */
-
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -126,7 +124,7 @@ button {
     width: 100%;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #35424a
 }
 
@@ -159,7 +157,7 @@ button {
 }
 
 
-.label{
+.label {
   margin-right: 10px;
 }
 

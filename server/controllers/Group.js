@@ -4,6 +4,11 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const Nexmo = require('nexmo');
 
 
+/**
+ * 
+ * 
+ * @class Group
+ */
 class Group {
   static createGroup(req, res) {
     const groupName = req.body.groupName;

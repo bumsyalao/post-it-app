@@ -70,8 +70,16 @@ export default class DashBoard extends Component {
   render() { 
     return (
       <div id='dash'>
-        <NavDash contact={this.state.contacts} group={this.state.groups} user={this.state.user} databaseUsers={this.state.databaseUsers} notification={this.state.notification}/>  
-        <button type='onClick' className='btn btn-primary'>Message Board</button>       
+        <NavDash 
+          contact={this.state.contacts} 
+          group={this.state.groups} 
+          user={this.state.user} 
+          databaseUsers={this.state.databaseUsers} 
+          notification={this.state.notification}
+        />  
+
+        <button type='onClick' className='btn btn-primary'>Message Board</button>     
+          
         <Grid>
           <Row className="show-grid">
             <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>

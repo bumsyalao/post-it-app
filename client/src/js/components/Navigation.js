@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom';
  */
 export default class Navigation extends Component {
     state = {
-    authed: false,
+    auth: false,
     loading: true,
   }
 
@@ -36,7 +36,7 @@ export default class Navigation extends Component {
               <ul>           
                  <li>
                   <Link to='/'>Home&nbsp;&nbsp;</Link>
-                  {this.state.authed
+                  {this.state.auth
                     ? <button
                         style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
                     : <span>
@@ -68,16 +68,19 @@ export default class Navigation extends Component {
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
 
-                     {this.state.authed
+                     {this.state.auth
                     ? <button
                         style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
-                    : <span>
+                    : 
+                  <div>
+                    <span><a href="#"><span className="glyphicon glyphicon-user"></span></a> <Link to="/register">Sign Up&nbsp;&nbsp;</Link></span>
+                   <span><a href="#"><span className="glyphicon glyphicon-log-in"></span></a> <Link to="/login">Login </Link> </span>
+
+                  </div>
                   
-                  <li><a href="#"><span className="glyphicon glyphicon-user"></span> <Link to="/register">Sign Up</Link></a></li>
-                  <li><a href="#"><span className="glyphicon glyphicon-log-in"></span> <Link to="/login">Login </Link> </a></li>
                       
                          
-                      </span>}
+                      }
           
                 </ul>
               </div>

@@ -3,13 +3,13 @@ import {Switch, Route, Redirect, Link} from 'react-router-dom';
 import Footer from './Footer'
 import Routes from './Routes'
 import AppStore from '../stores/AppStore'
-import {firebaseAuth, firebase}from '../../../../server/config'
+import { firebaseAuth, firebase }from '../../../../server/config'
 import Signin from './Signin'
 import Signup from './Signup';
 import Home from './Home';
 import Navigation from './Navigation'
 import Dashboard from './Dashboard/Dashboard'
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 
 
@@ -23,8 +23,8 @@ import {BrowserRouter} from 'react-router-dom';
 class App extends Component  {
   constructor(props){
         super(props);
-        this.state ={
-           authed: AppStore.getAuthed(),
+        this.state = {
+           auth: AppStore.getAuth(),
            user: AppStore.getUser(),         
         };
          this._onChange= this._onChange.bind(this)
@@ -60,8 +60,8 @@ class App extends Component  {
     render() {
       return(
         <div>
-          {!this.state.authed ? <Navigation /> : ''}
-         <Routes authed={this.state.authed} />
+          {!this.state.auth ? <Navigation /> : ''}
+         <Routes auth={this.state.auth} />
          <Footer />
         </div>
     );
@@ -75,7 +75,7 @@ class App extends Component  {
      */
     _onChange(){
         this.setState({user: AppStore.getUser()});
-        this.setState({authed: AppStore.getAuthed()});      
+        this.setState({auth: AppStore.getAuth()});      
     }      
 }
 

@@ -25,7 +25,7 @@ export default class ArchivedBox extends Component {
       }else{
           var display =   this.state.archives.map((message, index) => {
                     return(             
-                        <ArchiveMessage message={message} key={index}/>      
+                        <ArchiveMessage message={message} key={index} />      
                     ) 
                 })
       }

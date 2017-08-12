@@ -7,7 +7,8 @@ import AppAPI from '../utils/appAPI'
 const CHANGE_EVENT = 'change'
 
     let _user = '';
-    let _authed = false;
+    const localStorage = null;
+    let _auth = false;
     let _contacts = [];
     let _currentGroup = '';
     let _messages = [];  
@@ -22,216 +23,215 @@ const CHANGE_EVENT = 'change'
     let _archiveMessage = [];
     let _openArchive = 'inbox';
     let _seenUsers = [];
-    let _googleSignup = null
- 
-//localStorage["users"] ? false : true;
-  const AppStore = assign({}, EventEmitter.prototype, {
+    let _googleSignup = null;
 
-    getAuthed(){
-      return _authed;
-    },
+const AppStore = assign({}, EventEmitter.prototype, {
 
-      // If there is a user in local storage, set authentication true
-     setAuthed(){
-          _authed = true;
-    },
+  getAuth() {
+    return _auth;
+  },
+
+    // If there is a user in local storage, set authentication true
+    setAuth(){
+        _auth = true;
+  },
+  
+  setLogout(){
+    _auth = false;
+    localStorage.clear()
+  },
+
+  getUser(){
+    return _user;
+  },
+
+  saveUser(user){
+    _user = user;
     
-    setLogout(){
-      _authed = false;
-      localStorage.clear()
-    },
+  },
 
-    getUser(){
-      return _user;
-    },
+  setUser(user){
+    _user = user;
+  },
 
-    saveUser(user){
-      _user = user;
-      // localStorage.setItem('user', JSON.stringify(user))
-    },
+  getContacts(){
+    return _contacts;
+  },
+  saveContact(contact){
+    _contacts.push(contact);
+  },
 
-    setUser(user){
-      _user = user;
-    },
+  setContacts(contacts){
+    _contacts = contacts;
+  },
 
-   getContacts(){
-      return _contacts;
-    },
-    saveContact(contact){
-      _contacts.push(contact);
-    },
+  // Get All Users in the database
+  getAllUsersNumber(){
+    return _allUsersNumber;
+  },
+  setAllUsersNumber(number){
+    _allUsersNumber = number;
+  },
 
-    setContacts(contacts){
-      _contacts = contacts;
-    },
+    
+  getdatabaseUsers(){
+    return _databaseUsers;
+  },
 
-    // Get All Users in the database
-    getAllUsersNumber(){
-      return _allUsersNumber;
-    },
-    setAllUsersNumber(number){
-      _allUsersNumber = number;
-    },
+  setdatabaseUsers(contacts){
+    _databaseUsers = contacts;
+  },
 
-     
-    getdatabaseUsers(){
-      return _databaseUsers;
-    },
+      // Get the Current User who signed up with Google
+  getGoogleSignup(){
+    return _googleSignup;
+  },
 
-    setdatabaseUsers(contacts){
-      _databaseUsers = contacts;
-    },
+  setGoogleSignup(googleUser){
+    _googleSignup = googleUser;
+  },
 
-       // Get the Current User who signed up with Google
-    getGoogleSignup(){
-      return _googleSignup;
-    },
+  getGroups(){
+    return _groups;
+  },
+  saveGroup(group){
+    _groups.push(group);
+  },
 
-    setGoogleSignup(googleUser){
-      _googleSignup = googleUser;
-    },
+  setGroups(groups){
+    _groups = groups;
+  },
 
-    getGroups(){
-      return _groups;
-    },
-    saveGroup(group){
-      _groups.push(group);
-    },
+  // Get the Current Group When the User has Clicked on A Group
+  getCurrentGroup(){
+    return _currentGroup;
+  },
 
-    setGroups(groups){
-      _groups = groups;
-    },
-
-   // Get the Current Group When the User has Clicked on A Group
-    getCurrentGroup(){
-      return _currentGroup;
-    },
-
-    setCurrentGroup(keyName){
-      _currentGroup = keyName;
-    },
+  setCurrentGroup(keyName) {
+    _currentGroup = keyName;
+  },
 
 
-    // Get Users in a Group
-    getGroupUsers(){
-      return _groupUsers;
-    },
-    saveGroupUsers(users){
-      _groupUsers.push(users);
-    },
+  // Get Users in a Group
+  getGroupUsers(){
+    return _groupUsers;
+  },
+  saveGroupUsers(users){
+    _groupUsers.push(users);
+  },
 
-    setGroupUsers(users){
-      _groupUsers = users;
-    },
-
-
-        // Get Emails in a Group
-    getGroupEmails(){
-      return _groupEmails;
-    },
-
-    setGroupEmails(emails){
-      _groupEmails = emails;
-    },
-
-        // Get Numbers in a Group
-    getGroupNumbers(){
-      return _groupNumbers;
-    },
-
-    setGroupNumbers(numbers){
-      _groupNumbers = numbers;
-    },
+  setGroupUsers(users){
+    _groupUsers = users;
+  },
 
 
-    // Get Messages
-    getMessages(){
-      return _messages;
-    },
-    saveMessages(message){
-      _messages.push(message);
-    },
-    setMessages(messages){
-      _messages = messages;
-    },
+      // Get Emails in a Group
+  getGroupEmails(){
+    return _groupEmails;
+  },
 
-    // Get Notification
-    getNotification(){
-      return _notification;
-    },
-    saveNotification(notify){
-      _notification.push(notify);
-    },
-    setNotification(notify){
-      _notification = notify;
-    },
+  setGroupEmails(emails){
+    _groupEmails = emails;
+  },
 
-    // Get Personal Message
-    getPersonalMessage(){
-      return _personalMessage;
-    },
-    savePersonalMessage(message){
-      _personalMessage.push(message);
-    },
- 
-    setPersonalMessage(message){
-      _personalMessage = message;
-    },
-   
-    removeMessage(messageId){
-      var index = _personalMessage.findIndex(x => x.id === messageId);
-      _personalMessage.splice(index, 1)
-      
-    },
+      // Get Numbers in a Group
+  getGroupNumbers(){
+    return _groupNumbers;
+  },
+
+  setGroupNumbers(numbers){
+    _groupNumbers = numbers;
+  },
+
+
+  // Get Messages
+  getMessages(){
+    return _messages;
+  },
+  saveMessages(message){
+    _messages.push(message);
+  },
+  setMessages(messages){
+    _messages = messages;
+  },
+
+  // Get Notification
+  getNotification(){
+    return _notification;
+  },
+  saveNotification(notify){
+    _notification.push(notify);
+  },
+  setNotification(notify){
+    _notification = notify;
+  },
+
+  // Get Personal Message
+  getPersonalMessage(){
+    return _personalMessage;
+  },
+  savePersonalMessage(message){
+    _personalMessage.push(message);
+  },
+
+  setPersonalMessage(message){
+    _personalMessage = message;
+  },
+  
+  removeMessage(messageId){
+    var index = _personalMessage.findIndex(x => x.id === messageId);
+    _personalMessage.splice(index, 1)
+    
+  },
+
+    // Get Archive Message
+  getArchiveMessage(){
+    return _archiveMessage;
+  },
+  saveArchiveMessage(message){
+    _archiveMessage.push(message)
+  },
+
+  setArchiveMessage(message){
+    _archiveMessage = message;
+  },
 
       // Get Archive Message
-    getArchiveMessage(){
-      return _archiveMessage;
-    },
-    saveArchiveMessage(message){
-      _archiveMessage.push(message)
-    },
- 
-    setArchiveMessage(message){
-      _archiveMessage = message;
-    },
+  getSeenUsers(){
+    return _seenUsers;
+  },
 
-       // Get Archive Message
-    getSeenUsers(){
-      return _seenUsers;
-    },
+  setSeenUsers(users){
+    _seenUsers = users;
+  },
 
-    setSeenUsers(users){
-      _seenUsers = users;
-    },
+  // Open and Close Archive link
+  getOpenArchive(){
+    return _openArchive;
+  },
+  openArchive(){
+    _openArchive = 'archive'
+  },
+  closeArchive(){
+    _openArchive = 'inbox'
+  },
+  openGroup(){
+    _openArchive = 'group'
+  },
 
-    // Open and Close Archive link
-    getOpenArchive(){
-      return _openArchive;
-    },
-    openArchive(){
-      _openArchive = 'archive'
-    },
-    closeArchive(){
-      _openArchive = 'inbox'
-    },
-    openGroup(){
-      _openArchive = 'group'
-    },
+  emitChange(){
+    this.emit(CHANGE_EVENT)
+  },
 
-    emitChange(){
-      this.emit(CHANGE_EVENT)
-    },
+  addChangeListener(callback){
+    this.on('change', callback);
+  },
 
-    addChangeListener(callback){
-      this.on('change', callback);
-    },
+  removeChangeListener(callback){
+    this.removeListener('change', callback)
+  }
 
-    removeChangeListener(callback){
-      this.removeListener('change', callback)
-    }
-
-  });
+});
 
   AppDispatcher.register((payload) => {
     const action = payload.action;
@@ -397,7 +397,7 @@ const CHANGE_EVENT = 'change'
       case AppConstants.RECEIVE_LOGIN:
          //Store Save
         AppStore.saveUser(action.user);
-        AppStore.setAuthed();
+        AppStore.setAuth();
         // //Emit Change
         AppStore.emit(CHANGE_EVENT);
         break;

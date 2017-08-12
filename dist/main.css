@@ -6,9 +6,6 @@ body {
   margin: 0;
   background: #f4f4f4; }
 
-#lhs {
-  padding: 0px; }
-
 #transform {
   text-transform: capitalize; }
 
@@ -83,7 +80,6 @@ footer {
   width: 70%;
   padding: 10px; }
 
-/* Styling */
 /* Full-width input fields */
 input[type=text], input[type=password] {
   width: 100%;

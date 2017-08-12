@@ -34,7 +34,7 @@ PostIt is a simple application that allows friends and colleagues create groups 
 # Installation
   Kindly follow the steps below to setup a local development environment.
   1. Clone this repository from a terminal git clone https://github.com/Charpell/post-it-app.git.
-  2. Move into the project directory
+  2. ```cd post-it-app```
   3. Install project dependencies npm install
   4. Run ```npm run dev```
   
@@ -80,6 +80,7 @@ The API contains different endpoints with their respective payloads as stated be
      react-router
      react-router-dom
      reactify
+     mocha
      
 
    DevDependecies Package

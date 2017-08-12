@@ -19,14 +19,14 @@ import Lhs from './Dashboard/Lhs'
 /**
  * Create a Route for users who have been authenticated by firebase
  * 
- * @param {any} {component: Component, authed, ...rest} 
+ * @param {any} {component: Component, auth, ...rest} 
  * @returns 
  */
-function PrivateRoute ({component: Component, authed, ...rest}) {
+function PrivateRoute ({component: Component, auth, ...rest}) {
   return (
     <Route
       {...rest}
-      render={(props) => authed === true
+      render={(props) => auth === true
         ? <Component {...props} />
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
@@ -37,14 +37,14 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
 /**
  * Route for users who aren't authenticated
  * 
- * @param {any} {component: Component, authed, ...rest} 
+ * @param {any} {component: Component, auth, ...rest} 
  * @returns 
  */
-function PublicRoute ({component: Component, authed, ...rest}) {
+function PublicRoute ({component: Component, auth, ...rest}) {
   return ( 
     <Route
       {...rest}
-      render={(props) => authed === false
+      render={(props) => auth === false
         ? <Component {...props} />
         : <Redirect to='/dashboard' />}
     />
@@ -68,13 +68,13 @@ export default class Routes extends Component {
             <div className="row">
               <Switch>
                 <Route path='/' exact component={Home} />
-                <PublicRoute authed={this.props.authed} path='/login' component={Signin} />
-                <PublicRoute authed={this.props.authed} path='/register'  component={Signup } />
-                <PrivateRoute authed={this.props.authed} path='/dashboard' component={DashBoard} />
-                <Route authed={this.props.authed} path='/reset' component={ResetPassword} />
-                <Route authed={this.props.authed} path='/google' component={GoogleWelcome} />
-                <PrivateRoute authed={this.props.authed} path='/lhs' component={Lhs} />
-                <PrivateRoute authed={this.props.authed} path='/navdash' component={NavDash} />
+                <PublicRoute auth={this.props.auth} path='/login' component={Signin} />
+                <PublicRoute auth={this.props.auth} path='/register'  component={Signup } />
+                <PrivateRoute auth={this.props.auth} path='/dashboard' component={DashBoard} />
+                <Route auth={this.props.auth} path='/reset' component={ResetPassword} />
+                <Route auth={this.props.auth} path='/google' component={GoogleWelcome} />
+                <PrivateRoute auth={this.props.auth} path='/lhs' component={Lhs} />
+                <PrivateRoute auth={this.props.auth} path='/navdash' component={NavDash} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
