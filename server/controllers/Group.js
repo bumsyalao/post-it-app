@@ -1,4 +1,4 @@
-const { usersRef, groupRef, firebase } = require('../config');
+const { usersRef, groupRef, firebase, userGroupRef } = require('../config');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const Nexmo = require('nexmo');
@@ -13,133 +13,195 @@ class Group {
   static createGroup(req, res) {
     const groupName = req.body.groupName;
     const userName = req.body.userName;
+    const userKey = req.body.uid;
+
+
     const db = firebase.database();
     
-    groupRef.child(groupName).once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-   // Create  and Group and Insert Username
-        groupRef.child(groupName).child('Users').child(userName).set(userName)
+    // GROUP DATABASE
+    // Unique key to represnt Each Group
+    const groupKey = db.ref('Groups/').push({
+      groupName,
+      'Admin': userName,
+      'Userf': userName
+      // dateCreated: requestBody.dateCreated
+    }).key;
 
-        // Push the user's details into Group/ Users
-        db.ref(`/users/${userName}/Groups`).push({
-          groupName,
-          userName
-        }).then(() => {
-          res.send(`Group ${groupName} created`);
-        }).catch((err) => {
-          res.send(err);
-        });
-      } else {
-        res.send('Group already exists');
-      }
-    }).catch((err) => {
-      res.status(401).send({
-        message: `Something went wrong ${err.message}`,
+    // Add the Admin to the Group
+    groupRef.child(groupKey).child('Users').push(userKey);
+
+  //  groupRef.child(groupKey).child('Users').push("UdzkXSFb7pQiF1CBxWr0VfbOW5u1")
+
+  //   groupRef.child(groupKey).child('Users').push('ZVmYwdUQhdhfegLrsbkotCHklNG2')
+
+
+
+       // USER_GROUP DATABASE
+   // Add List of groups for a user in the userGroup database
+    userGroupRef.child(userKey).child(groupKey).set({
+      groupName
+    })
+
+    userGroupRef.child(userKey).child(groupKey).child('Users').push(userKey);
+
+    // userGroupRef.child(userKey).child(groupKey).child('Users').push('Mary')
+    //  userGroupRef.child(userKey).child(groupKey).child('Users').push('Emeka')
+
+
+  
+
+    // userGroupRef.child(userKey).child('Groups').child(groupKey).child('Users').child(userKey).set({
+    //   Users: 'Mary'
+    // })
+
+    // userGroupRef.child(userKey).child('Groups').child(groupKey).child(userKey).set({
+    //  Users: 'Nnamso'
+    // })
+ 
+ 
+
+    // userGroupRef.child(uid).child(groupKey).child(uid)..child('GroupID')set({
+    //   'Users': 'Nnamsos'
+    // })
+
+    // userGroupRef.child(groupKey).child('Users').child(uid).set({
+    //   'Users': 'Mary'
+    // })
+    
+    
+
+    res.send('Group Created')
+
+    // userGroupRef.child(groupKey).child('Users').push({
+    //   'Users': 'Nnamsos'
+    // })
+    
+    // groupRef.child(groupName).push({
+    //   groupName,
+    //   'Admin': userName,
+    //   'Members': null,
+    // })
+    
+  //  // Create  and Group and Insert Username
+  //       groupRef.child(groupName).child('Users').child(userName).set(userName)
+
+  //       // Push the user's details into Group/ Users
+  //       db.ref(`/users/${userName}/Groups`).push({
+  //         groupName,
+  //         userName
+  //       }).then(() => {
+  //         res.send(`Group ${groupName} created`);
+  //       }).catch((err) => {
+  //         res.send(err);
+  //       });
+
+
+  }
+
+
+  static addUserToGroup(req, res) {
+    const groupKey = req.body.groupKey;
+    const userKey = req.body.userKey;
+
+    groupRef.child(groupKey).child('Users').push(userKey);
+
+    let users = [];
+    groupRef.child(groupKey).child('Users').once('value', (snapShot) => {
+      snapShot.forEach((childSnapShot) => {
+        users.push(childSnapShot.val());
+      });
+     
+      // Add all the users in a group to the user just added
+      users.forEach((entry) => {            
+        userGroupRef.child(userKey).child(groupKey).child('Users').push(entry);
+      });
+
+      // Remove the Users key before iterating throught the users, this is to avoid double repeatation
+      users = users.filter(item => item !== userKey);
+
+      // Loop through the User Group Database and add list of newly added users
+      users.forEach((entry) => {       
+        userGroupRef.child(entry).child(groupKey).child('Users').push(userKey);
       });
     });
-  }
+      
+    res.send('User added successfully');
 
-  static addUser(req, res) {
-    const groupName = req.params.groupName;
-    const user = req.params.user;
-    const db = firebase.database();
-    usersRef.child(user).once('value', (snapshot) => {
-      const username = snapshot.exists() ? snapshot.val().username : 'null';
-      const email = snapshot.exists() ? snapshot.val().email : 'null';
-      const number = snapshot.exists() ? snapshot.val().number : 'null';
+}
 
-        // //Push the user's details into Group/ Users
-      db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
-        // Push the user's details into Group
-      groupRef.child(groupName).child('Users').child(username).set(username);
-      groupRef.child(groupName).child('Email').push(email);
-      groupRef.child(groupName).child('Number').push(number)
-   .then(() => {
-     res.send('User added successfully');
-   });
-    })
-    .catch((err) => {
-      res.send(err);
+
+  static allUserInAGroup(req, res) {
+    const groupKey = '-KrfgkBflFn1J2yPJsE5';
+
+    const groups = [];
+    groupRef.child(groupKey).child('Users').once('value', (snapShot) => {
+      snapShot.forEach((childSnapShot) => {
+         groups.push(childSnapShot.val());
+      });
+         res.send(groups)
+         console.log(groups)     
     });
   }
 
 
-  static addMessage(req, res) {
-    const groupName = req.params.groupName;
-    const messages = req.params.messages;
-    const emails = req.params.emails;
-    const numbers = req.params.numbers;
-    const allUsers = req.params.allUsers;
-    const notification = req.params.notification;
-    const priority = req.params.priority;
+
+   static createMessage(req, res) {
+    const groupKey = req.body.groupKey;
+    const messages = req.body.messages;
+    const emails = req.body.emails;
+    const numbers = req.body.numbers;
+    const allUsers = req.body.allUsers;
+    const notification = req.body.notification;
+    const priority = req.body.priority;
+    const userKeys = req.body.userKeys;  // Get all uid form Users,
+    const groupName = req.body.groupName;
+    res.send(req.body)
+
     const db = firebase.database();
 
     // Converts the list of numbers into array
-    const number = numbers.split(',');
+     const number = numbers.split(',');
 
     // Converts the list of allUsers into array
     const allUser = allUsers.split(',');
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const userName = user.displayName;
-       // loop through the user names in user database and add notifications
-        allUser.forEach((entry) => {
-          db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
-        });
-        // Push the message into Group
-        groupRef.child(groupName).child('Messages').push(
-          {
-            User: user.displayName,
-            Message: messages,
-            Priority: priority,
 
-          });
-        firebase.database().ref().child('Groups').once('value', (snap) => { 
-          const data = snap.val();
-          const groups = [];
-          Object.keys(data).map((keyName) => {
-            groups.push(keyName);
-          });
 
-          groups.forEach((entry) => {
-            firebase.database().ref().child('Groups').child(entry)
-            .child('Users')
-            .once('value', (snapshot) => {
-              const dataSnapshot = snapshot.val();
+     // Converts the list of UserKeys into array
+    const userKey = userKeys.split(',');
 
-              for (const i in dataSnapshot) {
-                if (i === userName) {
-                  firebase.database().ref().child('Groups').child(entry)
-                  .child('Messages')
-                  .once('value', (snapMessage) => {
-                    const allMessage = snapMessage.val();
-                    const groupMessages = [];
-                    let groupMessage = {};
-                        
-                    Object.keys(allMessage).map((keyName) => {
-                      groupMessage = {
-                        uid: keyName,
-                        User: allMessage[keyName].User,
-                        Message: allMessage[keyName].Message,
-                        Group: entry
-                      };
-                      groupMessages.push(groupMessage);
-                    });
-                    db.ref(`/users/${userName}/Messages`).push(groupMessage);
-                  });
-                }
-              }
-            });
-          });
-        })
-        .then(() => {
-          res.send('Message added successfully');
-        })
-        .catch((err) => {
-          res.send(err);
-        });
 
-      if ((priority === 'Urgent') || (priority === 'Critical')) {
+      // Create a Message in the Group Database
+      const messageKey = groupRef.child(groupKey).child('Messages').push({
+      messages,
+      emails,
+      numbers,
+      allUsers,
+      allUser,
+    }).key;
+
+
+
+    userKey.forEach((entry) => {
+      // Add the messages to the UserGroup database
+     userGroupRef.child(entry).child(groupKey).child('Message').child(messageKey).set({
+      messages,
+      emails,
+      numbers,
+      allUsers,
+      allUser,
+    })
+  });
+
+      userKey.forEach((entry) => {
+       // Add the messages to the UserGroup database
+     userGroupRef.child(entry).child(groupKey).child('Notification').child(messageKey).set({
+        notification
+    })
+
+  });
+
+
+        if ((priority === 'Urgent') || (priority === 'Critical')) {
          // Send Email Notification to Users
         const transporter = nodemailer.createTransport(smtpTransport({
           service: 'gmail',
@@ -161,7 +223,7 @@ class Group {
             res.send(error);
           }
           console.log('Message %s sent: %s', info);
-          res.send('Message %s sent: %s', info);
+         
         });
       }
         if (priority === 'Critical') {
@@ -184,47 +246,11 @@ class Group {
           );
           });
         }
-      } else {
-        res.status(403).send({
-          // user is not signed in
-          message: 'You are not signed in right now!'
-        });
-      }
-    });
+      
+
   }
 
-  static database(req, res){
-    const groupName = req.params.groupName;
-    const rootRef = firebase.database().ref().child('Groups').child(groupName);
-    rootRef.once('value', (snapshot) => {
-      res.send(snapshot);
-    });
-  }
-
-
-  static messageDatabase(req, res){
-    const groupName = req.params.groupName;
-    const rootRef = firebase.database().ref().child('Groups').child(groupName)
-    .child('Messages');
-
-    rootRef.once('value', (snap) => {
-      const data = snap.val();
-      const messages = [];
-      let message = {};
-
-    for (const i in data) {
-      message = {
-        id: i,
-        user: data[i].User,
-        text: data[i].Message,
-        Priority: data[i].Priority
-      };
-      messages.push(message);
-    }
-      res.send(messages);
-    });
-  }
-
+  
 }
 
 

@@ -1,5 +1,7 @@
 import AppActions from '../actions/AppActions';
 import axios from 'axios';
+import toastr from 'toastr'
+
 
 module.exports = {
   saveContact(contact) {
@@ -12,13 +14,12 @@ module.exports = {
       const user = response.data;
 
       if (response.data.message === 'The email address is already in use by another account.') {
-        alert(response.data.message);
-      } else if (response.data.message == 'The email address is badly formatted.'){               
-        alert(response.data.message);
+        toastr.error(response.data.message);
+      } else if (response.data.message === 'The email address is badly formatted.'){               
+        toastr.error(response.data.message);
       } else {
-        console.log(user);
-        AppActions.receiveLogin(user);
-        alert('Welcome,  An email will be sent to you, please verify your account.') 
+        // AppActions.receiveLogin(user);
+        toastr.success('Welcome,  An email will be sent to you, please verify your account.') 
       }
     }).catch((error) => {
       console.log(error);
@@ -52,7 +53,7 @@ module.exports = {
       groupName: group.groupName,
       userName: group.userName
     }).then((response) => {
-      alert(response.data);
+      toastr.success(response.data);
     }).catch((error) => {
       console.log(error);
     });
@@ -62,10 +63,8 @@ module.exports = {
   getGroups() {
     axios.get('/user/database')
     .then((group) => {
-        // console.log(groups)
       const groups = group.data;
       AppActions.receiveGroup(groups);
-      console.log(groups);
     })
     .catch((error) => {
       console.log(error);
@@ -89,9 +88,9 @@ module.exports = {
     const user = addUser.user;
     axios.post(`/group/${groupName}/${user}`)
     .then((response) => {
-        alert(response.data);
+      toastr.success(response.data);
     }).catch((error) => {
-        console.log(error);
+      console.log(error);
     });
   },
 
@@ -104,20 +103,20 @@ module.exports = {
     const allUsers = message.allUsers;
     const notification = message.notification;
     const priority = message.priority;
+    console.log(message)
     
     axios.post(`/groups/${groupName}/${messages}/${emails}/${numbers}/${allUsers}/${notification}/${priority}`)
     .then((response) => {
-        console.log(response);
-      }).catch((error) => {
-        console.log(error);
-        });                  
+      toastr.success(response);
+    }).catch((error) => {
+      console.log(error);
+    });
   },
 
   getMessages(keyName) {
     const groupName = keyName;
     axios.get(`/groups/${groupName}`)
         .then((message) => {
-          console.log(message.data);
           AppActions.receiveMessages(message.data);
         })
         .catch((error) => {
@@ -125,10 +124,9 @@ module.exports = {
         });
   },
 
-  removeMessage(messageId){
+  removeMessage(messageId) {
     axios.post(`/user/archive/${messageId}`)
         .then((message) => {
-          console.log(message.data);
           AppActions.archiveMessages(message.data);
         })
         .catch((error) => {
@@ -163,26 +161,25 @@ module.exports = {
       password: contact.password
     }).then((response) => {
       const user = response.data.userData;
-      const message = response.data.message;
+      const message = response.data.messages;
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
-          alert(response.data);
+        toastr.error(response.data);
       } else if (response.data.message === 'The password is invalid or the user does not have a password.'){               
-          alert(response.data.message);
+        toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        AppActions.receivePersonalMessage(message);
-        console.log(message);
-         alert('Welcome');
+        AppActions.receivePersonalMessage(message);      
+        toastr.success('Welcome To PostIt');
       }
     }).catch((error) => {
-        console.log(error);
+       console.log(error);
     });
   },
 
   setLogout() {
     axios.post('/user/signout').then((response) => {
-      console.log(response);
+      toastr.success(response);
     }).catch((error) => {
       console.log(error);
     });
@@ -210,13 +207,11 @@ module.exports = {
       }).then((response) => {
         const user = response.data.userData;
         const message = response.data.message;
-          console.log(user);
-          console.log(message);
         AppActions.receiveLogin(user);
         AppActions.receivePersonalMessage(message);
-            alert('WARNING: Google Sign Up feature is incomplete ');
+        toastr.warning('Google Sign Up feature is incomplete ');
       }).catch((error) => {
-          console.log(error);
+        console.log(error);
       });
     }
   },
@@ -231,7 +226,7 @@ module.exports = {
   resetPassword(email) {
     axios.post('/user/reset', { email
     }).then((response) => {
-      alert(response.data);
+      toastr.success(response.data);
     }).catch((error) => {
       console.log(error);
     });

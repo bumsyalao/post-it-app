@@ -4,7 +4,7 @@ import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
 import GroupOptions from './GroupOptions'
-
+import toastr from 'toastr'
 
 /**
  * Displays the navigation of the dashboard
@@ -187,12 +187,12 @@ const Uppercase = capitalizeFirstLetter(this.refs.user.value)
       }   
 
       if(this.refs.type.value === ''){
-        alert("Select a group name from the drop down list")
+        toastr.error("Select a group name from the drop down list")
       }
       else if (this.props.databaseUsers.includes(Uppercase)){
         AppActions.saveGroupUser(addUser);
       }else{
-        alert("The User dosen't exist")
+        toastr.error("The User dosen't exist")
       }
       this.refs.type.value = ''; 
       this.refs.user.value = '';

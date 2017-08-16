@@ -40,9 +40,9 @@ export default class DisplayMessage extends Component {
 
     return (
       <div style={{border:'1px solid LightBlue'}}>  
-        <ul>
+        <div>
                 {display}                 
-        </ul>
+        </div>
       </div>
 
     )

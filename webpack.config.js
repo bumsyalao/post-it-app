@@ -39,6 +39,14 @@ const config = {
         exclude: /node_modules/,
       },
       {
+        test: /\.jsx$/,
+        loaders: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react']
+        }
+      },
+      {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
