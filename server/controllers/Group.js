@@ -201,6 +201,49 @@ class Group {
   });
 
 
+     
+      // // Add all the users in a group to the user just added
+      // users.forEach((entry) => {            
+      //   userGroupRef.child(userKey).child(groupKey).child('Users').push(entry);
+      // });
+
+      // // Remove the Users key before iterating throught the users, this is to avoid double repeatation
+      // users = users.filter(item => item !== userKey);
+
+      // // Loop through the User Group Database and add list of newly added users
+      // users.forEach((entry) => {       
+      //   userGroupRef.child(entry).child(groupKey).child('Users').push(userKey);
+      // });
+    // });
+
+    const us = ['ZVmYwdUQhdhfegLrsbkotCHklNG2', 'UdzkXSFb7pQiF1CBxWr0VfbOW5u1' ]
+       us.forEach((entry) => {
+               let email = [];
+    usersRef.child(entry).child('email').once('value', (snapShot) => {
+      snapShot.forEach((childSnapShot) => {
+        // email.push(childSnapShot.val()); 
+        console.log(snapShot)
+      
+              //  email.push(snapShot.val())
+              //  email.concat(snapShot.val())
+               
+
+       snapShot.forEach((snapShot) => {
+         
+        //  console.log(snapShot)
+      });
+        
+         console.log(childSnapShot)    
+
+      }); 
+     
+
+  });
+
+
+       })
+
+
         if ((priority === 'Urgent') || (priority === 'Critical')) {
          // Send Email Notification to Users
         const transporter = nodemailer.createTransport(smtpTransport({
