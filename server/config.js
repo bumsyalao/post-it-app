@@ -14,7 +14,7 @@ firebase.initializeApp(config);
 const firebaseAuth = firebase.auth();
 
 const db = firebase.database();
-const usersRef = db.ref('Users');
+const usersRef = db.ref('users');
 const groupRef = db.ref('Groups');
 const userGroupRef = db.ref('UserGroup');
 
