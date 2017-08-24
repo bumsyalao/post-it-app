@@ -7,20 +7,10 @@ const path = require('path');
 const router = express.Router();
 
 
-
-// Sign Up
 router.post('/user/signup', User.signup);
-
-//Google Sign Up
 router.post('/user/google', User.google);
-
-//Google Login
 router.post('/google/login', User.googleLogin);
-
-// Sign In
 router.post('/user/signin', User.signin);
-
-// Sign Out
 router.post('/user/signout', User.signout);
 
 // Route for Creating Group

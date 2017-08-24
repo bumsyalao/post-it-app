@@ -166,7 +166,7 @@ module.exports = {
       password: contact.password
     }).then((response) => {
       const user = response.data.userData;
-      const message = response.data.message;
+      const message = response.data.messages;
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
         toastr.error(response.data);

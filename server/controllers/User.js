@@ -44,48 +44,44 @@ class User {
      * @return {object}  returns the user's details
      */
   static google(req, res) {
-    const googleUser = req.body.googleUser
-    const userName = googleUser.userName;
-    const email = googleUser.email;
-    const uid = googleUser.uid;
-    const number = googleUser.number;
-    // add element to database
-      usersRef.child(userName).set({
-        userName,
-        email,
-        uid,
-        number
-      });
-
-           // Get all user's personal message while signing in
-      const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
-      rootRef.once('value', snap => {
-      const data = snap.val()
-      const messages = []
-      let message = {}
+    const googleUser = req.body.googleUser;
+    const { userName, email, uid, number } = googleUser;
   
-      for (var i in data){
-        message = {
-          uid: data[i].uid,
-          user: data[i].User,
-          text: data[i].Message,
-          group: data[i].Group,  
-        }
-        messages.push(message)
-       }   
+    // add element to database
+    usersRef.child(userName).set({
+      userName,
+      email,
+      uid,
+      number
+    });
 
-       const user = {
-         displayName: userName
+    // Get all user's personal message while signing in
+    const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
+    rootRef.once('value', (snap) => {
+      const data = snap.val();
+      const messages = [];
+      let message = {};
+  
+       for (const i in data) {
+         message = {
+           uid: data[i].uid,
+           user: data[i].User,
+           text: data[i].Message,
+           group: data[i].Group
+         };
+         messages.push(message);
        }
 
-        res.status(200).send({
+      const user = {
+        displayName: userName
+      };
+
+      res.status(200).send({
         message: 'Welcome to Post it app',
         userData: user,
-        message: messages
+        messages
       });
-    })
-
-
+    });
   }
 
 
@@ -96,35 +92,34 @@ class User {
      * @return {object}  returns the user's details
      */
   static signin(req, res) {
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = req.body;
     firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
-      const userName = user.displayName
+      const userName = user.displayName;
       
       // Get all user's personal message while signing in
-      const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');
-      rootRef.once('value', snap => {
-      const data = snap.val()
-      const messages = []
-      let message = {}
+      const rootRef = firebase.database().ref().child('users').child(userName)
+      .child('Messages');
+      rootRef.once('value', (snap) => {
+        const data = snap.val();
+        const messages = [];
+        let message = {};
   
-      for (var i in data){
+      for (const i in data) {
         message = {
           uid: data[i].uid,
           user: data[i].User,
           text: data[i].Message,
-          group: data[i].Group,  
-        }
-        messages.push(message)
-       }   
+          group: data[i].Group
+        };
+        messages.push(message);
+      }
         res.status(200).send({
-        message: 'Welcome to Post it app',
-        userData: user,
-        message: messages
+          message: 'Welcome to Post it app',
+          userData: user,
+          messages
+        });
       });
-    })
-
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -137,8 +132,6 @@ class User {
       }
     });
   }
-
-
 
  /**
      * The Sign Out method
@@ -159,13 +152,17 @@ class User {
   }
 
 
- static seenMessage(req, res){
-  const uid = req.params.uid;
-  const userName = req.params.userName
-  const groupName = req.params.groupName
+ /**
+     * The Sign In method
+     * @param {number} req - User's Request
+     * @param {object} res - Server Response
+     * @return {object}  returns the user's details
+     */
+  static seenMessage(req, res) {
+    const { uid, userName, groupName } = req.params;
 
-   groupRef.child(groupName).child('Messages').child(uid).child("Seen").push({Seen: userName})
-   groupRef.child(groupName).child('Messages').child(uid).child("Seen").once('value', snap => {
+    groupRef.child(groupName).child('Messages').child(uid).child("Seen").push({Seen: userName})
+    groupRef.child(groupName).child('Messages').child(uid).child("Seen").once('value', snap => {
       const data = snap.val()
       const users = []
       let user = {}
