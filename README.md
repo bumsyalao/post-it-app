@@ -104,6 +104,7 @@ The API contains different endpoints with their respective payloads as stated be
     babel-eslint
     babel-loader
     babel-preset-es2015
+      Andela Bootcamp BFAs
     babel-watch
 
  
@@ -111,7 +112,11 @@ The API contains different endpoints with their respective payloads as stated be
     Ebuka Umeh
 
 # Acknowledgments
-      Andela Bootcamp Facilitators
-      Andela Bootcamp BFAs
       Andela Bootcampers
+      Andela Bootcamp Facilitators
       Family and Friends
+
+## License $ Copyright
+MIT © Ebuka Umeh
+
+Licensed under the [MIT License](LICENSE).
