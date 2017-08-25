@@ -2,12 +2,12 @@
 const firebase = require('firebase');
 
 const config = {
-  apiKey: 'AIzaSyDx5Xi4OxL1F18jqNO1L1JyAhO8CM3J3h0',
-  authDomain: 'post-it-app-8b2cb.firebaseapp.com',
-  databaseURL: 'https://post-it-app-8b2cb.firebaseio.com',
-  projectId: 'post-it-app-8b2cb',
-  storageBucket: 'post-it-app-8b2cb.appspot.com',
-  messagingSenderId: '852510559801'
+  apiKey: process.env.DB_KEY,
+  authDomain: process.env.DB_DOMAIN,
+  databaseURL: process.env.DB_URL,
+  projectId: process.env.DB_ID,
+  storageBucket: process.env.DB_STORAGE,
+  messagingSenderId: process.env.DB_SENDER
 };
 firebase.initializeApp(config);
 

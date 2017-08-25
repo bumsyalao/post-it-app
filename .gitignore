@@ -3,3 +3,4 @@ test2.js
 .DS_Store
 .vscode
 .nyc_output
+.env

@@ -62,7 +62,7 @@ where <your_desired_port> is the port you want to use. So, if you want to use po
 
 ### How can I contribute?
 There are two major ways to contribute:
-+ If you find bugs in the application, create a New Issue and let me know about it.
++ If you find bugs in the application, create a `New Issue` and let me know about it.
 + If you would like to add additional features to this application, fork this repository, make necessary changes and create a Pull Request. Please make sure that all Hound suggestions are implemented and Travis CI passes.
 
 ## Author
