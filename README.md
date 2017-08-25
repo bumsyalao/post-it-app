@@ -49,6 +49,22 @@ It is also hosted on heroku at <a href="https://post-it-app35.herokuapp.com//" t
 ## API Documentation
 The Api Documentaion of Post IT App can be found [here](http://docs.postit7.apiary.io/#)
 
+## Limitations
++ Users can not upload picture
++ Users can not choose to accept invitation request
+
+## FAQ
++ What if I want to use another port?
+That's easy. In the root of the project. create a file named .env and add the following line to it:
+`PORT=<your_desired_port>`
+where <your_desired_port> is the port you want to use. So, if you want to use port 9000, you will write:
+`PORT=9000`
+
++ How can I contribute?
+There are two major ways to contribute:
++ If you find bugs in the application, create a New Issue and let me know about it.
++ If you would like to add additional features to this application, fork this repository, make necessary changes and create a Pull Request. Please make sure that all Hound suggestions are implemented and Travis CI passes.
+
 ## Author
     Ebuka Umeh
 

@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 node_modules
 test2.js
-=======
-node_modules
-.vscode
->>>>>>> a3db5f3caa32708acf0737761ad73d07fd56a26d
 .DS_Store
 .vscode
+.nyc_output
