@@ -116,7 +116,7 @@ The API contains different endpoints with their respective payloads as stated be
       Andela Bootcamp Facilitators
       Family and Friends
 
-## License $ Copyright
-MIT © Ebuka Umeh
+## License & Copyright
+MIT © [Ebuka Umeh](https://github.com/Charpell)
 
 Licensed under the [MIT License](LICENSE).
