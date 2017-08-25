@@ -47,7 +47,7 @@ npm install
 It is also hosted on heroku at <a href="https://post-it-app35.herokuapp.com//" target="_blank">PostIt API</a>.
 
 ## API Documentation
-The Api Documentaion of Post IT App can be found [here](http://docs.postit7.apiary.io/#reference/0/login-a-new-user)
+The Api Documentaion of Post IT App can be found [here](http://docs.postit7.apiary.io/#)
 
 ## Author
     Ebuka Umeh
