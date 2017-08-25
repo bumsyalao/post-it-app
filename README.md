@@ -46,20 +46,8 @@ npm install
 
 It is also hosted on heroku at <a href="https://post-it-app35.herokuapp.com//" target="_blank">PostIt API</a>.
 
-The API contains different endpoints with their respective payloads as stated below:
-
-| Endpoints                    | Functions                                                               | Payloads                 | Request Methods |
-|------------------------------|-------------------------------------------------------------------------|--------------------------|-----------------|
-|1 /user/signup             | It allows users to register                                             | username, email and password    | POST            |
-|2 /user/google             | It allows users to register                                             | google auth    | POST            |
-|3 /user/signin             | It gives users access to login                                          | email and password    | POST            |
-|4 /group                   | It allows users to create group for notifications                       | groupName and userName | POST            |
-|5 /group/:groupName/:user     | It allows users to add another user to a created group of id groupID    | username                 | POST            |
-| /groups/:groupName/:messages
-/:emails/:numbers/:allUsers
-/:notification/:priority/group
-/:groupID/message  | It allows users to post message to a created group of id groupID        | message and postedBy     | POST            |
-|6 /group/:groupID/messages | It allows users to retrieve messages from a created group of id groupID | No payload               | GET             |
+## API Documentation
+The Api Documentaion of Post IT App can be found [here](http://docs.postit7.apiary.io/#reference/0/login-a-new-user)
 
 ## Author
     Ebuka Umeh
