@@ -7,7 +7,7 @@ import AppAPI from '../utils/appAPI'
 const CHANGE_EVENT = 'change'
 
 let _user = '';
-const localStorage = null;
+const localStorage = null; 
 let _auth = false;
 let _contacts = [];
 let _currentGroup = '';
@@ -298,7 +298,7 @@ AppDispatcher.register((payload) => {
 
   case AppConstants.SAVE_MESSAGE:
     console.log('Saving Message...');
-    // Store Save
+    // // Store Save
     AppStore.savePersonalMessage(action.message);
     // // Save to API
     AppAPI.saveMessages(action.message);

@@ -52,7 +52,7 @@ export default class NavDash extends Component {
 
 
     
-    return (
+    return ( 
       <Navbar inverse collapseOnSelect>
 
         <Modal show={this.state.showModal} onHide={this.close}>

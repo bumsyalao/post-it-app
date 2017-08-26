@@ -18,7 +18,9 @@ module.exports = {
       } else if (response.data.message === 'The email address is badly formatted.'){               
         toastr.error(response.data.message);
       } else {
-        // AppActions.receiveLogin(user);
+        AppActions.receiveLogin(user);
+        console.log(response)
+        console.log(user)
         toastr.success('Welcome,  An email will be sent to you, please verify your account.') 
       }
     }).catch((error) => {
@@ -125,7 +127,10 @@ module.exports = {
   },
 
   removeMessage(messageId) {
-    axios.post(`/user/archive/${messageId}`)
+    console.log(messageId)
+    axios.post('/user/archive/messageId', {
+      messageId
+    })
         .then((message) => {
           AppActions.archiveMessages(message.data);
         })
@@ -169,7 +174,8 @@ module.exports = {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        AppActions.receivePersonalMessage(message);      
+        AppActions.receivePersonalMessage(message);  
+          
         toastr.success('Welcome To PostIt');
       }
     }).catch((error) => {

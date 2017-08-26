@@ -3,6 +3,8 @@ import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 import GoogleWelcome from './GoogleWelcome'
 import {firebaseAuth, firebase, provider}from '../../../../server/config'
+import toastr from 'toastr'
+
 
 
 /**
@@ -126,9 +128,9 @@ export default class Signup extends Component {
 
       // Checks if Username and Phone number already exist
     if (this.state.databaseUsers.includes(userNameToUppercase)){
-     alert("The username already exist")  
+     toastr.success("The username already exist")  
     }else if(this.state.numbers.includes(this.refs.number.value)){
-        alert("The phone number already exist")
+     toastr.success("The phone number already exist")
      }else {      
         AppActions.saveContact(contact);
 
