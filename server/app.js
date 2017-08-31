@@ -25,13 +25,6 @@ app.get('*', (req, res) => {
 });
 
 
-// This gets route for webpage
-// test of server.===========================================
-app.use((req, res, next) => {
-  next();
-});
-
-
 app.listen(port);
 
 module.exports = app;

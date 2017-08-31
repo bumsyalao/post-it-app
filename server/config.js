@@ -1,14 +1,22 @@
 // Firebase Configuration
 const firebase = require('firebase');
+const nodeEnv = process.env.NODE_ENV || 'development';
+let prefix = '';
+
+if (nodeEnv === 'test') {
+  prefix = 'TEST_'; 
+}
 
 const config = {
-  apiKey: process.env.DB_KEY,
-  authDomain: process.env.DB_DOMAIN,
-  databaseURL: process.env.DB_URL,
-  projectId: process.env.DB_ID,
-  storageBucket: process.env.DB_STORAGE,
-  messagingSenderId: process.env.DB_SENDER
+  apiKey: process.env[`${prefix}DB_KEY`],
+  authDomain: process.env[`${prefix}DB_DOMAIN`],
+  databaseURL: process.env[`${prefix}DB_URL`],
+  projectId: process.env[`${prefix}DB_ID`],
+  storageBucket: process.env[`${prefix}DB_STORAGE`],
+  messagingSenderId: process.env[`${prefix}DB_SENDER`]
 };
+
+
 firebase.initializeApp(config);
 
 const firebaseAuth = firebase.auth();

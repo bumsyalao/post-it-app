@@ -4,10 +4,10 @@
   "description": "Messsaging app",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 15000",
+    "test": "NODE_ENV=test mocha --timeout 15000",
     "start": "nodemon ./server/app",
     "dev": "webpack-dev-server",
-    "coverage": "nyc --require babel-core/register mocha ./test/test.js",
+    "coverage": "NODE_ENV=test nyc --require babel-core/register mocha ./test/test.js",
     "showcoverage": "coverage/lcov-report/index.html"
   },
   "repository": {
