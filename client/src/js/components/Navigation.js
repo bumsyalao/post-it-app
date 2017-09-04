@@ -58,7 +58,7 @@ export default class Navigation extends Component {
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span> 
                 </button>
-                <a className="navbar-brand low-red" href="#">POSTIT</a>
+                <a className="navbar-brand low-red" href="#">POST IT</a>
               </div>
               <div className="collapse navbar-collapse" id="myNavbar">
 

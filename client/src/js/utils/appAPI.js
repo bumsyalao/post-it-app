@@ -1,12 +1,13 @@
 import AppActions from '../actions/AppActions';
 import axios from 'axios';
-import toastr from 'toastr'
+import toastr from 'toastr';
 
 
 module.exports = {
   saveContact(contact) {
+    console.log(contact)
     axios.post('/user/signup', {
-      username: contact.username,
+      userName: contact.username,
       email: contact.email,
       password: contact.password,
       number: contact.number
@@ -33,6 +34,7 @@ module.exports = {
     axios.get('/users/allusers')
       .then((contacts) => {
         AppActions.receiveContact(contacts.data);
+        console.log(contact)
       })
       .catch((error) => {
         console.log(error);

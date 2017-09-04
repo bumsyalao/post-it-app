@@ -1,6 +1,8 @@
 const { firebase, usersRef, groupRef } = require('../config');
 
 
+
+
 /** Class representing a the User Database. */
 class User {
  /**
@@ -12,17 +14,26 @@ class User {
   static signup(req, res) {
     const { userName, password, email, number } = req.body;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
-      const uid = user.uid;
+    if (typeof userName === 'undefined' || typeof email === 'undefined' || typeof password === 'undefined' || typeof number === 'undefined') {
+      res.status(400).json({ message: 'You need to provide userName, password, number and email' });
+    } else if (userName === '' || password === '' || email === '' || number === '') {
+      res.status(400).json({ message: 'userName, password, number or email cannot be empty' });
+    } else {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+        const uid = user.uid;
 
+      // update the userName of the user
       user.updateProfile({
         displayName: userName
       });
 
+         // send verification email to user
       user.sendEmailVerification().then(() => {
-        res.send(user);
+        res.status(201).send(user);
       });
 
+
+    // add element to database
       usersRef.child(userName).set({
         userName,
         password,
@@ -30,10 +41,19 @@ class User {
         uid,
         number
       });
-    })
+    })   
     .catch((error) => {
-      res.send(error);
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        res.status(400).json({ message: error.message });
+      } else if(errorCode === 'auth/weak-password') {
+        res.status(400).json({ message: error.message });         
+      } else if (errorCode === 'auth/email-already-in-use') {
+        res.status(409).json({ message: error.message });
+      }
+
     });
+    }
   }
 
 
@@ -93,10 +113,15 @@ class User {
      */
   static signin(req, res) {
     const { email, password } = req.body;
-    firebase.auth()
+    
+    if (typeof email === 'undefined' || typeof password === 'undefined' ) {
+      res.status(400).json({ message: 'You need to provide password and email' });
+    } else if (email === '' || password === '' ) {
+      res.status(400).json({ message: 'Email or Password cannot be empty' });
+    } else {
+          firebase.auth()
     .signInWithEmailAndPassword(email, password).then((user) => {
-      const userName = user.displayName;
-      
+      const userName = user.displayName;     
       // Get all user's personal message while signing in
       const rootRef = firebase.database().ref().child('users').child(userName)
       .child('Messages');
@@ -123,14 +148,22 @@ class User {
     })
     .catch((error) => {
       const errorCode = error.code;
-      const errorMessage = error.message;
+  
 
-      if (errorCode === 'auth/wrong-password') {
-        res.send(error);
-      } else {
-        res.send(errorMessage);
+      if (errorCode === 'auth/invalid-email') {
+        res.status(400).json({ message: error.message }); 
+      } else if(errorCode === 'auth/user-not-found'){
+          res.status(401).json({ message: error.message });
+       } else if (errorCode === 'auth/wrong-password') {
+        res.status(401).json({ message: error.message }); 
+        
       }
+
     });
+
+    }
+
+
   }
 
  /**
@@ -141,7 +174,7 @@ class User {
      */
   static signout(req, res) {
     firebase.auth().signOut().then(() => {
-      res.send({
+      res.status(200).send({
         message: 'You are successfully signed out'
       });
     }).catch((error) => {
@@ -152,12 +185,7 @@ class User {
   }
 
 
- /**
-     * The Sign In method
-     * @param {number} req - User's Request
-     * @param {object} res - Server Response
-     * @return {object}  returns the user's details
-     */
+
   static seenMessage(req, res) {
     const { uid, userName, groupName } = req.params;
 
@@ -185,7 +213,6 @@ class User {
  static messageArchive(req, res){
    const messageId = req.body.messageId
    
-   console.log(messageId)
 
       const userName = 'Hh'
         const rootRef = firebase.database().ref().child('users').child(userName).child('Messages');

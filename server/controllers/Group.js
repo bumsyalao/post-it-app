@@ -3,68 +3,86 @@ const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const Nexmo = require('nexmo');
 
+const validStringLength = (userName, groupName) => {
+  if (userName.length >= 1 && groupName.length >= 1){
+    return true;
+  }
+  return null;
+};
+
+const validStringContent = (userName, groupName) => {
+  if (userName.match(/\W/) || groupName.match(/\W/)){
+    return false;
+  }
+  return true;
+};
+
 
 class Group {
   static createGroup(req, res) {
-    const groupName = req.body.groupName; 
-    const userName = req.body.userName
-    const db = firebase.database();
-    
-      groupRef.child(groupName).once('value', (snapshot) => {
-      if (!snapshot.exists()) { 
-   // Create  and Group and Insert Username
-          groupRef.child(groupName).child('Users').child(userName).set(userName)
+    const { groupName, userName } = req.body;
 
-        //Push the user's details into Group/ Users
-        db.ref(`/users/${userName}/Groups`).push({
-          groupName,
-          userName
-        }).then(() => {
-          res.send(`Group ${groupName} created`);
-        }).catch((err) => {
-          res.send(err);
-        });
+    if (!(validStringLength(userName, groupName) && validStringContent(userName, groupName))) {
+        res.status(400).json({ message: 'Username or Groupname is invalid' });
       } else {
-        res.send('Group already exists');
-      }
-    }).catch((err) => {
-            res.status(401).send({
-              message: `Something went wrong ${err.message}`,
-            });
+        const db = firebase.database();  
+        groupRef.child(groupName).once('value', (snapshot) => {
+        if (!snapshot.exists()) { 
+     // Create  and Group and Insert Username
+            groupRef.child(groupName).child('Users').child(userName).set(userName)
+  
+          //Push the user's details into Group/ Users
+          db.ref(`/users/${userName}/Groups`).push({
+            groupName,
+            userName
+          }).then(() => {
+            res.status(201).json({ message: `Group ${groupName} created` });
+          }).catch((err) => {
+            res.send(err);
           });
+        } else {
+          res.status(409).json({ message: 'Group already exists' });
+        }
+      }).catch((err) => {
+              res.status(401).send({
+                message: `Something went wrong ${err.message}`,
+              });
+            });
+
+      }
    
-
-  } 
-
-
-static addUser(req, res) {
-  const groupName = req.params.groupName;
-  const user = req.params.user;
-
-  const db = firebase.database();
-
-usersRef.child(user).once('value', (snapshot) => {
-const username = snapshot.exists() ? snapshot.val().username : "null";
-const email = snapshot.exists() ? snapshot.val().email : "null";
-const number = snapshot.exists() ? snapshot.val().number : "null";
-
-// //Push the user's details into Group/ Users
-db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
+    }
+    
 
 
-//Push the user's details into Group
-groupRef.child(groupName).child('Users').child(username).set(username)
-groupRef.child(groupName).child('Email').push(email)
-groupRef.child(groupName).child('Number').push(number)
+  
 
-.then(() => {
-  res.send('User added successfully');
-});
-})
-.catch((err) => {
-res.send('Error');
-});
-	}
+    static addUserToGroup(req, res) {
+      const { groupName, user } = req.body;
+      const db = firebase.database();
+    
+    usersRef.child(user).once('value', (snapshot) => {
+    const username = snapshot.exists() ? snapshot.val().username : "null";
+    const email = snapshot.exists() ? snapshot.val().email : "null";
+    const number = snapshot.exists() ? snapshot.val().number : "null";
+    
+    // //Push the user's details into Group/ Users
+    db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
+    
+    
+    //Push the user's details into Group
+    groupRef.child(groupName).child('Users').child(username).set(username)
+    groupRef.child(groupName).child('Email').push(email)
+    groupRef.child(groupName).child('Number').push(number)
+    
+    .then(() => {
+      res.send('User added successfully');
+    });
+    })
+    .catch((err) => {
+    res.send('Error');
+    });
+  }
 
 
   static addMessage(req, res) {

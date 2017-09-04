@@ -64,7 +64,7 @@ const AppActions = {
   },
 
   inboxMessage() {
-    // alert('This feauture is not yet available, coming soon')
+  
   },
 
   updateInbox(user) {
