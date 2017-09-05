@@ -2,6 +2,7 @@ const chaiHttp = require('chai-http');
 const chai = require('chai');
 const app = require('../server/app');
 const request = require('supertest');
+const { validStringContent, validStringLength } = require('../server/helpers/validate.helper');
 
 
 chai.use(chaiHttp);
@@ -10,9 +11,9 @@ const expect = chai.expect;
 
 
 describe('EndPoint: SignUp', () => {
-  const userName = 'kahn';
+  const userName = 'Teahn';
   const password = 'ebuka12345';
-  const email = 'ebuka@gmail.com';
+  const email = 'ebu@gmal.com';
   const number = '2348066098146';
 
   it('It returns status 201 for when all parameters are complete and a user is created', (done) => {
@@ -21,12 +22,14 @@ describe('EndPoint: SignUp', () => {
       .send({ userName, password, email, number })
       .set('Accept', 'application/json')
       .end((err, res) => {
-        res.status.should.equal(201, done);
+        res.status.should.equal(201);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
         if (err) return done(err);
         done();
-      });
-      
+      });     
   })
+
 
   it('It should return status 400 for missing username', (done) => {
     request(app)
@@ -274,7 +277,7 @@ describe('SignOut Route', () => {
 
 
 describe('Create Group', () => {
-  const groupName = 'Bugger';
+  const groupName = 'BuggSo';
   const userName = 'Ebuka';
   it('It returns status 201 when the user creates group', (done) => {
     request(app)
@@ -299,7 +302,7 @@ describe('Create Group', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('Username or Groupname is invalid')
+        res.body.should.have.property('message').eql('The Username or Groupname field is invalid')
         if (err) return done(err);
         done();
       });
@@ -314,7 +317,7 @@ describe('Create Group', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('Username or Groupname is invalid')
+        res.body.should.have.property('message').eql('The Username or Groupname field is invalid')
         if (err) return done(err);
         done();
       });
@@ -334,8 +337,165 @@ describe('Create Group', () => {
         done();
       });
   });
+})
+
+  describe('Add User to a Group', () => {
+    const groupName = 'BSer';
+    const user = 'Hh';
+    it('It returns status 201 when a user is added to a group', (done) => {
+      request(app)
+        .post('/group/groupName/user')
+        .send({ groupName, user })
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.should.have.property('message').eql('User added successfully')
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('It returns status 400 when the User field is Undefined', (done) => {
+      request(app)
+        .post('/group/groupName/user')
+        .send({ groupName, user: ''  })
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.should.have.property('message').eql('The Username or Groupname field is invalid')
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('It returns status 400 when the Group Name field is Undefined', (done) => {
+      request(app)
+        .post('/group/groupName/user')
+        .send({ user, groupName: '' })
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.should.have.property('message').eql('The Username or Groupname field is invalid')
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('It returns status 403 If the User dosent Exist', (done) => {
+      request(app)
+        .post('/group/groupName/user')
+        .send({ groupName, user: 'Exist' })
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(403);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.should.have.property('message').eql("The User dosen't exist")
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('It returns status 403 If the Group dosent Exist', (done) => {
+      request(app)
+        .post('/group/groupName/user')
+        .send({ user, groupName: 'Exist' })
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(403);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.should.have.property('message').eql("Group dosen't exists")
+          if (err) return done(err);
+          done();
+        });
+    });
 
 
-});
+  });
 
+  describe('EndPoint: Reset Password', () => {
+    const validEmail = 'Hh@gmail.com';
+    const invalidEmail = 'gfhr@gmail.com'
 
+    it('It returns status 201 when the email is valid', (done) => {
+      request(app)
+        .post('/user/reset')
+        .send({ email: validEmail })
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.should.have.property('message').eql('An email has been sent for password reset. Log in after Reset')
+          if (err) return done(err);
+          done();
+        });
+    });
+
+      it('It returns status 401 if a email/user dose not exist', (done) => {
+        request(app)
+          .post('/user/reset')
+          .send({ email: invalidEmail })
+          .set('Accept', 'application/json')
+          .end((err, res) => {
+            res.status.should.equal(401);
+            res.body.should.be.a('object');
+            res.body.should.have.property('message');
+            res.body.should.have.property('message').eql('There is no user record corresponding to this identifier. The user may have been deleted.');
+            if (err) return done(err);
+            done();
+          });
+      });
+
+        it('It should return status 400 for badly formatted email', (done) => {
+          request(app)
+            .post('/user/reset')
+            .send({ email:'ebuka@' })
+            .set('Accept', 'application/json')
+            .end((err, res) => {
+              res.status.should.equal(400);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message');
+              res.body.message.should.be.eql('The email address is badly formatted.');
+              if (err) return done(err);
+              done();
+            });
+        });
+
+  })
+
+  describe('EndPoint: Get all Phone Numbers from the database', () => {
+    it('It returns status 200 when the email is valid', (done) => {
+      request(app)
+        .get('/users/allNumbers')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(200);
+          res.body.should.be.a('array');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+  })
+  describe('EndPoint: Get all Users from the Database', () => {
+    it('It returns status 200 when the email is valid', (done) => {
+      request(app)
+        .get('/users/allusers')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.status.should.equal(200);
+          res.body.should.be.a('array');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+  })

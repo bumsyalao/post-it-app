@@ -2,20 +2,9 @@ const { usersRef, groupRef, firebase } = require('../config');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const Nexmo = require('nexmo');
+const { validStringContent, validStringLength } = require('../helpers/validate.helper');
 
-const validStringLength = (userName, groupName) => {
-  if (userName.length >= 1 && groupName.length >= 1){
-    return true;
-  }
-  return null;
-};
 
-const validStringContent = (userName, groupName) => {
-  if (userName.match(/\W/) || groupName.match(/\W/)){
-    return false;
-  }
-  return true;
-};
 
 
 class Group {
@@ -23,7 +12,7 @@ class Group {
     const { groupName, userName } = req.body;
 
     if (!(validStringLength(userName, groupName) && validStringContent(userName, groupName))) {
-        res.status(400).json({ message: 'Username or Groupname is invalid' });
+        res.status(400).json({ message: 'The Username or Groupname field is invalid' });
       } else {
         const db = firebase.database();  
         groupRef.child(groupName).once('value', (snapshot) => {
@@ -37,17 +26,15 @@ class Group {
             userName
           }).then(() => {
             res.status(201).json({ message: `Group ${groupName} created` });
-          }).catch((err) => {
-            res.send(err);
+          }).catch((error) => {
+            res.status(500).json({ message: error });
           });
         } else {
           res.status(409).json({ message: 'Group already exists' });
         }
       }).catch((err) => {
-              res.status(401).send({
-                message: `Something went wrong ${err.message}`,
-              });
-            });
+          res.status(401).json({ message: `Something went wrong ${err.message}` });
+        });
 
       }
    
@@ -57,32 +44,43 @@ class Group {
 
   
 
-    static addUserToGroup(req, res) {
-      const { groupName, user } = req.body;
-      const db = firebase.database();
-    
-    usersRef.child(user).once('value', (snapshot) => {
-    const username = snapshot.exists() ? snapshot.val().username : "null";
-    const email = snapshot.exists() ? snapshot.val().email : "null";
-    const number = snapshot.exists() ? snapshot.val().number : "null";
-    
-    // //Push the user's details into Group/ Users
-    db.ref(`/users/${user}/groups`).child(groupName).set(groupName);
-    
-    
-    //Push the user's details into Group
-    groupRef.child(groupName).child('Users').child(username).set(username)
-    groupRef.child(groupName).child('Email').push(email)
-    groupRef.child(groupName).child('Number').push(number)
-    
-    .then(() => {
-      res.send('User added successfully');
-    });
-    })
-    .catch((err) => {
-    res.send('Error');
-    });
-  }
+  static addUserToGroup(req, res) {
+    const { groupName, user } = req.body;
+    if (!(validStringLength(groupName, user) && validStringContent(groupName, user))) {
+      res.status(400).json({ message: 'The Username or Groupname field is invalid' });
+    } else {
+      const db = firebase.database();   
+      usersRef.child(user).once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          const username = snapshot.val().username;
+          const email = snapshot.val().email;
+          const number = snapshot.val().number;
+          //Push the user's details into Group/ Users
+          db.ref(`/users/${user}/groups`).child(groupName).set(groupName);   
+
+          //Push the user's details into Group but first check if the group exist
+          groupRef.child(groupName).once('value', (groupSnapshot) => {                 
+              if (groupSnapshot.exists()) { 
+                groupRef.child(groupName).child('Users').child(username).set(username)
+                groupRef.child(groupName).child('Email').push(email)
+                groupRef.child(groupName).child('Number').push(number)     
+              } else {
+                res.status(403).json({ message: "Group dosen't exists" });
+              }     
+          })        
+          .then(() => {
+              res.status(201).json({ message: 'User added successfully' });
+          });    
+        } else {
+          res.status(403).json({ message: "The User dosen't exist" })
+        }   
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error });
+      });  
+      }
+
+}
 
 
   static addMessage(req, res) {

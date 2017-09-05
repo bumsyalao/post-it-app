@@ -1,6 +1,5 @@
 const User = require('./controllers/User');
 const Group = require('./controllers/Group');
-const Testing = require('./controllers/Testing');
 
 const express = require('express');
 const path = require('path');
@@ -57,14 +56,5 @@ router.get('/users/allnumbers/', User.allNumbers);
 
 // Password Reset
 router.post('/user/reset/', User.resetPassword);
-
-router.get('/test/one/', Testing.one);
-router.get('/test/two/', Testing.two);
-router.get('/test/three/', Testing.three);
-router.get('/test/four/', Testing.four);
-router.get('/test/five/', Testing.five);
-router.get('/test/six/', Testing.six);
-router.get('/test/seven/', Testing.seven);
-router.get('/test/getMethod/', Testing.getMethod);
 
 module.exports = router;

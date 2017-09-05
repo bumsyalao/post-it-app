@@ -65,6 +65,7 @@ class User {
      */
   static google(req, res) {
     const googleUser = req.body.googleUser;
+    console.log(googleUser+ ' Back end')
     const { userName, email, uid, number } = googleUser;
   
     // add element to database
@@ -148,8 +149,6 @@ class User {
     })
     .catch((error) => {
       const errorCode = error.code;
-  
-
       if (errorCode === 'auth/invalid-email') {
         res.status(400).json({ message: error.message }); 
       } else if(errorCode === 'auth/user-not-found'){
@@ -162,7 +161,6 @@ class User {
     });
 
     }
-
 
   }
 
@@ -337,8 +335,7 @@ firebase.auth().onAuthStateChanged((user) => {
                     Object.keys(data).map((keyName, keyIndex) => {
                       groups.push(keyName)          
                     }) 
-
-    
+ 
 
         // Loop through every user inside every group
         //if the userName match, output  all messages from every group
@@ -366,7 +363,8 @@ firebase.auth().onAuthStateChanged((user) => {
                             messages.push(message)
                             
                                              
-                 })                              
+                 })
+                                      
               })  
           }
 
@@ -393,26 +391,30 @@ firebase.auth().onAuthStateChanged((user) => {
     rootRef.once('value', (snap) => {
       const data = snap.val();
       const numbers = [];
-
       for(var i in data) {
         numbers.push(data[i].number);
       }
-      res.send(numbers);
+      res.status(200).send(numbers);
     });
   }
 
 
-  static resetPassword(req, res) {
+  static resetPassword(req, res) {    
     const emailAddress = req.body.email 
     var auth = firebase.auth();
-
     auth.sendPasswordResetEmail(emailAddress).then(function() {
-     res.send('An email has been sent for password reset. Log in after Reset')
+     res.status(201).json({ message: 'An email has been sent for password reset. Log in after Reset' }); 
     }, function(error) {
-         res.send('Error: The email address does not exist')
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        res.status(400).json({ message: error.message }); 
+      } else if(errorCode === 'auth/user-not-found'){
+          res.status(401).json({ message: error.message });
+       } 
     });
   }
 
 
 }
 module.exports = User;
+

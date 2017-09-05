@@ -90,7 +90,7 @@ module.exports = {
   saveGroupUser(addUser) {
     const groupName = addUser.groupname;
     const user = addUser.user;
-    axios.post(`/group/${groupName}/${user}`)
+    axios.post('/group/groupName}/user')
     .then((response) => {
       toastr.success(response.data);
     }).catch((error) => {
@@ -210,6 +210,7 @@ module.exports = {
   },
 
   google(googleUser) {
+    console.log(googleUser+ 'Front')
     if (googleUser.number) {
       axios.post('/user/google', { googleUser
       }).then((response) => {
