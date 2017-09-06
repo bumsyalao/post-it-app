@@ -27,7 +27,7 @@ class App extends Component  {
            auth: AppStore.getAuth(),
            user: AppStore.getUser(),         
         };
-         this._onChange= this._onChange.bind(this)
+         this.onChange= this.onChange.bind(this)
     }
 
    /**
@@ -38,7 +38,7 @@ class App extends Component  {
     * @memberof App
     */
    componentDidMount(){
-        AppStore.addChangeListener(this._onChange);
+        AppStore.addChangeListener(this.onChange);
     }
 
     /**
@@ -48,7 +48,7 @@ class App extends Component  {
     * @memberof App
     */
     componentUnmount(){
-        AppStore.removeChangeListener(this._onChange);
+        AppStore.removeChangeListener(this.onChange);
     }
  
 /**
@@ -73,7 +73,7 @@ class App extends Component  {
      * 
      * @memberof App
      */
-    _onChange(){
+    onChange(){
         this.setState({user: AppStore.getUser()});
         this.setState({auth: AppStore.getAuth()});      
     }      

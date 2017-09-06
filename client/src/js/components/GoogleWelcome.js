@@ -16,9 +16,7 @@ export default class GoogleWelcome extends Component {
     this.state = {
        databaseUsers: AppStore.getdatabaseUsers(),
        numbers: AppStore.getAllUsersNumber(),
-
     };
-     this._onChange= this._onChange.bind(this)
      this.onChange = this.onChange.bind(this)
   }
 
@@ -30,7 +28,7 @@ export default class GoogleWelcome extends Component {
     * @memberof GoogleWelcome
     */
    componentDidMount(){
-        AppStore.addChangeListener(this._onChange);
+        AppStore.addChangeListener(this.onChange);
     }
 
    /**
@@ -40,7 +38,7 @@ export default class GoogleWelcome extends Component {
     * @memberof GoogleWelcome
     */
     componentUnmount(){
-        AppStore.removeChangeListener(this._onChange);
+        AppStore.removeChangeListener(this.onChange);
     }
 
     onChange(e){
@@ -87,7 +85,7 @@ export default class GoogleWelcome extends Component {
      * 
      * @memberof Signup
      */
-    _onChange(){
+    onChange(){
         this.setState({databaseUsers: AppStore.getdatabaseUsers()});
         this.setState({numbers: AppStore.getAllUsersNumber()});                  
     } 

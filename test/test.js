@@ -2,7 +2,6 @@ const chaiHttp = require('chai-http');
 const chai = require('chai');
 const app = require('../server/app');
 const request = require('supertest');
-const { validStringContent, validStringLength } = require('../server/helpers/validate.helper');
 
 
 chai.use(chaiHttp);

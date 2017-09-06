@@ -63,7 +63,7 @@ module.exports = {
     });
   },
 
-        // Get list of Groups from Database
+        //Get list of Groups from Database
   getGroups() {
     axios.get('/user/database')
     .then((group) => {
@@ -90,7 +90,7 @@ module.exports = {
   saveGroupUser(addUser) {
     const groupName = addUser.groupname;
     const user = addUser.user;
-    axios.post('/group/groupName}/user')
+    axios.post('/group/groupName/user')
     .then((response) => {
       toastr.success(response.data);
     }).catch((error) => {
@@ -169,6 +169,7 @@ module.exports = {
     }).then((response) => {
       const user = response.data.userData;
       const message = response.data.messages;
+      console.log(response);
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
         toastr.error(response.data);

@@ -19,6 +19,9 @@ class Group {
         if (!snapshot.exists()) { 
      // Create  and Group and Insert Username
             groupRef.child(groupName).child('Users').child(userName).set(userName)
+            groupRef.child(groupName).child('Users').child('Bot').set('Bot')
+            groupRef.child(groupName).child('Email').push('bot@postit.com')
+            groupRef.child(groupName).child('Number').push('2348066098146')  
   
           //Push the user's details into Group/ Users
           db.ref(`/users/${userName}/Groups`).push({
@@ -39,10 +42,6 @@ class Group {
       }
    
     }
-    
-
-
-  
 
   static addUserToGroup(req, res) {
     const { groupName, user } = req.body;
@@ -56,7 +55,9 @@ class Group {
           const email = snapshot.val().email;
           const number = snapshot.val().number;
           //Push the user's details into Group/ Users
-          db.ref(`/users/${user}/groups`).child(groupName).set(groupName);   
+          db.ref(`/users/${user}/Groups`).push({
+            groupName
+          });  
 
           //Push the user's details into Group but first check if the group exist
           groupRef.child(groupName).once('value', (groupSnapshot) => {                 
@@ -83,154 +84,175 @@ class Group {
 }
 
 
-  static addMessage(req, res) {
-	  const groupName = req.params.groupName;
-    const messages = req.params.messages;
-    const emails = req.params.emails;
-    const numbers = req.params.numbers;
-    const allUsers = req.params.allUsers;
-    const notification = req.params.notification;
-    const priority = req.params.priority;
+  static createMessage(req, res) {
+    const { groupName, messages, notification, priority } = req.body;
+
+    if (!(validStringLength(groupName, messages) && validStringContent(groupName, messages))) {
+      res.status(400).json({ message: 'The Message or Groupname field is invalid' });
+    } else if (!(validStringLength(notification, priority) && validStringContent(notification, priority))) {
+      res.status(400).json({ message: 'The Notification or Priority field is invalid' });
+    } else {
     const db = firebase.database();
-
-    // Converts the list of numbers into array
-    const number = numbers.split(",");
-
-    // Converts the list of allUsers into array
-    const allUser = allUsers.split(",");
-
-      firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           const userName = user.displayName
-       
-       // loop through the user names in user database and add notifications
-        allUser.forEach((entry) => {
-           db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
-        })
-         
+                
         //Push the message into Group
 				groupRef.child(groupName).child("Messages").push(
         {  
           User: user.displayName,
           Message: messages,
           Priority: priority,
-
         })
-        
-        // loop through the user names in user database and add notifications
-        allUser.forEach((entry) => {
-           db.ref(`/users/${entry}/Messages`).push(
-        {  
-          User: user.displayName,
-          Message: messages,
-          Priority: priority,
+        .then(() => {
+          res.status(201).json({ message: 'Message added successfully'});
+          }).catch((error) => {
+          res.status(500).send(error);
+          });
 
-        })
+          // Notify Every User for Notification
+          const users = []
+          const userRef = firebase.database()
+            .ref()
+            .child('Groups')
+            .child('Andela')
+            .child('Users');
+          userRef.once('value', snap => {
+          let user = {}
+          snap.forEach((data) => {
+            users.push(data.val())
+            })   
+            users.forEach((entry) => {
+              const db = firebase.database(); 
+              db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
+           }) 
+          })
 
-        })
+          // Send an Email to every User in the Group
+          const email = [];
+          const emailRef = firebase.database()
+            .ref()
+            .child('Groups')
+            .child('Andela')
+            .child('Email');
+          emailRef.once('value', (snap) => {
+            snap.forEach((data) => {
+              email.push(data.val());
+            });
+            const emails = email.join(',');
 
- .then(() => {
-res.send('Message added successfully');
-}).catch((err) => {
-res.send('Error');
-});
+            if((priority === 'Urgent') || (priority === 'Critical')){
+              // Send Email Notification to Users
+           let transporter = nodemailer.createTransport(smtpTransport({
+           service: "gmail",
+           auth: {
+               user: 'wesumeh@gmail.com',
+               pass: 'dericoderico'
+           }
+           }));
+           let mailOptions = {
+               from: '"PostIt App" <admin@postit.com>', // sender address
+               to: emails, // list of receivers
+               subject: 'New Message Received', // Subject line
+               text: 'PostIt App ?', // plain text body
+               html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in '+ groupName +' group</h2>' // html body
+           };
+           transporter.sendMail(mailOptions, (error, info) => {
+               if (error) {
+                console.log(error);
+               }
+                console.log('Message %s sent: %s', info);
+           });
+         }
+          });
+          
 
-
-      if((priority === 'Urgent') || (priority === 'Critical')){
-         // Send Email Notification to Users
-      let transporter = nodemailer.createTransport(smtpTransport({
-      service: "gmail",
-      auth: {
-          user: 'wesumeh@gmail.com',
-          pass: 'dericoderico'
-      }
-      }));
-      let mailOptions = {
-          from: '"PostIt App" <admin@postit.com>', // sender address
-          to: emails, // list of receivers
-          subject: 'New Message Received', // Subject line
-          text: 'PostIt App ?', // plain text body
-          html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in '+ groupName +' group</h2>' // html body
-      };
-      transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              console.log(error);
+          const number = [];
+          const numberRef = firebase.database()
+            .ref()
+            .child('Groups')
+            .child('Andela')
+            .child('Number');
+          numberRef.once('value', (snap) => {
+            snap.forEach((data) => {
+              number.push(data.val());
+            });
+            if(priority === 'Critical'){
+              //Send SMS Notification to Users in a particular Group
+              const nexmo = new Nexmo({
+              apiKey: '47f699b7',
+              apiSecret: 'ebc6283d134add6e'
+            });
+            //Loop through the numbers and send sms per each number
+              number.forEach((entry) => {
+                nexmo.message.sendSms(
+                  'Post-It', entry, 'Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in '+ groupName +' group',
+                    (error, responseData) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log(responseData);
+                      }
+                    }
+                );
+          });
           }
-          console.log('Message %s sent: %s', info);
-      });
-
-    }
-    
-    if(priority === 'Critical'){
-        //Send SMS Notification to Users in a particular Group
-        const nexmo = new Nexmo({
-        apiKey: '47f699b7',
-        apiSecret: 'ebc6283d134add6e'
-      });
-      
-      //Loop through the numbers and send sms per each number
-        number.forEach((entry) => {
-          nexmo.message.sendSms(
-            'Post-It', entry, 'Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in '+ groupName +' group',
-              (err, responseData) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  console.log(responseData);
-                }
-              }
-          );
-
-    });
-
-    }
-
+          });
       } else {
         res.status(403).send({
-          // user is not signed in
           message: 'You are not signed in right now!'
         });
       }
     });
+  }
 	}
+ 
+
+  static usersAndMessagesInGroups(req, res) {
+    const groupName = req.params.groupName;
+    const messages = []
+    const users = []
+    
+    const messageRef = firebase.database()
+    .ref()
+    .child('Groups')
+    .child(groupName)
+    .child('Messages');
+    messageRef.once('value', (snap) => {
+    let message = {}
+    snap.forEach((data) => {    
+      message = {
+        id: data.key,
+        user: data.val().User,
+        text: data.val().Message,
+        Priority: data.val().Priority
+      }
+      messages.push(message)
+      })
+
+      const userRef = firebase.database().ref().child('Groups').child(groupName).child('Users');
+      userRef.once('value', snap => {
+      let user = {}
+      snap.forEach((data) => {
+        user = {
+          userName: data.val()
+        }
+        users.push(user)
+        })   
+
+        res.status(200).json({
+          message: `Getting Messages and Users in ${groupName} database`,
+          messages, 
+          users     
+        });
+      })
+
+    })
+
+
+  }
 
   
-    static database(req, res){
-      const groupName = req.params.groupName
-
-      const rootRef = firebase.database().ref().child('Groups').child(groupName);
-      rootRef.once('value', (snapshot) => {
-          res.send(snapshot)
-
-        })  
-    }
-
-
-
-  static messageDatabase(req, res){
-    const groupName = req.params.groupName
-  const rootRef = firebase.database().ref().child('Groups').child(groupName).child('Messages');
-
-  rootRef.once('value', snap => {
-  const key = snap.key
-  const data = snap.val()
-  const messages = []
-  let message = {}
-  
-
-  for (var i in data){
-    message = {
-      id: i,
-      user: data[i].User,
-      text: data[i].Message,
-      Priority: data[i].Priority
-    }
-    messages.push(message)
-    }      
-    res.send(messages) 
-})
-
-}
 
 }
 

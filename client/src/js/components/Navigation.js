@@ -78,8 +78,7 @@ export default class Navigation extends Component {
 
                   </div>
                   
-                      
-                         
+                                               
                       }
           
                 </ul>

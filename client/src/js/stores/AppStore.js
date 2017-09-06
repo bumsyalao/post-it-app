@@ -6,207 +6,207 @@ import AppAPI from '../utils/appAPI'
 
 const CHANGE_EVENT = 'change'
 
-let _user = '';
+let userStore = '';
 const localStorage = null; 
-let _auth = false;
-let _contacts = [];
-let _currentGroup = '';
-let _messages = [];  
-let _groups = [];
-let _groupUsers = [];
-let _groupEmails = [];
-let _groupNumbers = [];
-let _databaseUsers = [];
-let _notification = [];
-let _personalMessage = [];
-let _allUsersNumber = [];
-let _archiveMessage = [];
-let _openArchive = 'inbox';
-let _seenUsers = [];
-let _googleSignup = null;
+let authenticate = false;
+let contactsStore = [];
+let currentGroupStore = '';
+let messagesStore = [];  
+let groupsStore = [{groupName: "figire", userName: "Hh"}];
+let groupUsersStore = [];
+let groupEmailStore = [];
+let groupNumbersStore = [];
+let databaseUsersStore = [];
+let notificationStore = [];
+let personalMessageStore = [];
+let allUsersNumberStore = [];
+let archiveMessageStore = [];
+let openArchiveStore = 'inbox';
+let seenUsersStore = [];
+let googleSignUpStore = null;
 
 const AppStore = assign({}, EventEmitter.prototype, {
 
   getAuth() {
-    return _auth;
+    return authenticate;
   },
 
   setAuth() {
-    _auth = true;
+    authenticate = true;
   },
   setLogout() {
-    _auth = false;
+    authenticate = false;
   },
 
   getUser() {
-    return _user;
+    return userStore;
   },
 
   saveUser(user) {
-    _user = user;
+    userStore = user;
   },
 
   setUser(user) {
-    _user = user;
+    userStore = user;
   },
 
   getContacts() {
-    return _contacts;
+    return contactsStore;
   },
   saveContact(contact) {
-    _contacts.push(contact);
+    contactsStore.push(contact);
   },
 
   setContacts(contacts) {
-    _contacts = contacts;
+    contactsStore = contacts;
   },
 
   // Get All Users in the database
   getAllUsersNumber() {
-    return _allUsersNumber;
+    return allUsersNumberStore;
   },
   setAllUsersNumber(number) {
-    _allUsersNumber = number;
+    allUsersNumberStore = number;
   },
   getdatabaseUsers() {
-    return _databaseUsers;
+    return databaseUsersStore;
   },
 
   setdatabaseUsers(contacts) {
-    _databaseUsers = contacts;
+    databaseUsersStore = contacts;
   },
 
   // Get the Current User who signed up with Google
   getGoogleSignup() {
-    return _googleSignup;
+    return googleSignUpStore;
   },
   setGoogleSignup(googleUser) {
-    _googleSignup = googleUser;
+    googleSignUpStore = googleUser;
   },
   getGroups() {
-    return _groups;
+    return groupsStore;
   },
   saveGroup(group) {
-    _groups.push(group);
+    groupsStore.push(group);
   },
 
-  setGroups(groups) {
-    _groups = groups;
-  },
+  // setGroups(groups) {
+  //   groupsStore = groups;
+  // },
 
   // Get the Current Group When the User has Clicked on A Group
   getCurrentGroup() {
-    return _currentGroup;
+    return currentGroupStore;
   },
 
   setCurrentGroup(keyName) {
-    _currentGroup = keyName;
+    currentGroupStore = keyName;
   },
 
 
   // Get Users in a Group
   getGroupUsers() {
-    return _groupUsers;
+    return groupUsersStore;
   },
   saveGroupUsers(users) {
-    _groupUsers.push(users);
+    groupUsersStore.push(users);
   },
 
   setGroupUsers(users) {
-    _groupUsers = users;
+    groupUsersStore = users;
   },
 
 
   // Get Emails in a Group
   getGroupEmails() {
-    return _groupEmails;
+    return groupEmailStore;
   },
 
   setGroupEmails(emails) {
-    _groupEmails = emails;
+    groupEmailStore = emails;
   },
 
   // Get Numbers in a Group
   getGroupNumbers() {
-    return _groupNumbers;
+    return groupNumbersStore;
   },
 
   setGroupNumbers(numbers) {
-    _groupNumbers = numbers;
+    groupNumbersStore = numbers;
   },
 
 
   // Get Messages
   getMessages() {
-    return _messages;
+    return messagesStore;
   },
   saveMessages(message) {
-    _messages.push(message);
+    messagesStore.push(message);
   },
   setMessages(messages) {
-    _messages = messages;
+    messagesStore = messages;
   },
 
   // Get Notification
   getNotification() {
-    return _notification;
+    return notificationStore;
   },
   saveNotification(notify) {
-    _notification.push(notify);
+    notificationStore.push(notify);
   },
   setNotification(notify) {
-    _notification = notify;
+    notificationStore = notify;
   },
 
   // Get Personal Message
   getPersonalMessage() {
-    return _personalMessage;
+    return personalMessageStore;
   },
   savePersonalMessage(message) {
-    _personalMessage.push(message);
+    personalMessageStore.push(message);
   },
 
   setPersonalMessage(message) {
-    _personalMessage = message;
+    personalMessageStore = message;
   },
   removeMessage(messageId) {
-    var index = _personalMessage.findIndex(x => x.id === messageId);
-    _personalMessage.splice(index, 1);
+    var index = personalMessageStore.findIndex(x => x.id === messageId);
+    personalMessageStore.splice(index, 1);
   },
 
   // Get Archive Message
   getArchiveMessage() {
-    return _archiveMessage;
+    return archiveMessageStore;
   },
   saveArchiveMessage(message) {
-    _archiveMessage.push(message);
+    archiveMessageStore.push(message);
   },
 
   setArchiveMessage(message) {
-    _archiveMessage = message;
+    archiveMessageStore = message;
   },
 
   // Get Archive Message
   getSeenUsers() {
-    return _seenUsers;
+    return seenUsersStore;
   },
 
   setSeenUsers(users) {
-    _seenUsers = users;
+    seenUsersStore = users;
   },
 
   // Open and Close Archive link
   getOpenArchive() {
-    return _openArchive;
+    return openArchiveStore;
   },
   openArchive() {
-    _openArchive = 'archive';
+    openArchiveStore = 'archive';
   },
   closeArchive() {
-    _openArchive = 'inbox';
+    openArchiveStore = 'inbox';
   },
   openGroup() {
-    _openArchive = 'group';
+    openArchiveStore = 'group';
   },
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -262,7 +262,7 @@ AppDispatcher.register((payload) => {
     AppStore.emit(CHANGE_EVENT);
     break;
 
-  case AppConstants.RECEIVE_GROUP:
+  case AppConstants.RECEIVE_GROUP: 
     console.log('Receiving Groups...');
     // Store Save
     AppStore.setGroups(action.groups);

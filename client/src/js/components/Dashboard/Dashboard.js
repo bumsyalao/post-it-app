@@ -31,7 +31,7 @@ export default class DashBoard extends Component {
             notification: AppStore.getNotification(),
             displayArchives: AppStore.getOpenArchive()  
         };
-         this._onChange= this._onChange.bind(this)
+         this.onChange= this.onChange.bind(this)
     }
 
 
@@ -43,7 +43,7 @@ export default class DashBoard extends Component {
     * @memberof DashBoard
     */
    componentWillMount ()  {
-     AppStore.addChangeListener(this._onChange);
+     AppStore.addChangeListener(this.onChange);
   }
 
 
@@ -55,7 +55,7 @@ export default class DashBoard extends Component {
     * @memberof DashBoard
     */
   componentWillUnmount () {
-    AppStore.removeChangeListener(this._onChange);
+    AppStore.removeChangeListener(this.onChange);
   } 
 
 
@@ -102,9 +102,9 @@ export default class DashBoard extends Component {
      * @return {void}
      * @memberof DashBoard
      */
-    _onChange(){
+    onChange(){
         this.setState({
-          contacts: AppStore.getGroupUsers(),
+          contacts: AppStore.getGroupUsers(), 
           groups: AppStore.getGroups(),
           user: AppStore.getUser(),
           currentGroup: AppStore.getCurrentGroup(),

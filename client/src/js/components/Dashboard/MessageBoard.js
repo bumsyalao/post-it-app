@@ -22,14 +22,14 @@ export default class MessageBoard extends Component {
             currentGroup : AppStore.getCurrentGroup(),     
             messages : AppStore.getMessages()     
         };
-         this._onChange= this._onChange.bind(this)
+         this.onChange= this.onChange.bind(this)
     }
 
     componentWillMount ()  {
-     AppStore.addChangeListener(this._onChange);
+     AppStore.addChangeListener(this.onChange);
     }
     componentWillUnmount () {
-      AppStore.removeChangeListener(this._onChange);
+      AppStore.removeChangeListener(this.onChange);
     } 
 
   
@@ -111,12 +111,12 @@ export default class MessageBoard extends Component {
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){                    
-            AppActions.saveMessage(message)  
+            // AppActions.saveMessage(message)  
             console.log(message)
             this.refs.message.value = '';
          }             
       }
-      _onChange(){
+      onChange(){
         this.setState({currentGroup: AppStore.getCurrentGroup()});
         this.setState({messages: AppStore.getMessages()});
         this.setState({user: AppStore.getUser()});
