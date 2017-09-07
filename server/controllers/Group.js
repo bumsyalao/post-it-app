@@ -10,7 +10,6 @@ const { validStringContent, validStringLength } = require('../helpers/validate.h
 class Group {
   static createGroup(req, res) {
     const { groupName, userName } = req.body;
-
     if (!(validStringLength(userName, groupName) && validStringContent(userName, groupName))) {
         res.status(400).json({ message: 'The Username or Groupname field is invalid' });
       } else {
@@ -88,128 +87,122 @@ class Group {
   static createMessage(req, res) {
     const { groupName, messages, notification, priority } = req.body;
     
-
     if (!(validStringLength(groupName, messages) )) {
       res.status(400).json({ message: 'The Message or Groupname field is invalid' });
     } else if (!(validStringLength(notification, priority) )) {
       res.status(400).json({ message: 'The Notification or Priority field is invalid' });
     } else {
-      console.log(groupName + messages+ notification+ priority)
     const db = firebase.database();
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           const userName = user.displayName
-          console.log(userName)
-                
-        //Push the message into Group
 				groupRef.child(groupName).child("Messages").push(
         {  
-       
+          user: userName,
           Message: messages,
           Priority: priority,
         })
-      }
-    })
-    //     .then(() => {
-    //       res.status(201).json({ message: 'Message added successfully'});
-    //       }).catch((error) => {
-    //       res.status(500).send(error);
-    //       });
 
-    //       // Notify Every User for Notification
-    //       const users = []
-    //       const userRef = firebase.database()
-    //         .ref()
-    //         .child('Groups')
-    //         .child('Andela')
-    //         .child('Users');
-    //       userRef.once('value', snap => {
-    //       let user = {}
-    //       snap.forEach((data) => {
-    //         users.push(data.val())
-    //         })   
-    //         users.forEach((entry) => {
-    //           const db = firebase.database(); 
-    //           db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
-    //        }) 
-    //       })
+        .then(() => {
+          res.status(201).json({ message: 'Message added successfully'});
+          }).catch((error) => {
+          res.status(500).send(error);
+          });
 
-    //       // Send an Email to every User in the Group
-    //       const email = [];
-    //       const emailRef = firebase.database()
-    //         .ref()
-    //         .child('Groups')
-    //         .child('Andela')
-    //         .child('Email');
-    //       emailRef.once('value', (snap) => {
-    //         snap.forEach((data) => {
-    //           email.push(data.val());
-    //         });
-    //         const emails = email.join(',');
+          // Notify Every User for Notification
+          const users = []
+          const userRef = firebase.database()
+            .ref()
+            .child('Groups')
+            .child(groupName)
+            .child('Users');
+          userRef.once('value', snap => {
+          let user = {}
+          snap.forEach((data) => {
+            users.push(data.val())
+            })   
+            users.forEach((entry) => {
+              const db = firebase.database(); 
+              db.ref(`/users/${entry}/Notifications`).child(notification).set(notification);
+           }) 
+          })
 
-    //         if((priority === 'Urgent') || (priority === 'Critical')){
-    //           // Send Email Notification to Users
-    //        let transporter = nodemailer.createTransport(smtpTransport({
-    //        service: "gmail",
-    //        auth: {
-    //            user: 'wesumeh@gmail.com',
-    //            pass: 'dericoderico'
-    //        }
-    //        }));
-    //        let mailOptions = {
-    //            from: '"PostIt App" <admin@postit.com>', // sender address
-    //            to: emails, // list of receivers
-    //            subject: 'New Message Received', // Subject line
-    //            text: 'PostIt App ?', // plain text body
-    //            html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in '+ groupName +' group</h2>' // html body
-    //        };
-    //        transporter.sendMail(mailOptions, (error, info) => {
-    //            if (error) {
-    //             console.log(error);
-    //            }
-    //             console.log('Message %s sent: %s', info);
-    //        });
-    //      }
-    //       });
+          // Send an Email to every User in the Group
+          const email = [];
+          const emailRef = firebase.database()
+            .ref()
+            .child('Groups')
+            .child(groupName)
+            .child('Email');
+          emailRef.once('value', (snap) => {
+            snap.forEach((data) => {
+              email.push(data.val());
+            });
+            const emails = email.join(',');
+
+            if((priority === 'Urgent') || (priority === 'Critical')){
+              // Send Email Notification to Users
+           let transporter = nodemailer.createTransport(smtpTransport({
+           service: "gmail",
+           auth: {
+               user: 'wesumeh@gmail.com',
+               pass: 'dericoderico'
+           }
+           }));
+           let mailOptions = {
+               from: '"PostIt App" <admin@postit.com>', // sender address
+               to: emails, // list of receivers
+               subject: 'New Message Received', // Subject line
+               text: 'PostIt App ?', // plain text body
+               html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in '+ groupName +' group</h2>' // html body
+           };
+           transporter.sendMail(mailOptions, (error, info) => {
+               if (error) {
+                console.log(error);
+               }
+                console.log('Message %s sent: %s', info);
+           });
+         }
+          });
           
 
-    //       const number = [];
-    //       const numberRef = firebase.database()
-    //         .ref()
-    //         .child('Groups')
-    //         .child('Andela')
-    //         .child('Number');
-    //       numberRef.once('value', (snap) => {
-    //         snap.forEach((data) => {
-    //           number.push(data.val());
-    //         });
-    //         if(priority === 'Critical'){
-    //           //Send SMS Notification to Users in a particular Group
-    //           const nexmo = new Nexmo({
-    //           apiKey: '47f699b7',
-    //           apiSecret: 'ebc6283d134add6e'
-    //         });
-    //         //Loop through the numbers and send sms per each number
-    //           number.forEach((entry) => {
-    //             nexmo.message.sendSms(
-    //               'Post-It', entry, 'Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in '+ groupName +' group',
-    //                 (error, responseData) => {
-    //                   if (error) {
-    //                     console.log(error);
-    //                   } else {
-    //                     console.log(responseData);
-    //                   }
-    //                 }
-    //             );
-    //       });
-    //       }
-    //       });
-    //   } else {
-    //     res.status(403).send({
-    //       message: 'You are not signed in right now!'
-    //     });
-    //   }
-    // });
+          const number = [];
+          const numberRef = firebase.database()
+            .ref()
+            .child('Groups')
+            .child(groupName)
+            .child('Number');
+          numberRef.once('value', (snap) => {
+            snap.forEach((data) => {
+              number.push(data.val());
+            });
+            if(priority === 'Critical'){
+              //Send SMS Notification to Users in a particular Group
+              const nexmo = new Nexmo({
+              apiKey: '47f699b7',
+              apiSecret: 'ebc6283d134add6e'
+            });
+            //Loop through the numbers and send sms per each number
+              number.forEach((entry) => {
+                nexmo.message.sendSms(
+                  'Post-It', entry, 'Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in '+ groupName +' group',
+                    (error, responseData) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log(responseData);
+                      }
+                    }
+                );
+          });
+          }
+          });
+      } else {
+        res.status(403).send({
+          message: 'You are not signed in right now!'
+        });
+      }
+    });
   }
 	}
   
