@@ -41,7 +41,7 @@ export default class DisplayMessage extends Component {
     return (
       <div style={{border:'1px solid LightBlue'}}>  
         <div>
-                {display}                 
+                <h1> I am display </h1>               
         </div>
       </div>
 

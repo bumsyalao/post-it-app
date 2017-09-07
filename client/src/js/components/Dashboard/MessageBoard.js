@@ -34,26 +34,24 @@ export default class MessageBoard extends Component {
 
   
   render() {
-    // console.log(this.props.emails)
-    // console.log(this.state.messages)
-        if(this.props.displayArchives == 'archive') { 
-          var display = <ArchivedBox />  
-        }else if(this.props.displayArchives == 'inbox') { 
-          var display = <DisplayMessage />   
-        } else if(this.props.displayArchives == 'group') {      
-           var display =         
-           <section id="showcase">
-            <div id="messageArea" className="row">          
-            <h4 style={{color:'black',float:'left'}}>  Users in {this.state.currentGroup} group </h4><br/>     
-                {
-          Object.keys(this.props.contact).map(function(keyName, keyIndex) {
-                return(
-                    <div style={{float:'right'}} key={keyIndex} onClick={() => console.log(keyName)}>  
-                      <a href="#/dashboard" className="btn btn-default">  {keyName}</a>
-                    </div>             
-                )
-               })       
-            }
+    console.log(this.state.messages)
+    return (
+       <div>
+             <div className="jumbotron">
+              <ul style={{color: 'black', textAlign: 'left'}}>
+                 {
+                  this.state.messages.map((message, index) => {
+                     return(
+                       <Message message={message} key={index}/>
+                     ) 
+                  })
+                }                            
+              </ul>
+            </div>
+            <section id="showcase">
+            <div id="messageArea" className="row">   
+                  
+        
                      <div className="col-md-12">
             <div className="chat" id="chat" />
             <form id="messageForm" onSubmit={this.handleSubmit.bind(this)}>
@@ -74,24 +72,6 @@ export default class MessageBoard extends Component {
          </div>
         </div>
       </section>
-
-        } 
-    return (
-       <div>
-      {display}
-             {/*<div className="jumbotron">
-              <ul style={{color: 'black', textAlign: 'left'}}>
-                <ul>
-                {
-                  this.state.messages.map((message, index) => {
-                     return(
-                       <Message message={message} key={index}/>
-                     ) 
-                  })
-                }                            
-              </ul>
-              </ul>
-            </div>*/}
  
       </div>
     )
@@ -100,19 +80,15 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();   
           const message = {
-            group: this.state.currentGroup,         
+            // group: this.state.currentGroup,   
+            group: 'Cvvv',        
             text: this.refs.message.value.trim(),
-            user: this.state.user.displayName,
-            emails: Object.values(this.props.emails ? this.props.emails : toastr.warning("Add atleast one person to this Group") ),
-            numbers: Object.values(this.props.numbers),
-            allUsers: Object.values(this.props.contact),
             notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group',
             priority: this.refs.type.value  
           }       
          
          if(typeof message.text === 'string' && message.text.length > 0){                    
-            // AppActions.saveMessage(message)  
-            console.log(message)
+             AppActions.saveMessage(message)  
             this.refs.message.value = '';
          }             
       }

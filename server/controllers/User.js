@@ -1,8 +1,4 @@
 const { firebase, usersRef, groupRef } = require('../config');
-
-
-
-
 /** Class representing a the User Database. */
 class User {
  /**
@@ -21,41 +17,32 @@ class User {
     } else {
       firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
         const uid = user.uid;
-
-      // update the userName of the user
-      user.updateProfile({
-        displayName: userName
-      });
-
-         // send verification email to user
-      user.sendEmailVerification().then(() => {
-        res.status(201).send(user);
-      });
-
-
-    // add element to database
-      usersRef.child(userName).set({
-        userName,
-        password,
-        email: user.email,
-        uid,
-        number
-      });
-    })   
+        user.updateProfile({
+          displayName: userName
+        });
+        user.sendEmailVerification().then(() => {
+          res.status(201).send(user);
+        });
+        usersRef.child(userName).set({
+          userName,
+          password,
+          email: user.email,
+          uid,
+          number
+        });
+      })   
     .catch((error) => {
       const errorCode = error.code;
       if (errorCode === 'auth/invalid-email') {
         res.status(400).json({ message: error.message });
-      } else if(errorCode === 'auth/weak-password') {
+      } else if (errorCode === 'auth/weak-password') {
         res.status(400).json({ message: error.message });         
       } else if (errorCode === 'auth/email-already-in-use') {
         res.status(409).json({ message: error.message });
       }
-
     });
     }
   }
-
 
  /**
      * The Google Sign Up method
@@ -65,24 +52,22 @@ class User {
      */
   static google(req, res) {
     const googleUser = req.body.googleUser;
-    console.log(googleUser+ ' Back end')
     const { userName, email, uid, number } = googleUser;
-  
-    // add element to database
+
     usersRef.child(userName).set({
       userName,
       email,
       uid,
       number
-    });
-
-    // Get all user's personal message while signing in
-    const rootRef = firebase.database().ref().child('users').child(userName).child('Groups');
+    }); 
+    const rootRef = firebase.database().ref()
+    .child('users')
+    .child(userName)
+    .child('Groups');
     rootRef.once('value', (snap) => {
       const data = snap.val()
       const groups = []
-      let group = {}
-  
+      let group = {}  
       for (var i in data){
         group = {            
           groupName: data[i].groupName,
@@ -121,11 +106,11 @@ class User {
       .child('Groups');
       rootRef.once('value', (snap) => {
         const groups = [];
-        const group = {}
-        const groupRef = firebase.database().ref().child('users').child('Hh').child('Groups');
+        let group = {}
+        const groupRef = firebase.database().ref().child('users').child(userName).child('Groups');
           groupRef.once('value', (snap) => {
           snap.forEach((data) => {
-            const group = {  
+            group = {  
               groupName: data.val().groupName
             };
             groups.push(group)
@@ -161,7 +146,7 @@ class User {
   static signout(req, res) {
     firebase.auth().signOut().then(() => {
       res.status(200).send({
-        message: 'You are successfully signed out'
+        message: 'You have successfully signed out'
       });
     }).catch((error) => {
       res.status(405).send({
@@ -169,8 +154,6 @@ class User {
       });
     });
   }
-
-
 
 
 static notification(req, res){
@@ -210,7 +193,7 @@ firebase.auth().onAuthStateChanged((user) => {
     });
   }
 
-
+ 
  //Get All Phone Numbers in the database
     static allNumbers(req, res){
     const rootRef = firebase.database().ref().child('users');
@@ -223,6 +206,17 @@ firebase.auth().onAuthStateChanged((user) => {
       res.status(200).send(numbers);
     });
   }
+
+  // const userRef = firebase.database().ref().child('Groups').child(groupName).child('Users');
+  // userRef.once('value', snap => {
+  // let user = {}
+  // snap.forEach((data) => {
+  //   user = {
+  //     userName: data.val()
+  //   }
+  //   users.push(user)
+  //   })   
+  // })
 
 
 

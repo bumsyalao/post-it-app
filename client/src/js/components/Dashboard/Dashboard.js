@@ -84,8 +84,7 @@ export default class DashBoard extends Component {
           <Row className="show-grid">
             <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>
 
-              <h4>Message</h4>
-            <Col sm={12} md={9}> {!this.state.currentGroup ? <DisplayMessage /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </Col>
+            <Col sm={12} md={9}> {<MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </Col>
             
           </Row>
         </Grid>

@@ -12,7 +12,7 @@ let authenticate = false;
 let contactsStore = [];
 let currentGroupStore = '';
 let messagesStore = [];  
-let groupsStore = [{groupName: "figire", userName: "Hh"}];
+let groupsStore = [];
 let groupUsersStore = [];
 let groupEmailStore = [];
 let groupNumbersStore = [];
@@ -90,9 +90,9 @@ const AppStore = assign({}, EventEmitter.prototype, {
     groupsStore.push(group);
   },
 
-  // setGroups(groups) {
-  //   groupsStore = groups;
-  // },
+  setGroups(groups) {
+    groupsStore = groups;
+  },
 
   // Get the Current Group When the User has Clicked on A Group
   getCurrentGroup() {
@@ -143,9 +143,9 @@ const AppStore = assign({}, EventEmitter.prototype, {
   saveMessages(message) {
     messagesStore.push(message);
   },
-  setMessages(messages) {
-    messagesStore = messages;
-  },
+  // setMessages(messages) {
+  //   messagesStore = messages;
+  // },
 
   // Get Notification
   getNotification() {
@@ -255,17 +255,17 @@ AppDispatcher.register((payload) => {
     console.log('Saving group...');
     // Store Save
     AppStore.saveGroup(action.group);
-    console.log(action.group);
     // Save to API
     AppAPI.saveGroup(action.group);
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
 
-  case AppConstants.RECEIVE_GROUP: 
+  case AppConstants.RECEIVE_GROUPS: 
     console.log('Receiving Groups...');
-    // Store Save
+    // Store SaveS
     AppStore.setGroups(action.groups);
+    console.log(action.groups)
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
@@ -288,8 +288,9 @@ AppDispatcher.register((payload) => {
 
   case AppConstants.SAVE_GROUP_USER:
     console.log('Saving user into group...');
+    console.log(action.addUser)
     // Store Save
-    // AppStore.saveGroup(action.addUser);
+     AppStore.saveGroupUser(action.addUser);
     // //Save to API
     AppAPI.saveGroupUser(action.addUser);
     // Emit Change
@@ -299,7 +300,8 @@ AppDispatcher.register((payload) => {
   case AppConstants.SAVE_MESSAGE:
     console.log('Saving Message...');
     // // Store Save
-    AppStore.savePersonalMessage(action.message);
+    console.log(action.message)
+    AppStore.saveMessages(action.message);
     // // Save to API
     AppAPI.saveMessages(action.message);
     // Emit Change
@@ -319,7 +321,7 @@ AppDispatcher.register((payload) => {
     AppStore.saveArchiveMessage(action.messageId);
     AppStore.removeMessage(action.messageId.id);
     console.log(action.messageId);
-    AppAPI.removeMessage(action.messageId.uid);
+    // AppAPI.removeMessage(action.messageId.uid);
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
@@ -361,7 +363,7 @@ AppDispatcher.register((payload) => {
 
   case AppConstants.UPDATE_INBOX:
     console.log('Updating Inbox...');
-    AppAPI.updateInbox(action.user);
+    // AppAPI.updateInbox(action.user);
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
@@ -415,7 +417,7 @@ AppDispatcher.register((payload) => {
     // Save to API
     AppAPI.searchUserMessage(action.keyName);
     // Save to API
-    AppAPI.getMessages(action.keyName);
+    AppAPI.getMessages(action.keyName); 
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;

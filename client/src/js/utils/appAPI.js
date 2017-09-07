@@ -5,7 +5,6 @@ import toastr from 'toastr';
 
 module.exports = {
   saveContact(contact) {
-    console.log(contact)
     axios.post('/user/signup', {
       userName: contact.username,
       email: contact.email,
@@ -34,7 +33,6 @@ module.exports = {
     axios.get('/users/allusers')
       .then((contacts) => {
         AppActions.receiveContact(contacts.data);
-        console.log(contact)
       })
       .catch((error) => {
         console.log(error);
@@ -69,6 +67,7 @@ module.exports = {
     .then((group) => {
       const groups = group.data;
       AppActions.receiveGroup(groups);
+      console.log(groups)
     })
     .catch((error) => {
       console.log(error);
@@ -88,34 +87,32 @@ module.exports = {
   },
 
   saveGroupUser(addUser) {
-    const groupName = addUser.groupname;
-    const user = addUser.user;
-    axios.post('/group/groupName/user')
+    axios.post('/group/groupName/user', {
+       groupName: addUser.groupname,
+       user: addUser.user
+    })
     .then((response) => {
-      toastr.success(response.data);
+      toastr.success(response.data.message);
     }).catch((error) => {
       console.log(error);
     });
   },
 
   saveMessages(message) {
-    const groupName = message.group;
-    // const groupID = addUsers.groupID
-    const messages = message.text;
-    const emails = message.emails;
-    const numbers = message.numbers;
-    const allUsers = message.allUsers;
-    const notification = message.notification;
-    const priority = message.priority;
     console.log(message)
-    
-    axios.post(`/groups/${groupName}/${messages}/${emails}/${numbers}/${allUsers}/${notification}/${priority}`)
+    axios.post('/groupName/messages/notification/priority', {
+      groupName: message.group,
+      messages: message.text,
+      notification: message.notification,
+      priority: message.priority
+    })
     .then((response) => {
       toastr.success(response);
     }).catch((error) => {
       console.log(error);
     });
   },
+
 
   getMessages(keyName) {
     const groupName = keyName;
@@ -128,18 +125,18 @@ module.exports = {
         });
   },
 
-  removeMessage(messageId) {
-    console.log(messageId)
-    axios.post('/user/archive/messageId', {
-      messageId
-    })
-        .then((message) => {
-          AppActions.archiveMessages(message.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  },
+  // removeMessage(messageId) {
+  //   console.log(messageId)
+  //   axios.post('/user/archive/messageId', {
+  //     messageId
+  //   })
+  //       .then((message) => {
+  //         AppActions.archiveMessages(message.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  // },
 
   seenMessage(user) {
     const uid = user.uid;
@@ -154,12 +151,12 @@ module.exports = {
     });
   },
 
-  updateInbox(user) {
-    axios.post(`/user/inbox/${user}`)
-        .catch((error) => {
-          console.log(error);
-        });
-  },
+  // updateInbox(user) {
+  //   axios.post(`/user/inbox/${user}`)
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  // },
 
 
   login(contact) {
@@ -168,7 +165,7 @@ module.exports = {
       password: contact.password
     }).then((response) => {
       const user = response.data.userData;
-      const message = response.data.messages;
+      const groups = response.data.groups;
       console.log(response);
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
@@ -177,7 +174,7 @@ module.exports = {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        AppActions.receivePersonalMessage(message);  
+        AppActions.receiveGroups(groups);  
           
         toastr.success('Welcome To PostIt');
       }
@@ -188,7 +185,7 @@ module.exports = {
 
   setLogout() {
     axios.post('/user/signout').then((response) => {
-      toastr.success(response);
+      toastr.success(response.data.message);
     }).catch((error) => {
       console.log(error);
     });
@@ -216,9 +213,9 @@ module.exports = {
       axios.post('/user/google', { googleUser
       }).then((response) => {
         const user = response.data.userData;
-        const message = response.data.message;
+        const groups = response.data.groups;
         AppActions.receiveLogin(user);
-        AppActions.receivePersonalMessage(message);
+        AppActions.receiveGroups(groups);
         toastr.warning('Google Sign Up feature is incomplete ');
       }).catch((error) => {
         console.log(error);

@@ -267,7 +267,7 @@ describe('SignOut Route', () => {
         res.status.should.equal(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('You are successfully signed out');
+        res.body.should.have.property('message').eql('You have successfully signed out');
         if (err) return done(err);
         done();
       });

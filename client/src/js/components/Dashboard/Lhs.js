@@ -23,22 +23,15 @@ export default class Lhs extends Component {
   return (
       <div>
         <div>
-         <h4>Hello, {this.props.user.displayName}</h4> 
+         <h4>Hello, {this.props.user.displayName} </h4> 
         </div>       
-          <div >
-                <div onClick={this.handleInbox.bind(this)}><a href="#">Inbox</a></div>
-                <div onClick={this.handleArchive.bind(this)}><a href="#">Archive</a></div>
-          </div>
-   
-
+  
        <h4>Groups</h4>
                   <ul>
           <li>           
           { 
-
                  this.props.group.map((KeyName, KeyIndex) => {
-                        return(             
-                           
+                        return(                                        
                     <Groups KeyName={KeyName} key={KeyIndex}/>      
                         ) 
                     }) 
@@ -46,22 +39,21 @@ export default class Lhs extends Component {
             </li>
         </ul>
         <br/>
+
+        <h4> Users </h4>
+        <ul>
+          <li> Mark </li>
+          <li> John </li>
+          <li> Tope </li>
+          <li> Asa </li>
+
+          </ul>
          
 
       </div>
     )
   }
 
-  handleInbox(e){
-  e.preventDefault()
-  AppActions.closeArchive()
-  AppActions.updateInbox(this.props.user.displayName)
-}
-
-handleArchive(e){
-  e.preventDefault()
-  AppActions.openArchive()
-}
 
 }
  

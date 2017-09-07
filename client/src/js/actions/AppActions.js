@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import AppConstants from '../constants/AppConstants';
+import AppConstants from '../constants/AppConstants'; 
 
 const AppActions = {
   saveContact(contact) {
@@ -95,10 +95,10 @@ const AppActions = {
     });
   },
 
-  receivePersonalMessage(message) {
+  receiveGroups(groups) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.RECEIVE_PERSONAL_MESSAGE,
-      message
+      actionType: AppConstants.RECEIVE_GROUPS,
+      groups
     });
   },
 
@@ -142,6 +142,7 @@ const AppActions = {
       actionType: AppConstants.SEARCH_USER_MESSAGE,
       keyName
     });
+    console.log(keyName)
   },
 
   google(googleUser) {
