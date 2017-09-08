@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import AppAPI from './js/utils/appAPI'
-import App from "./js/components/App";
+import App from "./js/components/App.jsx";
 import Dashboard from "./js/components/Dashboard/Dashboard";
 import { BrowserRouter } from 'react-router-dom';
 import main from './main.scss';
@@ -15,7 +15,7 @@ import {firebaseAuth, firebase}from '../../server/config'
 
 //AppAPI.getGroups();
 AppAPI.getNotifications();
-AppAPI.getMessages();
+// AppAPI.getMessages();
 AppAPI.getContacts();
 AppAPI.getNumbers();
 AppAPI.searchUserMessage();

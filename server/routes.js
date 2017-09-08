@@ -28,9 +28,7 @@ router.get('/user/notification/', User.notification);
 // Retrive Users and Messages from a particular Group
 router.get('/groups/:groupName', Group.usersAndMessagesInGroups);
 
-
-
-
+ 
 // // Update a message when the user clicks inbox
 // router.post('/user/inbox/:user', User.updateInbox);
 

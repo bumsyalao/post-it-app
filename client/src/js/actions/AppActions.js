@@ -134,7 +134,7 @@ const AppActions = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RECEIVE_LOGIN,
       user
-    });
+    }); 
   },
 
   searchUserMessage(keyName) {
@@ -142,7 +142,6 @@ const AppActions = {
       actionType: AppConstants.SEARCH_USER_MESSAGE,
       keyName
     });
-    console.log(keyName)
   },
 
   google(googleUser) {
@@ -165,9 +164,9 @@ const AppActions = {
     });
   },
 
-  receiveUserMessage(users) {
+  receiveUser(users) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.RECEIVE_USER_MESSAGE,
+      actionType: AppConstants.RECEIVE_USER,
       users
     });
   },

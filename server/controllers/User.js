@@ -10,8 +10,11 @@ class User {
   static signup(req, res) {
     const { userName, password, email, number } = req.body;
 
-    if (typeof userName === 'undefined' || typeof email === 'undefined' || typeof password === 'undefined' || typeof number === 'undefined') {
-      res.status(400).json({ message: 'You need to provide userName, password, number and email' });
+    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
+        typeof password === 'undefined' || typeof number === 'undefined') {
+      res.status(400).json({ 
+        message: 'You need to provide userName, password, number and email',
+      });
     } else if (userName === '' || password === '' || email === '' || number === '') {
       res.status(400).json({ message: 'userName, password, number or email cannot be empty' });
     } else {

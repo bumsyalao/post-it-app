@@ -28,7 +28,7 @@ function PrivateRoute ({component: Component, auth, ...rest}) {
       {...rest}
       render={(props) => auth === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
     />
   )
 }
@@ -64,12 +64,12 @@ export default class Routes extends Component {
   render() {  
     return (   
        
-           <div className="container">
+           <div>
             <div className="row">
               <Switch>
                 <Route path='/' exact component={Home} />
                 <PublicRoute auth={this.props.auth} path='/login' component={Signin} />
-                <PublicRoute auth={this.props.auth} path='/register'  component={Signup } />
+                <PublicRoute auth={this.props.auth} path='/register'  component={Signup} />
                 <PrivateRoute auth={this.props.auth} path='/dashboard' component={DashBoard} />
                 <Route auth={this.props.auth} path='/reset' component={ResetPassword} />
                 <Route auth={this.props.auth} path='/google' component={GoogleWelcome} />

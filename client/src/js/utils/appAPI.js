@@ -88,8 +88,8 @@ module.exports = {
 
   saveGroupUser(addUser) {
     axios.post('/group/groupName/user', {
-       groupName: addUser.groupname,
-       user: addUser.user
+      groupName: addUser.groupname,
+      user: addUser.userName
     })
     .then((response) => {
       toastr.success(response.data.message);
@@ -99,7 +99,6 @@ module.exports = {
   },
 
   saveMessages(message) {
-    console.log(message)
     axios.post('/groupName/messages/notification/priority', {
       groupName: message.group,
       messages: message.text,
@@ -107,22 +106,10 @@ module.exports = {
       priority: message.priority
     })
     .then((response) => {
-      toastr.success(response);
+      toastr.success(response.data.message);
     }).catch((error) => {
       console.log(error);
     });
-  },
-
-
-  getMessages(keyName) {
-    const groupName = keyName;
-    axios.get(`/groups/${groupName}`)
-        .then((message) => {
-          AppActions.receiveMessages(message.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
   },
 
   // removeMessage(messageId) {
@@ -166,7 +153,6 @@ module.exports = {
     }).then((response) => {
       const user = response.data.userData;
       const groups = response.data.groups;
-      console.log(response);
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
         toastr.error(response.data);
@@ -191,16 +177,15 @@ module.exports = {
     });
   },
 
+
   searchUserMessage(keyName) {
     const groupName = keyName;
-    axios.get(`/group/${groupName}`)
+    axios.get(`/groups/${groupName}`)
       .then((users) => {
-        const user = users.data.Users;
-        const email = users.data.Email;
-        const number = users.data.Number;
-        AppActions.receiveUserMessage(user);
-        AppActions.receiveEmails(email);
-        AppActions.receiveNumbers(number);
+        const messages = users.data.messages;
+        const user = users.data.users;
+        AppActions.receiveMessages(messages)
+        AppActions.receiveUser(user)
       })
       .catch((error) => {
         console.log(error);

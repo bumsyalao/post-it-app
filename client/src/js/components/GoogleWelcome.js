@@ -99,10 +99,10 @@ export default class GoogleWelcome extends Component {
    */
   render() {
     return (
-      <div>
-     <h3> Welcome {this.props.googleUser.username} </h3>
-       <p>One more step, we need your phone number</p>
-       <div className='well'>            
+      <div className="col-md-4 col-md-offset-4">
+     <center><h3> Welcome {this.props.googleUser.username} </h3>
+       <p>One more step, we need your phone number</p></center>
+       <div>           
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className='form-group' >
                     <input type="text" ref='username' className='form-control' value= {this.props.googleUser.username} onChange={this.onChange} required/>

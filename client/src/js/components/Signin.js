@@ -3,6 +3,7 @@ import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 import AppAPI from '../utils/appAPI'
 import { firebaseAuth, firebase, provider } from '../../../../server/config'
+import { validateEmail } from '../helpers/validate.helper';
 import toastr from 'toastr';
 
 
@@ -41,21 +42,16 @@ class Signin extends Component {
           <h3>Sign In</h3>
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div className='form-group'>
-              <input type="email" ref='email' className='form-control' placeholder='Email' required />
+              <input type="text" ref='email' className='form-control' placeholder='Email' required />
             </div>
             <div className='form-group'>
-              <input type="password" ref='password' className='form-control' placeholder='Password' />
+              <input type="password" ref='password' className='form-control' placeholder='Password' required/>
             </div>
             <div><a href="#/reset">Forgot Password?</a></div>
 
             <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
           </form>
         </div>
-
-        {/*<div className='well' style={{float:'right'}}>  
-          <h3>Login With Google Account</h3>
-            <button onClick={this.handleGoogle.bind(this)}>Login with Gooogle</button>
-        </div>*/}
 
       </div>
 
@@ -75,11 +71,7 @@ class Signin extends Component {
       email: this.refs.email.value.trim(),
       password: this.refs.password.value.trim()
     }
-    // Validate Email Address
-    function validateEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    }
+
 
     if (validateEmail(this.refs.email.value.trim())) {
       AppActions.login(contact);

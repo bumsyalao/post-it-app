@@ -4,9 +4,6 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const Nexmo = require('nexmo');
 const { validStringContent, validStringLength } = require('../helpers/validate.helper');
 
-
-
-
 class Group {
   static createGroup(req, res) {
     const { groupName, userName } = req.body;
@@ -44,7 +41,6 @@ class Group {
 
   static addUserToGroup(req, res) {
     const { groupName, user } = req.body;
-    console.log(groupName+user)
     if (!(validStringLength(groupName, user) && validStringContent(groupName, user))) {
       res.status(400).json({ message: 'The Username or Groupname field is invalid' });
     } else {
@@ -86,6 +82,7 @@ class Group {
 
   static createMessage(req, res) {
     const { groupName, messages, notification, priority } = req.body;
+
     
     if (!(validStringLength(groupName, messages) )) {
       res.status(400).json({ message: 'The Message or Groupname field is invalid' });
@@ -95,7 +92,8 @@ class Group {
     const db = firebase.database();
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          const userName = user.displayName
+          const userName = user.displayName;
+          console.log(userName)
 				groupRef.child(groupName).child("Messages").push(
         {  
           user: userName,
@@ -222,7 +220,7 @@ class Group {
     snap.forEach((data) => {    
       message = {
         id: data.key,
-        user: data.val().User,
+        user: data.val().user,
         text: data.val().Message,
         Priority: data.val().Priority
       }
@@ -247,6 +245,27 @@ class Group {
       })
 
     })
+
+
+    const messageIDRef = firebase.database()
+    .ref()
+    .child('Groups')
+    .child(groupName)
+    .child('Messages');
+    messageIDRef.once('value', (snap) => {
+    const messageIDs = []  
+    snap.forEach((data) => {    
+      messageIDs.push(data.key)
+      })
+      // Push the Usernmame into the list of Messages
+      messageIDs.forEach((entry) => {
+        const db = firebase.database(); 
+        db.ref(`/Groups/groupName/Messages/${entry}`).child('Seen').push('Tam');
+    })
+
+    // const db = firebase.database(); 
+    // db.ref('/Groups/groupName/Messages/-KtSBsEbClNIJFNAdm_K').child('Seen').push('Tam');
+  })
 
 
   }

@@ -34,39 +34,47 @@ export default class MessageBoard extends Component {
 
   
   render() {
-    console.log(this.state.messages)
+    console.log(this.state.currentGroup)
     return (
-       <div>
+       <div>      
              <div className="jumbotron">
-              <ul style={{color: 'black', textAlign: 'left'}}>
+             <h4>#{this.state.currentGroup}</h4>
+              <div style={{color: 'black', textAlign: 'left'}} className="list-styles">
                  {
                   this.state.messages.map((message, index) => {
                      return(
                        <Message message={message} key={index}/>
                      ) 
                   })
-                }                            
-              </ul>
+                }                           
+              </div>
             </div>
+
+      
             <section id="showcase">
             <div id="messageArea" className="row">   
-                  
-        
-                     <div className="col-md-12">
+
+          <div className="col-md-12">
             <div className="chat" id="chat" />
+            
+            
+            
             <form id="messageForm" onSubmit={this.handleSubmit.bind(this)}>
-        
               <div className="form-group">
-                <label>Enter Message</label>
+               <div className="row">
+                <div className="col-md-9">
                 <textarea className="form-control" id="message" ref='message' placeholder="Enter Message"/>
-                <select ref="type" style={{color:'black',float:'left'}}>
+                <select ref="type" style={{color:'black',float:'left'}} className="select_btn">
                         <option value='Normal'>Normal</option>
                         <option value='Urgent'>Urgent</option>
                         <option value='Critical'>Critical</option>
                 </select> 
-                <br />
-                <input type="submit" className="btn btn-primary" defaultValue="Post Message" />           
+                </div>
+                <div className="col-md-3">
+                  <input type="submit" className="btn btn-primary" defaultValue="Post Message" />           
+               </div>
               </div>
+            </div>
 
             </form>
          </div>
@@ -80,8 +88,7 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();   
           const message = {
-            // group: this.state.currentGroup,   
-            group: 'Cvvv',        
+            group: this.state.currentGroup ,     
             text: this.refs.message.value.trim(),
             notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group',
             priority: this.refs.type.value  
@@ -89,6 +96,7 @@ export default class MessageBoard extends Component {
          
          if(typeof message.text === 'string' && message.text.length > 0){                    
              AppActions.saveMessage(message)  
+             console.log(message)
             this.refs.message.value = '';
          }             
       }

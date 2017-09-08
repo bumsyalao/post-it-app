@@ -4,7 +4,7 @@ import AppConstants from '../constants/AppConstants';
 import assign from 'object-assign'
 import AppAPI from '../utils/appAPI'
 
-const CHANGE_EVENT = 'change'
+const CHANGE_EVENT = 'change';
 
 let userStore = '';
 const localStorage = null; 
@@ -108,8 +108,8 @@ const AppStore = assign({}, EventEmitter.prototype, {
   getGroupUsers() {
     return groupUsersStore;
   },
-  saveGroupUsers(users) {
-    groupUsersStore.push(users);
+  saveGroupUser(users) {
+    groupUsersStore.push(users)
   },
 
   setGroupUsers(users) {
@@ -143,9 +143,9 @@ const AppStore = assign({}, EventEmitter.prototype, {
   saveMessages(message) {
     messagesStore.push(message);
   },
-  // setMessages(messages) {
-  //   messagesStore = messages;
-  // },
+  setMessages(messages) {
+    messagesStore = messages;
+  },
 
   // Get Notification
   getNotification() {
@@ -265,7 +265,6 @@ AppDispatcher.register((payload) => {
     console.log('Receiving Groups...');
     // Store SaveS
     AppStore.setGroups(action.groups);
-    console.log(action.groups)
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
@@ -290,7 +289,7 @@ AppDispatcher.register((payload) => {
     console.log('Saving user into group...');
     console.log(action.addUser)
     // Store Save
-     AppStore.saveGroupUser(action.addUser);
+    AppStore.saveGroupUser(action.addUser);
     // //Save to API
     AppAPI.saveGroupUser(action.addUser);
     // Emit Change
@@ -411,19 +410,18 @@ AppDispatcher.register((payload) => {
 
   case AppConstants.SEARCH_USER_MESSAGE:
     console.log('Searching for Users and Message...');
-
     AppStore.setCurrentGroup(action.keyName);
     AppStore.openGroup();
     // Save to API
     AppAPI.searchUserMessage(action.keyName);
     // Save to API
-    AppAPI.getMessages(action.keyName); 
+    // AppAPI.getMessages(action.keyName); 
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
 
-  case AppConstants.RECEIVE_USER_MESSAGE:
-    console.log('Receiving Users and Message...');
+  case AppConstants.RECEIVE_USER:
+    console.log('Receiving Users...');
     AppStore.setGroupUsers(action.users);
     // Emit Change
     AppStore.emit(CHANGE_EVENT);

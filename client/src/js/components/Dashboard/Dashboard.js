@@ -4,6 +4,7 @@ import NavDash from './NavDash';
 import LHS from './Lhs';
 import MessageBoard from './MessageBoard'
 import DisplayMessage from './DisplayMessage'
+import Welcome from '../Welcome'
 
 
 import {Grid, Row, Col, Clearfix} from 'react-bootstrap';
@@ -76,18 +77,18 @@ export default class DashBoard extends Component {
           user={this.state.user} 
           databaseUsers={this.state.databaseUsers} 
           notification={this.state.notification}
-        />  
-
-        <button type='onClick' className='btn btn-primary'>Message Board</button>     
+        />     
           
-        <Grid>
-          <Row className="show-grid">
-            <Col md={3} id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></Col>
+        <div>
+          <div className="row">
+            <div className="col-md-2 col-sm-12" id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></div>
 
-            <Col sm={12} md={9}> {<MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </Col>
+
+            {/* <Col sm={12} md={9}> {!this.state.currentGroup ? <DisplayMessage /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </Col> */}
+            <div className="col-md-10 col-sm-12"> {!this.state.currentGroup ? <Welcome /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </div>
             
-          </Row>
-        </Grid>
+          </div>
+        </div>
       </div>
 
     )

@@ -13,7 +13,7 @@ export default class Groups extends Component {
 render() {
       return (
            <div onClick={() => AppActions.searchUserMessage(this.props.KeyName.groupName)}>  
-              <a href="#/dashboard" className="btn btn-default">  {this.props.KeyName.groupName}</a>
+              <a href="#/dashboard" className="text-decoration">  {this.props.KeyName.groupName}</a>
           </div>  
       )
     }
