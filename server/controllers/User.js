@@ -11,28 +11,21 @@ class User {
  * @param {Object} res response object
  * @return {Object} response containing the registered user
  */
-  static signup(req, res) {
-    const { userName, password, email, number } = req.body;
+static signup(req, res) {
+  const { userName, password, email, number } = req.body;
 
-    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
-      typeof password === 'undefined' || typeof number === 'undefined') {
-      res.status(400).json({
-        message: 'You need to provide userName, password, number and email',
+  if (typeof userName === 'undefined' || typeof email === 'undefined' || typeof password === 'undefined' || typeof number === 'undefined') {
+    res.status(400).json({ message: 'You need to provide userName, password, number and email' });
+  } else if (userName === '' || password === '' || email === '' || number === '') {
+    res.status(400).json({ message: 'userName, password, number or email cannot be empty' });
+  } else {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      const uid = user.uid;
+      user.updateProfile({
+        displayName: userName
       });
-    } else if (userName === '' || password === '' || email === '' ||
-      number === '') {
-      res.status(400).json({ message: 'userName, password, number'
-      + 'or email cannot be empty' });
-    } else {
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        const uid = user.uid;
-        user.updateProfile({
-          displayName: userName
-        });
-        user.sendEmailVerification().then(() => {
-          res.status(201).send(user);
-        });
+      user.sendEmailVerification().then(() => {
         usersRef.child(userName).set({
           userName,
           password,
@@ -40,19 +33,21 @@ class User {
           uid,
           number
         });
-      })
-        .catch((error) => {
-          const errorCode = error.code;
-          if (errorCode === 'auth/invalid-email') {
-            res.status(400).json({ message: error.message });
-          } else if (errorCode === 'auth/weak-password') {
-            res.status(400).json({ message: error.message });
-          } else if (errorCode === 'auth/email-already-in-use') {
-            res.status(409).json({ message: error.message });
-          }
-        });
+        res.status(201).send(user);
+      });
+    })
+  .catch((error) => {
+    const errorCode = error.code;
+    if (errorCode === 'auth/invalid-email') {
+      res.status(400).json({ message: error.message });
+    } else if (errorCode === 'auth/weak-password') {
+      res.status(400).json({ message: error.message });         
+    } else if (errorCode === 'auth/email-already-in-use') {
+      res.status(409).json({ message: error.message });
     }
+  });
   }
+}
 
   /**
  * @description: controls a user's registration via Google signup
@@ -64,34 +59,45 @@ class User {
   static google(req, res) {
     const googleUser = req.body.googleUser;
     const { userName, email, uid, number } = googleUser;
-
-    usersRef.child(userName).set({
-      userName,
-      email,
-      uid,
-      number
-    });
-    const rootRef = firebase.database().ref()
-      .child('users')
-      .child(userName)
-      .child('Groups');
-    rootRef.once('value', (snap) => {
-      const data = snap.val()
-      const groups = []
-      let group = {}
-      for (var i in data) {
-        group = {
-          groupName: data[i].groupName,
-          userName: data[i].userName
-        }
-        groups.push(group)
+    usersRef.child(userName).once('value', (snapshot) => {
+      if (!snapshot.exists()) {
+        usersRef.child(userName).set({
+          userName,
+          email,
+          uid,
+          number,
+          google: true
+        });
+        res.status(201).json({
+          message: 'Welcome to Post it app',
+          displayName: userName
+        });
+      } else {
+        usersRef.child(userName).child('Groups').once('value', () => {
+          const groups = [];
+          let group = {};
+          const groupRef = firebase.database().ref().child('users')
+          .child(userName)
+          .child('Groups');
+          groupRef.once('value', (snap) => {
+            snap.forEach((data) => {
+              group = {
+                groupName: data.val().groupName
+              };
+              groups.push(group);
+            });
+            res.status(200).send({
+              message: 'Welcome to Post it app',
+              displayName: userName,
+              groups
+            });
+          });
+        });
       }
-
-      res.status(200).send({
-        message: 'Welcome to Post it app',
-        userData: user,
-        groups
-      });
+    }).catch((err) => {
+      res.status(401).json(
+        { message: `Something went wrong ${err.message}` }
+      );
     });
   }
 

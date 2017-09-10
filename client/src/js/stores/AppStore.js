@@ -333,7 +333,8 @@ AppDispatcher.register((payload) => {
     break;
 
   case AppConstants.SEEN_MESSAGE:
-    console.log('User who have seen message..');        
+    console.log('User who have seen message..');
+
     AppAPI.seenMessage(action.user);
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
@@ -342,6 +343,7 @@ AppDispatcher.register((payload) => {
   case AppConstants.RECEIVE_SEEN_USERS:
     console.log('Receiving users who have seen message..');
     AppStore.setSeenUsers(action.users);
+    console.log(action.users)
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;
@@ -414,8 +416,6 @@ AppDispatcher.register((payload) => {
     AppStore.openGroup();
     // Save to API
     AppAPI.searchUserMessage(action.keyName);
-    // Save to API
-    // AppAPI.getMessages(action.keyName); 
     // Emit Change
     AppStore.emit(CHANGE_EVENT);
     break;

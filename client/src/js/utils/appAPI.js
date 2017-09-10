@@ -19,8 +19,6 @@ module.exports = {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        console.log(response)
-        console.log(user)
         toastr.success('Welcome,  An email will be sent to you, please verify your account.') 
       }
     }).catch((error) => {
@@ -126,12 +124,11 @@ module.exports = {
   // },
 
   seenMessage(user) {
-    const uid = user.uid;
-    const userName = user.userName;
     const groupName = user.groupName;
-    axios.post(`/seen/${groupName}/${uid}/${userName}`)
-    .then((message) => {
-      AppActions.receiveSeenUsers(message.data);
+    const messageID = user.messageID;
+    axios.get(`/groups/${groupName}/${messageID}`)
+    .then((response) => {
+      AppActions.receiveSeenUsers(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -160,7 +157,7 @@ module.exports = {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        AppActions.receiveGroups(groups);  
+        AppActions.receiveGroups(groups);
           
         toastr.success('Welcome To PostIt');
       }
@@ -180,6 +177,7 @@ module.exports = {
 
   searchUserMessage(keyName) {
     const groupName = keyName;
+    console.log(groupName)
     axios.get(`/groups/${groupName}`)
       .then((users) => {
         const messages = users.data.messages;
@@ -193,14 +191,11 @@ module.exports = {
   },
 
   google(googleUser) {
-    console.log(googleUser+ 'Front')
     if (googleUser.number) {
       axios.post('/user/google', { googleUser
       }).then((response) => {
-        const user = response.data.userData;
-        const groups = response.data.groups;
+        const user = response.data;
         AppActions.receiveLogin(user);
-        AppActions.receiveGroups(groups);
         toastr.warning('Google Sign Up feature is incomplete ');
       }).catch((error) => {
         console.log(error);

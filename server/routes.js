@@ -15,4 +15,6 @@ router.get('/user/notification/', User.notification);
 router.get('/groups/:groupName', Group.usersAndMessagesInGroups);
 router.get('/users/allusers/', User.allUsers);
 router.get('/users/allnumbers/', User.allNumbers);
+router.get('/groups/:groupName/:messageID/', Group.seenMessage);
+
 module.exports = router;

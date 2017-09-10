@@ -299,8 +299,25 @@ class Group {
       messageIDs.forEach((entry) => {
         const db = firebase.database();
         db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
-        .child('Kats').set('Kats');
+        .child('Pele').set('Pele');
       });
+    });
+  }
+
+    /**
+ * @description: retrieves all users who have seen a message
+ *  through route GET: group/seenMessage
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing all users who have seen a message
+ */
+  static seenMessage(req, res) {
+    const { groupName, messageID } = req.params;
+    groupRef.child(groupName)
+    .child('Messages')
+    .child(messageID).child('Seen')
+    .once('value', (users) => {
+      res.status(200).send(users);
     });
   }
 }

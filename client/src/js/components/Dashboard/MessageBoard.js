@@ -17,7 +17,7 @@ import toastr from 'toastr'
 export default class MessageBoard extends Component {
      constructor(props){
         super(props);
-        this.state ={
+        this.state = {
             user : AppStore.getUser(),
             currentGroup : AppStore.getCurrentGroup(),     
             messages : AppStore.getMessages()     
@@ -34,7 +34,6 @@ export default class MessageBoard extends Component {
 
   
   render() {
-    console.log(this.state.currentGroup)
     return (
        <div>      
              <div className="jumbotron">
@@ -43,7 +42,7 @@ export default class MessageBoard extends Component {
                  {
                   this.state.messages.map((message, index) => {
                      return(
-                       <Message message={message} key={index}/>
+                       <Message message={message} key={index} group={this.state.currentGroup}/>
                      ) 
                   })
                 }                           
