@@ -1,12 +1,16 @@
-const { firebase, usersRef, groupRef } = require('../config');
-/** Class representing a the User Database. */
+const { firebase, usersRef } = require('../config');
+
+/**
+ * class User: controls all user routes
+ * @class
+ */
 class User {
   /**
-      * The Sign Up method
-      * @param {string} req - User's Request
-      * @param {object} res - Server Response
-      * @return {object}  returns the user's details
-      */
+ * @description: controls a user's registration through route POST: user/signup
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing the registered user
+ */
   static signup(req, res) {
     const { userName, password, email, number } = req.body;
 
@@ -15,10 +19,13 @@ class User {
       res.status(400).json({
         message: 'You need to provide userName, password, number and email',
       });
-    } else if (userName === '' || password === '' || email === '' || number === '') {
-      res.status(400).json({ message: 'userName, password, number or email cannot be empty' });
+    } else if (userName === '' || password === '' || email === '' ||
+      number === '') {
+      res.status(400).json({ message: 'userName, password, number'
+      + 'or email cannot be empty' });
     } else {
-      firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((user) => {
         const uid = user.uid;
         user.updateProfile({
           displayName: userName
@@ -48,11 +55,12 @@ class User {
   }
 
   /**
-      * The Google Sign Up method
-      * @param {number} req - User's Request
-      * @param {number} res - Server Response
-      * @return {object}  returns the user's details
-      */
+ * @description: controls a user's registration via Google signup
+ *  through route POST: user/google
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing the registered user
+ */
   static google(req, res) {
     const googleUser = req.body.googleUser;
     const { userName, email, uid, number } = googleUser;
@@ -89,15 +97,17 @@ class User {
 
 
   /**
-      * The Sign In method
-      * @param {number} req - User's Request
-      * @param {object} res - Server Response
-      * @return {object}  returns the user's details
-      */
+ * @description: controls a user's login through route POST: user/signin
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing the logged-in user
+ */
   static signin(req, res) {
     const { email, password } = req.body;
     if (typeof email === 'undefined' || typeof password === 'undefined') {
-      res.status(400).json({ message: 'You need to provide password and email' });
+      res.status(400).json(
+        { message: 'You need to provide password and email' }
+      );
     } else if (email === '' || password === '') {
       res.status(400).json({ message: 'Email or Password cannot be empty' });
     } else {
@@ -105,18 +115,22 @@ class User {
         .signInWithEmailAndPassword(email, password).then((user) => {
           const userName = user.displayName;
           // Get all user's personal message while signing in
-          const rootRef = firebase.database().ref().child('users').child(userName)
-            .child('Groups');
-          rootRef.once('value', (snap) => {
+          const rootRef = firebase.database().ref()
+          .child('users')
+          .child(userName)
+          .child('Groups');
+          rootRef.once('value', () => {
             const groups = [];
-            let group = {}
-            const groupRef = firebase.database().ref().child('users').child(userName).child('Groups');
+            let group = {};
+            const groupRef = firebase.database().ref().child('users')
+            .child(userName)
+            .child('Groups');
             groupRef.once('value', (snap) => {
               snap.forEach((data) => {
                 group = {
                   groupName: data.val().groupName
                 };
-                groups.push(group)
+                groups.push(group);
               });
               res.status(200).send({
                 message: 'Welcome to Post it app',
@@ -134,7 +148,6 @@ class User {
             res.status(401).json({ message: error.message });
           } else if (errorCode === 'auth/wrong-password') {
             res.status(401).json({ message: error.message });
-
           }
         });
     }
@@ -158,75 +171,84 @@ class User {
     });
   }
 
-
+  /**
+ * @description: retrieves all notifications in user database
+ *  through route GET: user/notification
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing all notofications in the user database
+ */
   static notification(req, res) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // This means a user is signed in
-        const userId = user.uid;
-        const rootRef = firebase.database().ref().child('users');
-        rootRef.once('value', snap => {
-          const data = snap.val()
-          for (var i in data) {
-            if (userId == data[i].uid) {
-              var notification = data[i].Notifications
+        const uid = user.uid;
+        usersRef.once('value', (snap) => {
+          const usersNotificate = [];
+          snap.forEach((currentUser) => {
+            if (currentUser.val().uid === uid) {
+              usersNotificate.push(currentUser.val().Notifications);
             }
-          }
-          res.send(notification)
-        })
+          });
+          res.status(200).send(usersNotificate);
+        });
       } else {
-        console.log({
-          // user is not signed in
+        res.status(401).send({
           message: 'You are not signed in right now!'
         });
       }
     });
   }
 
-  //Get All Users in the Database
+
+  /**
+ * @description: retrieves all users in user database
+ *  through route GET: user/allUsers
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing all users in the user database
+ */
   static allUsers(req, res) {
-    const rootRef = firebase.database().ref().child('users');
-    rootRef.once('value', (snap) => {
-      const data = snap.val();
-      const users = [];
-      for (var i in data) {
-        users.push(data[i].username);
-      }
-      res.send(users);
+    usersRef.once('value', (snap) => {
+      const userNames = [];
+      snap.forEach((nos) => {
+        userNames.push(nos.val().username);
+      });
+      res.status(200).send(userNames);
     });
   }
 
 
-  //Get All Phone Numbers in the database
+  /**
+ * @description: retrieves all numbers in user database
+ *  through route GET: user/allNumbers
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing all numbers in the user database
+ */
   static allNumbers(req, res) {
-    const rootRef = firebase.database().ref().child('users');
-    rootRef.once('value', (snap) => {
-      const data = snap.val();
+    usersRef.once('value', (snap) => {
       const numbers = [];
-      for (var i in data) {
-        numbers.push(data[i].number);
-      }
+      snap.forEach((nos) => {
+        numbers.push(nos.val().number);
+      });
       res.status(200).send(numbers);
     });
   }
 
-  // const userRef = firebase.database().ref().child('Groups').child(groupName).child('Users');
-  // userRef.once('value', snap => {
-  // let user = {}
-  // snap.forEach((data) => {
-  //   user = {
-  //     userName: data.val()
-  //   }
-  //   users.push(user)
-  //   })   
-  // })
-
+  /**
+ * @description: reset password of users through /user/reset
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response
+ */
   static resetPassword(req, res) {
-    const emailAddress = req.body.email
-    var auth = firebase.auth();
-    auth.sendPasswordResetEmail(emailAddress).then(function () {
-      res.status(201).json({ message: 'An email has been sent for password reset. Log in after Reset' });
-    }, function (error) {
+    const emailAddress = req.body.email;
+    const auth = firebase.auth();
+    auth.sendPasswordResetEmail(emailAddress).then(() => {
+      res.status(201).json(
+        { message: 'An email has been sent for password reset.' }
+      );
+    }, (error) => {
       const errorCode = error.code;
       if (errorCode === 'auth/invalid-email') {
         res.status(400).json({ message: error.message });
@@ -235,8 +257,6 @@ class User {
       }
     });
   }
-
-
 
 }
 module.exports = User;
