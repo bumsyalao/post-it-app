@@ -1,3 +1,6 @@
+* {
+  border-radius: 0px !important;
+}
 body {
   font: {
    family: Arial, Helvetica, sans-serif;
@@ -7,9 +10,24 @@ body {
   padding: 0;
   margin: 0;
   background: #f4f4f4;
+  
 }
 
+.list-styles{
+  list-style-type: none !important;
+}
+.text-decoration{
+  text-decoration: none !important ;
+  color: white;
+}
 
+a:hover{
+  background-color: black;
+  padding: 2px;
+  color: white;
+  display: block;
+  
+}
 #transform {
   text-transform: capitalize;
 }
@@ -71,7 +89,7 @@ header {
 }
 
 #showcase{ 
-  min-height: 400px;
+  // min-height: 400px;
   text-align: center;
   color: #ffffff;
   & h1 {
@@ -90,7 +108,7 @@ header {
 
 footer {
   padding: 20px;
-  margin-top: 100px;
+  margin-top: -10px;
   color: #ffffff;
   background: #35424a;
   text-align: center
@@ -163,4 +181,73 @@ button {
 
 .low-red {
   color: #e8491d!important;
+}
+.form-margin{
+  margin-top: 2%;
+}
+.form-margin2{
+  margin-top: 2%;
+  margin-left: 8%;
+}
+.sideBar{
+  background-color: #35424a;
+  color: #fff;
+  padding-left: 40px;
+  padding-top: 30px;
+  margin-top: -20px;
+  width: 200px;
+  overflow: auto;
+  height: 700px;
+}
+
+.jumbotron{
+  height: 500px;
+  overflow-y: scroll;
+  padding-top: 100px;
+  width: 98%;
+}
+.message-padding{
+  padding-top: 100px !important;
+}
+
+.navDash {
+  font-size: 20px;
+}
+
+.select_btn {
+  margin-top: 5px;
+}
+
+.msg-border {
+  // background-color: grey;
+  color: black;
+  margin: 30px 0px;
+  padding: 0px 5px;
+}
+
+.left-side {
+  font-weight: bold;
+  margin-right: 5px;
+  font-size: 13px;
+}
+
+.right-side {
+   font-size: 12px
+} 
+
+.msg {
+
+}
+
+ul.nav li span.sign-up {
+  margin-top: 20px !important;
+}
+
+.glyphicon-user {
+  color: blue;
+}
+
+span.glyphicon-user:hover {
+  color: #dd4b39;
+  cursor: pointer;
 }

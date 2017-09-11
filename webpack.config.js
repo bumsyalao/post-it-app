@@ -28,6 +28,10 @@ const config = {
     historyApiFallback: true
   },
 
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+
   module: {
     rules: [
       {

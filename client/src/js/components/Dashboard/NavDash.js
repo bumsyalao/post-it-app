@@ -49,11 +49,9 @@ export default class NavDash extends Component {
 
 
   render() {
-
-
     
     return ( 
-      <Navbar inverse collapseOnSelect>
+      <Navbar inverse collapseOnSelect className= "navbar-height navbar-fixed-top navDash">
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -137,7 +135,7 @@ export default class NavDash extends Component {
 
           <Nav pullRight>
             <NavItem eventKey={1} href="#" onClick = {this.openNotify}>Notification 
-                <span className="glyphicon glyphicon-envelope"></span>
+                
         </NavItem>
             <NavItem eventKey={2} href="#" onClick={this.logout.bind(this)}>Logout</NavItem>
           </Nav>
@@ -183,7 +181,7 @@ const Uppercase = capitalizeFirstLetter(this.refs.user.value)
 
       const addUser = {
          groupname: this.refs.type.value.trim(), //group 
-         user: Uppercase   //user
+         userName: Uppercase   //user
       }   
 
       if(this.refs.type.value === ''){

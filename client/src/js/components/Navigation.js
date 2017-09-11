@@ -50,7 +50,7 @@ export default class Navigation extends Component {
             </nav>           
             </div>
           </header> */}
-          <nav className="navbar navbar-inverse" style={{ borderRadius: '0px'}}>
+          <nav className="navbar navbar-inverse fixed-top" style={{ borderRadius: '0px'}}>
             <div className="container-fluid">
               <div className="navbar-header">
                 <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -58,7 +58,7 @@ export default class Navigation extends Component {
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span> 
                 </button>
-                <a className="navbar-brand low-red" href="#">POST IT</a>
+                <span className="navbar-brand low-red" href="#">POST IT</span>
               </div>
               <div className="collapse navbar-collapse" id="myNavbar">
 
@@ -72,11 +72,10 @@ export default class Navigation extends Component {
                     ? <button
                         style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
                     : 
-                  <div>
-                    <span><a href="#"><span className="glyphicon glyphicon-user"></span></a> <Link to="/register">Sign Up&nbsp;&nbsp;</Link></span>
-                   <span><a href="#"><span className="glyphicon glyphicon-log-in"></span></a> <Link to="/login">Login </Link> </span>
-
-                  </div>
+                  <li>
+                    <span className="sign-up"> <Link to="/register">Sign Up</Link></span>
+                   
+                  </li>
                   
                                                
                       }

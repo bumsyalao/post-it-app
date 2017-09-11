@@ -41,11 +41,6 @@ export default class GoogleWelcome extends Component {
         AppStore.removeChangeListener(this.onChange);
     }
 
-    onChange(e){
-    e.preventDefault()
-    this.setState({username: e.target.value})
-  }
-
   handleSubmit(e){
     e.preventDefault()
      // Function to convert first letter of each word to capital letter   
@@ -57,7 +52,7 @@ export default class GoogleWelcome extends Component {
   const Uppercase = capitalizeFirstLetter(this.refs.username.value)
 
    const contact = {
-          username: Uppercase.replace(" ", ""),
+          userName: Uppercase.replace(" ", ""),
           email: this.refs.email.value.trim(),
           number: this.refs.number.value.trim(),
           uid: this.props.googleUser.uid,
@@ -65,10 +60,10 @@ export default class GoogleWelcome extends Component {
       }
             // Checks if Username and Phone number already exist
         if (this.state.databaseUsers.includes(Uppercase)){
-        alert("The username already exist")  
+            toastr.error("The username already exist")  
         
         }else if(this.state.numbers.includes(this.refs.number.value)){
-            alert("The phone number already exist")
+            toastr.error("The phone number already exist")
         }else {     
        
               AppActions.google(contact);
@@ -99,19 +94,24 @@ export default class GoogleWelcome extends Component {
    */
   render() {
     return (
-      <div>
-     <h3> Welcome {this.props.googleUser.username} </h3>
-       <p>One more step, we need your phone number</p>
-       <div className='well'>            
+      <div className="col-md-4 col-md-offset-4">
+     <center><h3> Welcome {this.props.googleUser.username} </h3>
+       <p>One more step, we need your phone number</p></center>
+       <div>           
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className='form-group' >
-                    <input type="text" ref='username' className='form-control' value= {this.props.googleUser.username} onChange={this.onChange} required/>
+                    <input type="text" ref='username' className='form-control' 
+                    value= {this.props.googleUser.username} required/>
                 </div>
                  <div className='form-group'>
-                    <input type="email" ref='email' className='form-control' value= {this.props.googleUser.email}  onChange={(e)=>this.props.onChange(e.target.value)} required/>
+                    <input type="email" ref='email' className='form-control' 
+                    value= {this.props.googleUser.email}  required/>
                 </div>
                 <div className='form-group'>
-                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
+                    <input type="text" ref='number' className='form-control' 
+                    placeholder='Phone Number: Ex 2348066098146' 
+                    pattern="[234][0-9]{12}" 
+                    title="It will contain only 13 numbers and must start with 234" required/>
                 </div>
                   
                 <button type='submit' className='btn btn-primary'>Submit</button>

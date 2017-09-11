@@ -3,6 +3,7 @@ import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 import GoogleWelcome from './GoogleWelcome'
 import {firebaseAuth, firebase, provider}from '../../../../server/config'
+import { validateEmail } from '../helpers/validate.helper';
 import toastr from 'toastr'
 
 
@@ -117,7 +118,7 @@ export default class Signup extends Component {
    }
 
     // Implements the function
-    const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
+   const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
 
    const contact = {
           username: userNameToUppercase,
@@ -126,13 +127,15 @@ export default class Signup extends Component {
           number: this.refs.number.value.trim()
       }
 
-      // Checks if Username and Phone number already exist
     if (this.state.databaseUsers.includes(userNameToUppercase)){
-     toastr.success("The username already exist")  
+     toastr.error('The username already exist')  
     }else if(this.state.numbers.includes(this.refs.number.value)){
-     toastr.success("The phone number already exist")
+     toastr.error('The phone number already exist')
+    }else if(!validateEmail(this.refs.email.value)){
+        toastr.error('Invalid Email Address')
      }else {      
         AppActions.saveContact(contact);
+
 
         this.refs.username.value = '';
          this.refs.email.value = '';
@@ -161,7 +164,7 @@ export default class Signup extends Component {
                                     <input type="text" ref='username' className='form-control' placeholder='Username' required/>
                                 </div>
                                 <div className='form-group'>
-                                    <input type="email" ref='email' className='form-control' placeholder='  Email' required/>
+                                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
                                 </div>
                                 <div className='form-group'>
                                     <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
@@ -181,7 +184,7 @@ export default class Signup extends Component {
                     </div>
      }
     return (  
-        <div className='well'>  
+        <div>  
             {display}          
         </div>
 
