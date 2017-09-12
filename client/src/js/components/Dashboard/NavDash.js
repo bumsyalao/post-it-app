@@ -49,7 +49,6 @@ export default class NavDash extends Component {
 
 
   render() {
-    
     return ( 
       <Navbar inverse collapseOnSelect className= "navbar-height navbar-fixed-top navDash">
 
@@ -98,7 +97,6 @@ export default class NavDash extends Component {
             </form>             
           </Modal.Body>
           <Modal.Footer>
-            {/*<Button href="#/dashboard" onClick={this.close2}>Close</Button>*/}
             <a href="#/dashboard" onClick={this.closeGroup}> Close</a>
           </Modal.Footer>
         </Modal>
@@ -154,9 +152,9 @@ export default class NavDash extends Component {
       } 
 
     // Implements the function
-      const Uppercase = capitalizeFirstLetter(this.refs.group.value.trim())
+      const groupName = capitalizeFirstLetter(this.refs.group.value.trim())
             const group = {
-              groupName: Uppercase,
+              groupName,
               userName: this.props.user.displayName
             }    
              AppActions.saveGroup(group);
@@ -165,29 +163,23 @@ export default class NavDash extends Component {
     }
     
 
- // Add User to the Group
+
     addUser(e){
     e.preventDefault(); 
-
-    // Function to convert first letter of each word to capital letter   
+  
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
    } 
 
-    // Implements the function
-const Uppercase = capitalizeFirstLetter(this.refs.user.value)
-
-
-
+const userName = capitalizeFirstLetter(this.refs.user.value)
       const addUser = {
-         groupname: this.refs.type.value.trim(), //group 
-         userName: Uppercase   //user
+         groupname: this.refs.type.value.trim(), 
+         userName
       }   
-
       if(this.refs.type.value === ''){
         toastr.error("Select a group name from the drop down list")
       }
-      else if (this.props.databaseUsers.includes(Uppercase)){
+      else if (this.props.databaseUsers.includes(userName)){
         AppActions.saveGroupUser(addUser);
       }else{
         toastr.error("The User dosen't exist")

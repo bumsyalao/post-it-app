@@ -58,15 +58,6 @@ export default class Lhs extends Component {
             <li>User</li>
             <li>User</li>
             <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-
       </div>
     )
   }

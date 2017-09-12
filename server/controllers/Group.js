@@ -2,6 +2,7 @@ const { usersRef, groupRef, firebase } = require('../config');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const Nexmo = require('nexmo');
+const moment = require('moment');
 const { validStringContent, validStringLength } =
  require('../helpers/validate.helper');
 
@@ -35,7 +36,6 @@ class Group {
           groupRef.child(groupName).child('Email').push('bot@postit.com');
           groupRef.child(groupName).child('Number').push('2348066098146');
 
-          // Push the user's details into Group/ Users
           db.ref(`/users/${userName}/Groups`).push({
             groupName,
             userName
@@ -47,9 +47,9 @@ class Group {
         } else {
           res.status(409).json({ message: 'Group already exists' });
         }
-      }).catch((err) => {
+      }).catch((error) => {
         res.status(401).json(
-          { message: `Something went wrong ${err.message}` }
+          { message: `Something went wrong ${error.message}` }
         );
       });
     }
@@ -75,12 +75,10 @@ class Group {
           const username = snapshot.val().username;
           const email = snapshot.val().email;
           const number = snapshot.val().number;
-          // Push the user's details into Group/ Users
           db.ref(`/users/${user}/Groups`).push({
             groupName
           });
 
-       // Push the user's details into Group but first check if the group exist
           groupRef.child(groupName).once('value', (groupSnapshot) => {
             if (groupSnapshot.exists()) {
               groupRef.child(groupName).child('Users').child(username)
@@ -105,7 +103,7 @@ class Group {
   }
 
   /**
- * @description: posts a message to a group through
+ * @description: posts a message in a group through
  *  route POST: /groupName/messages/notification/priority
  * @param {Object} req request object
  * @param {Object} res response object
@@ -129,18 +127,16 @@ class Group {
             {
               user: userName,
               Message: messages,
+              Time: moment().format('h:mm a'),
               Priority: priority,
             })
-
             .then(() => {
-              res.status(201).json({ message: 'Message added successfully' });
+              res.status(201).json({ message: 'Message posted successfully' });
             })
             .catch((error) => {
               res.status(500).send(error);
             });
 
-
-          // Notify Every User for Notification
           const users = [];
           const userRef = firebase.database()
             .ref()
@@ -161,7 +157,6 @@ class Group {
             });
           });
 
-          // Send an Email to every User in the Group
           const email = [];
           const emailRef = firebase.database()
             .ref()
@@ -175,7 +170,6 @@ class Group {
             const emails = email.join(',');
 
             if ((priority === 'Urgent') || (priority === 'Critical')) {
-              // Send Email Notification to Users
               const transporter = nodemailer.createTransport(smtpTransport({
                 service: 'gmail',
                 auth: {
@@ -184,10 +178,10 @@ class Group {
                 }
               }));
               const mailOptions = {
-                from: '"PostIt App" <admin@postit.com>', // sender address
-                to: emails, // list of receivers
-                subject: 'New Message Received', // Subject line
-                text: 'PostIt App ?', // plain text body
+                from: '"PostIt App" <admin@postit.com>',
+                to: emails,
+                subject: 'New Message Received',
+                text: 'PostIt App ?',
                 html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in ' + groupName + ' group</h2>' // html body
               };
               transporter.sendMail(mailOptions, (error, info) => {
@@ -211,12 +205,10 @@ class Group {
               number.push(data.val());
             });
             if (priority === 'Critical') {
-              // Send SMS Notification to Users in a particular Group
               const nexmo = new Nexmo({
                 apiKey: '47f699b7',
                 apiSecret: 'ebc6283d134add6e'
               });
-              // Loop through the numbers and send sms per each number
               number.forEach((entry) => {
                 nexmo.message.sendSms(
                   'Post-It', entry, 'Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in ' + groupName + ' group',
@@ -251,8 +243,6 @@ class Group {
     const groupName = req.params.groupName;
     const messages = [];
     const users = [];
-
-    // Get all the Message inside a Group
     const messageRef = firebase.database()
       .ref()
       .child('Groups')
@@ -265,12 +255,12 @@ class Group {
           id: data.key,
           user: data.val().user,
           text: data.val().Message,
+          Time: data.val().Time,
           Priority: data.val().Priority
         };
         messages.push(message);
       });
 
-      // Get all the Users inside a Group Id
       const userRef = firebase.database().ref()
       .child('Groups').child(groupName)
       .child('Users');
@@ -283,7 +273,6 @@ class Group {
           users.push(user);
         });
 
-        // Send the result to the front end
         res.status(200).json({
           message: `Getting Messages and Users in ${groupName} database`,
           messages,
@@ -292,7 +281,6 @@ class Group {
       });
     });
 
-    // Add Users who have seen the message to the message database
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const displayName = user.displayName;
@@ -306,7 +294,6 @@ class Group {
           snap.forEach((data) => {
             messageIDs.push(data.key);
           });
-          // Push the Usernmame into the list of Messages
           messageIDs.forEach((entry) => {
             const db = firebase.database();
             db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')

@@ -1,11 +1,9 @@
-import React, {Component} from 'react'
-import Message from './Message'
-import AppActions from '../../actions/AppActions'
-import AppStore from '../../stores/AppStore'
-import DisplayMessage from './DisplayMessage'
-import ArchivedBox from './ArchivedBox'
-import toastr from 'toastr'
-
+import React, {Component} from 'react';
+import Message from './Message';
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/AppStore';
+import toastr from 'toastr';
+import moment from 'moment';
 
 /**
  * The Presentation component that servers all message activities
@@ -87,8 +85,10 @@ export default class MessageBoard extends Component {
       handleSubmit(e){
           e.preventDefault();   
           const message = {
+            user: this.state.user.displayName,
             group: this.state.currentGroup ,     
             text: this.refs.message.value.trim(),
+            Time: moment().format('h:mm a'),
             notification: this.state.user.displayName+' posted in '+ this.state.currentGroup +' group',
             priority: this.refs.type.value  
           }       

@@ -19,7 +19,7 @@ export default class Welcome extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span> 
               </button>
-              <a className="navbar-brand low-red" href="#"></a>
+              <a className="navbar-brand low-red" href="#">Andela</a>
             </div>
             <div className="collapse navbar-collapse" id="myNavbar">
 
