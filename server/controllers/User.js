@@ -11,43 +11,49 @@ class User {
  * @param {Object} res response object
  * @return {Object} response containing the registered user
  */
-static signup(req, res) {
-  const { userName, password, email, number } = req.body;
+  static signup(req, res) {
+    const { userName, password, email, number } = req.body;
 
-  if (typeof userName === 'undefined' || typeof email === 'undefined' || typeof password === 'undefined' || typeof number === 'undefined') {
-    res.status(400).json({ message: 'You need to provide userName, password, number and email' });
-  } else if (userName === '' || password === '' || email === '' || number === '') {
-    res.status(400).json({ message: 'userName, password, number or email cannot be empty' });
-  } else {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      const uid = user.uid;
-      user.updateProfile({
-        displayName: userName
-      });
-      user.sendEmailVerification().then(() => {
-        usersRef.child(userName).set({
-          userName,
-          password,
-          email: user.email,
-          uid,
-          number
+    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
+       typeof password === 'undefined' || typeof number === 'undefined') {
+      res.status(400).json(
+        { message: 'You need to provide userName, password, number and email' }
+      );
+    } else if (userName === '' || password === '' ||
+     email === '' || number === '') {
+      res.status(400).json(
+        { message: 'userName, password, number or email cannot be empty' }
+      );
+    } else {
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        const uid = user.uid;
+        user.updateProfile({
+          displayName: userName
         });
-        res.status(201).send(user);
-      });
-    })
-  .catch((error) => {
-    const errorCode = error.code;
-    if (errorCode === 'auth/invalid-email') {
-      res.status(400).json({ message: error.message });
-    } else if (errorCode === 'auth/weak-password') {
-      res.status(400).json({ message: error.message });         
-    } else if (errorCode === 'auth/email-already-in-use') {
-      res.status(409).json({ message: error.message });
+        user.sendEmailVerification().then(() => {
+          usersRef.child(userName).set({
+            userName,
+            password,
+            email: user.email,
+            uid,
+            number
+          });
+          res.status(201).send(user);
+        });
+      })
+    .catch((error) => {
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        res.status(400).json({ message: error.message });
+      } else if (errorCode === 'auth/weak-password') {
+        res.status(400).json({ message: error.message });
+      } else if (errorCode === 'auth/email-already-in-use') {
+        res.status(409).json({ message: error.message });
+      }
+    });
     }
-  });
   }
-}
 
   /**
  * @description: controls a user's registration via Google signup
@@ -94,9 +100,9 @@ static signup(req, res) {
           });
         });
       }
-    }).catch((err) => {
+    }).catch((error) => {
       res.status(401).json(
-        { message: `Something went wrong ${err.message}` }
+        { message: `Something went wrong ${error.message}` }
       );
     });
   }
@@ -120,7 +126,6 @@ static signup(req, res) {
       firebase.auth()
         .signInWithEmailAndPassword(email, password).then((user) => {
           const userName = user.displayName;
-          // Get all user's personal message while signing in
           const rootRef = firebase.database().ref()
           .child('users')
           .child(userName)

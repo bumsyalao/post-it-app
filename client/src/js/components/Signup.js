@@ -53,9 +53,6 @@ export default class Signup extends Component {
     }
 
 
- 
-
-
     /**
      * @method setSignUp
      * Monitors changes in the components and change the state
@@ -117,7 +114,7 @@ export default class Signup extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
    }
 
-    // Implements the function
+
    const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
 
    const contact = {
@@ -133,10 +130,8 @@ export default class Signup extends Component {
      toastr.error('The phone number already exist')
     }else if(!validateEmail(this.refs.email.value)){
         toastr.error('Invalid Email Address')
-     }else {      
+    }else {      
         AppActions.saveContact(contact);
-
-
         this.refs.username.value = '';
          this.refs.email.value = '';
          this.refs.password.value = ''; 

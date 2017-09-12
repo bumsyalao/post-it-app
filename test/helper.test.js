@@ -1,6 +1,7 @@
 const chai = require('chai');
 const app = require('../server/app');
-const { validStringContent, validStringLength } = require('../server/helpers/validate.helper');
+const { validStringContent, validStringLength } =
+ require('../server/helpers/validate.helper');
 
 const expect = chai.expect;
 

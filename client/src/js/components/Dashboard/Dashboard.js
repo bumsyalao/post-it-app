@@ -3,7 +3,6 @@ import AppStore from '../../stores/AppStore';
 import NavDash from './NavDash';
 import LHS from './Lhs';
 import MessageBoard from './MessageBoard'
-import DisplayMessage from './DisplayMessage'
 import Welcome from '../Welcome'
 
 
@@ -24,13 +23,10 @@ export default class DashBoard extends Component {
            authed: false,
             user : AppStore.getUser(),      
             contacts: AppStore.getGroupUsers(),
-            emails: AppStore.getGroupEmails(),
-            numbers:AppStore.getGroupNumbers(),
             groups: AppStore.getGroups(),
             currentGroup: AppStore.getCurrentGroup(),
             databaseUsers: AppStore.getdatabaseUsers(),
-            notification: AppStore.getNotification(),
-            displayArchives: AppStore.getOpenArchive()  
+            notification: AppStore.getNotification(), 
         };
          this.onChange= this.onChange.bind(this)
     }
@@ -84,8 +80,8 @@ export default class DashBoard extends Component {
             <div className="col-md-2 col-sm-12" id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></div>
 
 
-            {/* <Col sm={12} md={9}> {!this.state.currentGroup ? <DisplayMessage /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </Col> */}
-            <div className="col-md-10 col-sm-12"> {!this.state.currentGroup ? <Welcome /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  displayArchives={this.state.displayArchives} />} </div>
+           
+            <div className="col-md-10 col-sm-12"> {!this.state.currentGroup ? <Welcome /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />} </div>
             
           </div>
         </div>
@@ -109,10 +105,7 @@ export default class DashBoard extends Component {
           user: AppStore.getUser(),
           currentGroup: AppStore.getCurrentGroup(),
           databaseUsers: AppStore.getdatabaseUsers(),
-          emails: AppStore.getGroupEmails(),
-          numbers:AppStore.getGroupNumbers(),
           notification: AppStore.getNotification(),
-          displayArchives: AppStore.getOpenArchive()
         });
         
     }  

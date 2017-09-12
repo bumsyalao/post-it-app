@@ -25,31 +25,6 @@ export default class Navigation extends Component {
   render() {
     return (
       <div>
-           {/* <header>
-            <div className="container">
-            <div id="branding">
-              <h1>
-                <span className="highlight">PostIt &nbsp;
-                </span> </h1>
-            </div>
-            <nav>
-              <ul>           
-                 <li>
-                  <Link to='/'>Home&nbsp;&nbsp;</Link>
-                  {this.state.auth
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
-                    : <span>
-                      
-                      <Link to="/register">Register&nbsp;&nbsp;</Link>
-                      <Link to="/login">Login&nbsp;&nbsp;</Link>    
-                      </span>}
-                </li>   
-                
-              </ul>
-            </nav>           
-            </div>
-          </header> */}
           <nav className="navbar navbar-inverse fixed-top" style={{ borderRadius: '0px'}}>
             <div className="container-fluid">
               <div className="navbar-header">
@@ -76,8 +51,7 @@ export default class Navigation extends Component {
                     <span className="sign-up"> <Link to="/register">Sign Up</Link></span>
                    
                   </li>
-                  
-                                               
+                                                                
                       }
           
                 </ul>
@@ -88,9 +62,5 @@ export default class Navigation extends Component {
       </div>
 
     )
-  }
-
-  handleSubmit(){
-      console.log("Logout")
   }
 }

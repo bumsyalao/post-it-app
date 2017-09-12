@@ -1,7 +1,6 @@
-import AppActions from '../actions/AppActions';
 import axios from 'axios';
 import toastr from 'toastr';
-
+import AppActions from '../actions/AppActions';
 
 module.exports = {
   saveContact(contact) {
@@ -12,21 +11,21 @@ module.exports = {
       number: contact.number
     }).then((response) => {
       const user = response.data;
-
-      if (response.data.message === 'The email address is already in use by another account.') {
+      if (response.data.message ===
+         'The email address is already in use by another account.') {
         toastr.error(response.data.message);
-      } else if (response.data.message === 'The email address is badly formatted.'){               
+      } else if (response.data.message ===
+         'The email address is badly formatted.') {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        toastr.success('Welcome,  An email will be sent to you, please verify your account.') 
+        toastr.success('Welcome,  An email will be sent to you.');
       }
     }).catch((error) => {
       console.log(error);
     });
   },
 
-    // Get all Contacts from database, this will use for validation
   getContacts() {
     axios.get('/users/allusers')
       .then((contacts) => {
@@ -37,7 +36,6 @@ module.exports = {
       });
   },
 
-       // Get all Numbers from database, this will use for validation
   getNumbers() {
     axios.get('/users/allnumbers')
         .then((response) => {
@@ -53,26 +51,12 @@ module.exports = {
       groupName: group.groupName,
       userName: group.userName
     }).then((response) => {
-      toastr.success(response.data);
+      toastr.success(response.data.message);
     }).catch((error) => {
       console.log(error);
     });
   },
 
-        //Get list of Groups from Database
-  getGroups() {
-    axios.get('/user/database')
-    .then((group) => {
-      const groups = group.data;
-      AppActions.receiveGroup(groups);
-      console.log(groups)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  },
-       
-  // Get Notifications from Database
   getNotifications() {
     axios.get('/user/notification')
     .then((response) => {
@@ -84,7 +68,7 @@ module.exports = {
     });
   },
 
-  saveGroupUser(addUser) {
+  addUserToGroup(addUser) {
     axios.post('/group/groupName/user', {
       groupName: addUser.groupname,
       user: addUser.userName
@@ -110,19 +94,6 @@ module.exports = {
     });
   },
 
-  // removeMessage(messageId) {
-  //   console.log(messageId)
-  //   axios.post('/user/archive/messageId', {
-  //     messageId
-  //   })
-  //       .then((message) => {
-  //         AppActions.archiveMessages(message.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  // },
-
   seenMessage(user) {
     const groupName = user.groupName;
     const messageID = user.messageID;
@@ -135,14 +106,6 @@ module.exports = {
     });
   },
 
-  // updateInbox(user) {
-  //   axios.post(`/user/inbox/${user}`)
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  // },
-
-
   login(contact) {
     axios.post('/user/signin', {
       email: contact.email,
@@ -153,16 +116,16 @@ module.exports = {
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
         toastr.error(response.data);
-      } else if (response.data.message === 'The password is invalid or the user does not have a password.'){               
+      } else if (response.data.message ===
+         'The password is invalid or the user does not have a password.') {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
         AppActions.receiveGroups(groups);
-          
         toastr.success('Welcome To PostIt');
       }
     }).catch((error) => {
-       console.log(error);
+         console.log(error);
     });
   },
 
@@ -174,16 +137,14 @@ module.exports = {
     });
   },
 
-
-  searchUserMessage(keyName) {
+  searchUserMessageInGroup(keyName) {
     const groupName = keyName;
-    console.log(groupName)
     axios.get(`/groups/${groupName}`)
       .then((users) => {
         const messages = users.data.messages;
         const user = users.data.users;
-        AppActions.receiveMessages(messages)
-        AppActions.receiveUser(user)
+        AppActions.receiveMessages(messages);
+        AppActions.receiveUser(user);
       })
       .catch((error) => {
         console.log(error);
@@ -201,13 +162,6 @@ module.exports = {
         console.log(error);
       });
     }
-  },
-
-  googleLogin(googleUser) {
-    axios.post('/google/login', {
-      userName: googleUser,
-    });
-    console.log(googleUser);
   },
 
   resetPassword(email) {

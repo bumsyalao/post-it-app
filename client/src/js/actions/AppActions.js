@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import AppConstants from '../constants/AppConstants'; 
+import AppConstants from '../constants/AppConstants';
 
 const AppActions = {
   saveContact(contact) {
@@ -23,20 +23,6 @@ const AppActions = {
     });
   },
 
-  removeMessage(messageId) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.REMOVE_MESSAGE,
-      messageId
-    });
-  },
-
-  archiveMessages(message) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.ARCHIVE_MESSAGE,
-      message
-    });
-  },
-
   seenMessage(user) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.SEEN_MESSAGE,
@@ -48,29 +34,6 @@ const AppActions = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RECEIVE_SEEN_USERS,
       users
-    });
-  },
-
-  openArchive() {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.OPEN_ARCHIVE
-    });
-  },
-
-  closeArchive() {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.CLOSE_ARCHIVE
-    });
-  },
-
-  inboxMessage() {
-  
-  },
-
-  updateInbox(user) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.UPDATE_INBOX,
-      user
     });
   },
 
@@ -134,7 +97,7 @@ const AppActions = {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RECEIVE_LOGIN,
       user
-    }); 
+    });
   },
 
   searchUserMessage(keyName) {
@@ -147,13 +110,6 @@ const AppActions = {
   google(googleUser) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.GOOGLE,
-      googleUser
-    });
-  },
-
-  googleLogin(googleUser) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.GOOGLE_LOGIN,
       googleUser
     });
   },

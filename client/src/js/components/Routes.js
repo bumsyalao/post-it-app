@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {Switch, Route, Redirect, Link} from 'react-router-dom';
-
 import AppStore from '../stores/AppStore'
-
 import Navigation from './Navigation'
 import Signin from './Signin'
 import Signup from './Signup';
@@ -10,7 +8,6 @@ import Home from './Home';
 import Footer from './Footer'
 import ResetPassword from './ResetPassword'
 import GoogleWelcome from './GoogleWelcome'
-
 import DashBoard from './Dashboard/Dashboard'
 import NavDash from './Dashboard/NavDash'
 import Lhs from './Dashboard/Lhs'
