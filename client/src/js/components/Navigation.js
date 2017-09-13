@@ -27,38 +27,21 @@ export default class Navigation extends Component {
       <div>
           <nav className="navbar navbar-inverse fixed-top" style={{ borderRadius: '0px'}}>
             <div className="container-fluid">
-              <div className="navbar-header">
+              <div className="navbar-header" id="navbar-header">
                 <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span> 
                 </button>
-                <span className="navbar-brand low-red" href="#">POST IT</span>
+                <span style={{ marginRight: '30px' }} className="navbar-brand low-red" href="#"> POST IT</span>
               </div>
               <div className="collapse navbar-collapse" id="myNavbar">
-
-                   
                 <ul className="nav navbar-nav">
-                  <li><Link to='/'>Home</Link></li>
+                  <li><Link to='/'>Home </Link></li>
                 </ul>
-                <ul className="nav navbar-nav navbar-right">
-
-                     {this.state.auth
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
-                    : 
-                  <li>
-                    <span className="sign-up"> <Link to="/register">Sign Up</Link></span>
-                   
-                  </li>
-                                                                
-                      }
-          
-                </ul>
-              </div>
+             </div>
             </div>
           </nav>
-
       </div>
 
     )

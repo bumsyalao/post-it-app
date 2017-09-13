@@ -1,5 +1,5 @@
-// Firebase Configuration
 const firebase = require('firebase');
+
 const config = {
   apiKey: 'AIzaSyDx5Xi4OxL1F18jqNO1L1JyAhO8CM3J3h0',
   authDomain: 'post-it-app-8b2cb.firebaseapp.com',
@@ -23,8 +23,6 @@ const firebaseAuth = firebase.auth();
 const db = firebase.database();
 const usersRef = db.ref('users');
 const groupRef = db.ref('Groups');
-const userGroupRef = db.ref('UserGroup');
-
 
 const provider = new firebase.auth.GoogleAuthProvider();
 module.exports = {
@@ -32,7 +30,6 @@ module.exports = {
   db,
   usersRef,
   groupRef,
-  userGroupRef,
   firebaseAuth,
   provider,
 };

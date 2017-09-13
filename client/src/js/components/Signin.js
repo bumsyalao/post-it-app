@@ -48,6 +48,7 @@ class Signin extends Component {
               <input type="password" ref='password' className='form-control' placeholder='Password' required/>
             </div>
             <div><a href="#/reset">Forgot Password?</a></div>
+            <div><a href="#/register">Don't have an account? Signup</a></div>
 
             <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
           </form>

@@ -44,8 +44,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {!this.state.auth
-          ? <section>
+            <section>
               <center>
                 <div>
                   <h1>Welcome to PostIt</h1>
@@ -64,7 +63,6 @@ class Home extends Component {
                 <Signin/>
               </div>
             </section>
-          : <Dashboard/>}
 
       </div>
     )

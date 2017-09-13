@@ -33,8 +33,8 @@ export default class MessageBoard extends Component {
   
   render() {
     return (
-       <div>      
-             <div className="jumbotron">
+       <div className="message-board">      
+             <div className="message-display-board">
              <h4>#{this.state.currentGroup}</h4>
               <div style={{color: 'black', textAlign: 'left'}} className="list-styles">
                  {
@@ -57,7 +57,7 @@ export default class MessageBoard extends Component {
             
             
             <form id="messageForm" onSubmit={this.handleSubmit.bind(this)}>
-              <div className="form-group">
+              <div className="message-row form-group">
                <div className="row">
                 <div className="col-md-9">
                 <textarea className="form-control" id="message" ref='message' placeholder="Enter Message"/>

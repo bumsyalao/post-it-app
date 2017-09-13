@@ -15,22 +15,31 @@ import AppStore from '../../stores/AppStore'
  * The Left hand Side of the 
  * 
  * @export
- * @class Lhs
+ * @class SideBar
  * @extends {Component}
  */
-export default class Lhs extends Component {
+export default class SideBar extends Component {
   
   render() {
+
+    let userName = JSON.parse(localStorage.getItem('user'));
+    const groupName = JSON.parse(localStorage.getItem('groupName'))
+    console.log(this.props.group)
+    console.log(this.props.group === groupName)
+    console.log(groupName)
+
+  let hj = this.props.group || groupName
+
     return (
       <div className="sideBar message-padding">
         <div>
-          <h4>{this.props.user.displayName}</h4>
+          <h4>{userName}</h4>
         </div>
 
         <h4>Groups</h4>
         <ul className="list-styles">
             {
-              this.props.group.map((KeyName, KeyIndex) => {
+              hj.map((KeyName, KeyIndex) => {
                 return (
                   <Groups KeyName={KeyName} key={KeyIndex} />
                 )
@@ -50,12 +59,6 @@ export default class Lhs extends Component {
             }
 
         </ul>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
-            <li>User</li>
             <li>User</li>
             <li>User</li>
       </div>

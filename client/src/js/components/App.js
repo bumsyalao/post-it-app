@@ -26,7 +26,8 @@ class App extends Component  {
         this.state = {
             authentication: AppStore.getAuth(),
             user: AppStore.getUser(),
-            loggedInUser: AppStore.getLoggedInUser()      
+            loggedInUser: AppStore.getLoggedInUser(),
+            groups: AppStore.getGroups()    
         }; 
          this.onChange= this.onChange.bind(this) 
     }
@@ -61,11 +62,21 @@ class App extends Component  {
   render() {
     if (this.state.authentication === true) {
         localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));
+         localStorage.setItem('groupName', JSON.stringify(this.state.groups))
+         
       }
   
      let componentToMount;
       if (localStorage.getItem('user') == null) {
-        componentToMount = <Home {...this.state} />;
+        componentToMount =         <div className="row">
+                                        <Navigation /> 
+                                        <div className="row">
+                                            <Routes authed={this.state.authed} />
+                                        </div>
+                                        <div className="row">
+                                            <Footer />
+                                        </div>
+                                    </div>
       } else {
         componentToMount = <Dashboard />;
       }
@@ -85,7 +96,9 @@ class App extends Component  {
     onChange(){
         this.setState({user: AppStore.getUser()});
         this.setState({authentication: AppStore.getAuth()});
-        this.setState({loggedInUser: AppStore.getLoggedInUser()});     
+        this.setState({loggedInUser: AppStore.getLoggedInUser()});
+        this.setState({groups: AppStore.getGroups()});
+              
     }      
 }
 

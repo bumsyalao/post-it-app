@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AppStore from '../../stores/AppStore';
 import NavDash from './NavDash';
-import LHS from './Lhs';
+import SideBar from './SideBar';
 import MessageBoard from './MessageBoard'
 import Welcome from '../Welcome'
 
@@ -66,27 +66,23 @@ export default class DashBoard extends Component {
    */
   render() { 
     return (
-      <div id='dash'>
-        <NavDash 
+      <div>
+      <NavDash 
           contact={this.state.contacts} 
           group={this.state.groups} 
           user={this.state.user} 
           databaseUsers={this.state.databaseUsers} 
           notification={this.state.notification}
-        />     
-          
+        /> 
+        <div id='dash'>
         <div>
           <div className="row">
-            <div className="col-md-2 col-sm-12" id='lhs'> <LHS contact={this.state.contacts} group={this.state.groups} user={this.state.user} /></div>
-
-
-           
-            <div className="col-md-10 col-sm-12"> {!this.state.currentGroup ? <Welcome /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />} </div>
-            
+            <div className="col-md-2 col-sm-12" id='lhs'> <SideBar contact={this.state.contacts} group={this.state.groups} user={this.state.user} userObject={this.props.userObject}/></div>
+            <div className="col-md-10 col-sm-12"> {!this.state.currentGroup ? <Welcome /> : <MessageBoard contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers}  groupObject={this.state.groups} />} </div>
           </div>
         </div>
       </div>
-
+      </div>
     )
   }
 

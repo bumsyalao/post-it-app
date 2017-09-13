@@ -107,7 +107,7 @@ module.exports = {
   },
 
   login(contact) {
-    axios.post('/user/signin', {
+    axios.post('/user/signin', { 
       email: contact.email,
       password: contact.password
     }).then((response) => {

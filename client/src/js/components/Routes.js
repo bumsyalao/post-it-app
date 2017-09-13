@@ -10,7 +10,7 @@ import ResetPassword from './ResetPassword'
 import GoogleWelcome from './GoogleWelcome'
 import DashBoard from './Dashboard/Dashboard'
 import NavDash from './Dashboard/NavDash'
-import Lhs from './Dashboard/Lhs'
+import SideBar from './Dashboard/SideBar'
 
 
 /**
@@ -70,7 +70,7 @@ export default class Routes extends Component {
                 <PrivateRoute auth={this.props.auth} path='/dashboard' component={DashBoard} />
                 <Route auth={this.props.auth} path='/reset' component={ResetPassword} />
                 <Route auth={this.props.auth} path='/google' component={GoogleWelcome} />
-                <PrivateRoute auth={this.props.auth} path='/lhs' component={Lhs} />
+                <PrivateRoute auth={this.props.auth} path='/sidebar' component={SideBar} />
                 <PrivateRoute auth={this.props.auth} path='/navdash' component={NavDash} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>

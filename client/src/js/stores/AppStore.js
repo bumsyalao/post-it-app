@@ -45,7 +45,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
 
   saveUser(user) {
     userStore = user;
-    loggedInUser.push(user);
+    loggedInUser.push(user.displayName);
   },
 
   setUser(user) {
@@ -94,6 +94,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
 
   setGroups(groups) {
     groupsStore = groups;
+    //loggedInUser.push(user.displayName);
   },
 
   // Get the Current Group When the User has Clicked on A Group
@@ -266,6 +267,7 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.LOGOUT:
       window.localStorage.removeItem('user');
+      window.localStorage.removeItem('groupName');
       AppStore.setLogout();
       AppAPI.setLogout();
       AppStore.emit(CHANGE_EVENT);
