@@ -61,9 +61,7 @@ class App extends Component  {
    */
   render() {
     if (this.state.authentication === true) {
-        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));
-         localStorage.setItem('groupName', JSON.stringify(this.state.groups))
-         
+        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));        
       }
   
      let componentToMount;
@@ -97,8 +95,7 @@ class App extends Component  {
         this.setState({user: AppStore.getUser()});
         this.setState({authentication: AppStore.getAuth()});
         this.setState({loggedInUser: AppStore.getLoggedInUser()});
-        this.setState({groups: AppStore.getGroups()});
-              
+        this.setState({groups: AppStore.getGroups()});              
     }      
 }
 

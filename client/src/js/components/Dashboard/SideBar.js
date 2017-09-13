@@ -23,12 +23,12 @@ export default class SideBar extends Component {
   render() {
 
     let userName = JSON.parse(localStorage.getItem('user'));
-    const groupName = JSON.parse(localStorage.getItem('groupName'))
-    console.log(this.props.group)
-    console.log(this.props.group === groupName)
-    console.log(groupName)
+    // const groupName = JSON.parse(localStorage.getItem('groupName'))
+    // console.log(this.props.group)
+    // console.log(this.props.group === groupName)
+    // console.log(groupName)
 
-  let hj = this.props.group || groupName
+  let groupObject = this.props.group
 
     return (
       <div className="sideBar message-padding">
@@ -39,7 +39,7 @@ export default class SideBar extends Component {
         <h4>Groups</h4>
         <ul className="list-styles">
             {
-              hj.map((KeyName, KeyIndex) => {
+              groupObject.map((KeyName, KeyIndex) => {
                 return (
                   <Groups KeyName={KeyName} key={KeyIndex} />
                 )

@@ -6,7 +6,8 @@ const { firebase, usersRef } = require('../config');
  */
 class User {
   /**
- * @description: controls a user's registration through route POST: user/signup
+ * @description: THis method creates a user account
+ * route POST: user/signup
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing the registered user
@@ -56,8 +57,8 @@ class User {
   }
 
   /**
- * @description: controls a user's registration via Google signup
- *  through route POST: user/google
+ * @description: This method controls a user's registration via Google signup
+ * route POST: user/google
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing the registered user
@@ -109,7 +110,8 @@ class User {
 
 
   /**
- * @description: controls a user's login through route POST: user/signin
+ * @description: This method controls a user's login
+ * route POST: user/signin
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing the logged-in user
@@ -166,6 +168,7 @@ class User {
 
   /**
       * The Sign Out method
+      * @description: This method logs the user out
       * @param {null} req - User's Request
       * @param {object} res - Server Response
       * @return {object}  returns the user's details
@@ -183,8 +186,8 @@ class User {
   }
 
   /**
- * @description: retrieves all notifications in user database
- *  through route GET: user/notification
+ * @description: This method retrieves all notifications in user database
+ * route GET: user/notification
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing all notofications in the user database
@@ -212,8 +215,8 @@ class User {
 
 
   /**
- * @description: retrieves all users in user database
- *  through route GET: user/allUsers
+ * @description: This method retrieves all users in user database
+ * route GET: user/allUsers
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing all users in the user database
@@ -230,8 +233,8 @@ class User {
 
 
   /**
- * @description: retrieves all numbers in user database
- *  through route GET: user/allNumbers
+ * @description: This method retrieves all numbers in user database
+ * route GET: user/allNumbers
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing all numbers in the user database
@@ -247,7 +250,8 @@ class User {
   }
 
   /**
- * @description: reset password of users through /user/reset
+ * @description: This method reset password of users 
+ * route: GET: /user/reset
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response

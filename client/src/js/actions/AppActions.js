@@ -44,6 +44,13 @@ const AppActions = {
     });
   },
 
+  getGroups(userName) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.GET_GROUPS,
+      userName
+    });
+  },
+
   receiveGroup(groups) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RECEIVE_GROUP,

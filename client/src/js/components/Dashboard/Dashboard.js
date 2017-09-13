@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AppStore from '../../stores/AppStore';
+import AppActions from '../../actions/AppActions'
 import NavDash from './NavDash';
 import SideBar from './SideBar';
 import MessageBoard from './MessageBoard'
@@ -26,7 +27,7 @@ export default class DashBoard extends Component {
             groups: AppStore.getGroups(),
             currentGroup: AppStore.getCurrentGroup(),
             databaseUsers: AppStore.getdatabaseUsers(),
-            notification: AppStore.getNotification(), 
+            notification: AppStore.getNotification()
         };
          this.onChange= this.onChange.bind(this)
     }
@@ -39,7 +40,9 @@ export default class DashBoard extends Component {
     * @return {void}
     * @memberof DashBoard
     */
-   componentWillMount ()  {
+   componentDidMount ()  {
+    let userName = JSON.parse(localStorage.getItem('user'));    
+     AppActions.getGroups(userName)     
      AppStore.addChangeListener(this.onChange);
   }
 
@@ -65,6 +68,7 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   render() { 
+    console.log(this.state.groups)
     return (
       <div>
       <NavDash 

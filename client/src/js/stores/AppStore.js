@@ -94,10 +94,11 @@ const AppStore = assign({}, EventEmitter.prototype, {
 
   setGroups(groups) {
     groupsStore = groups;
-    //loggedInUser.push(user.displayName);
   },
 
   // Get the Current Group When the User has Clicked on A Group
+
+
   getCurrentGroup() {
     return currentGroupStore;
   },
@@ -217,6 +218,11 @@ AppDispatcher.register((payload) => {
       AppStore.emit(CHANGE_EVENT);
       break;
 
+    case AppConstants.GET_GROUPS:
+      AppAPI.getGroups(action.userName);
+      AppStore.emit(CHANGE_EVENT);
+      break;
+
     case AppConstants.RECEIVE_GROUPS:
       AppStore.setGroups(action.groups);
       AppStore.emit(CHANGE_EVENT);
@@ -251,9 +257,9 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.RECEIVE_SEEN_USERS:
       AppStore.setSeenUsers(action.users);
-      AppStore.emit(CHANGE_EVENT);
+      AppStore.emit(CHANGE_EVENT); 
       break;
-
+ 
     case AppConstants.SIGN_IN:
       AppAPI.login(action.contact);
       AppStore.emit(CHANGE_EVENT);
