@@ -5,6 +5,7 @@ import AppAPI from '../utils/appAPI'
 import { firebaseAuth, firebase, provider } from '../../../../server/config'
 import { validateEmail } from '../helpers/validate.helper';
 import toastr from 'toastr';
+import GoogleButton from 'react-google-button'
 
 
 /**
@@ -49,9 +50,9 @@ class Signin extends Component {
             </div>
             <div><a href="#/reset">Forgot Password?</a></div>
             <div><a href="#/register">Don't have an account? Signup</a></div>
-
             <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
           </form>
+          <GoogleButton />
         </div>
 
       </div>

@@ -84,6 +84,11 @@ export default class NavDash extends Component {
           </Modal.Footer>
         </Modal>
 
+
+
+
+        
+
          <Modal show={this.state.showModal2} onHide={this.closeGroup}>
           <Modal.Header closeButton>
             <Modal.Title>Create Group</Modal.Title>
