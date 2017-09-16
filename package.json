@@ -9,7 +9,8 @@
     "start": "nodemon ./server/app",
     "dev": "webpack-dev-server",
     "coverage": "nyc --require babel-core/register mocha ./test/*.js",
-    "showcoverage": "coverage/lcov-report/index.html"
+    "showcoverage": "coverage/lcov-report/index.html",
+    "build": "webpack -p --config webpack.config.prod.js"
   },
   "repository": {
     "type": "git",

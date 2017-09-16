@@ -17,11 +17,11 @@ app.use(bodyParser.json());
 
 // Root API endpoint
 app.use('/', routes);
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../client/src/build/')));
 
 
 app.get('*', (req, res) => {
-  res.sendFile(`${process.cwd()}/dist/index.html`);
+  res.sendFile(`${process.cwd()}/client/src/build/index.html`);
 });
 
 
