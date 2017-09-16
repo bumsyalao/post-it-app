@@ -29,7 +29,7 @@ export default class Board extends Component {
     }
     componentWillUnmount() {
         AppStore.removeChangeListener(this.onChange);
-    }
+    } 
 
 
 

@@ -14,34 +14,34 @@ import SideBar from './Dashboard/SideBar'
 
 
 /**
- * Create a Route for users who have been authenticated by firebase
+ * Create a Route for users who have been authedenticated by firebase
  * 
- * @param {any} {component: Component, auth, ...rest} 
+ * @param {any} {component: Component, authed, ...rest} 
  * @returns 
  */
-function PrivateRoute ({component: Component, auth, ...rest}) {
+function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
     <Route
       {...rest}
-      render={(props) => auth === true
+      render={(props) => authed === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
   )
 }
 
 
 /**
- * Route for users who aren't authenticated
+ * Route for users who aren't authedenticated
  * 
- * @param {any} {component: Component, auth, ...rest} 
+ * @param {any} {component: Component, authed, ...rest} 
  * @returns 
  */
-function PublicRoute ({component: Component, auth, ...rest}) {
+function PublicRoute ({component: Component, authed, ...rest}) {
   return ( 
     <Route
       {...rest}
-      render={(props) => auth === false
+      render={(props) => authed === false
         ? <Component {...props} />
         : <Redirect to='/dashboard' />}
     />
@@ -59,19 +59,18 @@ function PublicRoute ({component: Component, auth, ...rest}) {
 export default class Routes extends Component { 
 
   render() {  
-    return (   
-       
+    return (         
            <div>
             <div className="row">
               <Switch>
                 <Route path='/' exact component={Home} />
-                <PublicRoute auth={this.props.auth} path='/login' component={Signin} />
-                <PublicRoute auth={this.props.auth} path='/register'  component={Signup} />
-                <PrivateRoute auth={this.props.auth} path='/dashboard' component={DashBoard} />
-                <Route auth={this.props.auth} path='/reset' component={ResetPassword} />
-                <Route auth={this.props.auth} path='/google' component={GoogleWelcome} />
-                <PrivateRoute auth={this.props.auth} path='/sidebar' component={SideBar} />
-                <PrivateRoute auth={this.props.auth} path='/navdash' component={NavDash} />
+                <Route authed={this.props.authed} path='/login' component={Signin} />
+                <PublicRoute authed={this.props.authed} path='/register'  component={Signup} />
+                <PrivateRoute authed={this.props.authed} path='/dashboard' component={DashBoard} />
+                <Route authed={this.props.authed} path='/reset' component={ResetPassword} />
+                <Route authed={this.props.authed} path='/google' component={GoogleWelcome} />
+                <PrivateRoute authed={this.props.authed} path='/sidebar' component={SideBar} />
+                <PrivateRoute authed={this.props.authed} path='/navdash' component={NavDash} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

@@ -20,7 +20,7 @@ import AppStore from '../../stores/AppStore'
  */
 export default class SideBar extends Component {
 
-  render() {
+  render() { 
     const userName = JSON.parse(localStorage.getItem('user'));
 
     return (

@@ -128,6 +128,9 @@ export default class Signup extends Component {
      toastr.error('The username already exist')  
     }else if(this.state.numbers.includes(this.refs.number.value)){
      toastr.error('The phone number already exist')
+    }else if(this.refs.password.value !== this.refs.verifyPassword.value){
+        toastr.error('Password does not match')
+
     }else if(!validateEmail(this.refs.email.value)){
         toastr.error('Invalid Email Address')
     }else {      
@@ -166,7 +169,10 @@ export default class Signup extends Component {
                                 </div>
                                 <div className='form-group'>
                                     <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
-                                </div>              
+                                </div>        
+                                <div className='form-group'>
+                                    <input type="password" ref='verifyPassword' className='form-control' placeholder='Verify Password' pattern="(?=.*\d).{6,}" required/>
+                                </div>       
                                 <button type='submit' className='btn btn-primary'>Submit</button>
                             </form>
                         </div>

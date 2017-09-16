@@ -13,6 +13,8 @@ let currentGroupStore = '';
 let messagesStore = [];
 let groupsStore = [];
 let groupUsersStore = [];
+let groupEmailStore = [];
+let groupNumbersStore = [];
 let databaseUsersStore = [];
 let notificationStore = [];
 let personalMessageStore = [];
@@ -119,6 +121,24 @@ const AppStore = assign({}, EventEmitter.prototype, {
   setGroupUsers(users) {
     groupUsersStore = users;
   },
+
+    // Get Emails in a Group
+    getGroupEmails() {
+      return groupEmailStore;
+    },
+  
+    setGroupEmails(emails) {
+      groupEmailStore = emails;
+    },
+  
+    // Get Numbers in a Group
+    getGroupNumbers() {
+      return groupNumbersStore;
+    },
+  
+    setGroupNumbers(numbers) {
+      groupNumbersStore = numbers;
+    },
 
   // Get Messages
   getMessages() {

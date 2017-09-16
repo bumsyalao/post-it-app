@@ -55,7 +55,7 @@ export default class Message extends Component {
       <div>
           <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
             <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">{this.props.message.user}&nbsp;
+              <h5 className="mb-1"><strong>{this.props.message.user}</strong>&nbsp;
                 <small className="text-muted">{this.props.message.Time}</small>&nbsp;                
                 <span onClick={this.handleSeenMessage.bind(this)} >  
                   <span className="glyphicon glyphicon-user"></span>

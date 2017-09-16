@@ -69,7 +69,7 @@ class App extends Component  {
         componentToMount =         <div className="row">
                                         <Navigation /> 
                                         <div className="row">
-                                            <Routes authed={this.state.authed} />
+                                            <Routes authed={this.state.authentication} />
                                         </div>
                                         <div className="row">
                                             <Footer />
