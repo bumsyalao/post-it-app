@@ -38,23 +38,27 @@ class Signin extends Component {
    */
   render() {
     return (
-      <div>
-        <div className='well col-md-8 col-md-offset-2'>
-          <h3>Sign In</h3>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <div className='form-group'>
-              <input type="text" ref='email' className='form-control' placeholder='Email' required />
-            </div>
-            <div className='form-group'>
-              <input type="password" ref='password' className='form-control' placeholder='Password' required/>
-            </div>
-            <div><a href="#/reset">Forgot Password?</a></div>
-            <div><a href="#/register">Don't have an account? Signup</a></div>
-            <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
-          </form>
-          <GoogleButton />
+      <div className="row">
+        <div className="col-sm-12">
+          <div className='well col-md-8 col-md-offset-2'>
+            <h3>Sign In</h3>
+            
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <div className='form-group'>
+                <input type="text" ref='email' className='form-control' placeholder='Email' required />
+              </div>
+              <div className='form-group'>
+                <input type="password" ref='password' className='form-control' placeholder='Password' required/>
+              </div>
+              <div><a href="#/reset">Forgot Password?</a></div>
+              <div><a href="#/register">Don't have an account? Signup</a></div>
+              <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
+            </form>
+        <GoogleButton  className="google-button" onClick={this.handleGoogleSignin.bind(this)}/>
+            
+          </div>
+          
         </div>
-
       </div>
 
     )
@@ -91,7 +95,7 @@ class Signin extends Component {
   * @returns {void}
   * @memberof Signin
 */
-  handleGoogle(e) {
+  handleGoogleSignin(e) {
     e.preventDefault();
     provider.addScope('profile');
     provider.addScope('email');

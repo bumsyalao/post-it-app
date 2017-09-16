@@ -85,12 +85,16 @@ export default class Signup extends Component {
             const token = result.credential.accessToken;
             const user = result.user;
             const googleUser = {
-                 username: user.displayName,
+                 displayName: user.displayName,
                  email: user.email,
                  uid: user.uid
             }
 
-         AppActions.google(googleUser);
+         //AppActions.google(googleUser);
+         AppActions.receiveLogin(googleUser);
+         
+         
+         console.log(googleUser)
       });   
    }
  
@@ -154,34 +158,31 @@ export default class Signup extends Component {
          var display = <GoogleWelcome googleUser={this.state.googleUser}/>
      } else {
          var display = <div className="container" >
-
-                        <div className="col-md-6 col-sm-6 col-xs-12">
-                            <h3>Sign Up</h3>
-                            <form onSubmit={this.handleSubmit.bind(this)}>
-                                <div className='form-group'>
-                                    <input type="text" ref='username' className='form-control' placeholder='Username' required/>
+                            <div className="row">
+                            <div className="col-sm-3"></div>
+                                <div className="col-md-6 col-sm-6 col-xs-12">
+                                    <h3>Sign Up</h3>
+                                    <form onSubmit={this.handleSubmit.bind(this)}>
+                                        <div className='form-group'>
+                                            <input type="text" ref='username' className='form-control' placeholder='Username' required/>
+                                        </div>
+                                        <div className='form-group'>
+                                            <input type="text" ref='email' className='form-control' placeholder='Email' required/>
+                                        </div>
+                                        <div className='form-group'>
+                                            <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
+                                        </div>
+                                        <div className='form-group'>
+                                            <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
+                                        </div>        
+                                        <div className='form-group'>
+                                            <input type="password" ref='verifyPassword' className='form-control' placeholder='Verify Password' pattern="(?=.*\d).{6,}" required/>
+                                        </div>       
+                                        <button type='submit' className='btn btn-primary'>Submit</button>
+                                    </form>
                                 </div>
-                                <div className='form-group'>
-                                    <input type="text" ref='email' className='form-control' placeholder='Email' required/>
-                                </div>
-                                <div className='form-group'>
-                                    <input type="text" ref='number' className='form-control' placeholder='Phone Number: Ex 2348066098146' pattern="[234][0-9]{12}" title="It will contain only 13 numbers and must start with 234" required/>
-                                </div>
-                                <div className='form-group'>
-                                    <input type="password" ref='password' className='form-control' placeholder='Password' pattern="(?=.*\d).{6,}" title="Must contain at least 6 characters and 1 number"  required/>
-                                </div>        
-                                <div className='form-group'>
-                                    <input type="password" ref='verifyPassword' className='form-control' placeholder='Verify Password' pattern="(?=.*\d).{6,}" required/>
-                                </div>       
-                                <button type='submit' className='btn btn-primary'>Submit</button>
-                            </form>
-                        </div>
-                        
-                          <div className="col-md-6 col-sm-6 col-xs-12">  
-                                <h3>Login With Google Account</h3>
-                                <button onClick={this.handleGoogleSignin.bind(this)}>Login with Gooogle</button>
-                         </div>
-
+                                <div className="col-sm-3"></div>
+                            </div>
                     </div>
      }
     return (  

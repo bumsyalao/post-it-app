@@ -55,7 +55,7 @@ export default class GoogleWelcome extends Component {
         const Uppercase = capitalizeFirstLetter(this.refs.username.value)
 
         const contact = {
-            userName: Uppercase.replace(" ", ""),
+            displayName: Uppercase.replace(" ", ""),
             email: this
                 .refs
                 .email
@@ -64,7 +64,7 @@ export default class GoogleWelcome extends Component {
             number: this
                 .refs
                 .number
-                .value
+                .value 
                 .trim(),
             uid: this.props.googleUser.uid,
             password: null
@@ -77,7 +77,8 @@ export default class GoogleWelcome extends Component {
             toastr.error("The phone number already exist")
         } else {
 
-            AppActions.google(contact);
+            //AppActions.google(contact);
+            console.log(contact)
 
             this.refs.username.value = '';
             this.refs.email.value = '';

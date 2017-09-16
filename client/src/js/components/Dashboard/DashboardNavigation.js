@@ -166,6 +166,7 @@ export default class DashboardNavigation extends Component {
             userName
         }
         AppActions.saveGroup(group);
+        console.log(group)
         this.refs.group.value = '';
 
     }

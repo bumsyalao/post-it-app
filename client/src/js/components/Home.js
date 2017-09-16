@@ -43,27 +43,22 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-            <section>
-              <center>
-                <div>
-                  <h1>Welcome to PostIt</h1>
-                  <p>PostIt is a simple application that allows friends and colleagues create
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12 col-md-6">
+            <div className="jumbotron">
+              <h1 className="display-3">Welcome to PostIt</h1>
+              <p className="lead">PostIt is a simple application that allows friends and colleagues create
                     groups for notifications.</p>
-                </div>
-              </center>
-              <div className=" col-md-5 col-sm-12 form-margin2">
+            </div>
+          </div>
 
-                <img
-                  src="http://www.affiliateprograms.com/blog/wp-content/uploads/2012/05/Group-Chat.jpg"
-                  height={342}
-                  width={442}/>
-              </div>
-              <div className="col-md-6 col-sm-12 form-margin">
-                <Signin/>
-              </div>
-            </section>
-
+          <div className="col-sm-12 col-md-6">
+            <div className="form-margin2">
+              <Signin/>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

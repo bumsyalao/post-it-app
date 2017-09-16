@@ -86,7 +86,7 @@ class App extends Component  {
 }  
     
  /**
-     * @method setApp
+     * @method setApp 
      * Monitors changes in the components and change the state
      * 
      * @memberof App

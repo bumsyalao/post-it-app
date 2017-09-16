@@ -175,7 +175,7 @@ module.exports = {
   resetPassword(email) {
     axios.post('/user/reset', { email
     }).then((response) => {
-      toastr.success(response.data);
+      toastr.success(response.data.message);
     }).catch((error) => {
       console.log(error);
     });

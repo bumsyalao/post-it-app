@@ -29,6 +29,11 @@ body {
   margin: auto;
   overflow: hidden; }
 
+.google-button {
+  margin-top: 20px;
+  background-color: white !important;
+  color: black !important; }
+
 ul {
   margin: 0;
   padding: 0;
