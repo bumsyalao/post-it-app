@@ -1,12 +1,19 @@
 import React, {Component} from 'react'
 
+
+/**
+ * Displays the List of Users in a group
+ * @param props 
+ * @export
+ * @class Users
+ * @extends {Component}
+ */
 export default class Users extends Component {
   render() {
-    return (
-      <div>
-        <li>{this.props.contact.Users}</li>
-         
-      </div>
+    return ( 
+        <li data-toggle="collapse" className="collapsed">
+            <a href="#"><i className="fa fa-globe fa-lg"></i>&nbsp; {this.props.KeyName.userName}</a>
+        </li>     
 
     )
   }

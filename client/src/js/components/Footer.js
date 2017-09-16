@@ -1,11 +1,33 @@
 import React, {Component} from 'react'
 
+
+/**
+ * Footer Component
+ * 
+ * @export
+ * @class Welcome
+ * @extends {Component}
+ */
 export default class Welcome extends Component {
   render() {
     return (
-      <footer>
-          <p>Andela, Copyright © 2017</p>
-        </footer>
+          <nav className="navbar navbar-inverse navbar-fixed-bottom" style={{ borderRadius: '0px'}}>
+          <div className="container-fluid">
+
+              <a className="navbar-brand low-red" href="#">Andela</a>
+            </div>
+            <div className="collapse navbar-collapse" id="myNavbar">
+
+                 
+              <ul className="nav navbar-nav">
+    
+            
+              </ul>
+              <ul className="nav navbar-nav navbar-right">
+              
+              </ul>
+          </div>
+        </nav>
     )
   }
 }

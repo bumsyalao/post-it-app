@@ -1,0 +1,61 @@
+import React, { Component } from 'react';
+
+import { MenuItem, Clearfix } from 'react-bootstrap';
+
+import { Modal, Button, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap'
+import Users from './Users'
+import Groups from './Groups'
+import AppActions from '../../actions/AppActions'
+import AppStore from '../../stores/AppStore'
+
+
+
+
+/**
+ * The Left hand Side of the 
+ * 
+ * @export
+ * @class SideBar
+ * @extends {Component}
+ */
+export default class SideBar extends Component {
+
+  render() { 
+    const userName = JSON.parse(localStorage.getItem('user'));
+
+    return (
+      <div className="sideBar message-padding">
+
+        <li data-toggle="collapse" data-target="#new" className="collapsed" onClick={() => AppActions.getGroups(userName)}>
+          <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Group <span className="arrow"></span></a>
+        </li>
+        <ul className="sub-menu collapse" id="new">
+          {
+            this.props.group.map((KeyName, KeyIndex) => {
+              return (
+                <Groups KeyName={KeyName} key={KeyIndex} />
+              )
+            })
+          }
+        </ul>
+        <br /> 
+
+
+        <li data-toggle="collapse" data-target="#new" className="collapsed">
+          <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Users <span className="arrow"></span></a>
+        </li>
+        {this.props.contact.map((KeyName, KeyIndex) => {
+          return (
+            <Users KeyName={KeyName} key={KeyIndex} />
+          )
+        })}
+        <br />
+
+      </div>
+
+    )
+
+  }
+
+
+}

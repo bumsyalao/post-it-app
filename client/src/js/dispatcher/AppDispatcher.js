@@ -5,11 +5,10 @@ const AppDispatcher = assign(new Dispatcher(), {
   handleViewAction(action) {
     const payload = {
       source: 'VIEW_ACTION',
-      action: action
+      action
     };
     this.dispatch(payload);
-    
-    }
+  }
 
 });
 

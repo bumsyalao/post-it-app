@@ -1,16 +1,19 @@
 import React, {Component} from 'react'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {Modal, Button, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap'
-
 import AppActions from '../../actions/AppActions'
 import AppStore from '../../stores/AppStore'
 import GroupOptions from './GroupOptions'
+import toastr from 'toastr'
 
-
-
-
+/**
+ * Displays the navigation of the dashboard
+ * 
+ * @export
+ * @class NavDash
+ * @extends {Component}
+ */
 export default class NavDash extends Component {
-
   state = { 
     showModal: false,
     showModal2: false,
@@ -46,11 +49,8 @@ export default class NavDash extends Component {
 
 
   render() {
-
-
-    
-    return (
-      <Navbar inverse collapseOnSelect>
+    return ( 
+      <Navbar inverse collapseOnSelect className= "navbar-height navbar-fixed-top navDash">
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -84,6 +84,11 @@ export default class NavDash extends Component {
           </Modal.Footer>
         </Modal>
 
+
+
+
+        
+
          <Modal show={this.state.showModal2} onHide={this.closeGroup}>
           <Modal.Header closeButton>
             <Modal.Title>Create Group</Modal.Title>
@@ -97,7 +102,6 @@ export default class NavDash extends Component {
             </form>             
           </Modal.Body>
           <Modal.Footer>
-            {/*<Button href="#/dashboard" onClick={this.close2}>Close</Button>*/}
             <a href="#/dashboard" onClick={this.closeGroup}> Close</a>
           </Modal.Footer>
         </Modal>
@@ -134,7 +138,7 @@ export default class NavDash extends Component {
 
           <Nav pullRight>
             <NavItem eventKey={1} href="#" onClick = {this.openNotify}>Notification 
-                <span className="glyphicon glyphicon-envelope"></span>
+                
         </NavItem>
             <NavItem eventKey={2} href="#" onClick={this.logout.bind(this)}>Logout</NavItem>
           </Nav>
@@ -153,9 +157,9 @@ export default class NavDash extends Component {
       } 
 
     // Implements the function
-      const Uppercase = capitalizeFirstLetter(this.refs.group.value.trim())
+      const groupName = capitalizeFirstLetter(this.refs.group.value.trim())
             const group = {
-              groupName: Uppercase,
+              groupName,
               userName: this.props.user.displayName
             }    
              AppActions.saveGroup(group);
@@ -164,32 +168,26 @@ export default class NavDash extends Component {
     }
     
 
- // Add User to the Group
+
     addUser(e){
     e.preventDefault(); 
-
-    // Function to convert first letter of each word to capital letter   
+  
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
    } 
 
-    // Implements the function
-const Uppercase = capitalizeFirstLetter(this.refs.user.value)
-
-
-
+const userName = capitalizeFirstLetter(this.refs.user.value)
       const addUser = {
-         groupname: this.refs.type.value.trim(), //group 
-         user: Uppercase   //user
+         groupname: this.refs.type.value.trim(), 
+         userName
       }   
-
       if(this.refs.type.value === ''){
-        alert("Select a group name from the drop down list")
+        toastr.error("Select a group name from the drop down list")
       }
-      else if (this.props.databaseUsers.includes(Uppercase)){
+      else if (this.props.databaseUsers.includes(userName)){
         AppActions.saveGroupUser(addUser);
       }else{
-        alert("The User dosen't exist")
+        toastr.error("The User dosen't exist")
       }
       this.refs.type.value = ''; 
       this.refs.user.value = '';
