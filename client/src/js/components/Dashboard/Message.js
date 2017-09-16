@@ -53,28 +53,10 @@ export default class Message extends Component {
   render() {
     return (
       <div>
-
-        {/* 
-      <div className="msg-border">
-            <span className="left-side">{this.props.message.user}</span>
-            <span className="right-side">{this.props.message.Time} </span>
-             <span onClick={this.handleSeenMessage.bind(this)} >  
-              <span className="glyphicon glyphicon-user"></span>
-          </span> 
-           
-      <div className="col-md-12">
-      <div className="msg">
-        {this.props.message.text}
-        </div>
-      </div>
-      </div>
-*/}
-
-        <div className="viewMessageBoard">
           <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
             <div className="d-flex w-100 justify-content-between">
               <h5 className="mb-1">{this.props.message.user}&nbsp;
-                <small className="text-muted">{this.props.message.Time}</small>                
+                <small className="text-muted">{this.props.message.Time}</small>&nbsp;                
                 <span onClick={this.handleSeenMessage.bind(this)} >  
                   <span className="glyphicon glyphicon-user"></span>
                 </span>
@@ -82,7 +64,7 @@ export default class Message extends Component {
             </div>
             <p className="mb-1">{this.props.message.text}</p>
           </a>
-        </div>
+
 
         <Modal show={this.state.showModal} onHide={this.handleClose}>
           <Modal.Header closeButton>

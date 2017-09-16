@@ -4,7 +4,6 @@ import AppActions from '../../actions/AppActions'
 import NavDash from './NavDash';
 import DashboardNavigation from './DashboardNavigation'
 import SideBar from './SideBar';
-import MessageBoard from './MessageBoard'
 import Board from './Board'
 import Welcome from '../Welcome'
 import WelcomeBoard from './WelcomeBoard'
