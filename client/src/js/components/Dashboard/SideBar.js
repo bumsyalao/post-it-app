@@ -19,50 +19,42 @@ import AppStore from '../../stores/AppStore'
  * @extends {Component}
  */
 export default class SideBar extends Component {
-  
+
   render() {
-
-    let userName = JSON.parse(localStorage.getItem('user'));
-    // const groupName = JSON.parse(localStorage.getItem('groupName'))
-    // console.log(this.props.group)
-    // console.log(this.props.group === groupName)
-    // console.log(groupName)
-
-  let groupObject = this.props.group
+    const userName = JSON.parse(localStorage.getItem('user'));
 
     return (
       <div className="sideBar message-padding">
-        <div>
-          <h4>{userName}</h4>
-        </div>
 
-        <h4>Groups</h4>
-        <ul className="list-styles">
-            {
-              groupObject.map((KeyName, KeyIndex) => {
-                return (
-                  <Groups KeyName={KeyName} key={KeyIndex} />
-                )
-              })
-            }
+        <li data-toggle="collapse" data-target="#new" className="collapsed" onClick={() => AppActions.getGroups(userName)}>
+          <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Group <span className="arrow"></span></a>
+        </li>
+        <ul className="sub-menu collapse" id="new">
+          {
+            this.props.group.map((KeyName, KeyIndex) => {
+              return (
+                <Groups KeyName={KeyName} key={KeyIndex} />
+              )
+            })
+          }
         </ul>
+        <br /> 
+
+
+        <li data-toggle="collapse" data-target="#new" className="collapsed">
+          <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Users <span className="arrow"></span></a>
+        </li>
+        {this.props.contact.map((KeyName, KeyIndex) => {
+          return (
+            <Users KeyName={KeyName} key={KeyIndex} />
+          )
+        })}
         <br />
 
-        <h4> Users </h4>
-        <ul className="list-styles">
-        {
-              this.props.contact.map((KeyName, KeyIndex) => {
-                return (
-                  <Users KeyName={KeyName} key={KeyIndex} />
-                )
-              })
-            }
-
-        </ul>
-            <li>User</li>
-            <li>User</li>
       </div>
+
     )
+
   }
 
 

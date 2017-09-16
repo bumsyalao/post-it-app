@@ -9,8 +9,8 @@ const { validStringContent, validStringLength } =
  */
 class Group {
     /**
- * @description: This method lets registered users create group
- * route POST: /group
+let groupsStore = [{groupName:'Andela', groupName:'Facebook', groupName:'Twitter'}];
+let groupUsersStore = [{userName:'Tony', userName:'Kunle', userName:'David', userName:'Mark' }];
  * @param {Object} req requset object
  * @param {Object} res response object
  * @return {Object} response containing the created group

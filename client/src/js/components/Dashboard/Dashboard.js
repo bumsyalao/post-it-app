@@ -5,7 +5,9 @@ import NavDash from './NavDash';
 import DashboardNavigation from './DashboardNavigation'
 import SideBar from './SideBar';
 import MessageBoard from './MessageBoard'
+import Board from './Board'
 import Welcome from '../Welcome'
+import WelcomeBoard from './WelcomeBoard'
 
 
 import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
@@ -41,9 +43,8 @@ export default class DashBoard extends Component {
    * @return {void}
    * @memberof DashBoard
    */
-  componentDidMount() {
-    let userName = JSON.parse(localStorage.getItem('user'));
-    AppActions.getGroups(userName)
+  componentWillMount() {
+
     AppStore.addChangeListener(this.onChange);
   }
 
@@ -69,6 +70,7 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   render() {
+    let userName = JSON.parse(localStorage.getItem('user'));
     return (
       <div>
         <div className="nav-side-menu">
@@ -78,9 +80,9 @@ export default class DashBoard extends Component {
 
             <ul id="menu-content" className="menu-content collapse out">
 
-              <li className="collapsed active">
+              <li>
                 <a href="#">
-                  <i className="fa fa-dashboard fa-lg"></i>&nbsp; Ebuka @ Andela group
+                  <i className="fa fa-dashboard fa-lg"></i>&nbsp; {userName} 
                      </a>
               </li>
               <br/>
@@ -91,71 +93,17 @@ export default class DashBoard extends Component {
                 user={this.state.user}
                 databaseUsers={this.state.databaseUsers}
                 notification={this.state.notification}
-              />
+              />              
               <br/>
-
-
-
-
-              <ul className="sub-menu collapse" id="service">
-                <li>New Service 1</li>
-                <li>New Service 2</li>
-                <li>New Service 3</li>
-                <li>New Service 1</li>
-                <li>New Service 2</li>
-                <li>New Service 3</li>
-                <li>New Service 1</li>
-                <li>New Service 2</li>
-                <li>New Service 3</li>
-                <li>New Service 1</li>
-                <li>New Service 2</li>
-                <li>New Service 3</li>
-              </ul>
-
-              <li>
-                <a href="#">
-                  <i className="fa fa-user fa-lg"></i>&nbsp; Groups
-                     </a>
-              </li>
-
-              <SideBar />
-
-              <li data-toggle="collapse" data-target="#new" className="collapsed">
-                <a href="#"><i className="fa fa-car fa-lg"></i> New <span className="arrow"></span></a>
-              </li>
-              <ul className="sub-menu collapse" id="new">
-                <li>New New 1</li>
-                <li>New New 2</li>
-                <li>New New 3</li>
-              </ul>
-
-
-
-
-
-              <li>
-                <a href="#">
-                  <i className="fa fa-users fa-lg"></i> Users
-                     </a>
-              </li>
-
-
+                <SideBar contact={this.state.contacts} group={this.state.groups} user={this.state.user} currentGroup={this.state.currentGroup}/>
             </ul>
 
           </div>
         </div>
-
-
-        <div className="container" id="main">
-          <div className="row">
-            <div className="col-md-12">
-              <h4>This is suppose to be in the main content</h4>
-            </div>
-          </div>
-        </div>
+         {!this.state.currentGroup ? <WelcomeBoard /> : <Board contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />}
       </div>
     )
-  }
+  } 
 
 
   /**

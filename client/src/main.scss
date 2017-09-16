@@ -18,6 +18,20 @@ body {
   margin-bottom: 50px;
 }
 
+.viewMessageBoard {
+	overflow-y: scroll;
+	height: 600px;
+}
+
+.sendMessageDiv {
+	margin-top: 4%;
+}
+
+.sendMessageInput {
+	border: 1px solid #2e353d;
+	padding: 1%;
+}
+
 /* Global */
 .container {
   width: 80%;

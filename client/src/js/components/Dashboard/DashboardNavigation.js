@@ -49,7 +49,6 @@ export default class DashboardNavigation extends Component {
 
 
     render() {
-        console.log(this.props.contact)
         return (
             <div>
 
@@ -155,6 +154,7 @@ export default class DashboardNavigation extends Component {
     }
 
     createGroup(e) {
+        const userName = JSON.parse(localStorage.getItem('user'));
         e.preventDefault()
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
@@ -163,9 +163,9 @@ export default class DashboardNavigation extends Component {
         const groupName = capitalizeFirstLetter(this.refs.group.value.trim())
         const group = {
             groupName,
-            userName: this.props.user.displayName
+            userName
         }
-        console.log(group);
+        AppActions.saveGroup(group);
         this.refs.group.value = '';
 
     }

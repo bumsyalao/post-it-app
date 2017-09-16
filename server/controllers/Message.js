@@ -36,7 +36,7 @@ class Message {
             {
               user: userName,
               Message: messages,
-              Time: moment().format('h:mm a'),
+              Time: moment().format('h:mm a, MMM Do'),
               Priority: priority,
             })
             .then(() => {

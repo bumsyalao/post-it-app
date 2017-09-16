@@ -12,9 +12,9 @@ import AppActions from '../../actions/AppActions'
 export default class Groups extends Component {
 render() {
       return (
-           <div onClick={() => AppActions.searchUserMessage(this.props.KeyName.groupName)}>  
-              <a href="#/dashboard" className="text-decoration">  {this.props.KeyName.groupName}</a>
-          </div>  
+          <li onClick={() => AppActions.searchUserMessage(this.props.KeyName.groupName)}>
+          <a href="#/dashboard" className="text-decoration">  {this.props.KeyName.groupName}</a>
+          </li>
       )
     }
 }

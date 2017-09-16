@@ -30,7 +30,7 @@ export default class Signup extends Component {
      this.onChange= this.onChange.bind(this)
   }
 
-
+ 
    /**
     * @method componentDidMount
     * Adds an event Listener to the Store and fires when the component is fully mounted.

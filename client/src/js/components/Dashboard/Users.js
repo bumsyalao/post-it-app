@@ -10,10 +10,10 @@ import React, {Component} from 'react'
  */
 export default class Users extends Component {
   render() {
-    return (
-      <div>
-        <li>{this.props.KeyName.userName}</li>       
-      </div>
+    return ( 
+        <li data-toggle="collapse" className="collapsed">
+            <a href="#"><i className="fa fa-globe fa-lg"></i>&nbsp; {this.props.KeyName.userName}</a>
+        </li>     
 
     )
   }
