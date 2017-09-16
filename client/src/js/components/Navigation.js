@@ -1,47 +1,44 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
 
+
+/**
+ * Navigation Component gives the user access to navigate the app
+ * 
+ * @export
+ * @class Navigation
+ * @extends {Component}
+ */
 export default class Navigation extends Component {
     state = {
-    authed: false,
+    auth: false,
     loading: true,
   }
+
+
+  /**
+   * Makes an action call to to lets users navigate
+   * 
+   * @returns 
+   * @memberof Navigation
+   */
   render() {
     return (
       <div>
-           <header>
-          <div className="container">
-            <div id="branding">
-              <h1>
-                <span className="highlight">PostIt &nbsp;
-                </span>Messenger App</h1>
-            </div>
-            <nav>
-              <ul>
-                <li> <Link to='/'>Home</Link></li>            
-                 <li>
-                  {this.state.authed
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}} onClick={this.handleSubmit.bind(this)} className="navbar-brand">Logout</button>
-                    : <span>
-                      
-                      <Link to="/register">SignUp&nbsp;&nbsp;</Link>
-                      <Link to="/login">SignIn&nbsp;&nbsp;</Link>    
-                      </span>}
-                </li>   
-                
-              </ul>
-            </nav>
-            
-          </div>
-        </header>
-
+          <nav className="navbar navbar-inverse fixed-top" style={{ borderRadius: '0px'}}>
+            <div className="container-fluid">
+              <div className="navbar-header" id="navbar-header">
+                <span style={{ marginRight: '30px' }} className="navbar-brand low-red" href="#"> &nbsp;&nbsp;POST IT</span>
+              </div>
+              <div className="collapse navbar-collapse" id="myNavbar">
+                <ul className="nav navbar-nav">
+                  <li><Link to='/'>Home </Link></li>
+                </ul>
+             </div>
+            </div> 
+          </nav>
       </div>
 
     )
-  }
-
-  handleSubmit(){
-      console.log("Logout")
   }
 }
