@@ -8,9 +8,9 @@ const should = chai.should();
 const expect = chai.expect;
 
 describe('EndPoint: SignUp', () => {
-  const userName = 'Cem';
+  const userName = 'Cemb';
   const password = 'emeka5612345';
-  const email = 'emekasmith@gmal.com';
+  const email = 'emekasmithyu@gmal.com';
   const number = '2348066098146';
 
   it('It returns status 201 when a user is created', (done) => {
