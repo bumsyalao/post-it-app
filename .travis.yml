@@ -5,3 +5,5 @@ before_install:
   - travis_wait npm install
 script:
   - npm run coverage
+after_success:
+    
