@@ -5,7 +5,6 @@ const express = require('express');
 
 const router = express.Router();
 router.post('/user/signup', User.signup);
-router.post('/user/google', User.google);
 router.post('/user/signin', User.signin);
 router.post('/user/signout', User.signout);
 router.post('/user/reset/', User.resetPassword);
