@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nyc mocha --timeout 150000",
     "jest": "jest",
-    "start": "nodemon ./server/app",
+    "start": "node ./server/app",
     "dev": "webpack-dev-server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack -p --config webpack.config.prod.js"
