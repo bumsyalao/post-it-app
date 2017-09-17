@@ -116,7 +116,14 @@ const AppActions = {
 
   google(googleUser) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.GOOGLE,
+      actionType: AppConstants.GOOGLE_LOGIN,
+      googleUser
+    });
+  },
+
+  googleSignup(googleUser) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.GOOGLE_SIGNUP,
       googleUser
     });
   },

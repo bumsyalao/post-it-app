@@ -93,7 +93,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
   getGoogleSignup() {
     return googleSignUpStore;
   },
-  setGoogleSignup(googleUser) {
+  setGoogleSignIn(googleUser) {
     googleSignUpStore = googleUser;
   },
   getGroups() {
@@ -234,7 +234,7 @@ AppDispatcher.register((payload) => {
       AppStore.setdatabaseUsers(action.contacts);
       AppStore.emit(CHANGE_EVENT);
       break;
-    
+
     case AppConstants.RECEIVE_EMAILS:
       AppStore.setEmails(action.emails);
       AppStore.emit(CHANGE_EVENT);
@@ -291,9 +291,9 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.RECEIVE_SEEN_USERS:
       AppStore.setSeenUsers(action.users);
-      AppStore.emit(CHANGE_EVENT); 
+      AppStore.emit(CHANGE_EVENT);
       break;
- 
+
     case AppConstants.SIGN_IN:
       AppAPI.login(action.contact);
       AppStore.emit(CHANGE_EVENT);
@@ -313,9 +313,13 @@ AppDispatcher.register((payload) => {
       AppStore.emit(CHANGE_EVENT);
       break;
 
-    case AppConstants.GOOGLE:
-      AppStore.setGoogleSignup(action.googleUser);
-      //AppAPI.google(action.googleUser);
+    case AppConstants.GOOGLE_LOGIN:
+      AppStore.setGoogleSignIn(action.googleUser);
+      AppStore.emit(CHANGE_EVENT);
+      break;
+
+    case AppConstants.GOOGLE_SIGNUP:
+      AppAPI.googleSignUp(action.googleUser);
       AppStore.emit(CHANGE_EVENT);
       break;
 

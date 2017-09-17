@@ -171,17 +171,24 @@ module.exports = {
       });
   },
 
-  google(googleUser) {
-    if (googleUser.number) {
-      axios.post('/user/google', { googleUser
-      }).then((response) => {
-        const user = response.data;
-        AppActions.receiveLogin(user);
-        toastr.warning('Google Sign Up feature is incomplete ');
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
+  googleSignUp(googleUser) {
+    const userName = googleUser.username.replace(' ', '');
+    const email = googleUser.email;
+    const number = googleUser.number;
+    const uid = googleUser.uid;
+
+    axios.post('/google/signup', {
+      userName,
+      email,
+      number,
+      uid
+    }).then((response) => {
+      const user = response.data;
+      AppActions.receiveLogin(user);
+      toastr.success('Welcome To PostIt');
+    }).catch((error) => {
+      console.log(error);
+    });
   },
 
   resetPassword(email) {
