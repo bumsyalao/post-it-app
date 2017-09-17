@@ -72,7 +72,7 @@ export default class Board extends Component {
         e.preventDefault();  
         const userName = JSON.parse(localStorage.getItem('user')); 
         const message = {
-          user: userName,
+          user: userName.replace(" ", ""),
           group: this.state.currentGroup,     
           text: this.refs.message.value.trim(),
           Time: moment().format('h:mm a, MMM Do'),

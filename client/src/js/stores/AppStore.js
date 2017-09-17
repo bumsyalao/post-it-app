@@ -320,7 +320,7 @@ AppDispatcher.register((payload) => {
       break;
 
     case AppConstants.SEARCH_USER_MESSAGE:
-      AppStore.setCurrentGroup(action.group);
+      AppStore.setCurrentGroup(action.group.groupName);
       AppAPI.searchUserMessageInGroup(action.group);
       AppStore.emit(CHANGE_EVENT);
       break;

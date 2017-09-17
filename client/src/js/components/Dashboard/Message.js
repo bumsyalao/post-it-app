@@ -72,13 +72,15 @@ export default class Message extends Component {
           </Modal.Header>
           <Modal.Body>
             <ul>
-              {
+            
+              {!this.state.seenMessage ?
 
                 Object.keys(this.state.seenMessage).map(function (keyName, keyIndex) {
 
                   return <li key={keyIndex}>{keyName}</li>
 
-                })
+                }):
+                <li className='mylist'>Empty</li>
 
               }
             </ul>

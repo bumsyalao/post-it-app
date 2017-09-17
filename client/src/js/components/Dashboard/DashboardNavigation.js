@@ -130,7 +130,7 @@ export default class DashboardNavigation extends Component {
 
                                 Object.keys(this.props.notification).map(function (keyName, keyIndex) {
 
-                                    return <li key={keyIndex}>{keyName}</li>
+                                    return <li className='mylist' key={keyIndex}>{keyName}</li>
 
                                 })
 

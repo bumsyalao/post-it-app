@@ -133,7 +133,7 @@ class Signin extends Component {
         const user = result.user;
         const displayName = user.displayName
         const googleUser = {
-          displayName: displayName.replace(" ", ""),
+          displayName: displayName,
           email: user.email,
           uid: user.uid
         }

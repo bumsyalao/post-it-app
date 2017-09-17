@@ -21,7 +21,8 @@ import AppStore from '../../stores/AppStore'
 export default class SideBar extends Component {
 
   render() { 
-    const userName = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userName = user.replace(" ", "")
 
     return (
       <div className="sideBar message-padding">
