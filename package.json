@@ -11,6 +11,15 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack -p --config webpack.config.prod.js"
   },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Charpell/post-it-app2.git"
@@ -60,6 +69,7 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "coveralls": "*",
     "css-loader": "^0.28.4",
     "eslint": "^3.19.0",
