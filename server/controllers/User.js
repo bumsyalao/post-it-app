@@ -249,8 +249,25 @@ class User {
     });
   }
 
+    /**
+ * @description: This method retrieves all emails in user database
+ * route GET: user/allEmails
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing all emails in the user database
+ */
+  static allEmails(req, res) {
+    usersRef.once('value', (snap) => {
+      const emails = [];
+      snap.forEach((nos) => {
+        emails.push(nos.val().email);
+      });
+      res.status(200).send(emails);
+    });
+  }
+
   /**
- * @description: This method reset password of users 
+ * @description: This method reset password of users
  * route: GET: /user/reset
  * @param {Object} req request object
  * @param {Object} res response object

@@ -69,21 +69,21 @@ const config = {
   },
 
   plugins: [HtmlWebpackPluginConfig,
-    new ExtractTextPlugin({ filename: 'main.css', disable: false, allChunks: true }),
+    new ExtractTextPlugin({
+      filename: 'main.css',
+      disable: false, 
+      allChunks: true }),
     new HtmlWebpackPlugin({
-        template: './client/index.html',
-        filename: 'index.html',
-        inject: 'body'
-      }),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production')
-        }
-      }),
-      new webpack.optimize.UglifyJsPlugin()
-    // new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
-    // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-    // new webpack.HotModuleReplacementPlugin(),
+      template: './client/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin()
   ],
 };
 

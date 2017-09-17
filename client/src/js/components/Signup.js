@@ -70,33 +70,6 @@ export default class Signup extends Component {
     } 
 
 
-    /**
-     * Handles Google Sign in
-     * 
-     * @param {any} e 
-     * @memberof Signup
-     */
-    handleGoogleSignin(e){
-      e.preventDefault();      
-        provider.addScope('profile');
-        provider.addScope('email');
-        firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            const token = result.credential.accessToken;
-            const user = result.user;
-            const googleUser = {
-                 displayName: user.displayName,
-                 email: user.email,
-                 uid: user.uid
-            }
-
-         //AppActions.google(googleUser);
-         AppActions.receiveLogin(googleUser);
-         
-         
-         console.log(googleUser)
-      });   
-   }
  
    /**
    * Makes an action call to Sign up a user with username, email, phone number  and password

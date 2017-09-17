@@ -11,10 +11,16 @@ import AppActions from '../../actions/AppActions'
  */
 export default class Groups extends Component {
 render() {
+    const userName = JSON.parse(localStorage.getItem('user'));
+    const group = {
+        groupName: this.props.KeyName.groupName,
+        userName
+    }
       return (
-          <li onClick={() => AppActions.searchUserMessage(this.props.KeyName.groupName)}>
+          <li onClick={() => AppActions.searchUserMessage(group)}>
           <a href="#/dashboard" className="text-decoration">  {this.props.KeyName.groupName}</a>
           </li>
       )
     }
+
 }

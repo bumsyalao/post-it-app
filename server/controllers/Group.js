@@ -9,8 +9,6 @@ const { validStringContent, validStringLength } =
  */
 class Group {
     /**
-let groupsStore = [{groupName:'Andela', groupName:'Facebook', groupName:'Twitter'}];
-let groupUsersStore = [{userName:'Tony', userName:'Kunle', userName:'David', userName:'Mark' }];
  * @param {Object} req requset object
  * @param {Object} res response object
  * @return {Object} response containing the created group
@@ -26,7 +24,6 @@ let groupUsersStore = [{userName:'Tony', userName:'Kunle', userName:'David', use
       const db = firebase.database();
       groupRef.child(groupName).once('value', (snapshot) => {
         if (!snapshot.exists()) {
-          // Create  and Group and Insert Username
           groupRef.child(groupName).child('Users').child(userName)
           .set(userName);
           groupRef.child(groupName).child('Users').child('Bot').set('Bot');
@@ -130,13 +127,14 @@ let groupUsersStore = [{userName:'Tony', userName:'Kunle', userName:'David', use
 
   /**
  * @description: This method retrieves all users and messages in a group
- * route: GET: /groups/:groupID
+ * route: GET: /groups/:groupName
  * @param {Object} req request object
  * @param {Object} res response object
  * @return {Object} response containing all users nd messages of a group
  */
   static usersAndMessagesInGroups(req, res) {
     const groupName = req.params.groupName;
+    const userName = req.params.user;
     const messages = [];
     const users = [];
     const messageRef = firebase.database()
@@ -176,27 +174,21 @@ let groupUsersStore = [{userName:'Tony', userName:'Kunle', userName:'David', use
         });
       });
     });
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const displayName = user.displayName;
-        const messageIDRef = firebase.database()
-        .ref()
-        .child('Groups')
-        .child(groupName)
-        .child('Messages');
-        messageIDRef.once('value', (snap) => {
-          const messageIDs = [];
-          snap.forEach((data) => {
-            messageIDs.push(data.key);
-          });
-          messageIDs.forEach((entry) => {
-            const db = firebase.database();
-            db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
-            .child(displayName).set(displayName);
-          });
-        });
-      }
+    const messageIDRef = firebase.database()
+    .ref()
+    .child('Groups')
+    .child(groupName)
+    .child('Messages');
+    messageIDRef.once('value', (snap) => {
+      const messageIDs = [];
+      snap.forEach((data) => {
+        messageIDs.push(data.key);
+      });
+      messageIDs.forEach((entry) => {
+        const db = firebase.database();
+        db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
+        .child(userName).set(userName);
+      });
     });
   }
 

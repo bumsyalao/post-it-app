@@ -46,6 +46,16 @@ module.exports = {
         });
   },
 
+  getEmails() {
+    axios.get('/users/allemails')
+        .then((response) => {
+          AppActions.receiveEmails(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  },
+
   saveGroup(group) {
     axios.post('/group', {
       groupName: group.groupName,
@@ -91,9 +101,10 @@ module.exports = {
   },
 
   saveMessages(message) {
-    axios.post('/groupName/messages/notification/priority', {
-      groupName: message.group,
-      messages: message.text,
+    axios.post('/group/user/message/notification/priority', {
+      group: message.group,
+      user: message.user,
+      message: message.text,
       notification: message.notification,
       priority: message.priority
     })
@@ -145,14 +156,15 @@ module.exports = {
     });
   },
 
-  searchUserMessageInGroup(keyName) {
-    const groupName = keyName;
-    axios.get(`/groups/${groupName}`)
-      .then((users) => {
-        const messages = users.data.messages;
-        const user = users.data.users;
+  searchUserMessageInGroup(group) {
+    const groupName = group.groupName;
+    const user = group.userName;
+    axios.get(`/groups/${groupName}/${user}`)
+      .then((response) => {
+        const messages = response.data.messages;
+        const users = response.data.users;
         AppActions.receiveMessages(messages);
-        AppActions.receiveUser(user);
+        AppActions.receiveUser(users);
       })
       .catch((error) => {
         console.log(error);
