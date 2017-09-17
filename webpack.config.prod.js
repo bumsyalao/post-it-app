@@ -11,8 +11,6 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 
 const config = {
-  devtool: 'cheap-module-eval-source-map',
-
   entry: [
     './client/src/index.js'
   ],
@@ -22,9 +20,6 @@ const config = {
     filename: 'prod_bundle.js'
   },
   devServer: {
-    hot: true,
-    contentBase: path.join(__dirname, 'client/build'),
-    publicPath: '/',
     historyApiFallback: true
   },
 
@@ -83,7 +78,9 @@ const config = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      compress: true
+    })
   ],
 };
 
