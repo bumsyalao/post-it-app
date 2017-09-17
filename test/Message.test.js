@@ -62,3 +62,19 @@ describe('Create Message', () => {
       });
   });
 });
+
+describe('EndPoint: It returns every user who have seen a message', () => {
+  it('It returns status 200 when the all notification is received', (done) => {
+    const groupName = 'FILE';
+    const messageID = '-KtnPBIB2vrb0t3znQNo';
+    request(app)
+      .get('/groups/:groupName/:messageID')
+      .send(groupName, messageID)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        if (err) return done(err);
+        done();
+      });
+  });
+});

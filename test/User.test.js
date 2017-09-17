@@ -8,9 +8,9 @@ const should = chai.should();
 const expect = chai.expect;
 
 describe('EndPoint: SignUp', () => {
-  const userName = 'Clean';
-  const password = 'ebuka12345';
-  const email = 'ebuka20@gmal.com';
+  const userName = 'Cem';
+  const password = 'emeka5612345';
+  const email = 'emekasmith@gmal.com';
   const number = '2348066098146';
 
   it('It returns status 201 when a user is created', (done) => {
@@ -282,16 +282,16 @@ describe('SignOut Route', () => {
 });
 
 describe('EndPoint: Reset Password', () => {
-  const validEmail = 'Hh@gmail.com';
+  const validEmail = 'wesumeh@gmail.com';
   const invalidEmail = 'gfhr@gmail.com';
 
-  it('It returns status 201 when the email is valid', (done) => {
+  it('It returns status 205 when the email is valid', (done) => {
     request(app)
       .post('/user/reset')
       .send({ email: validEmail })
       .set('Accept', 'application/json')
       .end((err, res) => {
-        res.status.should.equal(201);
+        res.status.should.equal(205);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
@@ -300,6 +300,7 @@ describe('EndPoint: Reset Password', () => {
         done();
       });
   });
+
 
   it('It returns status 401 if a email/user dose not exist', (done) => {
     request(app)
@@ -376,21 +377,6 @@ describe('EndPoint: Get all Emails from the Database', () => {
   });
 });
 
-describe('EndPoint: It returns every user who have seen a message', () => {
-  it('It returns status 200 when the all notification is received', (done) => {
-    const groupName = 'FILE';
-    const messageID = '-KtnPBIB2vrb0t3znQNo';
-    request(app)
-      .get('/groups/:groupName/:messageID')
-      .send(groupName, messageID)
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(200);
-        if (err) return done(err);
-        done();
-      });
-  });
-});
 
 describe('EndPoint: Get all Notification for a User', () => {
   it('It returns status 200 when the all notification is received', (done) => {

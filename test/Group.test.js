@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 const should = chai.should();
 
 describe('Create Group', () => {
-  const groupName = 'Regroup';
+  const groupName = 'Army';
   const userName = 'Ebuka';
   it('It returns status 201 when the user creates group', (done) => {
     request(app)
