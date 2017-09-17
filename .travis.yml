@@ -5,6 +5,3 @@ before_install:
   - travis_wait npm install
 script:
   - npm run coverage
-after_success:
-    - npm install -g codeclimate-test-reporter
-    - codeclimate-test-reporter < coverage/lcov.info
