@@ -107,10 +107,10 @@ const AppActions = {
     });
   },
 
-  searchUserMessage(keyName) {
+  searchUserMessage(group) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.SEARCH_USER_MESSAGE,
-      keyName
+      group
     });
   },
 

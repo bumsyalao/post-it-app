@@ -70,7 +70,6 @@ export default class Board extends Component {
     }
     sendMessage(e){
         e.preventDefault();  
-        console.log(this.state.currentGroup)
         const userName = JSON.parse(localStorage.getItem('user')); 
         const message = {
           user: userName,
@@ -83,7 +82,6 @@ export default class Board extends Component {
        
        if(typeof message.text === 'string' && message.text.length > 0){                    
            AppActions.saveMessage(message)  
-           console.log(message)
           this.refs.message.value = '';
        }             
     }

@@ -8,12 +8,12 @@ const should = chai.should();
 const expect = chai.expect;
 
 describe('EndPoint: SignUp', () => {
-  const userName = 'Teahn';
-  const password = 'ebuka12345';
-  const email = 'ebu@gmal.com';
+  const userName = 'Cemb';
+  const password = 'emeka5612345';
+  const email = 'emekasmithyu@gmal.com';
   const number = '2348066098146';
 
-  it('It returns status 201 for when all parameters are complete and a user is created', (done) => {
+  it('It returns status 201 when a user is created', (done) => {
     request(app)
       .post('/user/signup')
       .send({ userName, password, email, number })
@@ -21,11 +21,10 @@ describe('EndPoint: SignUp', () => {
       .end((err, res) => {
         res.status.should.equal(201);
         res.body.should.be.a('object');
-        res.body.should.have.property('message');
         if (err) return done(err);
         done();
-      });     
-  })
+      });
+  });
 
 
   it('It should return status 400 for missing username', (done) => {
@@ -37,7 +36,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('You need to provide userName, password, number and email');
+        res.body.message.should.be
+        .eql('You need to provide userName, password, number and email');
         if (err) return done(err);
         done();
       });
@@ -52,7 +52,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('You need to provide userName, password, number and email');
+        res.body.message.should.be
+        .eql('You need to provide userName, password, number and email');
         if (err) return done(err);
         done();
       });
@@ -67,7 +68,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('You need to provide userName, password, number and email');
+        res.body.message.should.be
+        .eql('You need to provide userName, password, number and email');
         if (err) return done(err);
         done();
       });
@@ -76,13 +78,14 @@ describe('EndPoint: SignUp', () => {
   it('It should return status 400 for badly formatted email', (done) => {
     request(app)
       .post('/user/signup')
-      .send({ userName, password, number, email:'ebuka@' })
+      .send({ userName, password, number, email: 'ebuka@' })
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('The email address is badly formatted.');
+        res.body.message.should.be
+        .eql('The email address is badly formatted.');
         if (err) return done(err);
         done();
       });
@@ -97,13 +100,13 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(409);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('The email address is already in use by another account.');
+        res.body.message.should.be
+        .eql('The email address is already in use by another account.');
         if (err) return done(err);
         done();
       });
   });
 
-  
   it('It should return status 400 for missing password', (done) => {
     request(app)
       .post('/user/signup')
@@ -113,7 +116,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('You need to provide userName, password, number and email');
+        res.body.message.should.be
+        .eql('You need to provide userName, password, number and email');
         if (err) return done(err);
         done();
       });
@@ -128,17 +132,16 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('Password should be at least 6 characters');
+        res.body.message.should.be
+        .eql('Password should be at least 6 characters');
         if (err) return done(err);
         done();
       });
   });
+});
 
- })
 
-
- describe('SignIn Route', () => {
-  
+describe('SignIn Route', () => {
   const email = 'hh@gmail.com';
   const password = '123456';
 
@@ -163,7 +166,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('You need to provide password and email');
+        res.body.should.have.property('message')
+        .eql('You need to provide password and email');
         if (err) return done(err);
         done();
       });
@@ -178,7 +182,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('The email address is badly formatted.');
+        res.body.should.have.property('message')
+        .eql('The email address is badly formatted.');
         if (err) return done(err);
         done();
       });
@@ -193,7 +198,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(401);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('There is no user record corresponding to this identifier. The user may have been deleted.');
+        res.body.should.have.property('message')
+        .eql('There is no user record corresponding to this identifier. The user may have been deleted.');
         if (err) return done(err);
         done();
       });
@@ -208,7 +214,8 @@ describe('EndPoint: SignUp', () => {
         res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('You need to provide password and email');
+        res.body.should.have.property('message')
+        .eql('You need to provide password and email');
         if (err) return done(err);
         done();
       });
@@ -217,25 +224,26 @@ describe('EndPoint: SignUp', () => {
   it('It returns status 401 for Invalid Password', (done) => {
     request(app)
       .post('/user/signin')
-      .send({ email, password:'123456ggh' })
+      .send({ email, password: '123456ggh' })
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(401);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('The password is invalid or the user does not have a password.');
+        res.body.should.have.property('message')
+        .eql('The password is invalid or the user does not have a password.');
         if (err) return done(err);
         done();
       });
   });
-})
+});
 
 
 describe('Home Page', () => {
-  it('It returns a status of 200 and welcomes user`s to the home page', (done) => {
+  it('It returns a status of 200 on the home page', (done) => {
     chai.request(app)
-      .get('/')   
-      .end((err, res) => {        
+      .get('/')
+      .end((err, res) => {
         expect(res).to.have.status(200);
         res.body.should.be.a('object');
         done();
@@ -265,119 +273,121 @@ describe('SignOut Route', () => {
         res.status.should.equal(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message').eql('You have successfully signed out');
+        res.body.should.have.property('message')
+        .eql('You have successfully signed out');
         if (err) return done(err);
         done();
       });
   });
 });
 
-//   describe('EndPoint: Reset Password', () => {
-//     const validEmail = 'Hh@gmail.com';
-//     const invalidEmail = 'gfhr@gmail.com'
+describe('EndPoint: Reset Password', () => {
+  const validEmail = 'wesumeh@gmail.com';
+  const invalidEmail = 'gfhr@gmail.com';
 
-//     it('It returns status 201 when the email is valid', (done) => {
-//       request(app)
-//         .post('/user/reset')
-//         .send({ email: validEmail })
-//         .set('Accept', 'application/json')
-//         .end((err, res) => {
-//           res.status.should.equal(201);
-//           res.body.should.be.a('object');
-//           res.body.should.have.property('message');
-//           res.body.should.have.property('message').eql('An email has been sent for password reset. Log in after Reset')
-//           if (err) return done(err);
-//           done();
-//         });
-//     });
-
-//       it('It returns status 401 if a email/user dose not exist', (done) => {
-//         request(app)
-//           .post('/user/reset')
-//           .send({ email: invalidEmail })
-//           .set('Accept', 'application/json')
-//           .end((err, res) => {
-//             res.status.should.equal(401);
-//             res.body.should.be.a('object');
-//             res.body.should.have.property('message');
-//             res.body.should.have.property('message').eql('There is no user record corresponding to this identifier. The user may have been deleted.');
-//             if (err) return done(err);
-//             done();
-//           });
-//       });
-
-//         it('It should return status 400 for badly formatted email', (done) => {
-//           request(app)
-//             .post('/user/reset')
-//             .send({ email:'ebuka@' })
-//             .set('Accept', 'application/json')
-//             .end((err, res) => {
-//               res.status.should.equal(400);
-//               res.body.should.be.a('object');
-//               res.body.should.have.property('message');
-//               res.body.message.should.be.eql('The email address is badly formatted.');
-//               if (err) return done(err);
-//               done();
-//             });
-//         });
-
-//   })
-
-//   describe('EndPoint: Get all Phone Numbers from the database', () => {
-//     it('It returns status 200 when the email is valid', (done) => {
-//       request(app)
-//         .get('/users/allNumbers')
-//         .set('Accept', 'application/json')
-//         .end((err, res) => {
-//           res.status.should.equal(200);
-//           res.body.should.be.a('array');
-//           if (err) return done(err);
-//           done();
-//         });
-//     });
-
-//   })
-//   describe('EndPoint: Get all Users from the Database', () => {
-//     it('It returns status 200 when the email is valid', (done) => {
-//       request(app)
-//         .get('/users/allusers')
-//         .set('Accept', 'application/json')
-//         .end((err, res) => {
-//           res.status.should.equal(200);
-//           res.body.should.be.a('array');
-//           if (err) return done(err);
-//           done();
-//         });
-//     });
-
-//   })
-
-describe('EndPoint: It returns every user who have seen a message', () => {
-    it('It returns status 200 when the all notification is received', (done) => {
-      const groupName = 'FILE';
-      const messageID = '-KtnPBIB2vrb0t3znQNo'
-      request(app)
-        .get('/groups/:groupName/:messageID')
-        .send(groupName, messageID)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          res.status.should.equal(200);
-          if (err) return done(err);
-          done();
-        });
-    });
+  it('It returns status 205 when the email is valid', (done) => {
+    request(app)
+      .post('/user/reset')
+      .send({ email: validEmail })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(205);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message')
+        .eql('An email has been sent for password reset.');
+        if (err) return done(err);
+        done();
+      });
   });
 
+
+  it('It returns status 401 if a email/user dose not exist', (done) => {
+    request(app)
+      .post('/user/reset')
+      .send({ email: invalidEmail })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(401);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message')
+        .eql('There is no user record corresponding to this identifier. The user may have been deleted.');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('It should return status 400 for badly formatted email', (done) => {
+    request(app)
+      .post('/user/reset')
+      .send({ email: 'ebuka@' })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(400);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be
+        .eql('The email address is badly formatted.');
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe('EndPoint: Get all Phone Numbers from the database', () => {
+  it('It returns status 200 when the email is valid', (done) => {
+    request(app)
+      .get('/users/allNumbers')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.should.be.a('array');
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe('EndPoint: Get all Users from the Database', () => {
+  it('It returns status 200 when the email is valid', (done) => {
+    request(app)
+      .get('/users/allusers')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.should.be.a('array');
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe('EndPoint: Get all Emails from the Database', () => {
+  it('It returns status 200 when the email is valid', (done) => {
+    request(app)
+      .get('/users/allemails')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.should.be.a('array');
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+
 describe('EndPoint: Get all Notification for a User', () => {
-    it('It returns status 200 when the all notification is received', (done) => {
-      request(app)
-        .get('/user/notifications')
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          res.status.should.equal(200);
-          res.body.should.be.a('object');
-          if (err) return done(err);
-          done();
-        });
-    });
-  })
+  it('It returns status 200 when the all notification is received', (done) => {
+    request(app)
+      .get('/user/notifications')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.should.be.a('object');
+        if (err) return done(err);
+        done();
+      });
+  });
+});

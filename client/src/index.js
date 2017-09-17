@@ -11,7 +11,8 @@ import {firebaseAuth, firebase}from '../../server/config';
 
 AppAPI.getContacts();
 AppAPI.getNumbers();
-AppAPI.searchUserMessageInGroup();
+//AppAPI.searchUserMessageInGroup();
+AppAPI.getEmails()
 
 
 ReactDOM.render(

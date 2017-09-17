@@ -23,6 +23,7 @@ let archiveMessageStore = [];
 let seenUsersStore = [];
 let googleSignUpStore = null;
 const loggedInUser = [];
+let allEmails = [];
 
 const AppStore = assign({}, EventEmitter.prototype, {
 
@@ -80,6 +81,14 @@ const AppStore = assign({}, EventEmitter.prototype, {
     databaseUsersStore = contacts;
   },
 
+
+  getAllEmails() {
+    return allEmails;
+  },
+  setEmails(emails) {
+    allEmails = emails;
+  },
+
   // Get the Current User who signed up with Google
   getGoogleSignup() {
     return googleSignUpStore;
@@ -105,8 +114,8 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return currentGroupStore;
   },
 
-  setCurrentGroup(keyName) {
-    currentGroupStore = keyName;
+  setCurrentGroup(group) {
+    currentGroupStore = group;
   },
 
 
@@ -122,23 +131,23 @@ const AppStore = assign({}, EventEmitter.prototype, {
     groupUsersStore = users;
   },
 
-    // Get Emails in a Group
-    getGroupEmails() {
-      return groupEmailStore;
-    },
-  
-    setGroupEmails(emails) {
-      groupEmailStore = emails;
-    },
-  
-    // Get Numbers in a Group
-    getGroupNumbers() {
-      return groupNumbersStore;
-    },
-  
-    setGroupNumbers(numbers) {
-      groupNumbersStore = numbers;
-    },
+  // Get Emails in a Group
+  getGroupEmails() {
+    return groupEmailStore;
+  },
+
+  setGroupEmails(emails) {
+    groupEmailStore = emails;
+  },
+
+  // Get Numbers in a Group
+  getGroupNumbers() {
+    return groupNumbersStore;
+  },
+
+  setGroupNumbers(numbers) {
+    groupNumbersStore = numbers;
+  },
 
   // Get Messages
   getMessages() {
@@ -225,6 +234,11 @@ AppDispatcher.register((payload) => {
       AppStore.setdatabaseUsers(action.contacts);
       AppStore.emit(CHANGE_EVENT);
       break;
+    
+    case AppConstants.RECEIVE_EMAILS:
+      AppStore.setEmails(action.emails);
+      AppStore.emit(CHANGE_EVENT);
+      break;
 
     case AppConstants.RECEIVE_ALLUSERS_NUMBER:
       AppStore.setAllUsersNumber(action.number);
@@ -301,13 +315,13 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.GOOGLE:
       AppStore.setGoogleSignup(action.googleUser);
-      AppAPI.google(action.googleUser);
+      //AppAPI.google(action.googleUser);
       AppStore.emit(CHANGE_EVENT);
       break;
 
     case AppConstants.SEARCH_USER_MESSAGE:
-      AppStore.setCurrentGroup(action.keyName);
-      AppAPI.searchUserMessageInGroup(action.keyName);
+      AppStore.setCurrentGroup(action.group);
+      AppAPI.searchUserMessageInGroup(action.group);
       AppStore.emit(CHANGE_EVENT);
       break;
 

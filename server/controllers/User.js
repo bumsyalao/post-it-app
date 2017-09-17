@@ -57,59 +57,6 @@ class User {
   }
 
   /**
- * @description: This method controls a user's registration via Google signup
- * route POST: user/google
- * @param {Object} req request object
- * @param {Object} res response object
- * @return {Object} response containing the registered user
- */
-  static google(req, res) {
-    const googleUser = req.body.googleUser;
-    const { userName, email, uid, number } = googleUser;
-    usersRef.child(userName).once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-        usersRef.child(userName).set({
-          userName,
-          email,
-          uid,
-          number,
-          google: true
-        });
-        res.status(201).json({
-          message: 'Welcome to Post it app',
-          displayName: userName
-        });
-      } else {
-        usersRef.child(userName).child('Groups').once('value', () => {
-          const groups = [];
-          let group = {};
-          const groupRef = firebase.database().ref().child('users')
-          .child(userName)
-          .child('Groups');
-          groupRef.once('value', (snap) => {
-            snap.forEach((data) => {
-              group = {
-                groupName: data.val().groupName
-              };
-              groups.push(group);
-            });
-            res.status(200).send({
-              message: 'Welcome to Post it app',
-              displayName: userName,
-              groups
-            });
-          });
-        });
-      }
-    }).catch((error) => {
-      res.status(401).json(
-        { message: `Something went wrong ${error.message}` }
-      );
-    });
-  }
-
-
-  /**
  * @description: This method controls a user's login
  * route POST: user/signin
  * @param {Object} req request object
@@ -249,8 +196,25 @@ class User {
     });
   }
 
+    /**
+ * @description: This method retrieves all emails in user database
+ * route GET: user/allEmails
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing all emails in the user database
+ */
+  static allEmails(req, res) {
+    usersRef.once('value', (snap) => {
+      const emails = [];
+      snap.forEach((nos) => {
+        emails.push(nos.val().email);
+      });
+      res.status(200).send(emails);
+    });
+  }
+
   /**
- * @description: This method reset password of users 
+ * @description: This method reset password of users
  * route: GET: /user/reset
  * @param {Object} req request object
  * @param {Object} res response object
@@ -260,7 +224,7 @@ class User {
     const emailAddress = req.body.email;
     const auth = firebase.auth();
     auth.sendPasswordResetEmail(emailAddress).then(() => {
-      res.status(201).json(
+      res.status(205).json(
         { message: 'An email has been sent for password reset.' }
       );
     }, (error) => {

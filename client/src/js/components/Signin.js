@@ -6,6 +6,8 @@ import { firebaseAuth, firebase, provider } from '../../../../server/config'
 import { validateEmail } from '../helpers/validate.helper';
 import toastr from 'toastr';
 import GoogleButton from 'react-google-button'
+import GoogleWelcome from './GoogleWelcome'
+import Welcome from './Welcome'
 
 
 /**
@@ -20,13 +22,32 @@ class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      emails: AppStore.getAllEmails(),
+      googleComponent: false,
+      googleUser: AppStore.getGoogleSignup()      
     };
 
 
-    // Bind Form values
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+  }
+
+  componentDidMount() {
+    AppStore.addChangeListener(this.onChange);
+  }
+
+
+  componentWillUnmount() {
+    AppStore.removeChangeListener(this.onChange);
+  }
+
+
+  onChange() {
+    this.setState({
+      emails: AppStore.getAllEmails(),
+      googleUser: AppStore.getGoogleSignup()      
+    });
+
   }
 
   /**
@@ -37,27 +58,34 @@ class Signin extends Component {
    * @memberof Signin
    */
   render() {
-    return (
-      <div className="row">
-        <div className="col-sm-12">
+    if (!this.state.googleComponent) {
+      var display =
           <div className='well col-md-8 col-md-offset-2'>
             <h3>Sign In</h3>
-            
+
             <form onSubmit={this.handleSubmit.bind(this)}>
               <div className='form-group'>
                 <input type="text" ref='email' className='form-control' placeholder='Email' required />
               </div>
               <div className='form-group'>
-                <input type="password" ref='password' className='form-control' placeholder='Password' required/>
+                <input type="password" ref='password' className='form-control' placeholder='Password' required />
               </div>
               <div><a href="#/reset">Forgot Password?</a></div>
               <div><a href="#/register">Don't have an account? Signup</a></div>
               <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
             </form>
-        <GoogleButton  className="google-button" onClick={this.handleGoogleSignin.bind(this)}/>
-            
+            <GoogleButton className="google-button" onClick={this.handleGoogleSignin.bind(this)} />
+
           </div>
-          
+
+    } else {
+      var display = < GoogleWelcome  />
+
+    }
+    return (
+      <div className="row">
+        <div className="col-sm-12">
+            {display}
         </div>
       </div>
 
@@ -103,16 +131,24 @@ class Signin extends Component {
       .then((result) => {
         const token = result.credential.accessToken;
         const user = result.user;
-        console.log(user)
-        if (user) {
-          firebase.auth().onAuthStateChanged(() => {
-            const googleUser = {
-              userName: user.email
-            }
-
-            AppActions.googleLogin(user.displayName);
-          });
+        const displayName = user.displayName
+        const googleUser = {
+          displayName: displayName.replace(" ", ""),
+          email: user.email,
+          uid: user.uid
         }
+
+        if (this.state.emails.includes(googleUser.email)){
+          AppActions.receiveLogin(googleUser);
+          toastr.success('Welcome to PostIt')
+         } else {
+          AppActions.google(googleUser);
+          
+           this.setState({
+            googleComponent: true
+           })
+         }
+
       });
   }
 
