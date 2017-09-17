@@ -24,8 +24,8 @@ export default class GoogleWelcome extends Component {
     }
 
   render() {
-      const displayName = this.state.googleDetail
-      console.log(displayName)
+      //const displayName = this.state.googleDetail
+      console.log(this.state.googleDetail)
     return (
       <div>
 

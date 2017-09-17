@@ -142,10 +142,11 @@ class Signin extends Component {
           AppActions.receiveLogin(googleUser);
           toastr.success('Welcome to PostIt')
          } else {
+          AppActions.google(googleUser);
+          
            this.setState({
             googleComponent: true
            })
-           AppActions.google(googleUser);
          }
 
       });
