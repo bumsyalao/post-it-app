@@ -99,7 +99,7 @@ export default class DashBoard extends Component {
 
           </div>
         </div>
-         {!this.state.currentGroup ? <WelcomeBoard /> : <Board contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />}
+         {!this.state.currentGroup ? <WelcomeBoard notification={this.state.notification} /> : <Board contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />}
       </div>
     )
   } 

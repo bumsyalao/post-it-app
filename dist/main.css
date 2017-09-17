@@ -6,6 +6,11 @@ body {
   margin: 0;
   background: #f4f4f4; }
 
+.mylist {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
 #transform {
   text-transform: capitalize; }
 

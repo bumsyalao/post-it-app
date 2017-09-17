@@ -29,11 +29,11 @@ export default class WelcomeBoard extends Component {
         AppStore.removeChangeListener(this.onChange);
     }
 
-    sendMessage(e){
+    sendMessage(e) {
         e.preventDefault();
         console.log(this.refs.type.value)
         console.log(this.refs.message.value.trim()
-    )
+        )
     }
 
 
@@ -44,10 +44,17 @@ export default class WelcomeBoard extends Component {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="viewMessageBoard">
-                        <h1>Welcome {userName}</h1>
-                        <p>You have 9 unread Message</p>
-
- 
+                            <div className="container" >
+                                <div className="row">
+                                    <div className="col-sm-3"></div>
+                                    <div className="col-md-6 col-sm-6 col-xs-12">
+                                        
+                                        <center>
+                                        <h3>Welcome {userName}</h3>
+                                        <p>You have {this.props.notification.length} unread Message</p></center>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

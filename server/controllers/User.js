@@ -57,6 +57,36 @@ class User {
   }
 
   /**
+ * @description: This method controls a user's registration via Google signup
+ * route POST: /google/signup
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @return {Object} response containing the registered user
+ */
+  static google(req, res) {
+    const { userName, email, uid, number } = req.body;
+    usersRef.child(userName).once('value', (snapshot) => {
+      if (!snapshot.exists()) {
+        usersRef.child(userName).set({
+          userName,
+          email,
+          uid,
+          number,
+          google: true
+        });
+        res.status(201).json({
+          message: 'Welcome to Post it app',
+          displayName: userName
+        });
+      }
+    }).catch((error) => {
+      res.status(401).json(
+        { message: `Something went wrong ${error.message}` }
+      );
+    });
+  }
+
+  /**
  * @description: This method controls a user's login
  * route POST: user/signin
  * @param {Object} req request object

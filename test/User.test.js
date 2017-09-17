@@ -238,6 +238,28 @@ describe('SignIn Route', () => {
   });
 });
 
+describe('Google SignUp Route', () => {
+  const userName = 'Gideon';
+  const email = 'emekasmithyu@gmal.com';
+  const number = '2348066098146';
+  const uid = 'rbjxWT5b4AfHirNE4IDlS0ELk882'
+  it('It returns status 201 when the a new user is created', (done) => {
+    request(app)
+      .post('/google/signup')
+      .set('Accept', 'application/json')
+      .send({ userName, email, number, uid })
+      .end((err, res) => {
+        res.status.should.equal(201);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message')
+        .eql('Welcome to Post it app');
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
 
 describe('Home Page', () => {
   it('It returns a status of 200 on the home page', (done) => {
