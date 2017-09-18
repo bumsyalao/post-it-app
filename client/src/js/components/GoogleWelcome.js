@@ -25,6 +25,7 @@ export default class GoogleWelcome extends Component {
     }
 
     render() {
+        console.log(this.state.databaseUsers)
         const email = this.state.googleDetail.email
         const uid = this.state.googleDetail.uid
         const displayName = this.state.googleDetail.displayName
@@ -35,7 +36,7 @@ export default class GoogleWelcome extends Component {
                 <div className='well'>
                     <form onSubmit={this.handleSubmit.bind(this)}>
                         <div className='form-group' >
-                            <input type="text" ref='username' className='form-control' value={displayName} required />
+                            <input type="text" ref='username' className='form-control' value={displayName} placeholder= 'Username' required />
                         </div>
                         <div className='form-group'>
                             <input type="text" ref='email' className='form-control' value={email} required />
@@ -57,6 +58,12 @@ export default class GoogleWelcome extends Component {
 
     handleSubmit(e) {
         e.preventDefault()
+
+        function capitalizeFirstLetter(string){
+            return string.charAt(0).toUpperCase() + string.slice(1);
+           }      
+        const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
+
         const contact = {
             username: this.refs.username.value.trim(),
             email: this.refs.email.value.trim(),
@@ -66,15 +73,13 @@ export default class GoogleWelcome extends Component {
         }
         if (this.state.numbers.includes(this.refs.number.value)) {
             toastr.error("The phone number already exist")
-        } else {
+        }else {
             AppActions.googleSignup(contact);
             this.refs.username.value = '';
             this.refs.email.value = '';
             this.refs.number.value = '';
         }
     }
-
-
 
     _onChange() {
         this.setState({ databaseUsers: AppStore.getdatabaseUsers() });

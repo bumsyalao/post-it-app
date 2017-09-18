@@ -68,7 +68,7 @@ class Group {
       const db = firebase.database();
       usersRef.child(user).once('value', (snapshot) => {
         if (snapshot.exists()) {
-          const username = snapshot.val().username;
+          const username = snapshot.val().userName;
           const email = snapshot.val().email;
           const number = snapshot.val().number;
           db.ref(`/users/${user}/Groups`).push({

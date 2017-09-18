@@ -403,7 +403,7 @@ describe('EndPoint: Get all Emails from the Database', () => {
 describe('EndPoint: Get all Notification for a User', () => {
   it('It returns status 200 when the all notification is received', (done) => {
     request(app)
-      .get('/user/notifications')
+      .get('/user/notification/:user')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);

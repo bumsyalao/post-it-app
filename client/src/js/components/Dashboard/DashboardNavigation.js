@@ -49,6 +49,8 @@ export default class DashboardNavigation extends Component {
 
 
     render() {
+        //console.log(this.props.notification)
+        const userName = JSON.parse(localStorage.getItem('user'));
         return (
             <div>
 
@@ -116,9 +118,9 @@ export default class DashboardNavigation extends Component {
                 </Modal>
 
 
-
-                <li data-toggle="collapse" className="collapsed">
-                    <a href="#" onClick = {this.openNotify}><i className="fa fa-globe fa-lg"></i>&nbsp; Notification</a>
+                
+                <li data-toggle="collapse" className="collapsed" onClick={() => AppActions.getNotification(userName)}>
+                    <a href="#" onClick={this.openNotify}><i className="fa fa-globe fa-lg"></i>&nbsp; Notification</a>
                 </li>
                 <Modal show={this.state.showNotify} onHide={this.closeNotify}>
                     <Modal.Header closeButton>
@@ -126,15 +128,20 @@ export default class DashboardNavigation extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <ul>
-                            {
+                        {
 
-                                Object.keys(this.props.notification).map(function (keyName, keyIndex) {
+                                this.props.notification.map(function (keyName, keyIndex) {
 
-                                    return <li className='mylist' key={keyIndex}>{keyName}</li>
+                                    return (
+
+                                        <li key={keyIndex}>{keyName.notification}</li>
+                                    )
 
                                 })
 
                             }
+     
+
                         </ul>
                     </Modal.Body>
                     <Modal.Footer>
@@ -186,7 +193,7 @@ export default class DashboardNavigation extends Component {
         if (this.refs.type.value === '') {
             toastr.error("Select a group name from the drop down list")
         }
-        else if (this.props.databaseUsers.includes(userName)) {
+        else if (this.props.allUsers.includes(userName)) {
             AppActions.saveGroupUser(addUser);
         } else {
             toastr.error("The User dosen't exist")

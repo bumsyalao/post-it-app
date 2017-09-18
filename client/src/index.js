@@ -13,6 +13,7 @@ AppAPI.getContacts();
 AppAPI.getNumbers();
 //AppAPI.searchUserMessageInGroup();
 AppAPI.getEmails()
+//AppAPI.getNotifications()
 
 
 ReactDOM.render(

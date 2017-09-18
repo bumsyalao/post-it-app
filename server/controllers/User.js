@@ -169,26 +169,37 @@ class User {
  * @param {Object} res response object
  * @return {Object} response containing all notofications in the user database
  */
+  // static notification(req, res) {
+  //       const uid = user.uid;
+  //       usersRef.once('value', (snap) => {
+  //         const usersNotificate = [];
+  //         snap.forEach((currentUser) => {
+  //           if (currentUser.val().uid === uid) {
+  //             usersNotificate.push(currentUser.val().Notifications);
+  //           }
+  //         });
+  //         res.status(200).send(usersNotificate);
+  //       });
+  // }
+
   static notification(req, res) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
-        usersRef.once('value', (snap) => {
-          const usersNotificate = [];
-          snap.forEach((currentUser) => {
-            if (currentUser.val().uid === uid) {
-              usersNotificate.push(currentUser.val().Notifications);
-            }
-          });
-          res.status(200).send(usersNotificate);
-        });
-      } else {
-        res.status(401).send({
-          message: 'You are not signed in right now!'
-        });
-      }
+    const userName = req.params.user;
+    const notifications = [];
+    let notification = {};
+    const notificationRef = firebase.database().ref().child('users')
+    .child(userName)
+    .child('Notifications');
+
+    notificationRef.once('value', (snap) => {
+      snap.forEach((data) => {
+        notification = {
+          notification: data.val()
+        };
+        notifications.push(notification);
+      });
+      res.status(200).send(notifications);
     });
-  }
+}
 
 
   /**
@@ -202,7 +213,7 @@ class User {
     usersRef.once('value', (snap) => {
       const userNames = [];
       snap.forEach((nos) => {
-        userNames.push(nos.val().username);
+        userNames.push(nos.val().userName);
       });
       res.status(200).send(userNames);
     });
