@@ -65,25 +65,41 @@ class User {
  */
   static google(req, res) {
     const { userName, email, uid, number } = req.body;
-    usersRef.child(userName).once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-        usersRef.child(userName).set({
-          userName,
-          email,
-          uid,
-          number,
-          google: true
-        });
-        res.status(201).json({
-          message: 'Welcome to Post it app',
-          displayName: userName
-        });
-      }
-    }).catch((error) => {
-      res.status(401).json(
-        { message: `Something went wrong ${error.message}` }
-      );
-    });
+    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
+      typeof uid === 'undefined' || typeof number === 'undefined') {
+      res.status(400).json(
+       { message: 'You need to provide userName, uid, number and email' }
+     );
+    } else if (userName === '' || uid === '' ||
+       email === '' || number === '') {
+      res.status(400).json(
+       { message: 'userName, uid, number or email cannot be empty' }
+     );
+    } else {
+      usersRef.child(userName).once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+          usersRef.child(userName).set({
+            userName,
+            email,
+            uid,
+            number,
+            google: true
+          });
+          res.status(201).json({
+            message: 'Welcome to Post it app',
+            displayName: userName
+          });
+        } else {
+          res.status(409).json({
+            message: 'Username already exist'
+          });
+        }
+      }).catch((error) => {
+        res.status(401).json(
+          { message: `Something went wrong ${error.message}` }
+        );
+      });
+    }
   }
 
   /**
@@ -169,26 +185,37 @@ class User {
  * @param {Object} res response object
  * @return {Object} response containing all notofications in the user database
  */
+  // static notification(req, res) {
+  //       const uid = user.uid;
+  //       usersRef.once('value', (snap) => {
+  //         const usersNotificate = [];
+  //         snap.forEach((currentUser) => {
+  //           if (currentUser.val().uid === uid) {
+  //             usersNotificate.push(currentUser.val().Notifications);
+  //           }
+  //         });
+  //         res.status(200).send(usersNotificate);
+  //       });
+  // }
+
   static notification(req, res) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
-        usersRef.once('value', (snap) => {
-          const usersNotificate = [];
-          snap.forEach((currentUser) => {
-            if (currentUser.val().uid === uid) {
-              usersNotificate.push(currentUser.val().Notifications);
-            }
-          });
-          res.status(200).send(usersNotificate);
-        });
-      } else {
-        res.status(401).send({
-          message: 'You are not signed in right now!'
-        });
-      }
+    const userName = req.params.user;
+    const notifications = [];
+    let notification = {};
+    const notificationRef = firebase.database().ref().child('users')
+    .child(userName)
+    .child('Notifications');
+
+    notificationRef.once('value', (snap) => {
+      snap.forEach((data) => {
+        notification = {
+          notification: data.val()
+        };
+        notifications.push(notification);
+      });
+      res.status(200).send(notifications);
     });
-  }
+}
 
 
   /**
@@ -202,7 +229,7 @@ class User {
     usersRef.once('value', (snap) => {
       const userNames = [];
       snap.forEach((nos) => {
-        userNames.push(nos.val().username);
+        userNames.push(nos.val().userName);
       });
       res.status(200).send(userNames);
     });

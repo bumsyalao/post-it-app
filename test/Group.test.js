@@ -9,20 +9,6 @@ const should = chai.should();
 describe('Create Group', () => {
   const groupName = 'Armyof';
   const userName = 'Ebuka';
-  it('It returns status 201 when the user creates group', (done) => {
-    request(app)
-      .post('/group')
-      .send({ groupName, userName })
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.body.should.be.a('object');
-        res.body.should.have.property('message');
-        if (err) return done(err);
-        done();
-      });
-  });
-
   it('It returns status 400 when the Group Name is Invalid', (done) => {
     request(app)
       .post('/group')
@@ -73,23 +59,8 @@ describe('Create Group', () => {
 });
 
 describe('Add User to a Group', () => {
-  const groupName = 'Boo';
-  const user = 'Hh';
-  it('It returns status 201 when a user is added to a group', (done) => {
-    request(app)
-      .post('/group/groupName/user')
-      .send({ groupName, user })
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.body.should.be.a('object');
-        res.body.should.have.property('message');
-        res.body.should.have.property('message')
-        .eql('User added successfully');
-        if (err) return done(err);
-        done();
-      });
-  });
+  const groupName = 'Games';
+  const user = 'Ebuka';
 
   it('It returns status 400 when the User field is Undefined', (done) => {
     request(app)
@@ -148,8 +119,6 @@ describe('Add User to a Group', () => {
         res.status.should.equal(403);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message')
-        .eql("Group dosen't exists");
         if (err) return done(err);
         done();
       });

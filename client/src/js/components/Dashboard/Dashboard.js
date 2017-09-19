@@ -69,6 +69,7 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   render() {
+    //console.log(this.state.groups)
     let userName = JSON.parse(localStorage.getItem('user'));
     return (
       <div>
@@ -90,7 +91,7 @@ export default class DashBoard extends Component {
                 contact={this.state.contacts}
                 group={this.state.groups}
                 user={this.state.user}
-                databaseUsers={this.state.databaseUsers}
+                allUsers={this.state.databaseUsers}
                 notification={this.state.notification}
               />              
               <br/>

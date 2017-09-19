@@ -72,20 +72,23 @@ module.exports = {
     .then((response) => {
       const groups = response.data;
       AppActions.receiveGroups(groups);
+      console.log(groups)
     }).catch((error) => {
       console.log(error);
     });
   },
 
-  getNotifications() {
-    axios.get('/user/notification')
-    .then((response) => {
-      const notification = response.data;
-      AppActions.receiveNotification(notification);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  getNotifications(userName) {
+//     axios.get(`/user/notification/${userName}`)
+//     .then((response) => {
+//       const notification = response.data;
+// //AppActions.receiveNotification(notification);
+// console.log(notification)
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+console.log(userName)
   },
 
   addUserToGroup(addUser) {
@@ -133,6 +136,7 @@ module.exports = {
       password: contact.password
     }).then((response) => {
       const user = response.data.userData;
+      const groups = response.data.groups;
 
       if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
         toastr.error(response.data);
@@ -141,6 +145,7 @@ module.exports = {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
+        AppActions.receiveGroups(groups);
         toastr.success('Welcome To PostIt');
       }
     }).catch((error) => {

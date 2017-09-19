@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants from '../constants/AppConstants';
 
+
 const AppActions = {
   saveContact(contact) {
     AppDispatcher.handleViewAction({
@@ -169,10 +170,10 @@ const AppActions = {
     });
   },
 
-  notification(notify) {
+  getNotification(userName) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.NOTIFICATION,
-      notify
+      actionType: AppConstants.NOTIFICATIONS,
+      userName
     });
   },
 

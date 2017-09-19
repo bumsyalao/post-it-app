@@ -125,22 +125,28 @@ class Signin extends Component {
 */
   handleGoogleSignin(e) {
     e.preventDefault();
+    
+    const firstName = (str) => {
+      let sm;
+      sm = str.split(' ');
+      return(sm[0])
+    }
+
     provider.addScope('profile');
     provider.addScope('email');
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
         const token = result.credential.accessToken;
         const user = result.user;
-        const displayName = user.displayName
+        const displayName = firstName(user.displayName)
         const googleUser = {
           displayName,
           email: user.email,
           uid: user.uid
         }
-
         if (this.state.emails.includes(googleUser.email)){
           AppActions.receiveLogin(googleUser);
-          toastr.success('Welcome to PostIt')
+          toastr.success('Welcome to PostIt')    
          } else {
           AppActions.google(googleUser);
           

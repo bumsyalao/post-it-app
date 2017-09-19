@@ -13,7 +13,7 @@ router.post('/group', Group.createGroup);
 router.post('/group/groupName/user', Group.addUserToGroup);
 router.post('/group/user/message/notification/priority', Message.createMessage);
 router.get('/group/:userName', Group.getGroups);
-router.get('/user/notification/', User.notification);
+router.get('/user/notification/:user', User.notification);
 router.get('/groups/:groupName/:user', Group.usersAndMessagesInGroups);
 router.get('/users/allusers/', User.allUsers);
 router.get('/users/allnumbers/', User.allNumbers);
