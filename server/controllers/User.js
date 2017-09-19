@@ -65,25 +65,41 @@ class User {
  */
   static google(req, res) {
     const { userName, email, uid, number } = req.body;
-    usersRef.child(userName).once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-        usersRef.child(userName).set({
-          userName,
-          email,
-          uid,
-          number,
-          google: true
-        });
-        res.status(201).json({
-          message: 'Welcome to Post it app',
-          displayName: userName
-        });
-      }
-    }).catch((error) => {
-      res.status(401).json(
-        { message: `Something went wrong ${error.message}` }
-      );
-    });
+    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
+      typeof uid === 'undefined' || typeof number === 'undefined') {
+      res.status(400).json(
+       { message: 'You need to provide userName, uid, number and email' }
+     );
+    } else if (userName === '' || uid === '' ||
+       email === '' || number === '') {
+      res.status(400).json(
+       { message: 'userName, uid, number or email cannot be empty' }
+     );
+    } else {
+      usersRef.child(userName).once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+          usersRef.child(userName).set({
+            userName,
+            email,
+            uid,
+            number,
+            google: true
+          });
+          res.status(201).json({
+            message: 'Welcome to Post it app',
+            displayName: userName
+          });
+        } else {
+          res.status(409).json({
+            message: 'Username already exist'
+          });
+        }
+      }).catch((error) => {
+        res.status(401).json(
+          { message: `Something went wrong ${error.message}` }
+        );
+      });
+    }
   }
 
   /**

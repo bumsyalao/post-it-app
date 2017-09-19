@@ -13,20 +13,6 @@ describe('EndPoint: SignUp', () => {
   const email = 'emekasmithyu@gmal.com';
   const number = '2348066098146';
 
-  it('It returns status 201 when a user is created', (done) => {
-    request(app)
-      .post('/user/signup')
-      .send({ userName, password, email, number })
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.body.should.be.a('object');
-        if (err) return done(err);
-        done();
-      });
-  });
-
-
   it('It should return status 400 for missing username', (done) => {
     request(app)
       .post('/user/signup')
@@ -157,6 +143,7 @@ describe('SignIn Route', () => {
         done();
       });
   });
+
   it('It returns status 400 for missing email', (done) => {
     request(app)
       .post('/user/signin')
@@ -243,17 +230,99 @@ describe('Google SignUp Route', () => {
   const email = 'emekasmithyu@gmal.com';
   const number = '2348066098146';
   const uid = 'rbjxWT5b4AfHirNE4IDlS0ELk882'
-  it('It returns status 201 when the a new user is created', (done) => {
+
+  it('It should return status 400 for missing username', (done) => {
     request(app)
       .post('/google/signup')
+      .send({ email, uid, number })
       .set('Accept', 'application/json')
-      .send({ userName, email, number, uid })
       .end((err, res) => {
-        res.status.should.equal(201);
+        res.status.should.equal(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message')
-        .eql('Welcome to Post it app');
+        res.body.message.should.be
+        .eql('You need to provide userName, uid, number and email');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('It should return status 400 for missing phone number', (done) => {
+    request(app)
+      .post('/google/signup')
+      .send({ userName, email, uid })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(400);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be
+        .eql('You need to provide userName, uid, number and email');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('It should return status 400 for missing email', (done) => {
+    request(app)
+      .post('/google/signup')
+      .send({ userName, uid, number })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(400);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be
+        .eql('You need to provide userName, uid, number and email');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+
+  it('It should return status 400 for missing uid', (done) => {
+    request(app)
+      .post('/google/signup')
+      .send({ userName, email, number, uid: '' })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(400);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be
+        .eql('userName, uid, number or email cannot be empty');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('It should return status 400 for undefined uid', (done) => {
+    request(app)
+      .post('/google/signup')
+      .send({ userName, email, number })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(400);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be
+        .eql('You need to provide userName, uid, number and email');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('It should return status 409 for existing Username', (done) => {
+    request(app)
+      .post('/google/signup')
+      .send({ userName, email, number, uid })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(409);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be
+        .eql('Username already exist');
         if (err) return done(err);
         done();
       });
@@ -407,7 +476,7 @@ describe('EndPoint: Get all Notification for a User', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body.should.be.a('object');
+        res.body.should.be.a('array');
         if (err) return done(err);
         done();
       });

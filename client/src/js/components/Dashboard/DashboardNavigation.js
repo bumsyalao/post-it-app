@@ -75,12 +75,6 @@ export default class DashboardNavigation extends Component {
                     </Modal.Footer>
                 </Modal>
 
-
-
-                <li data-toggle="collapse" className="collapsed">
-                    <a href="#"><i className="fa fa-globe fa-lg"></i>&nbsp; Find a User</a>
-                </li>
-
                 <li data-toggle="collapse" className="collapsed">
                     <a href="#" onClick={this.open}><i className="fa fa-globe fa-lg"></i>&nbsp; Invite a Friend</a>
                 </li>
