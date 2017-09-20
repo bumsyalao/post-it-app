@@ -6,6 +6,11 @@ body {
   margin: 0;
   background: #f4f4f4; }
 
+.introjs-fixedTooltip {
+  position: fixed;
+  background: transparent;
+  border: 2px solid white; }
+
 .mylist {
   list-style: none !important;
   padding: 0;

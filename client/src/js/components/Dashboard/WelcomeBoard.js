@@ -48,7 +48,7 @@ export default class WelcomeBoard extends Component {
                                 <div className="row">
                                     <div className="col-sm-3"></div>
                                     <div className="col-md-6 col-sm-6 col-xs-12">                                       
-                                        <center>
+                                        <center data-intro='Hello step one!'>
                                         <h3>Welcome {userName}</h3>
                                         </center>
                                     </div>

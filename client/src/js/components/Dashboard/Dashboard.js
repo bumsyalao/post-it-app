@@ -42,8 +42,8 @@ export default class DashBoard extends Component {
    * @return {void}
    * @memberof DashBoard
    */
-  componentWillMount() {
-
+  componentDidMount() {
+    introJs().start()
     AppStore.addChangeListener(this.onChange);
   }
 
@@ -73,7 +73,7 @@ export default class DashBoard extends Component {
     return (
       <div>
         <div className="nav-side-menu">
-          <div className="brand">PostIt</div>
+          <div className="brand">{!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}</div>
           <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
           <div className="menu-list">
 

@@ -12,7 +12,6 @@ import {firebaseAuth, firebase}from '../../server/config';
 AppAPI.getContacts();
 AppAPI.getNumbers();
 AppAPI.getEmails()
-//AppAPI.getNotifications()
 
 
 ReactDOM.render(

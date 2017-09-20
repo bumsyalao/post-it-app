@@ -21,7 +21,8 @@ export default class DashboardNavigation extends Component {
         groupName: '',
         userName: '',
         users: []
-    };
+    };   
+    
 
     // Modal for add Users to the Group
     close = () => {
@@ -53,7 +54,7 @@ export default class DashboardNavigation extends Component {
         return (
             <div>
 
-                <li data-toggle="collapse" className="collapsed">
+                <li data-toggle="collapse" className="collapsed intojs" data-intro='Hello step two!'>
                     <a href="#" onClick={this.openGroup}><i className="fa fa-globe fa-lg"></i>&nbsp; Create Group</a>
                 </li>
 
@@ -74,7 +75,7 @@ export default class DashboardNavigation extends Component {
                     </Modal.Footer>
                 </Modal>
 
-                <li data-toggle="collapse" className="collapsed">
+                <li data-toggle="collapse" className="collapsed" data-intro='Hello step three!'>
                     <a href="#" onClick={this.open}><i className="fa fa-globe fa-lg"></i>&nbsp; Invite a Friend</a>
                 </li>
 
@@ -112,7 +113,7 @@ export default class DashboardNavigation extends Component {
 
 
                 
-                <li data-toggle="collapse" className="collapsed" onClick={() => AppActions.getNotification(userName)}>
+                <li data-toggle="collapse" className="collapsed" data-intro='Hello step three!' onClick={() => AppActions.getNotification(userName)}>
                     <a href="#" onClick={this.openNotify}><i className="fa fa-globe fa-lg"></i>&nbsp; Notification</a>
                 </li>
                 <Modal show={this.state.showNotify} onHide={this.closeNotify}>
@@ -144,7 +145,7 @@ export default class DashboardNavigation extends Component {
 
 
 
-                <li data-toggle="collapse" className="collapsed">
+                <li data-toggle="collapse" data-intro='Hello step three!' className="collapsed">
                     <a href="#" onClick={this.logout.bind(this)}><i className="fa fa-globe fa-lg"></i>&nbsp; Logout</a>
                 </li>
 
