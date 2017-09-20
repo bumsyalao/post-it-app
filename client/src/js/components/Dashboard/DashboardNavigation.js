@@ -49,7 +49,6 @@ export default class DashboardNavigation extends Component {
 
 
     render() {
-        //console.log(this.props.notification)
         const userName = JSON.parse(localStorage.getItem('user'));
         return (
             <div>
@@ -121,7 +120,7 @@ export default class DashboardNavigation extends Component {
                         <Modal.Title>Notifications</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <ul>
+                        <ul className='mylist'>
                         {
 
                                 this.props.notification.map(function (keyName, keyIndex) {
@@ -167,7 +166,6 @@ export default class DashboardNavigation extends Component {
             userName
         }
         AppActions.saveGroup(group);
-        console.log(group)
         this.refs.group.value = '';
 
     }

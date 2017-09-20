@@ -29,6 +29,7 @@ class Group {
           groupRef.child(groupName).child('Users').child('Bot').set('Bot');
           groupRef.child(groupName).child('Email').push('bot@postit.com');
           groupRef.child(groupName).child('Number').push('2348066098146');
+          groupRef.child(groupName).child('Messages/Seen').push(null);
 
           db.ref(`/users/${userName}/Groups`).push({
             groupName,
@@ -68,7 +69,7 @@ class Group {
       const db = firebase.database();
       usersRef.child(user).once('value', (snapshot) => {
         if (snapshot.exists()) {
-          const username = snapshot.val().username;
+          const username = snapshot.val().userName;
           const email = snapshot.val().email;
           const number = snapshot.val().number;
           db.ref(`/users/${user}/Groups`).push({
@@ -124,41 +125,6 @@ class Group {
       });
   }
 
-  static getSeen(req, res) {
-    const groupName = req.params.group;
-    const userName = req.params.user;
-    const groups = [];
-    const messages = [];
-
-    const messagesIDRef = firebase.database()
-      .ref()
-      .child('Groups')
-      .child(groupName)
-      .child('Messages');
-    messagesIDRef.once('value', (snap) => {
-      const messageIDs = [];
-      let message = {};
-      snap.forEach((data) => {
-        messageIDs.push(data.key);
-        if (!data.val().Seen[userName]) {
-          // The User has not seen this message
-          message = {
-            id: data.key,
-            user: data.val().user,
-            text: data.val().Message,
-            Time: data.val().Time,
-            Priority: data.val().Priority
-          };
-          messages.push(message);
-        } else {
-          // The User has seen this message, push it to the user's Archives
-        }
-      });
-      res.send(messages);
-    });
-}
-
-
   /**
  * @description: This method retrieves all users and messages in a group
  * route: GET: /groups/:groupName
@@ -173,16 +139,16 @@ class Group {
     const users = [];
 
     const messagesIDRef = firebase.database()
-    .ref()
-    .child('Groups')
-    .child(groupName)
-    .child('Messages');
+      .ref()
+      .child('Groups')
+      .child(groupName)
+      .child('Messages');
     messagesIDRef.once('value', (snap) => {
       const messageIDs = [];
       let message = {};
       snap.forEach((data) => {
         messageIDs.push(data.key);
-        if (!data.val().Seen[userName]) {
+        if (data.val().Seen[userName]) {
           // The User has not seen this message
           message = {
             id: data.key,
@@ -217,6 +183,7 @@ class Group {
         });
       });
     });
+
     const messageIDRef = firebase.database()
       .ref()
       .child('Groups')
@@ -227,15 +194,14 @@ class Group {
       snap.forEach((data) => {
         messageIDs.push(data.key);
       });
-      messageIDs.forEach((entry) => {
-        const db = firebase.database();
-        db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
-          .child(userName).set(userName);
-      });
-      messageIDs.forEach((entry) => {
-        const db = firebase.database();
-        db.ref(`/seenMessage/${groupName}/${entry}`).push(userName)
-      });
+      const timeout = setTimeout(() => {
+        messageIDs.forEach((entry) => {
+          const db = firebase.database();
+          db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
+            .child(userName).set(userName);
+        });
+        clearTimeout(timeout);
+      }, 5000);
     });
   }
 

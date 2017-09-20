@@ -69,7 +69,6 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   render() {
-    //console.log(this.state.groups)
     let userName = JSON.parse(localStorage.getItem('user'));
     return (
       <div>

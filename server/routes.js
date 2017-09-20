@@ -18,6 +18,6 @@ router.get('/groups/:groupName/:user', Group.usersAndMessagesInGroups);
 router.get('/users/allusers/', User.allUsers);
 router.get('/users/allnumbers/', User.allNumbers);
 router.get('/users/allemails/', User.allEmails);
-router.get('/groups/:groupName/:messageID/', Message.seenMessage);
+router.get('/seen/:groupName/:messageID/', Message.seenMessage);
 
 module.exports = router;

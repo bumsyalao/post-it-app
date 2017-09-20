@@ -72,23 +72,20 @@ module.exports = {
     .then((response) => {
       const groups = response.data;
       AppActions.receiveGroups(groups);
-      console.log(groups)
     }).catch((error) => {
       console.log(error);
     });
   },
 
   getNotifications(userName) {
-//     axios.get(`/user/notification/${userName}`)
-//     .then((response) => {
-//       const notification = response.data;
-// //AppActions.receiveNotification(notification);
-// console.log(notification)
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-console.log(userName)
+    axios.get(`/user/notification/${userName}`)
+    .then((response) => {
+      const notification = response.data;
+      AppActions.receiveNotification(notification);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   },
 
   addUserToGroup(addUser) {
@@ -121,7 +118,7 @@ console.log(userName)
   seenMessage(user) {
     const groupName = user.groupName;
     const messageID = user.messageID;
-    axios.get(`/groups/${groupName}/${messageID}`)
+    axios.get(`/seen/${groupName}/${messageID}`)
     .then((response) => {
       AppActions.receiveSeenUsers(response.data);
     })

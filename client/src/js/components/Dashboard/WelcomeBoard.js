@@ -47,11 +47,10 @@ export default class WelcomeBoard extends Component {
                             <div className="container" >
                                 <div className="row">
                                     <div className="col-sm-3"></div>
-                                    <div className="col-md-6 col-sm-6 col-xs-12">
-                                        
+                                    <div className="col-md-6 col-sm-6 col-xs-12">                                       
                                         <center>
                                         <h3>Welcome {userName}</h3>
-                                        <p>You have {this.props.notification.length} unread Message</p></center>
+                                        </center>
                                     </div>
                                 </div>
                             </div>

@@ -335,8 +335,8 @@ AppDispatcher.register((payload) => {
       AppStore.emit(CHANGE_EVENT);
       break;
 
-    case AppConstants.NOTIFICATION:
-      AppAPI.getNotification(action.userName);
+    case AppConstants.NOTIFICATIONS:
+      AppAPI.getNotifications(action.userName);
       AppStore.emit(CHANGE_EVENT);
       break;
 
