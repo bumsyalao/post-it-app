@@ -142,7 +142,8 @@ class Signin extends Component {
         const googleUser = {
           displayName,
           email: user.email,
-          uid: user.uid
+          uid: user.uid,
+          photoURL: user.photoURL
         }
         if (this.state.emails.includes(googleUser.email)){
           AppActions.receiveLogin(googleUser);

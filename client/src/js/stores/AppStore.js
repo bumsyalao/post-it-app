@@ -49,6 +49,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
   saveUser(user) {
     userStore = user;
     loggedInUser.push(user.displayName);
+    loggedInUser.push(user.photoURL);
   },
 
   setUser(user) {
@@ -304,6 +305,7 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.LOGOUT:
       window.localStorage.removeItem('user');
+      window.localStorage.removeItem('photoURL');
       window.localStorage.removeItem('groupName');
       AppStore.setLogout();
       AppAPI.setLogout();

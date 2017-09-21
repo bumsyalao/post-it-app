@@ -31,9 +31,6 @@ export default class Board extends Component {
         AppStore.removeChangeListener(this.onChange);
     } 
 
-
-
-
     render() {
         return (
             <div className="container" id="main">

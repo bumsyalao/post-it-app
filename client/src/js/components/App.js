@@ -61,7 +61,8 @@ class App extends Component  {
    */
   render() {
     if (this.state.authentication === true) {
-        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));        
+        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0])); 
+        localStorage.setItem('photoURL', JSON.stringify(this.state.loggedInUser[1]));       
       }
   
      let componentToMount;
