@@ -24,7 +24,7 @@ export default class Board extends Component {
         this.sendMessage = this.sendMessage.bind(this)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         AppStore.addChangeListener(this.onChange);
     }
     componentWillUnmount() {

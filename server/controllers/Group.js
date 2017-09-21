@@ -137,36 +137,28 @@ class Group {
     const userName = req.params.user;
     const messages = [];
     const users = [];
-
-    const messagesIDRef = firebase.database()
+    const messageRef = firebase.database()
       .ref()
       .child('Groups')
       .child(groupName)
-      .child('Messages');
-    messagesIDRef.once('value', (snap) => {
-      const messageIDs = [];
+      .child('Messages')
+      .limitToLast(10);
+    messageRef.once('value', (snap) => {
       let message = {};
       snap.forEach((data) => {
-        messageIDs.push(data.key);
-        if (data.val().Seen[userName]) {
-          // The User has not seen this message
-          message = {
-            id: data.key,
-            user: data.val().user,
-            text: data.val().Message,
-            Time: data.val().Time,
-            Priority: data.val().Priority
-          };
-          messages.push(message);
-        } else {
-          // The User has seen this message, push it to the user's Archives
-          return [];
-        }
+        message = {
+          id: data.key,
+          user: data.val().user,
+          text: data.val().Message,
+          Time: data.val().Time,
+          Priority: data.val().Priority
+        };
+        messages.push(message);
       });
 
       const userRef = firebase.database().ref()
-        .child('Groups').child(groupName)
-        .child('Users');
+      .child('Groups').child(groupName)
+      .child('Users');
       userRef.once('value', (userSnapshot) => {
         let user = {};
         userSnapshot.forEach((data) => {
@@ -183,25 +175,21 @@ class Group {
         });
       });
     });
-
     const messageIDRef = firebase.database()
-      .ref()
-      .child('Groups')
-      .child(groupName)
-      .child('Messages');
+    .ref()
+    .child('Groups')
+    .child(groupName)
+    .child('Messages');
     messageIDRef.once('value', (snap) => {
       const messageIDs = [];
       snap.forEach((data) => {
         messageIDs.push(data.key);
       });
-      const timeout = setTimeout(() => {
-        messageIDs.forEach((entry) => {
-          const db = firebase.database();
-          db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
-            .child(userName).set(userName);
-        });
-        clearTimeout(timeout);
-      }, 5000);
+      messageIDs.forEach((entry) => {
+        const db = firebase.database();
+        db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
+        .child(userName).set(userName);
+      });
     });
   }
 
