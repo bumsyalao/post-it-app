@@ -61,22 +61,22 @@ class App extends Component  {
    * @memberof App
    */
   render() {
+      console.log(this.state.loggedInPicture)
     if (this.state.authentication === true) {
-        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0])); 
-        localStorage.setItem('photoURL', JSON.stringify(this.state.loggedInPicture[0]));       
+        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));        
       }
   
      let componentToMount;
       if (localStorage.getItem('user') == null) {
-        componentToMount =         <div className="row">
-                                        <Navigation /> 
-                                        <div className="row">
-                                            <Routes authed={this.state.authentication} />
-                                        </div>
-                                        <div className="row">
-                                            <Footer />
-                                        </div>
-                                    </div>
+        componentToMount = <div className="row">
+                                <Navigation /> 
+                                <div className="row">
+                                    <Routes authed={this.state.authentication} />
+                                </div>
+                                <div className="row">
+                                    <Footer />
+                                </div>
+                            </div>
       } else {
         componentToMount = <Dashboard />;
       }

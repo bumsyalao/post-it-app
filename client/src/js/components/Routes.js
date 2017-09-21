@@ -11,6 +11,7 @@ import GoogleWelcome from './GoogleWelcome'
 import DashBoard from './Dashboard/Dashboard'
 import NavDash from './Dashboard/NavDash'
 import SideBar from './Dashboard/SideBar'
+import { firebase } from '../../../../server/config';
 
 
 /**

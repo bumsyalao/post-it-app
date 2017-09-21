@@ -31,7 +31,11 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-
+  externals: {
+    'cheerio': 'window',
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true
+  },
   module: {
     rules: [
       {
@@ -69,7 +73,11 @@ const config = {
   },
 
   plugins: [HtmlWebpackPluginConfig,
-    new ExtractTextPlugin({ filename: 'main.css', disable: false, allChunks: true })
+    new ExtractTextPlugin({
+      filename: 'main.css',
+      disable: false,
+      allChunks: true
+    })
     // new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
     // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
     // new webpack.HotModuleReplacementPlugin(),

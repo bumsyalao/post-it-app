@@ -140,6 +140,7 @@ class Signin extends Component {
         const user = result.user;
         const displayName = firstName(user.displayName)
         const photoURL = firstName(user.photoURL)
+        localStorage.setItem('photoURL', JSON.stringify(photoURL))
         const googleUser = {
           displayName,
           email: user.email,
