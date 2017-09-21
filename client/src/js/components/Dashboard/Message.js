@@ -68,12 +68,12 @@ export default class Message extends Component {
 
         <Modal show={this.state.showModal} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Users who have Seen Message</Modal.Title>
+            <Modal.Title>Users who have Read Message</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ul>
+            <ul className='mylist'>
             
-              {!this.state.seenMessage ?
+              {this.state.seenMessage ?
 
                 Object.keys(this.state.seenMessage).map(function (keyName, keyIndex) {
 

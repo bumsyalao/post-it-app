@@ -42,7 +42,14 @@ export default class DashBoard extends Component {
    * @return {void}
    * @memberof DashBoard
    */
-  componentWillMount() {
+  componentDidMount() {
+    if (!localStorage.takenTour) {
+      const timeout = setTimeout(() => {
+        introJs().start()
+        clearTimeout(timeout);
+      }, 7000);
+      localStorage.setItem('takenTour', true);
+    }
 
     AppStore.addChangeListener(this.onChange);
   }
@@ -69,23 +76,25 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   render() {
-    //console.log(this.state.groups)
     let userName = JSON.parse(localStorage.getItem('user'));
+    let photoURL = JSON.parse(localStorage.getItem('photoURL'));
+    {photoURL ? photoURL : photoURL = 'https://history.indiana.edu/images/no-photo.jpg'}
     return (
       <div>
-        <div className="nav-side-menu">
-          <div className="brand">PostIt</div>
+        <div className="nav-side-menu" >
+          <div className="brand" data-intro='Welcome to PostIt, your current group will be displayed here'>{!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}</div>
           <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
           <div className="menu-list">
+
 
             <ul id="menu-content" className="menu-content collapse out">
 
               <li>
-                <a href="#">
-                  <i className="fa fa-dashboard fa-lg"></i>&nbsp; {userName} 
-                     </a>
+              <a href="#">
+                  <i className="fa fa-dashboard fa-lg"></i>&nbsp; <img src={photoURL} alt="Smiley face" height="42" width="42" />&nbsp;{userName}
+                </a>
               </li>
-              <br/>
+              <br />
 
               <DashboardNavigation
                 contact={this.state.contacts}
@@ -93,17 +102,17 @@ export default class DashBoard extends Component {
                 user={this.state.user}
                 allUsers={this.state.databaseUsers}
                 notification={this.state.notification}
-              />              
-              <br/>
-                <SideBar contact={this.state.contacts} group={this.state.groups} user={this.state.user} currentGroup={this.state.currentGroup}/>
+              />
+              <br />
+              <SideBar contact={this.state.contacts} group={this.state.groups} user={this.state.user} currentGroup={this.state.currentGroup} />
             </ul>
 
           </div>
         </div>
-         {!this.state.currentGroup ? <WelcomeBoard notification={this.state.notification} /> : <Board contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />}
+        {!this.state.currentGroup ? <WelcomeBoard notification={this.state.notification} /> : <Board contact={this.state.contacts} emails={this.state.emails} numbers={this.state.numbers} />}
       </div>
     )
-  } 
+  }
 
 
   /**

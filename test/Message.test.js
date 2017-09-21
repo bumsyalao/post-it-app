@@ -68,7 +68,7 @@ describe('EndPoint: It returns every user who have seen a message', () => {
     const groupName = 'FILE';
     const messageID = '-KtnPBIB2vrb0t3znQNo';
     request(app)
-      .get('/groups/:groupName/:messageID')
+      .get('/seen/:groupName/:messageID')
       .send(groupName, messageID)
       .set('Accept', 'application/json')
       .end((err, res) => {

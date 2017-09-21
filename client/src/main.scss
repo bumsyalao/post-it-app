@@ -9,11 +9,16 @@ body {
   background: #f4f4f4;
 }
 
+.introjs-fixedTooltip {
+	position: fixed;
+	background: transparent;
+	border: 2px solid white;
+}
+
 .mylist {
-	list-style:none;
+	list-style:none !important;
     padding:0;
 	margin:0;
-	//background-color: red !important
 }
 #transform {
   text-transform: capitalize;

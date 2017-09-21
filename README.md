@@ -51,10 +51,14 @@ That's easy. In the root of the project. create a file named .env and add the fo
 where <your_desired_port> is the port you want to use. So, if you want to use port 9000, you will write:
 `PORT=9000`
 
-### How can I contribute?
-There are two major ways to contribute:
-+ If you find bugs in the application, create a `New Issue` and let me know about it.
-+ If you would like to add additional features to this application, fork this repository into your local machine, make necessary changes and create a Pull Request. Please make sure that all Hound suggestions are implemented and Travis CI passes.
+
+## Contributions
+ Contributions are always welcome. If you are interested in enhancing the features in the project, follow these steps below:
+ + Fork the project to your repository then clone it to your local machine.
+ + Create a new branch and make features that will enhance it.
+ + If the you wish to update an existing enhancement submit a pull request.
+ + If you find bugs in the application, create a `New Issue` and let me know about it.
+ + If you need clarification on what is not clear, contact me via mail [ebuka.umeh@andela.com](mailto:ebuka.umeh@andela.com)
 
 ## Author
     Ebuka Umeh

@@ -29,13 +29,16 @@ class Message {
         { message: 'The Notification or Priority field is invalid' }
       );
     } else {
-      groupRef.child(group).child('Messages').push(
+      const messageKey = groupRef.child(group).child('Messages').push(
         {
           user,
           Message: message,
           Time: moment().format('h:mm a, MMM Do'),
           Priority: priority,
-        })
+        }).key;
+      groupRef.child(group).child('Messages').child(messageKey).child('Seen')
+      .child('Bot')
+      .set('Bot')
         .then(() => {
           res.status(201).json({ message: 'Message posted successfully' });
         })
