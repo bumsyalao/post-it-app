@@ -53,8 +53,9 @@ export default class DashboardNavigation extends Component {
         const userName = JSON.parse(localStorage.getItem('user'));
         return (
             <div>
+            
 
-                <li data-toggle="collapse" className="collapsed intojs" data-intro='Hello step two!'>
+                <li data-toggle="collapse" className="collapsed" data-intro='Click here to create your first Group'>
                     <a href="#" onClick={this.openGroup}><i className="fa fa-globe fa-lg"></i>&nbsp; Create Group</a>
                 </li>
 
@@ -75,7 +76,7 @@ export default class DashboardNavigation extends Component {
                     </Modal.Footer>
                 </Modal>
 
-                <li data-toggle="collapse" className="collapsed" data-intro='Hello step three!'>
+                <li data-toggle="collapse" className="collapsed" data-intro='Invite your fiends to your Group'>
                     <a href="#" onClick={this.open}><i className="fa fa-globe fa-lg"></i>&nbsp; Invite a Friend</a>
                 </li>
 
@@ -113,7 +114,7 @@ export default class DashboardNavigation extends Component {
 
 
                 
-                <li data-toggle="collapse" className="collapsed" data-intro='Hello step three!' onClick={() => AppActions.getNotification(userName)}>
+                <li data-toggle="collapse" className="collapsed" data-intro='When messages are posted in groups you belong to, you get your notifications here !' onClick={() => AppActions.getNotification(userName)}>
                     <a href="#" onClick={this.openNotify}><i className="fa fa-globe fa-lg"></i>&nbsp; Notification</a>
                 </li>
                 <Modal show={this.state.showNotify} onHide={this.closeNotify}>
@@ -145,7 +146,7 @@ export default class DashboardNavigation extends Component {
 
 
 
-                <li data-toggle="collapse" data-intro='Hello step three!' className="collapsed">
+                <li data-toggle="collapse" className="collapsed">
                     <a href="#" onClick={this.logout.bind(this)}><i className="fa fa-globe fa-lg"></i>&nbsp; Logout</a>
                 </li>
 

@@ -43,7 +43,14 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   componentDidMount() {
-    introJs().start()
+    if (!localStorage.takenTour) {
+               const timeout = setTimeout(() => {
+                introJs().start()
+                 clearTimeout(timeout);
+               }, 7000);
+                localStorage.setItem('takenTour', true);
+             }
+    
     AppStore.addChangeListener(this.onChange);
   }
 
@@ -72,8 +79,8 @@ export default class DashBoard extends Component {
     let userName = JSON.parse(localStorage.getItem('user'));
     return (
       <div>
-        <div className="nav-side-menu">
-          <div className="brand">{!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}</div>
+        <div className="nav-side-menu" >
+          <div className="brand" data-intro='Welcome to PostIt, your current group will be displayed here'>{!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}</div>
           <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
           <div className="menu-list">
 

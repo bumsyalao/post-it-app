@@ -27,7 +27,7 @@ export default class SideBar extends Component {
     return (
       <div className="sideBar message-padding">
 
-        <li data-toggle="collapse" data-target="#new" className="collapsed" onClick={() => AppActions.getGroups(userName)}>
+        <li data-toggle="collapse" data-target="#new" data-intro='Click here to display all your Groups' className="collapsed" onClick={() => AppActions.getGroups(userName)}>
           <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Group <span className="arrow"></span></a>
         </li>
         <ul className="sub-menu collapse" id="new">
@@ -42,7 +42,7 @@ export default class SideBar extends Component {
         <br /> 
 
 
-        <li data-toggle="collapse" data-target="#new" className="collapsed">
+        <li data-toggle="collapse" data-target="#new" data-intro='This displays all the users in a group' className="collapsed">
           <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Users <span className="arrow"></span></a>
         </li>
         {this.props.contact.map((KeyName, KeyIndex) => {
