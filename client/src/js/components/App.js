@@ -61,7 +61,6 @@ class App extends Component  {
    * @memberof App
    */
   render() {
-      console.log(this.state.loggedInPicture)
     if (this.state.authentication === true) {
         localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));        
       }
