@@ -23,6 +23,7 @@ let archiveMessageStore = [];
 let seenUsersStore = [];
 let googleSignUpStore = null;
 const loggedInUser = [];
+const loggedInPicture = [];
 let allEmails = [];
 
 const AppStore = assign({}, EventEmitter.prototype, {
@@ -42,6 +43,10 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return loggedInUser;
   },
 
+  getLoggedInPicture() {
+    return loggedInPicture;
+  },
+
   getUser() {
     return userStore;
   },
@@ -49,7 +54,6 @@ const AppStore = assign({}, EventEmitter.prototype, {
   saveUser(user) {
     userStore = user;
     loggedInUser.push(user.displayName);
-    loggedInUser.push(user.photoURL);
   },
 
   setUser(user) {
@@ -95,6 +99,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return googleSignUpStore;
   },
   setGoogleSignIn(googleUser) {
+    loggedInPicture.push(googleUser.photoURL);
     googleSignUpStore = googleUser;
   },
   getGroups() {
@@ -307,6 +312,7 @@ AppDispatcher.register((payload) => {
       window.localStorage.removeItem('user');
       window.localStorage.removeItem('photoURL');
       window.localStorage.removeItem('groupName');
+      location.reload();
       AppStore.setLogout();
       AppAPI.setLogout();
       AppStore.emit(CHANGE_EVENT);

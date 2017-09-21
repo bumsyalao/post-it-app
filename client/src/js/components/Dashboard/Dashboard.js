@@ -47,7 +47,7 @@ export default class DashBoard extends Component {
       const timeout = setTimeout(() => {
         introJs().start()
         clearTimeout(timeout);
-      }, 7000);
+      }, 3000);
       localStorage.setItem('takenTour', true);
     }
 
