@@ -145,8 +145,8 @@ module.exports = {
         AppActions.receiveGroups(groups);
         toastr.success('Welcome To PostIt');
       }
-    }).catch((error) => {
-         console.log(error);
+    }).catch(() => {
+      toastr.error('Your email or password is invalid');
     });
   },
 

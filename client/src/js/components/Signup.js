@@ -115,7 +115,8 @@ export default class Signup extends Component {
         this.refs.username.value = '';
          this.refs.email.value = '';
          this.refs.password.value = ''; 
-         this.refs.number.value = ''; 
+         this.refs.number.value = '';
+         this.refs.verifyPassword.value = ''; 
     }
 }
   
