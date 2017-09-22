@@ -82,8 +82,8 @@ class Message {
           const transporter = nodemailer.createTransport(smtpTransport({
             service: 'gmail',
             auth: {
-              user: 'wesumeh@gmail.com',
-              pass: 'dericoderico'
+              user: process.env.EMAIL_USERNAME,
+              pass: process.env.EMAIL_PASSWORD
             }
           }));
           const mailOptions = {
@@ -115,8 +115,8 @@ class Message {
         });
         if (priority === 'Critical') {
           const nexmo = new Nexmo({
-            apiKey: '47f699b7',
-            apiSecret: 'ebc6283d134add6e'
+            apiKey: process.env.NEXMO_APIKEY,
+            apiSecret: process.env.NEXMO_APISECRET
           });
           number.forEach((entry) => {
             nexmo.message.sendSms(

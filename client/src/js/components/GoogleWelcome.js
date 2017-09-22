@@ -26,9 +26,11 @@ export default class GoogleWelcome extends Component {
 
     render() {
         console.log(this.state.databaseUsers)
+        
         const email = this.state.googleDetail.email
         const uid = this.state.googleDetail.uid
         const displayName = this.state.googleDetail.displayName
+        const photoURL = this.state.googleDetail.photoURL
         return (
             <div>
                 <h3> Welcome {displayName} </h3>

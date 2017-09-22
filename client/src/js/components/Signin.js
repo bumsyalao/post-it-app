@@ -139,6 +139,8 @@ class Signin extends Component {
         const token = result.credential.accessToken;
         const user = result.user;
         const displayName = firstName(user.displayName)
+        const photoURL = firstName(user.photoURL)
+        localStorage.setItem('photoURL', JSON.stringify(photoURL))
         const googleUser = {
           displayName,
           email: user.email,
@@ -149,6 +151,8 @@ class Signin extends Component {
           AppActions.receiveLogin(googleUser);
           toastr.success('Welcome to PostIt')    
          } else {
+           console.log(googleUser)
+
           AppActions.google(googleUser);
           
            this.setState({

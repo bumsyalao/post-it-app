@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nyc mocha --timeout 150000",
     "jest": "jest",
-    "start": "NODE_ENV=production node ./server/app",
+    "start": "nodemon ./server/app",
     "dev": "webpack-dev-server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack -p --config webpack.config.prod.js"
@@ -43,6 +43,7 @@
     "chai-http": "^3.0.0",
     "codeclimate-test-reporter": "*",
     "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.5.4",
     "express": "^4.15.3",
     "firebase": "^4.0.0",
     "flux": "^3.1.2",
@@ -73,6 +74,7 @@
     "babel-register": "^6.26.0",
     "coveralls": "*",
     "css-loader": "^0.28.4",
+    "enzyme": "^2.9.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-friendly-formatter": "^3.0.0",
@@ -81,14 +83,17 @@
     "eslint-plugin-react": "^7.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.1.0",
     "node-sass": "^4.5.3",
+    "nodemon": "*",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.5",
     "should": "^11.2.1",
     "style-loader": "^0.18.1",
     "supertest": "^3.0.0",
     "tape": "^4.6.3",
-    "vinyl-source-stream": "^1.1.0",
-    "nodemon": "*"
+    "vinyl-source-stream": "^1.1.0"
   },
   "bugs": {
     "url": "https://github.com/Charpell/post-it-app2/issues"

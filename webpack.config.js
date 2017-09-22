@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
@@ -31,7 +32,11 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-
+  externals: {
+    'cheerio': 'window',
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true
+  },
   module: {
     rules: [
       {
@@ -68,11 +73,17 @@ const config = {
     ]
   },
 
-  plugins: [HtmlWebpackPluginConfig,
-    new ExtractTextPlugin({ filename: 'main.css', disable: false, allChunks: true })
-    // new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
-    // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-    // new webpack.HotModuleReplacementPlugin(),
+  plugins: [
+    new Dotenv({
+      path: '.env',
+      safe: false,
+    }),
+    HtmlWebpackPluginConfig,
+    new ExtractTextPlugin({
+      filename: 'main.css',
+      disable: false,
+      allChunks: true
+    }),
   ],
 };
 

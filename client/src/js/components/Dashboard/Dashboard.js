@@ -47,7 +47,7 @@ export default class DashBoard extends Component {
       const timeout = setTimeout(() => {
         introJs().start()
         clearTimeout(timeout);
-      }, 7000);
+      }, 3000);
       localStorage.setItem('takenTour', true);
     }
 
@@ -77,7 +77,7 @@ export default class DashBoard extends Component {
    */
   render() {
     let userName = JSON.parse(localStorage.getItem('user'));
-    let photoURL = JSON.parse(localStorage.getItem('photoURL'));
+    let photoURL = JSON.parse(localStorage.getItem('photoURL')) || null;
     {photoURL ? photoURL : photoURL = 'https://history.indiana.edu/images/no-photo.jpg'}
     return (
       <div>

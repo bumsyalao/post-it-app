@@ -27,6 +27,7 @@ class App extends Component  {
             authentication: AppStore.getAuth(),
             user: AppStore.getUser(),
             loggedInUser: AppStore.getLoggedInUser(),
+            loggedInPicture: AppStore.getLoggedInPicture(),            
             groups: AppStore.getGroups()    
         }; 
          this.onChange= this.onChange.bind(this) 
@@ -61,21 +62,20 @@ class App extends Component  {
    */
   render() {
     if (this.state.authentication === true) {
-        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0])); 
-        localStorage.setItem('photoURL', JSON.stringify(this.state.loggedInUser[1]));       
+        localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));        
       }
   
      let componentToMount;
       if (localStorage.getItem('user') == null) {
-        componentToMount =         <div className="row">
-                                        <Navigation /> 
-                                        <div className="row">
-                                            <Routes authed={this.state.authentication} />
-                                        </div>
-                                        <div className="row">
-                                            <Footer />
-                                        </div>
-                                    </div>
+        componentToMount = <div className="row">
+                                <Navigation /> 
+                                <div className="row">
+                                    <Routes authed={this.state.authentication} />
+                                </div>
+                                <div className="row">
+                                    <Footer />
+                                </div>
+                            </div>
       } else {
         componentToMount = <Dashboard />;
       }
