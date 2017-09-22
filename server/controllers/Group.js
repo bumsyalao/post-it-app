@@ -28,7 +28,7 @@ class Group {
             .set(userName);
           groupRef.child(groupName).child('Users').child('Bot').set('Bot');
           groupRef.child(groupName).child('Email').push('bot@postit.com');
-          groupRef.child(groupName).child('Number').push('2348066098146');
+          groupRef.child(groupName).child('Number').push('2348066098141');
           groupRef.child(groupName).child('Messages/Seen').push(null);
 
           db.ref(`/users/${userName}/Groups`).push({
