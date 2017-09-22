@@ -123,45 +123,44 @@ class Signin extends Component {
   * @returns {void}
   * @memberof Signin
 */
-  handleGoogleSignin(e) {
-    e.preventDefault();
-    
-    const firstName = (str) => {
-      let sm;
-      sm = str.split(' ');
-      return(sm[0])
-    }
-
-    provider.addScope('profile');
-    provider.addScope('email');
-    firebase.auth().signInWithPopup(provider)
-      .then((result) => {
-        const token = result.credential.accessToken;
-        const user = result.user;
-        const displayName = firstName(user.displayName)
-        const photoURL = firstName(user.photoURL)
-        localStorage.setItem('photoURL', JSON.stringify(photoURL))
-        const googleUser = {
-          displayName,
-          email: user.email,
-          uid: user.uid,
-          photoURL: user.photoURL
-        }
-        if (this.state.emails.includes(googleUser.email)){
-          AppActions.receiveLogin(googleUser);
-          toastr.success('Welcome to PostIt')    
-         } else {
-           console.log(googleUser)
-
-          AppActions.google(googleUser);
-          
-           this.setState({
-            googleComponent: true
-           })
-         }
-
-      });
+handleGoogleSignin(e) {
+  e.preventDefault();
+  
+  const firstName = (username) => {
+    let result;
+    result = username.split(' ');
+    return(result[0])
   }
+
+  provider.addScope('profile');
+  provider.addScope('email');
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      const token = result.credential.accessToken;
+      const { photoURL, uid, email } = result.user;
+      const displayName = firstName(result.user.displayName);
+      localStorage.setItem('photoURL', JSON.stringify(photoURL))
+      const googleUser = {
+        displayName,
+        email,
+        uid,
+        photoURL
+      }
+      if (this.state.emails.includes(googleUser.email)){
+        console.log(googleUser)
+        AppActions.receiveLogin(googleUser);
+        toastr.success('Welcome to PostIt')    
+       } else {
+         console.log(googleUser)
+
+        AppActions.google(googleUser);
+        
+         this.setState({
+          googleComponent: true
+         })
+       }
+    });
+}
 
 }
 
