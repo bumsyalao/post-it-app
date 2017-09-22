@@ -24,4 +24,9 @@ describe('<App />', () => {
         expect(wrapper.find(Routes)).to.have.length(1);
     });
 
+    it('State', () => {
+        const wrapper = shallow(<App />);
+        expect(wrapper.state().authentication).to.equal(false);
+    });
+
 });

@@ -36,6 +36,16 @@ To view the project visit this [link](https://post-it-app35.herokuapp.com/)
  * [ECMAScript 6](http://es6-features.org/): This is the newest version of JavsScript with new features such as arrow functions, spread and rest operators and many more.
  * [REACT](https://facebook.github.io/react/): REACT is a JavaScript framework developed by Facebook and it is used for developing web application. REACT is the 'VIEW' in the MVC architecture.
  * [FLUX](http://facebook.github.io/flux/): Flux is an architecture used for building stable and efficient web applications. Flux design is a unidirectional flow of data.
+ * [Babel:](https://babeljs.io/)  Babel is used to transpile es6 down to es5.
+ * [Webpack:](https://webpack.github.io/docs/what-is-webpack.html)  Webpack is used to bundle modules with dependencies and run mundane tasks.
+ * [Axios:](https://www.npmjs.com/package/axios)  Axios is an http client library used in making API calls.
+ * [Jest:](https://facebook.github.io/jest/) Jest is used to run tests.
+
+ # Coding Style
+- Airbnb 
+
+# Language
+- Javascript
 
 
 ## Limitations

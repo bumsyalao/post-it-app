@@ -43,6 +43,7 @@
     "chai-http": "^3.0.0",
     "codeclimate-test-reporter": "*",
     "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.5.4",
     "express": "^4.15.3",
     "firebase": "^4.0.0",
     "flux": "^3.1.2",
