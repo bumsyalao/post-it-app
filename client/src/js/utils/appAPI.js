@@ -22,7 +22,7 @@ module.exports = {
         toastr.success('Welcome,  An email will be sent to you.');
       }
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -32,7 +32,7 @@ module.exports = {
         AppActions.receiveContact(contacts.data);
       })
       .catch((error) => {
-        console.log(error);
+        toastr.error(error);
       });
   },
 
@@ -42,7 +42,7 @@ module.exports = {
           AppActions.receiveNumber(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          toastr.error(error);
         });
   },
 
@@ -52,7 +52,7 @@ module.exports = {
           AppActions.receiveEmails(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          toastr.error(error);
         });
   },
 
@@ -63,7 +63,7 @@ module.exports = {
     }).then((response) => {
       toastr.success(response.data.message);
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -73,7 +73,7 @@ module.exports = {
       const groups = response.data;
       AppActions.receiveGroups(groups);
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -84,7 +84,7 @@ module.exports = {
       AppActions.receiveNotification(notification);
     })
     .catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -96,7 +96,7 @@ module.exports = {
     .then((response) => {
       toastr.success(response.data.message);
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -111,7 +111,7 @@ module.exports = {
     .then((response) => {
       toastr.success(response.data.message);
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -123,7 +123,7 @@ module.exports = {
       AppActions.receiveSeenUsers(response.data);
     })
     .catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -154,7 +154,7 @@ module.exports = {
     axios.post('/user/signout').then((response) => {
       toastr.success(response.data.message);
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -169,7 +169,7 @@ module.exports = {
         AppActions.receiveUser(users);
       })
       .catch((error) => {
-        console.log(error);
+        toastr.error(error);
       });
   },
 
@@ -189,7 +189,7 @@ module.exports = {
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 
@@ -198,7 +198,7 @@ module.exports = {
     }).then((response) => {
       toastr.success(response.data.message);
     }).catch((error) => {
-      console.log(error);
+      toastr.error(error);
     });
   },
 

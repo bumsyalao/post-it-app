@@ -10,9 +10,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', routes);
-app.use(express.static(path.join(__dirname, '../client/src/build/')));
+app.use('/', routes);
+app.use(express.static(path.join(__dirname, '../dist')));
+
+
 app.get('*', (req, res) => {
-  res.sendFile(`${process.cwd()}/client/src/build/index.html`);
+  res.sendFile(`${process.cwd()}/dist/index.html`);
 });
 app.listen(port);
 

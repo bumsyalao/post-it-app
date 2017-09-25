@@ -91,7 +91,7 @@ class Message {
             to: emails,
             subject: 'New Message Received',
             text: 'PostIt App ?',
-            html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in ' + group + ' group</h2>' // html body
+            html: '<p>Hello</p><h2>This is to notify you that a vey urgent message which may have a critical priority level has been posted in ' + group + ' group</h2>'
           };
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {

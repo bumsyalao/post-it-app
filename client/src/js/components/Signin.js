@@ -151,10 +151,7 @@ handleGoogleSignin(e) {
         AppActions.receiveLogin(googleUser);
         toastr.success('Welcome to PostIt')    
        } else {
-         console.log(googleUser)
-
-        AppActions.google(googleUser);
-        
+        AppActions.google(googleUser);        
          this.setState({
           googleComponent: true
          })

@@ -1,6 +1,6 @@
 # Post-it-app
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://choosealicense.com/licenses/mit/)
-[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=Production-Build)](https://travis-ci.org/Charpell/post-it-app) [![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=Production-Build)](https://coveralls.io/github/Charpell/post-it-app?branch=Production-Build)
+[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=develop)](https://travis-ci.org/Charpell/post-it-app) [![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=develop)](https://coveralls.io/github/Charpell/post-it-app?branch=develop)
 
 PostIt is a simple application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. The application allows people create accounts, create groups and add registered users to the groups, and then send messages out to these groups whenever they want.
 To view the project visit this [link](https://post-it-app35.herokuapp.com/)
