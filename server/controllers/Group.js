@@ -142,7 +142,7 @@ class Group {
       .child('Groups')
       .child(groupName)
       .child('Messages')
-      .limitToLast(10);
+      .limitToLast(14);
     messageRef.once('value', (snap) => {
       let message = {};
       snap.forEach((data) => {
