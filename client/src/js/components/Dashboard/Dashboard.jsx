@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AppStore from '../../stores/AppStore';
 import AppActions from '../../actions/AppActions'
-import NavDash from './NavDash';
 import DashboardNavigation from './DashboardNavigation'
 import SideBar from './SideBar';
 import Board from './Board'

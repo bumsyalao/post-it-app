@@ -10,41 +10,54 @@ import toastr from 'toastr'
  * Displays the navigation of the dashboard
  * 
  * @export
- * @class NavDash
+ * @class DashboardNavigation
  * @extends {Component}
  */
 export default class DashboardNavigation extends Component {
-    state = {
-        showModal: false,
-        showModal2: false,
-        showNotify: false,
-        groupName: '',
-        userName: '',
-        users: []
-    };   
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false,
+            showModal2: false,
+            showNotify: false,
+            groupName: '',
+            userName: '',
+            users: []
+        };
+
+        this.close = this.close.bind(this);
+        this.open = this.open.bind(this);
+        this.openGroup = this.openGroup.bind(this);
+        this.closeGroup = this.closeGroup.bind(this);
+        this.closeNotify = this.closeNotify.bind(this);
+        this.openNotify = this.openNotify.bind(this);
+
+      }
+
+      
     
 
     // Modal for add Users to the Group
-    close = () => {
+    close() {
         this.setState({ showModal: false });
     }
-    open = () => {
+    open() {
         this.setState({ showModal: true });
     }
 
     // Modal for creating Group
-    closeGroup = () => {
+    closeGroup() {
         this.setState({ showModal2: false });
     }
-    openGroup = () => {
+    openGroup() {
         this.setState({ showModal2: true });
     }
 
     // Modal for Notifications
-    closeNotify = () => {
+    closeNotify() {
         this.setState({ showNotify: false });
     }
-    openNotify = () => {
+    openNotify(){
         this.setState({ showNotify: true });
     }
 

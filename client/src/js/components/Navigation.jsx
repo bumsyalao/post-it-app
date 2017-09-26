@@ -10,11 +10,13 @@ import {Link} from 'react-router-dom';
  * @extends {Component}
  */
 export default class Navigation extends Component {
-    state = {
-    auth: false,
-    loading: true,
+  constructor(props) {
+    super(props);
+    this.state = {
+      auth: false,
+      loading: true,
+    };
   }
-
 
   /**
    * Makes an action call to to lets users navigate

@@ -9,7 +9,6 @@ import Footer from './Footer'
 import ResetPassword from './ResetPassword'
 import GoogleWelcome from './GoogleWelcome'
 import DashBoard from './Dashboard/Dashboard'
-import NavDash from './Dashboard/NavDash'
 import SideBar from './Dashboard/SideBar'
 import { firebase } from '../../../../server/config';
 
@@ -71,7 +70,6 @@ export default class Routes extends Component {
                 <Route authed={this.props.authed} path='/reset' component={ResetPassword} />
                 <Route authed={this.props.authed} path='/google' component={GoogleWelcome} />
                 <PrivateRoute authed={this.props.authed} path='/sidebar' component={SideBar} />
-                <PrivateRoute authed={this.props.authed} path='/navdash' component={NavDash} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
