@@ -24,9 +24,7 @@ export default class GoogleWelcome extends Component {
         AppStore.removeChangeListener(this._onChange);
     }
 
-    render() {
-        console.log(this.state.databaseUsers)
-        
+    render() {        
         const email = this.state.googleDetail.email
         const uid = this.state.googleDetail.uid
         const displayName = this.state.googleDetail.displayName
@@ -58,8 +56,8 @@ export default class GoogleWelcome extends Component {
     }
 
 
-    handleSubmit(e) {
-        e.preventDefault()
+    handleSubmit(event) {
+        event.preventDefault()
 
         function capitalizeFirstLetter(string){
             return string.charAt(0).toUpperCase() + string.slice(1);

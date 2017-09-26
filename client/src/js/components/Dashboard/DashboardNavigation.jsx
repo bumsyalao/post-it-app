@@ -168,9 +168,9 @@ export default class DashboardNavigation extends Component {
         )
     }
 
-    createGroup(e) {
+    createGroup(event) {
         const userName = JSON.parse(localStorage.getItem('user'));
-        e.preventDefault()
+        event.preventDefault()
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
@@ -185,8 +185,8 @@ export default class DashboardNavigation extends Component {
 
     }
 
-    addUser(e) {
-        e.preventDefault();
+    addUser(event) {
+        event.preventDefault();
 
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
@@ -212,8 +212,8 @@ export default class DashboardNavigation extends Component {
 
 
     // Logout User
-    logout(e) {
-        e.preventDefault();
+    logout(event) {
+        event.preventDefault();
         AppActions.logout();
 
     }

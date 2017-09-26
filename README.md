@@ -2,8 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://choosealicense.com/licenses/mit/)
 [![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=Production-Build)](https://travis-ci.org/Charpell/post-it-app) [![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=Production-Build)](https://coveralls.io/github/Charpell/post-it-app?branch=Production-Build)
 
-PostIt is a simple application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. The application allows people create accounts, create groups and add registered users to the groups, and then send messages out to these groups whenever they want.
-To view the project visit this [link](https://post-it-app35.herokuapp.com/)
+PostIt is a simple application that allows friends and colleagues create groups for notifications. The application is hosted online on [link](https://post-it-app35.herokuapp.com/)
 
 ## Key Features of this Application
 + Users can Sign Up
@@ -25,10 +24,9 @@ To view the project visit this [link](https://post-it-app35.herokuapp.com/)
 + Google Chrome 
 
 ## Local Installation Guide
-* Ensure Node is installed
-* clone the repo with the following command `git clone https://github.com/Charpell/post-it-app.git`
+* Clone the repo with the following command `git clone https://github.com/Charpell/post-it-app.git`
+* Change into the directory `cd post-it-app`
 * Run `npm install` to install all the dependencies needed to run the application
-* Install `webpack` globally
 * To test the application, run `npm test`
 * On your local machine Run `npm start` to start the server and visit `http://localhost:3000`
 

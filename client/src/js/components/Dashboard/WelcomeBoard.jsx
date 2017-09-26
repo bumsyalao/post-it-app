@@ -19,7 +19,6 @@ export default class WelcomeBoard extends Component {
 
         };
         this.onChange = this.onChange.bind(this)
-        this.sendMessage = this.sendMessage.bind(this);
     }
 
     componentWillMount() {
@@ -28,13 +27,7 @@ export default class WelcomeBoard extends Component {
     componentWillUnmount() {
         AppStore.removeChangeListener(this.onChange);
     }
-
-    sendMessage(e) {
-        e.preventDefault();
-        console.log(this.refs.type.value)
-        console.log(this.refs.message.value.trim()
-        )
-    }
+    
 
 
     render() {

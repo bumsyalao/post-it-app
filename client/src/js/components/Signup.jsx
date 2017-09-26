@@ -77,8 +77,8 @@ export default class Signup extends Component {
    * @returns {void}
    * @memberof Signup
 */
-    handleSubmit(e){
-      e.preventDefault();  
+    handleSubmit(event){
+      event.preventDefault();  
 
          /**
      * @method function

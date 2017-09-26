@@ -99,8 +99,8 @@ class Signin extends Component {
      * @returns {void}
      * @memberof Signin
   */
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     const contact = {
       email: this.refs.email.value.trim(),
       password: this.refs.password.value.trim()
@@ -123,8 +123,8 @@ class Signin extends Component {
   * @returns {void}
   * @memberof Signin
 */
-handleGoogleSignin(e) {
-  e.preventDefault();
+handleGoogleSignin(event) {
+  event.preventDefault();
   
   const firstName = (username) => {
     let result;
@@ -147,7 +147,6 @@ handleGoogleSignin(e) {
         photoURL
       }
       if (this.state.emails.includes(googleUser.email)){
-        console.log(googleUser)
         AppActions.receiveLogin(googleUser);
         toastr.success('Welcome to PostIt')    
        } else {

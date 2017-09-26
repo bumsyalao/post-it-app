@@ -65,8 +65,8 @@ export default class Board extends Component {
 
         )
     }
-    sendMessage(e){
-        e.preventDefault();  
+    sendMessage(event){
+        event.preventDefault();  
         const userName = JSON.parse(localStorage.getItem('user')); 
         const message = {
           user: userName.replace(" ", ""),
