@@ -185,19 +185,6 @@ class User {
  * @param {Object} res response object
  * @return {Object} response containing all notofications in the user database
  */
-  // static notification(req, res) {
-  //       const uid = user.uid;
-  //       usersRef.once('value', (snap) => {
-  //         const usersNotificate = [];
-  //         snap.forEach((currentUser) => {
-  //           if (currentUser.val().uid === uid) {
-  //             usersNotificate.push(currentUser.val().Notifications);
-  //           }
-  //         });
-  //         res.status(200).send(usersNotificate);
-  //       });
-  // }
-
   static notification(req, res) {
     const userName = req.params.user;
     const notifications = [];
@@ -215,7 +202,7 @@ class User {
       });
       res.status(200).send(notifications);
     });
-}
+  }
 
 
   /**
@@ -231,7 +218,13 @@ class User {
       snap.forEach((nos) => {
         userNames.push(nos.val().userName);
       });
-      res.status(200).send(userNames);
+      if (userNames.length === 0) {
+        res.status(404).json(
+          { message: 'Usernames not found' }
+        );
+      } else {
+        res.status(200).send(userNames);
+      }
     });
   }
 
@@ -249,7 +242,13 @@ class User {
       snap.forEach((nos) => {
         numbers.push(nos.val().number);
       });
-      res.status(200).send(numbers);
+      if (numbers.length === 0) {
+        res.status(404).json(
+          { message: 'Numbers not found' }
+        );
+      } else {
+        res.status(200).send(numbers);
+      }
     });
   }
 
@@ -266,7 +265,13 @@ class User {
       snap.forEach((nos) => {
         emails.push(nos.val().email);
       });
-      res.status(200).send(emails);
+      if (emails.length === 0) {
+        res.status(404).json(
+          { message: 'Emails not found' }
+        );
+      } else {
+        res.status(200).send(emails);
+      }
     });
   }
 

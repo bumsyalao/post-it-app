@@ -128,8 +128,12 @@ describe('EndPoint: SignUp', () => {
 
 
 describe('SignIn Route', () => {
-  const email = 'hh@gmail.com';
+  const displayName = 'Jat';
+  const uid = 'Sb1mgQOVOoXafC3MMnQXVjKlPdJ2';
+  const email = 'jat@gmail.com';
   const password = '123456';
+  const apiKey = 'AIzaSyDx5Xi4OxL1F18jqNO1L1JyAhO8CM3J3h0';
+  const authDomain = 'post-it-app-8b2cb.firebaseapp.com';
 
   it('It returns status 200 for when all parameters are complete', (done) => {
     request(app)
@@ -139,6 +143,18 @@ describe('SignIn Route', () => {
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('object');
+        res.body.should.have.property('message')
+        .eql('Welcome to Post it app');
+        res.body.should.have.nested.property('userData.email')
+        .eql(email);
+        res.body.should.have.nested.property('userData.displayName')
+        .eql(displayName);
+        res.body.should.have.nested.property('userData.uid')
+        .eql(uid);
+        res.body.should.have.nested.property('userData.apiKey')
+        .eql(apiKey);
+        res.body.should.have.nested.property('userData.authDomain')
+        .eql(authDomain);
         if (err) return done(err);
         done();
       });

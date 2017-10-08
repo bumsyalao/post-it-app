@@ -7,7 +7,6 @@ import { validateEmail } from '../helpers/validate.helper';
 import toastr from 'toastr';
 import GoogleButton from 'react-google-button'
 import GoogleWelcome from './GoogleWelcome'
-import Welcome from './Welcome'
 
 
 /**
@@ -24,7 +23,7 @@ class Signin extends Component {
     this.state = {
       emails: AppStore.getAllEmails(),
       googleComponent: false,
-      googleUser: AppStore.getGoogleSignup()      
+      googleUser: AppStore.getGoogleSignup()     
     };
 
 

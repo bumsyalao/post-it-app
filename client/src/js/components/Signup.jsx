@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import AppActions from '../actions/AppActions' 
 import AppStore from '../stores/AppStore'
-import GoogleWelcome from './GoogleWelcome'
 import {firebaseAuth, firebase, provider}from '../../../../server/config'
 import { validateEmail } from '../helpers/validate.helper';
 import toastr from 'toastr'
@@ -128,10 +127,9 @@ export default class Signup extends Component {
    * @memberof Signup
    */
  render() {  
-     if (this.state.googleUser){
-         var display = <GoogleWelcome googleUser={this.state.googleUser}/>
-     } else {
-         var display = <div className="container" >
+    return (  
+        <div>  
+        <div className="container" >
                             <div className="row">
                             <div className="col-sm-3"></div>
                                 <div className="col-md-6 col-sm-6 col-xs-12">
@@ -157,11 +155,7 @@ export default class Signup extends Component {
                                 </div>
                                 <div className="col-sm-3"></div>
                             </div>
-                    </div>
-     }
-    return (  
-        <div>  
-            {display}          
+                    </div>         
         </div>
 
     )

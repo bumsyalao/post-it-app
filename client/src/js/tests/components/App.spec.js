@@ -7,6 +7,9 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import Routes from '../components/Routes';
 
+jest.mock('../../../../../server/config', () => ({
+  }));
+
 describe('<App />', () => {
 
     it('contains a <Navigation /> for unauthenticated user', () => {

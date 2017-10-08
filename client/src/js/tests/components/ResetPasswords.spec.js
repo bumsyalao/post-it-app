@@ -18,5 +18,4 @@ describe('<ResetPassword  Component/>', () => {
         expect(wrapper.find('br')).to.have.length(3);
     });
 
-
 });
