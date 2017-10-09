@@ -53,7 +53,7 @@ export default class ResetPassword extends Component {
    * @memberof ResetPassword
    */
   handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     const email = this
       .refs
       .email

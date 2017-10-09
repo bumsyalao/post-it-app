@@ -1,23 +1,53 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { expect } from 'chai';
+import renderer from 'react-test-renderer';
+import GoogleWelcome from '../../components/GoogleWelcome'
+import AppActions from '../../actions/AppActions'
 
-import GoogleWelcome from '../components/GoogleWelcome';
+jest.mock('../../../../../server/config', () => ({
+  }));
+jest.mock('../../actions/AppActions');
 
-describe('<GoogleWelcome  Component/>', () => {
 
-    it('contains a <GoogleWelcome /> component', () => {
-        const wrapper = shallow(<GoogleWelcome />);
-        expect(wrapper.find('div')).to.have.length(7);
-        expect(wrapper.find('h1')).to.have.length(1);
-        expect(wrapper.find('p')).to.have.length(1);
-    });
+let spyOnDispatcher;
+beforeEach(() => {
+    spyOnDispatcher = spyOn(AppActions, 'googleSignup');
+});
 
-    it('State', () => {
-      const wrapper = shallow(<GoogleWelcome />);
-      expect(wrapper.state().databaseUsers).to.equal([]);
-      expect(wrapper.state().numbers).to.equal([]);
-      expect(wrapper.state().googleDetail).to.equal(null);      
+afterEach(() => {
+    spyOnDispatcher.mockReset();
+});
+
+describe('GoogleWelcome Component', () => {
+  it('About component should render as expected', () => {
+    const tree = renderer.create(<GoogleWelcome />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
+
+  it('should display the necessary elements', () => {
+    const wrapper = shallow(<GoogleWelcome />);
+    wrapper.instance().componentUnmount();
+    expect(wrapper.find('div').length).toBe(7);
+    expect(wrapper.find('h2').length).toBe(1);
+    expect(wrapper.find('h4').length).toBe(1);
+    expect(wrapper.find('form').length).toBe(1);
+    expect(wrapper.find('input').length).toBe(1);
+    expect(wrapper.find('a').length).toBe(1);
+    expect(wrapper.find('br').length).toBe(3);
+});
+
+it('should expect AppAction to be called', () => {
+    const event = {
+        target: {
+          name: 'name',
+          value: 'value',
+        },
+        preventDefault: () => jest.fn()
+      };
+    const wrapper = mount(<GoogleWelcome />);
+    wrapper.instance().handleSubmit(event);
+    expect(spyOnDispatcher).toHaveBeenCalled();
+});
+
 
 });

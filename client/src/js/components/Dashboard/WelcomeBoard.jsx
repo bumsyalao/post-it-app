@@ -13,22 +13,6 @@ import moment from 'moment';
  * @extends {Component}
  */
 export default class WelcomeBoard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
-        this.onChange = this.onChange.bind(this)
-    }
-
-    componentWillMount() {
-        AppStore.addChangeListener(this.onChange);
-    }
-    componentWillUnmount() {
-        AppStore.removeChangeListener(this.onChange);
-    }
-    
-
 
     render() {
         let userName = JSON.parse(localStorage.getItem('user'));
@@ -53,10 +37,6 @@ export default class WelcomeBoard extends Component {
             </div>
 
         )
-    }
-
-    onChange() {
-
     }
 
 }

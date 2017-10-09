@@ -178,7 +178,7 @@ export default class DashboardNavigation extends Component {
         const groupName = capitalizeFirstLetter(this.refs.group.value.trim())
         const group = {
             groupName,
-            userName
+            userName 
         }
         AppActions.saveGroup(group);
         this.refs.group.value = '';

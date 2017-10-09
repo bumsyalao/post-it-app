@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
 
 
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
 
 describe('<Footer />', () => {
 

@@ -23,7 +23,7 @@ export default class SideBar extends Component {
   render() { 
     const user = JSON.parse(localStorage.getItem('user'));
     const userName = user.replace(" ", "")
-
+ 
     return (
       <div className="sideBar message-padding">
 

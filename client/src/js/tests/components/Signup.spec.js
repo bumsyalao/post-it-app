@@ -1,29 +1,54 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { expect } from 'chai';
+import renderer from 'react-test-renderer';
+import Signup from '../../components/Signup'
+import AppActions from '../../actions/AppActions'
 
-import Signup from '../components/Signup';
-import GoogleWelcome from '../components/GoogleWelcome';
-
-jest.mock('../../../../server/config', () => ({
+jest.mock('../../../../../server/config', () => ({
   }));
+jest.mock('../../actions/AppActions');
 
-describe('<Signup />', () => {
 
-    it('contains a component', () => {
-        const wrapper = shallow(<Signup />);
-        expect(wrapper.find('div')).to.have.length(11);
-        expect(wrapper.find('button')).to.have.length(1);
-        expect(wrapper.find('form')).to.have.length(1);
-    });
+let spyOnDispatcher;
+beforeEach(() => {
+    spyOnDispatcher = spyOn(AppActions, 'saveContact');
+});
 
-    it('State', () => {
-        const wrapper = shallow(<Signup />);
-        expect(wrapper.state().contacts).to.equal([]);
-        expect(wrapper.state().databaseUsers).to.equal([]);
-        expect(wrapper.state().emails).to.equal([]);
-        expect(wrapper.state().numbers).to.equal([]);
-        expect(wrapper.state().googleUser).to.equal([]);
-    });
+afterEach(() => {
+    spyOnDispatcher.mockReset();
+});
+
+describe('Signup Component', () => {
+  it('About component should render as expected', () => {
+    const tree = renderer.create(<Signup />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should display the necessary elements', () => {
+    const wrapper = mount(<Signup />);
+    wrapper.instance().componentWillUnmount();
+    expect(wrapper.find('div').length).toBe(7);
+    expect(wrapper.find('h2').length).toBe(1);
+    expect(wrapper.find('h4').length).toBe(1);
+    expect(wrapper.find('form').length).toBe(1);
+    expect(wrapper.find('input').length).toBe(1);
+    expect(wrapper.find('a').length).toBe(1);
+    expect(wrapper.find('br').length).toBe(3);
+});
+
+it('should expect AppAction to be called', () => {
+    const event = {
+        target: {
+          name: 'name',
+          value: 'value',
+        },
+        preventDefault: () => jest.fn()
+      };
+    const wrapper = mount(<Signup />);
+    wrapper.instance().refs.email.value = 'someemail@email.com';
+    wrapper.instance().handleSubmit(event);
+    expect(spyOnDispatcher).toHaveBeenCalled();
+});
+
 
 });

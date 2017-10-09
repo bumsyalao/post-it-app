@@ -122,15 +122,14 @@ class Signin extends Component {
   * @returns {void}
   * @memberof Signin
 */
-handleGoogleSignin(event) {
-  event.preventDefault();
+handleGoogleSignin(e) {
+  e.preventDefault();
   
   const firstName = (username) => {
     let result;
     result = username.split(' ');
     return(result[0])
   }
-
   provider.addScope('profile');
   provider.addScope('email');
   firebase.auth().signInWithPopup(provider)
@@ -146,6 +145,7 @@ handleGoogleSignin(event) {
         photoURL
       }
       if (this.state.emails.includes(googleUser.email)){
+        console.log(googleUser)
         AppActions.receiveLogin(googleUser);
         toastr.success('Welcome to PostIt')    
        } else {
@@ -156,6 +156,7 @@ handleGoogleSignin(event) {
        }
     });
 }
+
 
 }
 

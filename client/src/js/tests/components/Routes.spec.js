@@ -1,25 +1,28 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { expect } from 'chai';
+import renderer from 'react-test-renderer';
+import Routes from '../../components/Routes'
 
-import Routes from '../components/Routes';
-import Signin from '../components/Signin';
-import Signup from '../components/Signup';
-import Home from '../components/Home';
-import Footer from '../components/Footer';
-import ResetPassword from '../components/ResetPassword';
-import GoogleWelcome from '../components/GoogleWelcome';
-import DashBoard from '../components/Dashboard/Dashboard';
-import SideBar from '../components/Dashboard/SideBar';
 
-jest.mock('../../../../server/config', () => ({
-}));
+jest.mock('../../../../../server/config', () => ({
+  }));
 
-describe('<Routes />', () => {
+describe('Routes Component', () => {
+  it('About component should render as expected', () => {
+    const tree = renderer.create(<Routes />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-    it('State', () => {
-        const wrapper = shallow(<Routes />);
-        expect(wrapper.props().authed).to.equal(undefined);
-    });
+  it('should display the necessary elements', () => {
+    const wrapper = mount(<Routes />);
+    expect(wrapper.find('div').length).toBe(7);
+    expect(wrapper.find('h2').length).toBe(1);
+    expect(wrapper.find('h4').length).toBe(1);
+    expect(wrapper.find('form').length).toBe(1);
+    expect(wrapper.find('input').length).toBe(1);
+    expect(wrapper.find('a').length).toBe(1);
+    expect(wrapper.find('br').length).toBe(3);
+});
+
 
 });
