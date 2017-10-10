@@ -31,7 +31,7 @@ export default class DashboardNavigation extends Component {
         this.closeGroup = this.closeGroup.bind(this);
         this.closeNotify = this.closeNotify.bind(this);
         this.openNotify = this.openNotify.bind(this);
-
+        this.addUser = this.addUser.bind(this)
       }
 
       
@@ -64,6 +64,8 @@ export default class DashboardNavigation extends Component {
 
     render() {
         const userName = JSON.parse(localStorage.getItem('user'));
+        const groupOptions = this.props.group.map((keyName, keyIndex) => <GroupOptions keyName={keyName} key={keyIndex} />)
+
         return (
             <div>
             
@@ -98,19 +100,11 @@ export default class DashboardNavigation extends Component {
                         <Modal.Title>Add a User to this Group</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={this.addUser.bind(this)}>
+                        <form onSubmit={this.addUser}>
                             <div className='form-group'>
                                 <select className="form-control" ref="type">
-                                    <option></option>
-                                    {
-                                        this.props.group.map(function (keyName, keyIndex) {
-                                            return (
-                                                <GroupOptions keyName={keyName} key={keyIndex} />
-                                            )
-
-                                        })
-                                    }
-
+                                    <option>Groups</option>
+                                    {groupOptions}
                                 </select>
                             </div>
                             <div className='form-group'>
