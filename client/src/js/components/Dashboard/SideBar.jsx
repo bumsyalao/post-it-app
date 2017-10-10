@@ -43,7 +43,7 @@ export default class SideBar extends Component {
 
 
         <li data-toggle="collapse" data-target="#new" data-intro='This displays all the users in a group' className="collapsed">
-          <a href="#"><i className="fa fa-car fa-lg"></i>&nbsp; Users <span className="arrow"></span></a>
+          <a href="#"><i className="fa fa-globe fa-lg"></i>&nbsp; Users</a>
         </li>
         {this.props.contact.map((KeyName, KeyIndex) => {
           return (
