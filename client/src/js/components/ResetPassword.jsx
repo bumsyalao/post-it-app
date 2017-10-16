@@ -3,7 +3,7 @@ import AppActions from '../actions/AppActions'
 import AppStore from '../stores/AppStore'
 
 /**
- * Resets the passwrod of a user
+ * @description Resets the passwrod of a user
  *
  * @export
  * @class ResetPassword
@@ -47,9 +47,9 @@ export default class ResetPassword extends Component {
   }
 
   /**
-   * Makes an action to Reset Password
+   * @description Makes an action to Reset Password
    *
-   * @param {any} e
+   * @param {any} event
    * @memberof ResetPassword
    */
   handleSubmit(event) {

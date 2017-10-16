@@ -24,7 +24,12 @@ export default class Message extends Component {
 
 
 
-
+  /**
+     * Makes an action call to tick users who have seen a message
+     * @param {object} event
+     * @returns {void}
+     * @memberof Messsage
+  */
   handleSeenMessage(event) {
     event.preventDefault();
 
@@ -41,15 +46,33 @@ export default class Message extends Component {
 
   }
 
+  /**
+   * @method componentWillMount
+   * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+   * @return {void}
+   * @memberof Message
+   */
   componentWillMount() {
     AppStore.addChangeListener(this.onChange);
   }
+
+  /**
+  * @method componentWillUnmount
+  * @description Removes event Listener from the Store
+  * @memberof Message
+  */
   componentWillUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
 
 
-
+  /**
+   * @method render
+   * @description Render react component
+   * 
+   * @returns {String} The HTML markup for the Register
+   * @memberof Message
+   */
   render() {
     return (
       <div>
@@ -93,6 +116,12 @@ export default class Message extends Component {
       </div>
     )
   }
+
+  /**
+   * @method onChange
+   * @description Monitors changes in the components and change the state
+   * @memberof Message
+   */
   onChange() {
     this.setState({ seenMessage: AppStore.getSeenUsers() });
   }

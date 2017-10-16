@@ -10,8 +10,7 @@ import GoogleWelcome from './GoogleWelcome'
 
 
 /**
- * Gets user data and persits with firebase
- * 
+ * @description Gets user data and persits with firebase 
  * @export
  * @param {object} props
  * @class Signin
@@ -23,35 +22,48 @@ class Signin extends Component {
     this.state = {
       emails: AppStore.getAllEmails(),
       googleComponent: false,
-      googleUser: AppStore.getGoogleSignup()     
+      googleUser: AppStore.getGoogleSignup()
     };
-
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this)
   }
 
+    /**
+   * @method componentDidMount
+   * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+   * @return {void}
+   * @memberof Signin
+   */
   componentDidMount() {
     AppStore.addChangeListener(this.onChange);
   }
 
-
+  /**
+  * @method componentWillUnmount
+  * @description Removes event Listener from the Store
+  * @memberof Signin
+  */
   componentWillUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
 
-
+  /**
+   * @method onChange
+   * @description Monitors changes in the components and change the state
+   * @memberof Signin
+   */
   onChange() {
     this.setState({
       emails: AppStore.getAllEmails(),
-      googleUser: AppStore.getGoogleSignup()      
+      googleUser: AppStore.getGoogleSignup()
     });
 
   }
 
   /**
    * @method render
-   * Render react component
+   * @description Render react component
    * 
    * @returns {String} The HTML markup for the Register
    * @memberof Signin
@@ -59,32 +71,35 @@ class Signin extends Component {
   render() {
     if (!this.state.googleComponent) {
       var display =
-          <div className='well col-md-8 col-md-offset-2'>
-            <h3>Sign In</h3>
+        <div className='well col-md-8 col-md-offset-2'>
+          <h3>Sign In</h3>
 
-            <form onSubmit={this.handleSubmit.bind(this)}>
-              <div className='form-group'>
-                <input type="text" ref='email' className='form-control' placeholder='Email' required />
-              </div>
-              <div className='form-group'>
-                <input type="password" ref='password' className='form-control' placeholder='Password' required />
-              </div>
-              <div><a href="#/reset">Forgot Password?</a></div>
-              <div><a href="#/register">Don't have an account? Signup</a></div>
-              <button type='submit' onClick={this.addAlert} className='btn btn-primary'>Log in</button>
-            </form>
-            <GoogleButton className="google-button" onClick={this.handleGoogleSignin.bind(this)} />
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <div className='form-group'>
+              <input type="text" ref='email' className='form-control' 
+              placeholder='Email' required />
+            </div>
+            <div className='form-group'>
+              <input type="password" ref='password' className='form-control' 
+              placeholder='Password' required />
+            </div>
+            <div><a href="#/reset">Forgot Password?</a></div>
+            <div><a href="#/register">Don't have an account? Signup</a></div>
+            <button type='submit' onClick={this.addAlert} 
+            className='btn btn-primary'>Log in</button>
+          </form>
 
-          </div>
+          <GoogleButton className="google-button" onClick={this.handleGoogleSignin.bind(this)} />
+        </div>
 
     } else {
-      var display = < GoogleWelcome  />
+      var display = < GoogleWelcome />
 
     }
     return (
       <div className="row">
         <div className="col-sm-12">
-            {display}
+          {display}
         </div>
       </div>
 
@@ -94,7 +109,7 @@ class Signin extends Component {
 
   /**
      * Makes an action call to Sign in a user with email and password
-     * @param {object} e
+     * @param {object} event
      * @returns {void}
      * @memberof Signin
   */
@@ -118,44 +133,43 @@ class Signin extends Component {
 
   /**
   * Makes an action call to Sign in a user with google account
-  * @param {object} e
+  * @param {object} event
   * @returns {void}
   * @memberof Signin
 */
-handleGoogleSignin(e) {
-  e.preventDefault();
-  
-  const firstName = (username) => {
-    let result;
-    result = username.split(' ');
-    return(result[0])
+  handleGoogleSignin(event) {
+    event.preventDefault();
+
+    const firstName = (username) => {
+      let result;
+      result = username.split(' ');
+      return (result[0])
+    }
+    provider.addScope('profile');
+    provider.addScope('email');
+    firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        const token = result.credential.accessToken;
+        const { photoURL, uid, email } = result.user;
+        const displayName = firstName(result.user.displayName);
+        localStorage.setItem('photoURL', JSON.stringify(photoURL))
+        const googleUser = {
+          displayName,
+          email,
+          uid,
+          photoURL
+        }
+        if (this.state.emails.includes(googleUser.email)) {
+          AppActions.receiveLogin(googleUser);
+          toastr.success('Welcome to PostIt')
+        } else {
+          AppActions.google(googleUser);
+          this.setState({
+            googleComponent: true
+          })
+        }
+      });
   }
-  provider.addScope('profile');
-  provider.addScope('email');
-  firebase.auth().signInWithPopup(provider)
-    .then((result) => {
-      const token = result.credential.accessToken;
-      const { photoURL, uid, email } = result.user;
-      const displayName = firstName(result.user.displayName);
-      localStorage.setItem('photoURL', JSON.stringify(photoURL))
-      const googleUser = {
-        displayName,
-        email,
-        uid,
-        photoURL
-      }
-      if (this.state.emails.includes(googleUser.email)){
-        console.log(googleUser)
-        AppActions.receiveLogin(googleUser);
-        toastr.success('Welcome to PostIt')    
-       } else {
-        AppActions.google(googleUser);        
-         this.setState({
-          googleComponent: true
-         })
-       }
-    });
-}
 
 
 }

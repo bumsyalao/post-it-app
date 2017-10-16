@@ -7,7 +7,7 @@ import GroupOptions from './GroupOptions'
 import toastr from 'toastr'
 
 /**
- * Displays the navigation of the dashboard
+ * @description Displays the navigation of the dashboard
  * 
  * @export
  * @class DashboardNavigation
@@ -32,12 +32,10 @@ export default class DashboardNavigation extends Component {
         this.closeNotify = this.closeNotify.bind(this);
         this.openNotify = this.openNotify.bind(this);
         this.addUser = this.addUser.bind(this)
-      }
+    }
 
-      
-    
 
-    // Modal for add Users to the Group
+
     close() {
         this.setState({ showModal: false });
     }
@@ -45,7 +43,6 @@ export default class DashboardNavigation extends Component {
         this.setState({ showModal: true });
     }
 
-    // Modal for creating Group
     closeGroup() {
         this.setState({ showModal2: false });
     }
@@ -53,25 +50,31 @@ export default class DashboardNavigation extends Component {
         this.setState({ showModal2: true });
     }
 
-    // Modal for Notifications
     closeNotify() {
         this.setState({ showNotify: false });
     }
-    openNotify(){
+    openNotify() {
         this.setState({ showNotify: true });
     }
 
-
+    /**
+     * @method render
+     * @description Render react component
+     * 
+     * @returns {String} The HTML markup for the Register
+     * @memberof DashboardNavigation
+     */
     render() {
         const userName = JSON.parse(localStorage.getItem('user'));
         const groupOptions = this.props.group.map((keyName, keyIndex) => <GroupOptions keyName={keyName} key={keyIndex} />)
+        const notificationList = this.props.notification.map((keyName, keyIndex) => <li key={keyIndex}>{keyName.notification}</li>)
 
         return (
             <div>
-            
-
-                <li data-toggle="collapse" className="collapsed" data-intro='Click here to create your first Group'>
-                    <a href="#" onClick={this.openGroup}><i className="fa fa-globe fa-lg"></i>&nbsp; Create Group</a>
+                <li data-toggle="collapse" className="collapsed"
+                    data-intro='Click here to create your first Group'>
+                    <a href="#" onClick={this.openGroup}><i
+                        className="fa fa-globe fa-lg"></i>&nbsp; Create Group</a>
                 </li>
 
                 <Modal show={this.state.showModal2} onHide={this.closeGroup}>
@@ -81,9 +84,12 @@ export default class DashboardNavigation extends Component {
                     <Modal.Body>
                         <form onSubmit={this.createGroup.bind(this)}>
                             <div className='form-group'>
-                                <input type="text" ref='group' className='form-control' placeholder='GroupName' required />
+                                <input type="text" ref='group'
+                                    className='form-control' placeholder='GroupName'
+                                    required />
                             </div>
-                            <button type='submit' className='btn btn-primary'>Submit</button>
+                            <button type='submit'
+                                className='btn btn-primary'>Submit</button>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
@@ -91,8 +97,10 @@ export default class DashboardNavigation extends Component {
                     </Modal.Footer>
                 </Modal>
 
-                <li data-toggle="collapse" className="collapsed" data-intro='Invite your fiends to your Group'>
-                    <a href="#" onClick={this.open}><i className="fa fa-globe fa-lg"></i>&nbsp; Invite a Friend</a>
+                <li data-toggle="collapse" className="collapsed"
+                    data-intro='Invite your fiends to your Group'>
+                    <a href="#" onClick={this.open}><i
+                        className="fa fa-globe fa-lg"></i>&nbsp; Invite a Friend</a>
                 </li>
 
                 <Modal show={this.state.showModal} onHide={this.close}>
@@ -108,10 +116,13 @@ export default class DashboardNavigation extends Component {
                                 </select>
                             </div>
                             <div className='form-group'>
-                                <input type="text" ref='user' className='form-control' placeholder='Search for a User' required />
+                                <input type="text" ref='user'
+                                    className='form-control'
+                                    placeholder='Search for a User' required />
                             </div>
 
-                            <button type='submit' className='btn btn-primary'>Submit</button>
+                            <button type='submit'
+                                className='btn btn-primary'>Submit</button>
                         </form >
                     </Modal.Body>
                     <Modal.Footer>
@@ -120,9 +131,12 @@ export default class DashboardNavigation extends Component {
                 </Modal>
 
 
-                
-                <li data-toggle="collapse" className="collapsed" data-intro='When messages are posted in groups you belong to, you get your notifications here !' onClick={() => AppActions.getNotification(userName)}>
-                    <a href="#" onClick={this.openNotify}><i className="fa fa-globe fa-lg"></i>&nbsp; Notification</a>
+
+                <li data-toggle="collapse" className="collapsed"
+                    data-intro='When messages are posted in groups you belong to, you get your notifications here !'
+                    onClick={() => AppActions.getNotification(userName)}>
+                    <a href="#" onClick={this.openNotify}>
+                        <i className="fa fa-globe fa-lg"></i>&nbsp; Notification</a>
                 </li>
                 <Modal show={this.state.showNotify} onHide={this.closeNotify}>
                     <Modal.Header closeButton>
@@ -130,20 +144,7 @@ export default class DashboardNavigation extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <ul className='mylist'>
-                        {
-
-                                this.props.notification.map(function (keyName, keyIndex) {
-
-                                    return (
-
-                                        <li key={keyIndex}>{keyName.notification}</li>
-                                    )
-
-                                })
-
-                            }
-     
-
+                            {notificationList}
                         </ul>
                     </Modal.Body>
                     <Modal.Footer>
@@ -152,9 +153,9 @@ export default class DashboardNavigation extends Component {
                 </Modal>
 
 
-
                 <li data-toggle="collapse" className="collapsed">
-                    <a href="#" onClick={this.logout.bind(this)}><i className="fa fa-globe fa-lg"></i>&nbsp; Logout</a>
+                    <a href="#" onClick={this.logout.bind(this)}><i
+                        className="fa fa-globe fa-lg"></i>&nbsp; Logout</a>
                 </li>
 
             </div>
@@ -162,6 +163,12 @@ export default class DashboardNavigation extends Component {
         )
     }
 
+    /**
+    * @description Method for adding user to the group
+    * @param {object} event
+    * @returns {void}
+    * @memberof DashboardNavigation
+    */
     createGroup(event) {
         const userName = JSON.parse(localStorage.getItem('user'));
         event.preventDefault()
@@ -172,13 +179,20 @@ export default class DashboardNavigation extends Component {
         const groupName = capitalizeFirstLetter(this.refs.group.value.trim())
         const group = {
             groupName,
-            userName 
+            userName
         }
         AppActions.saveGroup(group);
         this.refs.group.value = '';
 
     }
 
+
+    /**
+    * @description Method for adding user to the group
+    * @param {object} event
+    * @returns {void}
+    * @memberof DashboardNavigation
+    */
     addUser(event) {
         event.preventDefault();
 
@@ -205,7 +219,12 @@ export default class DashboardNavigation extends Component {
     }
 
 
-    // Logout User
+    /**
+    * @description Method for logging out Users
+    * @param {object} event
+    * @returns {void}
+    * @memberof DashboardNavigation
+    */
     logout(event) {
         event.preventDefault();
         AppActions.logout();

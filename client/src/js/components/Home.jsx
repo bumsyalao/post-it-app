@@ -48,8 +48,8 @@ class Home extends Component {
           <div className="col-sm-12 col-md-6">
             <div className="jumbotron">
               <h1 className="display-3">Welcome to PostIt</h1>
-              <p className="lead">PostIt is a simple application that allows friends and colleagues create
-                    groups for notifications.</p>
+              <p className="lead">PostIt is a simple application that allows 
+                friends and colleagues create groups for notifications.</p>
             </div>
           </div>
 

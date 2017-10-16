@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Switch, Route, Redirect, Link} from 'react-router-dom';
+import React, { Component } from 'react'
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import AppStore from '../stores/AppStore'
 import Navigation from './Navigation'
 import Signin from './Signin'
@@ -14,34 +14,34 @@ import { firebase } from '../../../../server/config';
 
 
 /**
- * Create a Route for users who have been authedenticated by firebase
+ * @description Create a Route for users who have been isAuthenticatedenticated by firebase
  * 
- * @param {any} {component: Component, authed, ...rest} 
+ * @param {any} {component: Component, isAuthenticated, ...rest} 
  * @returns 
  */
-function PrivateRoute ({component: Component, authed, ...rest}) {
+function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => authed === true
+      render={(props) => isAuthenticated === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
+        : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
     />
   )
 }
 
 
 /**
- * Route for users who aren't authedenticated
+ * Route for users who aren't isAuthenticatedenticated
  * 
- * @param {any} {component: Component, authed, ...rest} 
+ * @param {any} {component: Component, isAuthenticated, ...rest} 
  * @returns 
  */
-function PublicRoute ({component: Component, authed, ...rest}) {
-  return ( 
+function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
+  return (
     <Route
       {...rest}
-      render={(props) => authed === false
+      render={(props) => isAuthenticated === false
         ? <Component {...props} />
         : <Redirect to='/dashboard' />}
     />
@@ -50,31 +50,37 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 
 
 /**
- * Route for rendering componets in the main App
+ * @description Route for rendering componets in the main App
  * 
  * @export
  * @class Routes
  * @extends {Component}
  */
-export default class Routes extends Component { 
+export default class Routes extends Component {
 
-  render() {  
-    return (         
-           <div>
-            <div className="row">
-              <Switch>
-                <Route path='/' exact component={Home} />
-                <Route authed={this.props.authed} path='/login' component={Signin} />
-                <PublicRoute authed={this.props.authed} path='/register'  component={Signup} />
-                <PrivateRoute authed={this.props.authed} path='/dashboard' component={DashBoard} />
-                <Route authed={this.props.authed} path='/reset' component={ResetPassword} />
-                <Route authed={this.props.authed} path='/google' component={GoogleWelcome} />
-                <PrivateRoute authed={this.props.authed} path='/sidebar' component={SideBar} />
-                <Route render={() => <h3>No Match</h3>} />
-              </Switch>
-            </div>
-          </div>
- 
+  render() {
+    return (
+      <div>
+        <div className="row">
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route isAuthenticated={this.props.isAuthenticated}
+              path='/login' component={Signin} />
+            <PublicRoute isAuthenticated={this.props.isAuthenticated}
+              path='/register' component={Signup} />
+            <PrivateRoute isAuthenticated={this.props.isAuthenticated}
+              path='/dashboard' component={DashBoard} />
+            <Route isAuthenticated={this.props.isAuthenticated}
+              path='/reset' component={ResetPassword} />
+            <Route isAuthenticated={this.props.isAuthenticated}
+              path='/google' component={GoogleWelcome} />
+            <PrivateRoute isAuthenticated={this.props.isAuthenticated}
+              path='/sidebar' component={SideBar} />
+            <Route render={() => <h3>No Match</h3>} />
+          </Switch>
+        </div>
+      </div>
+
     )
   }
 }
