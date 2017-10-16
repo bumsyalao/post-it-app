@@ -18,12 +18,12 @@ spyOnDispatcher.mockReset();
 });
 
 describe('Groups component', () => {
-  it('About component should render as expected', () => {
+  it('It should render Groups component', () => {
     const tree = renderer.create(<Groups />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('should display the necessary elements', () => {
+  it('It should display the necessary elements', () => {
     const wrapper = shallow(<Groups />);
     expect(wrapper.find('div').length).toBe(6);
     expect(wrapper.find('h2').length).toBe(1);
@@ -34,7 +34,7 @@ describe('Groups component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-  it('should expect AppAction to be called', () => {
+  it('It should expect searchUserMessage Action to be called', () => {
     const event = {
         target: {
           name: 'name',

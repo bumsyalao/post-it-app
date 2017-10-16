@@ -8,7 +8,7 @@ jest.mock('../../../../../server/config', () => ({
   }));
 
 describe('Routes Component', () => {
-  it('About component should render as expected', () => {
+  it('Routes component should render as expected', () => {
     const tree = renderer.create(<Routes />).toJSON();
     expect(tree).toMatchSnapshot();
   });

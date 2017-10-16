@@ -19,7 +19,7 @@ afterEach(() => {
 });
 
 describe('SideBar Component', () => {
-  it('About component should render as expected', () => {
+  it('It should render SideBar omponent', () => {
     const tree = renderer.create(<SideBar />).toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -35,7 +35,7 @@ describe('SideBar Component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-it('should expect AppAction to be called', () => {
+it('It should expect getGroups Action to be called', () => {
     const event = {
         target: {
           name: 'name',

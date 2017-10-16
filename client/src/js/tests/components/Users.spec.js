@@ -5,7 +5,7 @@ import Users from '../../components/Dashboard/Users'
 
 
 describe('Users component', () => {
-  it('About component should render as expected', () => {
+  it('Users component should render as expected', () => {
     const tree = renderer.create(<Users />).toJSON();
     expect(tree).toMatchSnapshot();
   });

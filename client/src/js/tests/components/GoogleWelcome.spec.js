@@ -24,7 +24,7 @@ describe('GoogleWelcome Component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should display the necessary elements', () => {
+  it('It should display the necessary elements', () => {
     const wrapper = shallow(<GoogleWelcome />);
     wrapper.instance().componentUnmount();
     expect(wrapper.find('div').length).toBe(7);
@@ -36,7 +36,7 @@ describe('GoogleWelcome Component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-it('should expect AppAction to be called', () => {
+it('It should expect googleSignin Action to be called', () => {
     const event = {
         target: {
           name: 'name',

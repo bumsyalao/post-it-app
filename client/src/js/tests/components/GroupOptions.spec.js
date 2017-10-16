@@ -5,7 +5,7 @@ import GroupOptions from '../../components/Dashboard/GroupOptions'
 
 
 describe('GroupOptions component', () => {
-  it('About component should render as expected', () => {
+  it('It should render GroupOptions component', () => {
     const tree = renderer.create(<GroupOptions />).toJSON();
     expect(tree).toMatchSnapshot();
   });

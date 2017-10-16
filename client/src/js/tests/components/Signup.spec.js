@@ -19,7 +19,7 @@ afterEach(() => {
 });
 
 describe('Signup Component', () => {
-  it('About component should render as expected', () => {
+  it('Signup component should render as expected', () => {
     const tree = renderer.create(<Signup />).toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -36,7 +36,7 @@ describe('Signup Component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-it('should expect AppAction to be called', () => {
+it('should expect saveContact Action to be called', () => {
     const event = {
         target: {
           name: 'name',

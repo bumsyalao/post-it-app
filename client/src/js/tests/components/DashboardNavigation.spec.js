@@ -18,12 +18,12 @@ spyOnDispatcher.mockReset();
 });
 
 describe('DashboardNavigation component', () => {
-  it('About component should render as expected', () => {
+  it('DashboardNavigation component should render as expected', () => {
     const tree = renderer.create(<DashboardNavigation />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('should display the necessary elements', () => {
+  it('It should display the necessary elements', () => {
     const wrapper = shallow(<DashboardNavigation />);
     expect(wrapper.find('div').length).toBe(6);
     expect(wrapper.find('h2').length).toBe(1);
@@ -34,14 +34,13 @@ describe('DashboardNavigation component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-  it('should expect #saveGroup AppAction to be called', () => {
+  it('It should expect saveGroup Action to be called', () => {
     const spyOnDispatcher = spyOn(AppActions, 'saveGroup');
     const event = {
         target: {
           name: 'name',
           value: 'value',
         },
-        // preventDefault: () => jest.fn()
       };
     const wrapper = mount(<DashboardNavigation />);
     wrapper.instance().refs.email.value = 'someemail@email.com';
@@ -49,12 +48,11 @@ describe('DashboardNavigation component', () => {
     expect(spyOnDispatcher).toHaveBeenCalled();
 });
 
-it('should expect #logout AppAction to be called', () => {
+it('It should expect logout Action to be called', () => {
   const spyOnDispatcher = spyOn(AppActions, 'logout');
   const wrapper = mount(<DashboardNavigation />);
   expect(spyOnDispatcher).toHaveBeenCalled();
 });
-
 
 });
 

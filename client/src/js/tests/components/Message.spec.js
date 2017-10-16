@@ -18,12 +18,12 @@ spyOnDispatcher.mockReset();
 });
 
 describe('Message component', () => {
-  it('About component should render as expected', () => {
+  it('It should render Message component', () => {
     const tree = renderer.create(<Message />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('should display the necessary elements', () => {
+  it('It should display the necessary elements', () => {
     const wrapper = shallow(<Message />);
     wrapper.instance().componentWillMount();
     wrapper.instance().componentWillUnmount();
@@ -36,7 +36,7 @@ describe('Message component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-  it('should expect AppAction to be called', () => {
+  it('It should expect handleSeenMessage AppAction to be called', () => {
     const spyOnDispatcher = spyOn(AppActions, 'seenMessage');
     const event = {
         target: {

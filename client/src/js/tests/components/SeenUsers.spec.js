@@ -5,7 +5,7 @@ import SeenUsers from '../../components/Dashboard/SeenUsers'
 
 
 describe('SeenUsers component', () => {
-  it('About component should render as expected', () => {
+  it('SeenUsers component should render as expected', () => {
     const tree = renderer.create(<SeenUsers />).toJSON();
     expect(tree).toMatchSnapshot();
   });

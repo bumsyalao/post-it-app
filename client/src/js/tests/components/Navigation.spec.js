@@ -9,7 +9,7 @@ jest.mock('../../../../../server/config', () => ({
 
 
 describe('Navigation Component', () => {
-  it('About component should render as expected', () => {
+  it('It should Navigation Home component', () => {
     const tree = renderer.create(<Navigation />).toJSON();
     expect(tree).toMatchSnapshot();
   });

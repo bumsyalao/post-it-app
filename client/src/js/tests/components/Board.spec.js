@@ -24,7 +24,7 @@ describe('Board component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-  it('should expect AppAction to be called', () => {
+  it('It should expect AppAction to be called', () => {
     const spyOnDispatcher = spyOn(AppActions, 'saveMessage');
     const event = {
         target: {
@@ -38,7 +38,7 @@ describe('Board component', () => {
     expect(spyOnDispatcher).toHaveBeenCalled();
 });
 
-it('should onChange method', () => {
+it('It should call onChange method', () => {
     const event = {
         target: {
           name: 'name',

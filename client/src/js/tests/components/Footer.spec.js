@@ -7,7 +7,7 @@ import Footer from '../../components/Footer';
 
 describe('<Footer />', () => {
 
-    it('contains a <Footer /> for component', () => {
+    it('It should contain a <Footer /> component', () => {
         const wrapper = shallow(<Footer />);
         expect(wrapper.find('div')).to.have.length(2);
         expect(wrapper.find('nav')).to.have.length(1);

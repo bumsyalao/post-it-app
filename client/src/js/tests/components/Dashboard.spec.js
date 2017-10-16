@@ -27,7 +27,7 @@ describe('Dashboard Component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-it('should expect AppAction to be called', () => {
+it('It should call onChange method', () => {
     const event = {
         target: {
           name: 'name',

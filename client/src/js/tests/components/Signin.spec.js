@@ -32,7 +32,7 @@ spyOnDispatcher.mockReset();
 });
 
 describe('Signin Component', () => {
-  it('About component should render as expected', () => {
+  it('It should expect Signin Component to render ', () => {
     const tree = renderer.create(<Signin />).toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -50,7 +50,7 @@ describe('Signin Component', () => {
     expect(wrapper.find(GoogleWelcome)).to.have.length(1);
 });
 
-it('should expect AppAction to be called', () => {
+it('It should expect login Action to be called', () => {
     const spyOnDispatcher = spyOn(AppActions, 'login');
     const event = {
         target: {
@@ -65,7 +65,7 @@ it('should expect AppAction to be called', () => {
     expect(spyOnDispatcher).toHaveBeenCalled();
 });
 
-it('should expect AppAction to be called', () => {
+it('It should expect receivelogin Action to be called', () => {
     const spyOnDispatcher = spyOn(AppActions, 'google');
     const event = {
         target: {

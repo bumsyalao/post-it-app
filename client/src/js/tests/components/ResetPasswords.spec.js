@@ -18,7 +18,7 @@ spyOnDispatcher.mockReset();
 });
 
 describe('ResetPassword component', () => {
-  it('About component should render as expected', () => {
+  it('It should ResetPassword Home component', () => {
     const tree = renderer.create(<ResetPassword />).toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -34,7 +34,7 @@ describe('ResetPassword component', () => {
     expect(wrapper.find('br').length).toBe(3);
 });
 
-  it('should expect AppAction to be called', () => {
+  it('should expect resetPassword Action to be called', () => {
     const spyOnDispatcher = spyOn(AppActions, 'resetPassword');
     const event = {
         target: {
