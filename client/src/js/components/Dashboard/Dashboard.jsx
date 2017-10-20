@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
+
 import AppStore from '../../stores/AppStore';
 import AppActions from '../../actions/AppActions'
 import DashboardNavigation from './DashboardNavigation'
@@ -7,14 +9,13 @@ import Board from './Board'
 import WelcomeBoard from './WelcomeBoard'
 
 
-import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
-
-
 /**
- * Creates a react Component
+ * @description Creates a react Component
  * 
  * @export
+ * 
  * @class DashBoard
+ * 
  * @extends {Component}
  */
 export default class DashBoard extends Component {
@@ -35,9 +36,11 @@ export default class DashBoard extends Component {
 
   /**
    * @method componentWillMount
+   * 
    * Adds an event Listener to the Store and fires when the component is fully mounted.
    *
    * @return {void}
+   * 
    * @memberof DashBoard
    */
   componentDidMount() {
@@ -55,22 +58,47 @@ export default class DashBoard extends Component {
 
   /**
    * @method componentWillUnmount
-   * Removes event Listener from the Store
+   * 
+   * @description Removes event Listener from the Store
    *
    * @return {void}
+   * 
    * @memberof DashBoard
    */
   componentWillUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
 
+    /**
+   * @method onChange
+   * 
+   * @description Monitors changes in the components and change the state
+   * 
+   * @return {void}
+   * 
+   * @memberof DashBoard
+   */
+  onChange() {
+    this.setState({
+      contacts: AppStore.getGroupUsers(),
+      groups: AppStore.getGroups(),
+      user: AppStore.getUser(),
+      currentGroup: AppStore.getCurrentGroup(),
+      databaseUsers: AppStore.getdatabaseUsers(),
+      notification: AppStore.getNotification(),
+    });
+
+  }
+
 
 
   /**
    * @method render
+   * 
    * @description Render the Dashboard component
    * 
    * @returns {void}
+   * 
    * @memberof DashBoard
    */
   render() {
@@ -80,7 +108,12 @@ export default class DashBoard extends Component {
     return (
       <div>
         <div className="nav-side-menu" >
-          <div className="brand" data-intro='Welcome to PostIt, your current group will be displayed here'>{!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}</div>
+          <div
+            className="brand"
+            data-intro='Welcome to PostIt, your current group will be displayed here'
+          >
+              {!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}
+          </div>
           <i className="fa fa-bars fa-2x toggle-btn"
             data-toggle="collapse" data-target="#menu-content"></i>
           <div className="menu-list">
@@ -91,7 +124,12 @@ export default class DashBoard extends Component {
               <li>
                 <a href="#">
                   <i className="fa fa-dashboard fa-lg"></i>&nbsp;
-                  <img src={photoURL} alt="Smiley face" height="42" width="42" />&nbsp;{userName}
+                  <img
+                    src={photoURL}
+                    alt="Smiley face"
+                    height="42"
+                    width="42"
+                  />&nbsp;{userName}
                 </a>
               </li>
               <br />
@@ -118,24 +156,5 @@ export default class DashBoard extends Component {
     )
   }
 
-
-  /**
-   * @method setDashboard
-   * @description Monitors changes in the components and change the state
-   * 
-   * @return {void}
-   * @memberof DashBoard
-   */
-  onChange() {
-    this.setState({
-      contacts: AppStore.getGroupUsers(),
-      groups: AppStore.getGroups(),
-      user: AppStore.getUser(),
-      currentGroup: AppStore.getCurrentGroup(),
-      databaseUsers: AppStore.getdatabaseUsers(),
-      notification: AppStore.getNotification(),
-    });
-
-  }
 }
 

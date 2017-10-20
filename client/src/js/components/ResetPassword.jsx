@@ -5,8 +5,8 @@ import AppStore from '../stores/AppStore'
 /**
  * @description Resets the passwrod of a user
  *
- * @export
  * @class ResetPassword
+ * 
  * @extends {Component}
  */
 export default class ResetPassword extends Component {
@@ -50,6 +50,7 @@ export default class ResetPassword extends Component {
    * @description Makes an action to Reset Password
    *
    * @param {any} event
+   * 
    * @memberof ResetPassword
    */
   handleSubmit(event) {

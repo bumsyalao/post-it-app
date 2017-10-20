@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+
 import AppActions from '../../actions/AppActions'
 
 
 /**
  * @description Component for displaying list of groups to Users
  * 
- * @export
  * @class Groups
+ * 
  * @extends {Component}
  */
 export default class Groups extends Component {

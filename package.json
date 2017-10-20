@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nyc mocha --timeout 150000",
     "jest": "jest --coverage",
-    "start": "node ./server/app",
+    "start": "NODE_ENV=production babel-node ./server/app",
     "dev": "webpack-dev-server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack -p --config webpack.config.prod.js"

@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
-import AppActions from '../actions/AppActions'
-import AppStore from '../stores/AppStore'
-import { firebaseAuth, firebase, provider } from '../../../../server/config'
+import React, { Component } from 'react';
+import toastr from 'toastr';
+
+import AppActions from '../actions/AppActions';
+import AppStore from '../stores/AppStore';
+import { firebaseAuth, firebase, provider } from '../../../../server/config';
 import { validateEmail } from '../helpers/validate.helper';
-import toastr from 'toastr'
 
 
 
 /**
  * @description Gets user data and persits with firebase
  * 
- * @export
  * @param {object} props
+ * 
  * @class Signup
+ * 
  * @extends {Component}
  */
 export default class Signup extends Component {
@@ -27,13 +29,17 @@ export default class Signup extends Component {
 
         };
         this.onChange = this.onChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
 
     /**
      * @method componentDidMount
+     * 
      * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+     * 
      * @return {void}
+     * 
      * @memberof Signup
      */
     componentDidMount() {
@@ -42,7 +48,9 @@ export default class Signup extends Component {
 
     /**
     * @method componentWillUnmount
+    *
     * @description Removes event Listener from the Store
+    *
     * @memberof Signup
     */
     componentWillUnmount() {
@@ -51,8 +59,10 @@ export default class Signup extends Component {
 
 
     /**
-     * @method setSignUp
+     * @method onChange
+     * 
      * @description Monitors changes in the components and change the state
+     * 
      * @memberof Signup
      */
     onChange() {
@@ -68,18 +78,21 @@ export default class Signup extends Component {
     
     /**
     * @description Makes an action call to Sign up a user with username, email, phone number  and password
+    *
     * @param {object} event
+    *
     * @returns {void}
+    *
     * @memberof Signup
- */
+    */
     handleSubmit(event) {
         event.preventDefault();
 
         /**
     * @method function
     * 
-    * @param {any} string 
-    * @returns 
+    * @param {any} string
+    *
     * @memberof Signup
     */
         function capitalizeFirstLetter(string) {
@@ -116,8 +129,9 @@ export default class Signup extends Component {
 
     /**
      * @method render
+     * 
      * @description Render react component
-     * @returns {String} The HTML markup for the Register
+     * 
      * @memberof Signup
      */
     render() {
@@ -128,7 +142,7 @@ export default class Signup extends Component {
                         <div className="col-sm-3"></div>
                         <div className="col-md-6 col-sm-6 col-xs-12">
                             <h3>Sign Up</h3>
-                            <form onSubmit={this.handleSubmit.bind(this)}>
+                            <form onSubmit={this.handleSubmit}>
                                 <div className='form-group'>
                                     <input type="text" ref='username' 
                                     className='form-control' 

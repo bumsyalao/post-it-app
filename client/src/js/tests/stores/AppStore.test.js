@@ -1,8 +1,8 @@
 import AppStore from '../../stores/AppStore';
-import AppAPI from '../../utils/appAPI'
+import AppAPI from '../../utils/appAPI';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import StoreMock from '../mocks/StoreMock';
-import SaveContact from '../mocks/SaveContact'
+import SaveContact from '../mocks/SaveContact';
 
 let spyOnDispatcher;
 beforeEach(() => {
@@ -17,8 +17,8 @@ afterEach(() => {
 jest.mock('../../dispatcher/AppDispatcher');
 const mockDispatcher = AppDispatcher.register.mock.calls[0][0];
 
-describe('It test the SAVE_CONTACT actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('SAVE_CONTACT', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -32,8 +32,8 @@ describe('It test the SAVE_CONTACT actionType', () => {
   });
 });
 
-describe('It test the RECEIVE_CONTACT actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_CONTACT', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -43,8 +43,8 @@ describe('It test the RECEIVE_CONTACT actionType', () => {
   });
 });
 
-describe('It test the RECEIVE_LOGIN actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_LOGIN', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -57,13 +57,13 @@ describe('It test the RECEIVE_LOGIN actionType', () => {
   it('should get the current user', () => {
     mockDispatcher(StoreMock);
     const result = (AppStore.getUser());
-    expect(result).toBe('');   
+    expect(result).toBe('');
   });
 
   it('should get the user stored in local Storage', () => {
     mockDispatcher(StoreMock);
     const result = (AppStore.getLoggedInUser());
-    expect(result).toEqual([]);   
+    expect(result).toEqual([]);
   });
 
   it('should get the user stored in local Storage', () => {
@@ -72,11 +72,10 @@ describe('It test the RECEIVE_LOGIN actionType', () => {
     AppStore.setAuth();
     AppStore.emit('change');
   });
-
 });
 
-describe('It test the RECEIVE_EMAILS actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_EMAILS', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -88,7 +87,7 @@ describe('It test the RECEIVE_EMAILS actionType', () => {
 
 
 describe('It test the RECEIVE_ALLUSERS_NUMBER actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -100,7 +99,7 @@ describe('It test the RECEIVE_ALLUSERS_NUMBER actionType', () => {
 
 
 describe('It test the SAVE_GROUP actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -109,13 +108,13 @@ describe('It test the SAVE_GROUP actionType', () => {
     AppStore.saveGroup({ groupName: 'Andela' });
     AppAPI.saveGroup({ groupName: 'Andela' })
     .then(() => {
-    })
+    });
   });
 });
 
 
-describe('It test the GET_GROUPS actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('GET_GROUPS', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -123,12 +122,12 @@ describe('It test the GET_GROUPS actionType', () => {
     mockDispatcher(SaveContact);
     AppAPI.getGroups({ userName: 'Femi' })
     .then(() => {
-    })
+    });
   });
 });
 
-describe('It test the RECEIVE_GROUPS actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_GROUPS', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -138,8 +137,8 @@ describe('It test the RECEIVE_GROUPS actionType', () => {
   });
 });
 
-describe('It test the RECEIVE_NOTIFICATION actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_NOTIFICATION', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -149,8 +148,8 @@ describe('It test the RECEIVE_NOTIFICATION actionType', () => {
   });
 });
 
-describe('It test the SAVE_GROUP_USER actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('SAVE_GROUP_USER', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -159,13 +158,13 @@ describe('It test the SAVE_GROUP_USER actionType', () => {
     AppStore.addUserToGroup({ userName: 'Femi' });
     AppAPI.addUserToGroup({ userName: 'Femi' })
     .then(() => {
-    })
+    });
   });
 });
 
 
-describe('It test the SAVE_MESSAGE actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('SAVE_MESSAGE', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -174,13 +173,13 @@ describe('It test the SAVE_MESSAGE actionType', () => {
     AppStore.saveMessages({ message: 'I am a message' });
     AppAPI.saveMessages({ message: 'I am a message' })
     .then(() => {
-    })
+    });
   });
 });
 
 
-describe('It test the RECEIVE_MESSAGE actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_MESSAGE', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -191,8 +190,8 @@ describe('It test the RECEIVE_MESSAGE actionType', () => {
 });
 
 
-describe('It test the SEEN_MESSAGE actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('SEEN_MESSAGE', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -200,13 +199,13 @@ describe('It test the SEEN_MESSAGE actionType', () => {
     mockDispatcher(SaveContact);
     AppAPI.seenMessage({ users: 'Ebuka' })
     .then(() => {
-    })
+    });
   });
 });
 
 
-describe('It test the RECEIVE_SEEN_USERS actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_SEEN_USERS', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -217,23 +216,22 @@ describe('It test the RECEIVE_SEEN_USERS actionType', () => {
 });
 
 
-describe('It test the SIGN_IN actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('SIGN_IN', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
   it('should get the vales and state of all methods', () => {
     mockDispatcher(SaveContact);
-    AppAPI.login({ email: 'fe@gmail.com', password:'123456'})
+    AppAPI.login({ email: 'fe@gmail.com', password: '123456' })
     .then(() => {
-    })
+    });
   });
 });
 
 
-
-describe('It test the LOGOUT actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('LOGOUT', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -242,13 +240,13 @@ describe('It test the LOGOUT actionType', () => {
     AppStore.setLogout();
     AppAPI.setLogout()
     .then(() => {
-  })
+    });
   });
 });
 
 
-describe('It test the GOOGLE_LOGIN actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('GOOGLE_LOGIN', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -259,8 +257,8 @@ describe('It test the GOOGLE_LOGIN actionType', () => {
 });
 
 
-describe('It test the SEARCH_USER_MESSAGE actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('SEARCH_USER_MESSAGE', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -269,13 +267,13 @@ describe('It test the SEARCH_USER_MESSAGE actionType', () => {
     AppStore.setCurrentGroup({ groupName: 'Ab' });
     AppAPI.searchUserMessageInGroup({ groupName: 'Ab' })
     .then(() => {
- })    
+    });
   });
 });
 
 
-describe('It test the RECEIVE_USER actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RECEIVE_USER', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
@@ -285,31 +283,29 @@ describe('It test the RECEIVE_USER actionType', () => {
   });
 });
 
-describe('It test the RESET_PASSWORD actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('RESET_PASSWORD', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
   it('should get the vales and state of all methods', () => {
     mockDispatcher(SaveContact);
-    AppAPI.resetPassword({ email: 'wes@gmail.com'})
+    AppAPI.resetPassword({ email: 'wes@gmail.com' })
     .then(() => {
-
-    })
+    });
   });
 });
 
 
-describe('It test the NOTIFICATIONS actionType', () => {
-  it('should register a callback with the dispatcherxist', () => {
+describe('NOTIFICATIONS', () => {
+  it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
   it('should get the vales and state of all methods', () => {
     mockDispatcher(SaveContact);
-    AppAPI.getNotifications({ useName: 'John'})
+    AppAPI.getNotifications({ useName: 'John' })
     .then(() => {
-
-    })
+    });
   });
 });

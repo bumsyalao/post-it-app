@@ -10,7 +10,7 @@ module.exports = {
       password: contact.password,
       number: contact.number
     }).then((response) => {
-      const user = response.data;
+      const user = response.data.userData;
       if (response.data.message ===
          'The email address is already in use by another account.') {
         toastr.error(response.data.message);
@@ -101,7 +101,7 @@ module.exports = {
   },
 
   saveMessages(message) {
-    return axios.post('/group/user/message/notification/priority', {
+    return axios.post('/group/user/message', {
       group: message.group,
       user: message.user,
       message: message.text,
@@ -133,16 +133,13 @@ module.exports = {
       password: contact.password
     }).then((response) => {
       const user = response.data.userData;
-      const groups = response.data.groups;
-
-      if (response.data === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+      if (response.data === 'There is no user record corresponding to this ') {
         toastr.error(response.data);
       } else if (response.data.message ===
          'The password is invalid or the user does not have a password.') {
         toastr.error(response.data.message);
       } else {
         AppActions.receiveLogin(user);
-        AppActions.receiveGroups(groups);
         toastr.success('Welcome To PostIt');
       }
     }).catch(() => {

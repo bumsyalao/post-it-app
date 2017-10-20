@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
+
 import AppStore from '../stores/AppStore'
 import Navigation from './Navigation'
 import Signin from './Signin'
@@ -17,7 +18,8 @@ import { firebase } from '../../../../server/config';
  * @description Create a Route for users who have been isAuthenticatedenticated by firebase
  * 
  * @param {any} {component: Component, isAuthenticated, ...rest} 
- * @returns 
+ * 
+ * @returns {void} void
  */
 function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
   return (
@@ -32,10 +34,11 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
 
 
 /**
- * Route for users who aren't isAuthenticatedenticated
+ * @description Route for users who aren't Authenticated
  * 
  * @param {any} {component: Component, isAuthenticated, ...rest} 
- * @returns 
+ * 
+ * @returns {void} void
  */
 function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
   return (
@@ -52,8 +55,8 @@ function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
 /**
  * @description Route for rendering componets in the main App
  * 
- * @export
  * @class Routes
+ * 
  * @extends {Component}
  */
 export default class Routes extends Component {

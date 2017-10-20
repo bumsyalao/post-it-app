@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
+import toastr from 'toastr'
+
 import AppStore from '../stores/AppStore'
 import AppActions from '../actions/AppActions'
-import toastr from 'toastr'
 
 /**
  * @description Signs the user with Google
  * 
- * @export
  * @param {object} props
- * @class Signup
+ * 
+ * @class GoogleWelcome
+ * 
  * @extends {Component}
  */
 export default class GoogleWelcome extends Component {
@@ -19,32 +21,88 @@ export default class GoogleWelcome extends Component {
             numbers: AppStore.getAllUsersNumber(),
             googleDetail: AppStore.getGoogleSignup()
         };
-        this._onChange = this._onChange.bind(this)
+        this.onChange = this.onChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     /**
      * @method componentDidMount
+     * 
      * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+     * 
      * @return {void}
+     * 
      * @memberof GoogleWelcome
      */
     componentDidMount() {
-        AppStore.addChangeListener(this._onChange);
+        AppStore.addChangeListener(this.onChange);
     }
 
     /**
     * @method componentWillUnmount
+
     * @description Removes event Listener from the Store
+
     * @memberof GoogleWelcome
     */
     componentUnmount() {
-        AppStore.removeChangeListener(this._onChange);
+        AppStore.removeChangeListener(this.onChange);
+    }
+
+    
+    /**
+    * @description Makes an action call to Sign up a user with username, email, phone number  and password
+
+    * @param {object} event
+
+    * @returns {void}
+
+    * @memberof GoogleWelcome
+    */
+    handleSubmit(event) {
+        event.preventDefault()
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
+
+        const contact = {
+            username: this.refs.username.value.trim(),
+            email: this.refs.email.value.trim(),
+            number: this.refs.number.value.trim(),
+            uid: this.state.googleDetail.uid,
+            password: null
+        }
+        if (this.state.numbers.includes(this.refs.number.value)) {
+            toastr.error("The phone number already exist")
+        } else {
+            AppActions.googleSignup(contact);
+        }
+    }
+
+    /**
+     * @method onChange
+     * 
+     * @description Monitors changes in the components and change the state
+     * 
+     * @memberof GoogleWelcome
+     */
+    onChange() {
+        this.setState({ 
+            databaseUsers: AppStore.getdatabaseUsers(),
+            numbers: AppStore.getAllUsersNumber(),
+            googleDetail: AppStore.getGoogleSignup()
+        });
     }
 
     /**
      * @method render
+     * 
      * @description Render react component
+     * 
      * @returns {String} The HTML markup for the Register
+     * 
      * @memberof GoogleWelcome
      */
     render() {
@@ -57,7 +115,7 @@ export default class GoogleWelcome extends Component {
                 <h3> Welcome {displayName} </h3>
                 <p>One more step, we need your phone number</p>
                 <div className='well'>
-                    <form onSubmit={this.handleSubmit.bind(this)}>
+                    <form onSubmit={this.handleSubmit}>
                         <div className='form-group' >
                             <input type="text" ref='username'
                                 className='form-control' value={displayName}
@@ -85,47 +143,4 @@ export default class GoogleWelcome extends Component {
         )
     }
 
-
-    /**
-    * @description Makes an action call to Sign up a user with username, email, phone number  and password
-    * @param {object} event
-    * @returns {void}
-    * @memberof GoogleWelcome
-    */
-    handleSubmit(event) {
-        event.preventDefault()
-
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-        const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
-
-        const contact = {
-            username: this.refs.username.value.trim(),
-            email: this.refs.email.value.trim(),
-            number: this.refs.number.value.trim(),
-            uid: this.state.googleDetail.uid,
-            password: null
-        }
-        if (this.state.numbers.includes(this.refs.number.value)) {
-            toastr.error("The phone number already exist")
-        } else {
-            AppActions.googleSignup(contact);
-            this.refs.username.value = '';
-            this.refs.email.value = '';
-            this.refs.number.value = '';
-        }
-    }
-
-    /**
-     * @method onChange
-     * @description Monitors changes in the components and change the state
-     * @memberof GoogleWelcome
-     */
-    _onChange() {
-        this.setState({ databaseUsers: AppStore.getdatabaseUsers() });
-        this.setState({ numbers: AppStore.getAllUsersNumber() });
-        this.setState({ googleDetail: AppStore.getGoogleSignup() });
-
-    }
 }

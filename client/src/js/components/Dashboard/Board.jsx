@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Message from './Message';
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
@@ -8,8 +9,8 @@ import moment from 'moment';
 /**
  * @description The Presentation component that servers all message activities
  * 
- * @export
  * @class MessageBoard
+ * 
  * @extends {Component}
  */
 export default class Board extends Component {
@@ -26,23 +27,75 @@ export default class Board extends Component {
 
     /**
     * @method componentDidMount
+
     * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+
     * @return {void}
+
     * @memberof Board
     */
     componentDidMount() {
         AppStore.addChangeListener(this.onChange);
     }
 
+    
     /**
     * @method componentWillUnmount
+
     * @description Removes event Listener from the Store
+
     * @memberof Board
     */
     componentWillUnmount() {
         AppStore.removeChangeListener(this.onChange);
     }
 
+
+    /**
+    * @description Makes an action call to Sign up a user with username, email, phone number  and password
+
+    * @param {object} event
+
+    * @returns {void}
+    
+    * @memberof Board
+    */
+    sendMessage(event) {
+        event.preventDefault();
+        const userName = JSON.parse(localStorage.getItem('user'));
+        const message = {
+            user: userName.replace(" ", ""),
+            group: this.state.currentGroup,
+            text: this.refs.message.value.trim(),
+            Time: moment().format('h:mm a, MMM Do'),
+            notification: userName + ' posted in ' + this.state.currentGroup + 
+                        ' group',
+            priority: this.refs.type.value
+        }
+
+        if (typeof message.text === 'string' && message.text.length > 0) {
+            AppActions.saveMessage(message);
+            this.refs.message.value = '';            
+        }
+    }
+    
+    onChange() {
+        this.setState({ 
+            currentGroup: AppStore.getCurrentGroup(),
+            messages: AppStore.getMessages(),
+            user: AppStore.getUser()
+        });
+    }
+
+/**
+   * @method render
+   * 
+   * @description Render the Board component
+   * 
+   * @returns {void}
+   * 
+   * @memberof Board
+   */
     render() {
         return (
             <div className="container" id="main">
@@ -80,37 +133,6 @@ export default class Board extends Component {
             </div>
 
         )
-    }
-
-/**
-    * @description Makes an action call to Sign up a user with username, email, phone number  and password
-    * @param {object} event
-    * @returns {void}
-    * @memberof Board
- */
-    sendMessage(event) {
-        event.preventDefault();
-        const userName = JSON.parse(localStorage.getItem('user'));
-        const message = {
-            user: userName.replace(" ", ""),
-            group: this.state.currentGroup,
-            text: this.refs.message.value.trim(),
-            Time: moment().format('h:mm a, MMM Do'),
-            notification: userName + ' posted in ' + this.state.currentGroup + 
-                          ' group',
-            priority: this.refs.type.value
-        }
-
-        if (typeof message.text === 'string' && message.text.length > 0) {
-            AppActions.saveMessage(message)
-            this.refs.message.value = '';
-        }
-    }
-
-    onChange() {
-        this.setState({ currentGroup: AppStore.getCurrentGroup() });
-        this.setState({ messages: AppStore.getMessages() });
-        this.setState({ user: AppStore.getUser() });
     }
 
 }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import AppActions from '../../actions/AppActions'
-import AppStore from '../../stores/AppStore'
 import { Modal } from 'react-bootstrap'
 
+import AppActions from '../../actions/AppActions'
+import AppStore from '../../stores/AppStore'
+
 /**
- * This displays the message from the database
+ * @description This displays the message from the database
  * 
- * @export
  * @class Message
+ * 
  * @extends {Component}
  */
 export default class Message extends Component {
@@ -25,9 +26,12 @@ export default class Message extends Component {
 
 
   /**
-     * Makes an action call to tick users who have seen a message
+     * @description Makes an action call to tick users who have seen a message
+     * 
      * @param {object} event
+     * 
      * @returns {void}
+     * 
      * @memberof Messsage
   */
   handleSeenMessage(event) {
@@ -48,8 +52,11 @@ export default class Message extends Component {
 
   /**
    * @method componentWillMount
+   * 
    * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+   * 
    * @return {void}
+   * 
    * @memberof Message
    */
   componentWillMount() {
@@ -58,19 +65,31 @@ export default class Message extends Component {
 
   /**
   * @method componentWillUnmount
+
   * @description Removes event Listener from the Store
+
   * @memberof Message
   */
   componentWillUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
 
+  /**
+   * @method onChange
+   * 
+   * @description Monitors changes in the components and change the state
+   * 
+   * @memberof Message
+   */
+  onChange() {
+    this.setState({ seenMessage: AppStore.getSeenUsers() });
+  }
 
   /**
    * @method render
+   * 
    * @description Render react component
    * 
-   * @returns {String} The HTML markup for the Register
    * @memberof Message
    */
   render() {
@@ -80,7 +99,7 @@ export default class Message extends Component {
             <div className="d-flex w-100 justify-content-between">
               <h5 className="mb-1"><strong>{this.props.message.user}</strong>&nbsp;&nbsp; 
                 <small className="text-muted">{this.props.message.Time}</small>&nbsp;&nbsp;                 
-                <span onClick={this.handleSeenMessage.bind(this)} >  
+                <span onClick={this.handleSeenMessage} >  
                   <span className="glyphicon glyphicon-user"></span>
                 </span>
               </h5>
@@ -97,19 +116,15 @@ export default class Message extends Component {
             <ul className='mylist'>
             
               {this.state.seenMessage ?
-
                 Object.keys(this.state.seenMessage).map(function (keyName, keyIndex) {
-
                   return <li key={keyIndex}>{keyName}</li>
-
                 }):
                 <li className='mylist'>Empty</li>
-
               }
             </ul>
           </Modal.Body>
           <Modal.Footer>
-            <a href="#/dashboard" onClick={this.handleClose.bind(this)}> Close</a>
+            <a href="#/dashboard" onClick={this.handleClose}> Close</a>
           </Modal.Footer>
         </Modal>
 
@@ -117,12 +132,4 @@ export default class Message extends Component {
     )
   }
 
-  /**
-   * @method onChange
-   * @description Monitors changes in the components and change the state
-   * @memberof Message
-   */
-  onChange() {
-    this.setState({ seenMessage: AppStore.getSeenUsers() });
-  }
 }

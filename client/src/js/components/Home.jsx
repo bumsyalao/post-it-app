@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
+
 import Signin from './Signin'
 import Dashboard from "./Dashboard/Dashboard";
 import AppStore from '../stores/AppStore'
 
 /**
- * The Index page
+ * @description It renders the Home page Component
  *
  * @class Home
+ * 
  * @extends {Component}
  */
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: AppStore.getAuth()
+      isAuthenticated: AppStore.getAuth()
     };
     this.onChange = this
       .onChange
@@ -22,9 +24,11 @@ class Home extends Component {
 
   /**
     * @method componentDidMount
-    * Adds an event Listener to the Store and fires when the component is fully mounted.
+    *
+    * @description Adds an event Listener to the Store and fires when the component is fully mounted.
     *
     * @return {void}
+    *
     * @memberof Home
     */
   componentDidMount() {
@@ -33,13 +37,27 @@ class Home extends Component {
 
   /**
 * @method componentUnmount
-* Removes event Listener from the Store
+*
+* @description Removes event Listener from the Store
 *
 * @memberof Home
 */
   componentUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
+
+    /**
+     * @method setApp
+     * 
+     * @description Monitors changes in the components and change the state
+     *
+     * @memberof Home
+     */
+    onChange() {
+      this.setState({
+        isAuthenticated: AppStore.getAuth()
+      });
+    }
 
   render() {
     return (
@@ -55,7 +73,7 @@ class Home extends Component {
 
           <div className="col-sm-12 col-md-6">
             <div className="form-margin2">
-              <Signin/>
+              <Signin />
             </div>
           </div>
         </div>
@@ -63,17 +81,7 @@ class Home extends Component {
     )
   }
 
-  /**
-     * @method setApp
-     * Monitors changes in the components and change the state
-     *
-     * @memberof Home
-     */
-  onChange() {
-    this.setState({
-      auth: AppStore.getAuth()
-    });
-  }
+
 }
 
 export default Home;
