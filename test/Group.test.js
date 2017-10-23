@@ -10,7 +10,7 @@ const email = 'jat@gmail.com';
 const password = '123456';
 
 describe('Create Group', () => {
-  const groupName = 'BaseBalls';
+  const groupName = 'SoccerNet';
   const userName = 'Ebuka';
 
   it('should return status 200 when the user logs in',
@@ -50,7 +50,7 @@ describe('Create Group', () => {
         res.body.should.have.property('message');
         res.body.should.have.property('groupName');
         res.body.should.have.nested.property('groupName')
-        .eql('BaseBalls');
+        .eql('SoccerNet');
         res.body.should.have.nested.property('userName')
         .eql('Ebuka');
         if (err) return done(err);

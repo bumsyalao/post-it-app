@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">73.58% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>78/106</span>
+        <span class='fraction'>84/105</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">65.22% </span>
+        <span class="strong">67.39% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>30/46</span>
+        <span class='fraction'>31/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">59.09% </span>
+        <span class="strong">63.64% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>13/22</span>
+        <span class='fraction'>14/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">73.58% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>78/106</span>
+        <span class='fraction'>84/105</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -369,27 +369,27 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -608,10 +608,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { usersRef, groupRef, firebase } from './../config';
 import { validStringContent, validStringLength }
-  from './../helpers/validate.helper';
+from './../helpers/validate.helper';
 &nbsp;
 &nbsp;
 /**
@@ -651,19 +651,19 @@ class Group {
       <span class="missing-if-branch" title="else path not taken" >E</span>i</span>f (currentUser || <span class="branch-1 cbranch-no" title="branch not covered" >googleAuth) {
         const db = firebase.database();
         groupRef.child(groupName).once('value', (snapshot) =&gt; {
-          <span class="missing-if-branch" title="if path not taken" >I</span>if (!snapshot.exists()) {
-<span class="cstat-no" title="statement not covered" >            groupRef.child(groupName).child('Users').child(userName)</span>
+          if (!snapshot.exists()) {
+            groupRef.child(groupName).child('Users').child(userName)
               .set(userName);
-<span class="cstat-no" title="statement not covered" >            groupRef.child(groupName).child('Users').child('Bot').set('Bot');</span>
-<span class="cstat-no" title="statement not covered" >            groupRef.child(groupName).child('Email').push('bot@postit.com');</span>
-<span class="cstat-no" title="statement not covered" >            groupRef.child(groupName).child('Number').push('2348066098141');</span>
-<span class="cstat-no" title="statement not covered" >            groupRef.child(groupName).child('Messages/Seen').push(null);</span>
+            groupRef.child(groupName).child('Users').child('Bot').set('Bot');
+            groupRef.child(groupName).child('Email').push('bot@postit.com');
+            groupRef.child(groupName).child('Number').push('2348066098141');
+            groupRef.child(groupName).child('Messages/Seen').push(null);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            db.ref(`/users/${userName}/Groups`).push({</span>
+            db.ref(`/users/${userName}/Groups`).push({
               groupName,
               userName
-            }).then(<span class="fstat-no" title="function not covered" >() =&gt; </span>{
-<span class="cstat-no" title="statement not covered" >              res.status(201).json({</span>
+            }).then(() =&gt; {
+              res.status(201).json({
                 message: `Group ${groupName} created`,
                 groupName,
                 userName
@@ -891,14 +891,14 @@ class Group {
 }
 &nbsp;
 &nbsp;
-module.exports = Group;
+export default Group;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 20 2017 17:50:19 GMT+0100 (WAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 23 2017 11:22:03 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

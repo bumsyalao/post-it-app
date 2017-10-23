@@ -21,4 +21,4 @@ router.get('/users/allnumbers/', User.getAllNumbers);
 router.get('/users/allemails/', User.getAllEmails);
 router.get('/seen/:groupName/:messageID', Message.getReadMessageUsers);
 
-export default router;
+module.exports = router;

@@ -13,9 +13,7 @@ const validStringContent = (userName, groupName) => {
 };
 
 
-const validate = {
+module.exports = {
   validStringLength,
   validStringContent,
 };
-
-export default validate;

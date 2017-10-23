@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+const firebase = require('firebase');
 
 const configuration = {
   apiKey: process.env.DB_KEY,
@@ -19,7 +19,7 @@ const groupRef = db.ref('Groups');
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-const config = {
+module.exports = {
   firebase,
   db,
   usersRef,
@@ -28,4 +28,3 @@ const config = {
   provider,
 };
 
-export default config;

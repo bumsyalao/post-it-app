@@ -230,14 +230,16 @@
 185
 186
 187
-188</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+188
+189
+190
+191</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -331,7 +333,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">65x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -350,28 +352,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">65x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">60x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -423,8 +429,7 @@ import Nexmo from 'nexmo';
 import moment from 'moment';
 &nbsp;
 import { usersRef, groupRef, firebase } from './../config';
-import { validStringLength }
-  from './../helpers/validate.helper';
+import { validStringLength } from './../helpers/validate.helper';
 &nbsp;
 &nbsp;
  /**
@@ -535,7 +540,9 @@ class Message {
                 to: emails,
                 subject: 'New Message Received',
                 text: 'PostIt App ?',
-                html: `&lt;p&gt;Hello&lt;/p&gt;&lt;h2&gt;This is to notify you that a vey urgent message which may have a critical priority level has been posted in ${group} group&lt;/h2&gt;`
+                html: `&lt;p&gt;Hello&lt;/p&gt;&lt;h2&gt;This is to notify you that a vey urgent 
+                message which may have a critical priority level has been 
+                posted in ${group} group&lt;/h2&gt;`
               };
 <span class="cstat-no" title="statement not covered" >              transporter.sendMail(mailOptions, <span class="fstat-no" title="function not covered" >() =&gt; </span>{</span>
               });
@@ -559,7 +566,9 @@ class Message {
               });
 <span class="cstat-no" title="statement not covered" >              number.forEach(<span class="fstat-no" title="function not covered" >(</span>entry) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                nexmo.message.sendSms(</span>
-                  'Post-It', entry, `Post-It App. This is to notify you that an urgent message which has a critical priority level has been posted in ${group} group`
+                  'Post-It', entry, `Post-It App. This is to notify you that an
+                   urgent message which has a critical priority 
+                   level has been posted in ${group} group`
                 );
               });
             }
@@ -610,7 +619,7 @@ module.exports = Message;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 20 2017 17:50:19 GMT+0100 (WAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 23 2017 11:22:03 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

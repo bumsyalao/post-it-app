@@ -11,7 +11,7 @@ const password = '123456';
 
 describe('EndPoint: SignUp', () => {
   const userName = 'Kakashi';
-  const email = 'kishi@gmail.com';
+  const email = 'kishis@gmail.com';
   const number = '2348066098146';
 
   it('should return 200 when a user sign up successfully', (done) => {
@@ -24,7 +24,7 @@ describe('EndPoint: SignUp', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Welcome to Post it app');
         res.body.should.have.nested.property('userData.email')
-        .eql('kishi@gmail.com');
+        .eql('kishis@gmail.com');
         res.body.should.have.nested.property('userData.displayName')
         .eql('Kakashi');
         res.body.should.have.nested.property('userData.uid');
