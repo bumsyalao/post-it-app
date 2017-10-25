@@ -30,10 +30,6 @@ describe('Create Group', () => {
         .eql('Jat');
         res.body.should.have.nested.property('userData.uid')
         .eql('Sb1mgQOVOoXafC3MMnQXVjKlPdJ2');
-        res.body.should.have.nested.property('userData.apiKey')
-        .eql('AIzaSyDx5Xi4OxL1F18jqNO1L1JyAhO8CM3J3h0');
-        res.body.should.have.nested.property('userData.authDomain')
-        .eql('post-it-app-8b2cb.firebaseapp.com');
         if (err) return done(err);
         done();
       });
@@ -170,10 +166,6 @@ describe('EndPoint: Get all Groups of a User', () => {
         .eql('Jat');
         res.body.should.have.nested.property('userData.uid')
         .eql('Sb1mgQOVOoXafC3MMnQXVjKlPdJ2');
-        res.body.should.have.nested.property('userData.apiKey')
-        .eql('AIzaSyDx5Xi4OxL1F18jqNO1L1JyAhO8CM3J3h0');
-        res.body.should.have.nested.property('userData.authDomain')
-        .eql('post-it-app-8b2cb.firebaseapp.com');
         if (err) return done(err);
         done();
       });

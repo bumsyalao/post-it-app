@@ -1,4 +1,5 @@
 import { firebase, usersRef } from './../config';
+import Validator from './Validator';
 
 /**
  * class User: controls all user routes
@@ -16,17 +17,19 @@ class User {
  */
   static signup(req, res) {
     const { userName, password, email, number } = req.body;
+    req.check('userName', 'Username is required').notEmpty().matches(/\w/);
+    req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
+    req.check('email', 'Email is required').notEmpty();
+    req.check('email', 'Please put a valid email').isEmail();
+    req.check('password', 'Password is required').notEmpty();
+    req.check('password', 'Password must be a mininum of 6 character')
+    .isLength(6, 50);
 
-    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
-    typeof password === 'undefined' || typeof number === 'undefined') {
-      res.status(400).json(
-        { message: 'You need to provide username, password, number and email' }
-      );
-    } else if (userName === '' || password === '' ||
-      email === '' || number === '') {
-      res.status(400).json(
-        { message: 'Username, password, number or email field cannot be empty' }
-      );
+
+    const errors = req.validationErrors();
+    if (errors) {
+      const message = errors[0].msg;
+      res.status(400).json({ message });
     } else {
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
@@ -62,6 +65,10 @@ class User {
         res.status(409).json({
           message: 'The email address is already in use by another account.'
         });
+      } else {
+        res.status(500).json({
+          message: 'Internal Server Error'
+        });
       }
     });
     }
@@ -79,16 +86,16 @@ class User {
   static googleSignup(req, res) {
     const { userName, email, uid, number } = req.body;
 
-    if (typeof userName === 'undefined' || typeof email === 'undefined' ||
-      typeof uid === 'undefined' || typeof number === 'undefined') {
-      res.status(400).json(
-       { message: 'You need to provide userName, uid, number and email' }
-     );
-    } else if (userName === '' || uid === '' ||
-       email === '' || number === '') {
-      res.status(400).json(
-       { message: 'userName, uid, number or email cannot be empty' }
-     );
+    req.check('userName', 'Username is required').notEmpty().matches(/\w/);
+    req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
+    req.check('email', 'Email is required').notEmpty();
+    req.check('email', 'Please put a valid email').isEmail();
+    req.check('uid', 'Uid is required').notEmpty().matches(/\w/);
+
+    const errors = req.validationErrors();
+    if (errors) {
+      const message = errors[0].msg;
+      res.status(400).json({ message });
     } else {
       usersRef.child(userName).once('value', (snapshot) => {
         if (!snapshot.exists()) {
@@ -127,14 +134,17 @@ class User {
  */
   static signin(req, res) {
     const { email, password } = req.body;
-    if (typeof email === 'undefined' || typeof password === 'undefined') {
-      res.status(400).json(
-        { message: 'You need to provide password and email' }
-      );
-    } else if (email === '' || password === '') {
-      res.status(400).json({
-        message: 'Email or Password field cannot be empty.'
-      });
+
+    req.check('email', 'Email is required').notEmpty();
+    req.check('email', 'Please put a valid email').isEmail();
+    req.check('password', 'Password is required').notEmpty();
+    req.check('password', 'Password must be a mininum of 6 character')
+    .isLength(6, 50);
+
+    const errors = req.validationErrors();
+    if (errors) {
+      const message = errors[0].msg;
+      res.status(400).json({ message });
     } else {
       firebase.auth()
         .signInWithEmailAndPassword(email, password).then((user) => {
@@ -178,6 +188,10 @@ class User {
               message:
               'The password is invalid or the user does not have a password.'
             });
+          } else {
+            res.status(500).json(
+              { message: 'Internal Server Error' }
+            );
           }
         });
     }
@@ -205,7 +219,7 @@ class User {
   }
 
   /**
- * @description: This method retrieves all notifications in user database
+ * @description: This method retrieves user's notifications from database
  * route GET: user/getNotification
  *
  * @param {Object} req request object
@@ -265,8 +279,8 @@ class User {
     if (currentUser) {
       usersRef.once('value', (snap) => {
         const userNames = [];
-        snap.forEach((nos) => {
-          userNames.push(nos.val().userName);
+        snap.forEach((allUsers) => {
+          userNames.push(allUsers.val().userName);
         });
         if (userNames.length === 0) {
           res.status(404).json(
@@ -302,8 +316,8 @@ class User {
     if (currentUser) {
       usersRef.once('value', (snap) => {
         const numbers = [];
-        snap.forEach((nos) => {
-          numbers.push(nos.val().number);
+        snap.forEach((allNumbers) => {
+          numbers.push(allNumbers.val().number);
         });
         if (numbers.length === 0) {
           res.status(404).json(
@@ -338,8 +352,8 @@ class User {
     if (currentUser) {
       usersRef.once('value', (snap) => {
         const emails = [];
-        snap.forEach((nos) => {
-          emails.push(nos.val().email);
+        snap.forEach((allEmails) => {
+          emails.push(allEmails.val().email);
         });
         if (emails.length === 0) {
           res.status(404).json(
@@ -394,7 +408,7 @@ class User {
         });
       });
     } else {
-      res.status(401).send('Access denied; You need to sign in');
+      res.status(401).send({ message: 'Access denied; You need to sign in' });
     }
   }
 

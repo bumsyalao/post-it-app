@@ -5,9 +5,6 @@ import Footer from './Footer'
 import Routes from './Routes'
 import AppStore from '../stores/AppStore'
 import { firebaseAuth, firebase } from '../../../../server/config'
-import Signin from './Signin'
-import Signup from './Signup';
-import Home from './Home';
 import Navigation from './Navigation'
 import Dashboard from './Dashboard/Dashboard'
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { expect } from 'chai';
+import { MemoryRouter } from 'react-router-dom';
 
 import App from '../../components/App';
 import Footer from '../../components/Footer';
@@ -12,44 +12,50 @@ jest.mock('../../../../../server/config', () => ({
   }));
 
 describe('<App />', () => {
-
-    it('It should contain a <Navigation /> for unauthenticated user', () => {
+    const event = {
+            user: 'ebuka',
+            authentication: true,
+            loggedInUser: [{ebuka:123},{andela:2333}],
+            groups: [{andela:'jfh'},{dex:'kakjh'}]
+      };
+      const onChange = jest.fn();
+    it('should contain a <Navigation /> for unauthenticated user', () => {
         const wrapper = shallow(<App />);
-        expect(wrapper.find(Navigation)).to.have.length(1);
+        expect(wrapper.find(Navigation)).toHaveLength(1);
         wrapper.instance().componentDidMount();
         wrapper.instance().componentUnmount();       
     });
 
-    it('It should contain a <Footer /> for unauthenticated user', () => {
+    // it('should contain a <Dashboard /> component', () => {
+    //     const wrapper = shallow(<App />);
+    //     expect(wrapper.find(Dashboard)).toHaveLength(1);
+    // });
+
+    it('should contain a <Footer /> for unauthenticated user', () => {
         const wrapper = shallow(<App />);
-        expect(wrapper.find(Dashboard)).to.have.length(1);
+        expect(wrapper.find(Footer)).toHaveLength(1);
     });
 
-    it('It should contain a <Footer /> for unauthenticated user', () => {
+    it('should contain a <Routes /> for unauthenticated user', () => {
         const wrapper = shallow(<App />);
-        expect(wrapper.find(Footer)).to.have.length(1);
+        expect(wrapper.find(Routes)).toHaveLength(1);
     });
 
-    it('It should contain a <Routes /> for unauthenticated user', () => {
+    it('should return initial default state inside a component', () => {
         const wrapper = shallow(<App />);
-        expect(wrapper.find(Routes)).to.have.length(1);
+        expect(wrapper.state().authentication).toEqual(false);
+        expect(wrapper.state().user).toEqual('');
+        expect(wrapper.state().loggedInUser.length).toEqual(0);
+        expect(wrapper.state().loggedInPicture.length).toEqual(0);
+        expect(wrapper.state().groups.length).toEqual(0);
     });
 
-    it('It should return initial default state inside a component', () => {
-        const wrapper = shallow(<App />);
-        expect(wrapper.state().authentication).to.equal(false);
-    });
-
-    it('It should call onChange method', () => {
-        const event = {
-          target: {
-            name: 'name',
-            value: 'value',
-          }
-        };
-        const wrapper = mount(<App />);
+    it('should call onChange method', () => {
+        const wrapper = mount(<MemoryRouter><App event={event} onChange={onChange}/></MemoryRouter>);
+        console.log(wrapper.setState().nodes[0].props.children.props.onChange)
+        console.log(wrapper.instance().onChange())
         wrapper.instance().onChange(event);
-        expect(wrapper.state().name).toEqual('value');
+        expect(wrapper.state().user).toEqual('ebuka');
       });
 
 });

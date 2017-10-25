@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import expressValidator from 'express-validator';
 import bodyParser from 'body-parser';
 import 'dotenv/config';
 
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(expressValidator());
 app.use('/', routes);
 app.use(express.static(path.join(__dirname, '../client/src/build/')));
 app.get('*', (req, res) => {
