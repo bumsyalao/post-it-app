@@ -1,6 +1,9 @@
 import axios from 'axios';
 import toastr from 'toastr';
+
+import ToastError from '../helpers/ToastError';
 import AppActions from '../actions/AppActions';
+
 
 module.exports = {
   saveContact(contact) {
@@ -11,19 +14,10 @@ module.exports = {
       number: contact.number
     }).then((response) => {
       const user = response.data.userData;
-      if (response.data.message ===
-         'The email address is already in use by another account.') {
-        toastr.error(response.data.message);
-      } else if (response.data.message ===
-         'The email address is badly formatted.') {
-        toastr.error(response.data.message);
-      } else {
-        AppActions.receiveLogin(user);
-        toastr.success('Welcome,  An email will be sent to you.');
-      }
-    }).catch((error) => {
-      toastr.error(error);
-    });
+      AppActions.receiveLogin(user);
+      toastr.success('Welcome,  An email will be sent to you.');
+    })
+    .catch(ToastError);
   },
 
   getContacts() {
@@ -31,9 +25,7 @@ module.exports = {
       .then((contacts) => {
         AppActions.receiveContact(contacts.data);
       })
-      .catch((error) => {
-        toastr.error(error);
-      });
+      .catch(ToastError);
   },
 
   getNumbers() {
@@ -41,9 +33,7 @@ module.exports = {
         .then((response) => {
           AppActions.receiveNumber(response.data);
         })
-        .catch((error) => {
-          toastr.error(error);
-        });
+        .catch(ToastError);
   },
 
   getEmails() {
@@ -51,9 +41,7 @@ module.exports = {
         .then((response) => {
           AppActions.receiveEmails(response.data);
         })
-        .catch((error) => {
-          toastr.error(error);
-        });
+        .catch(ToastError);
   },
 
   saveGroup(group) {
@@ -62,9 +50,8 @@ module.exports = {
       userName: group.userName
     }).then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    })
+    .catch(ToastError);
   },
 
   getGroups(userName) {
@@ -72,9 +59,8 @@ module.exports = {
     .then((response) => {
       const groups = response.data;
       AppActions.receiveGroups(groups);
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    })
+    .catch(ToastError);
   },
 
   getNotifications(userName) {
@@ -83,9 +69,7 @@ module.exports = {
       const notification = response.data;
       AppActions.receiveNotification(notification);
     })
-    .catch((error) => {
-      toastr.error(error);
-    });
+    .catch(ToastError);
   },
 
   addUserToGroup(addUser) {
@@ -95,9 +79,8 @@ module.exports = {
     })
     .then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    })
+    .catch(ToastError);
   },
 
   saveMessages(message) {
@@ -110,9 +93,8 @@ module.exports = {
     })
     .then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    })
+    .catch(ToastError);
   },
 
   seenMessage(user) {
@@ -122,37 +104,26 @@ module.exports = {
     .then((response) => {
       AppActions.receiveSeenUsers(response.data);
     })
-    .catch((error) => {
-      toastr.error(error);
-    });
+    .catch(ToastError);
   },
 
   login(contact) {
     return axios.post('/user/signin', {
       email: contact.email,
       password: contact.password
-    }).then((response) => {
+    })
+    .then((response) => {
       const user = response.data.userData;
-      if (response.data === 'There is no user record corresponding to this ') {
-        toastr.error(response.data);
-      } else if (response.data.message ===
-         'The password is invalid or the user does not have a password.') {
-        toastr.error(response.data.message);
-      } else {
-        AppActions.receiveLogin(user);
-        toastr.success('Welcome To PostIt');
-      }
-    }).catch(() => {
-      toastr.error('Your email or password is invalid');
-    });
+      AppActions.receiveLogin(user);
+      toastr.success('Welcome To PostIt');
+    })
+    .catch(ToastError);
   },
 
   setLogout() {
     return axios.post('/user/signout').then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    }).catch(ToastError);
   },
 
   searchUserMessageInGroup(group) {
@@ -165,9 +136,7 @@ module.exports = {
         AppActions.receiveMessages(messages);
         AppActions.receiveUser(users);
       })
-      .catch((error) => {
-        toastr.error(error);
-      });
+      .catch(ToastError);
   },
 
   googleSignUp(googleUser) {
@@ -181,22 +150,21 @@ module.exports = {
       email,
       number,
       uid
-    }).then((response) => {
+    })
+    .then((response) => {
       const user = response.data;
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    })
+    .catch(ToastError);
   },
 
   resetPassword(email) {
     return axios.post('/user/reset', { email
     }).then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      toastr.error(error);
-    });
+    })
+    .catch(ToastError);
   },
 
 };

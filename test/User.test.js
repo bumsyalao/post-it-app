@@ -12,7 +12,7 @@ const password = '123456';
 describe('EndPoint: SignUp', () => {
   const userName = 'Kakashi';
   const email = 'kishis@gmail.com';
-  const number = '2348066098146';
+  const number = '2348088098146';
 
   it('should return 200 when a user sign up successfully', (done) => {
     request(app)
@@ -27,11 +27,7 @@ describe('EndPoint: SignUp', () => {
         .eql('kishis@gmail.com');
         res.body.should.have.nested.property('userData.displayName')
         .eql('Kakashi');
-        res.body.should.have.nested.property('userData.uid');
-        res.body.should.have.nested.property('userData.apiKey');
-        res.body.should.have.nested.property('userData.photoURL');
-        res.body.should.have.nested.property('userData.emailVerified');
-        res.body.should.have.nested.property('userData.phoneNumber');
+        res.body.should.have.nested.property('2348088098146');
         if (err) return done(err);
         done();
       });

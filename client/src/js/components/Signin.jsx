@@ -76,8 +76,6 @@ class Signin extends Component {
 
     if (validateEmail(this.refs.email.value.trim())) {
       AppActions.login(contact);
-      this.refs.email.value = '';
-      this.refs.password.value = '';
     } else {
       toastr.error('Invalid Email Address')
     }

@@ -119,11 +119,6 @@ export default class Signup extends Component {
             toastr.error('Invalid Email Address')
         } else {
             AppActions.saveContact(contact);
-            this.refs.username.value = '';
-            this.refs.email.value = '';
-            this.refs.password.value = '';
-            this.refs.number.value = '';
-            this.refs.verifyPassword.value = '';
         }
     }
 

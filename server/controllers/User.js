@@ -1,5 +1,4 @@
 import { firebase, usersRef } from './../config';
-import Validator from './Validator';
 
 /**
  * class User: controls all user routes
@@ -17,6 +16,7 @@ class User {
  */
   static signup(req, res) {
     const { userName, password, email, number } = req.body;
+
     req.check('userName', 'Username is required').notEmpty().matches(/\w/);
     req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
     req.check('email', 'Email is required').notEmpty();
@@ -24,7 +24,6 @@ class User {
     req.check('password', 'Password is required').notEmpty();
     req.check('password', 'Password must be a mininum of 6 character')
     .isLength(6, 50);
-
 
     const errors = req.validationErrors();
     if (errors) {
@@ -181,12 +180,12 @@ class User {
             });
           } else if (errorCode === 'auth/user-not-found') {
             res.status(404).json({
-              message: 'There is no user record corresponding to this email.'
+              message: 'The email does not exist.'
             });
           } else if (errorCode === 'auth/wrong-password') {
             res.status(404).json({
               message:
-              'The password is invalid or the user does not have a password.'
+              'The password is invalid.'
             });
           } else {
             res.status(500).json(
