@@ -109,22 +109,14 @@ export default class DashboardNavigation extends Component {
     addUser(event) {
         event.preventDefault();
 
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        const userName = capitalizeFirstLetter(this.refs.user.value)
         const addUser = {
             groupname: this.refs.type.value.trim(),
-            userName
+            userName: this.refs.user.value
         }
-        if (this.refs.type.value === '') {
-            toastr.error("Select a group name from the drop down list")
-        }
-        else if (this.props.allUsers.includes(userName)) {
-            AppActions.saveGroupUser(addUser);
+        if (this.refs.type.value === 'Groups') {
+            toastr.error("Select a Group name")
         } else {
-            toastr.error("The User dosen't exist")
+            AppActions.saveGroupUser(addUser)
         }
     }
 
@@ -156,7 +148,7 @@ export default class DashboardNavigation extends Component {
         const userName = JSON.parse(localStorage.getItem('user'));
         const groupOptions = this.props.group.map((keyName, keyIndex) =>  <GroupOptions keyName={keyName} key={keyIndex} />)
         const notificationList = this.props.notification.map((keyName, keyIndex) => <li key={keyIndex}>{keyName.notification}</li>)
-
+        const allUsers = this.props.allUsers.map((keyName, keyIndex) => <option key={keyIndex}>{keyName.users}</option>)
         return (
             <div>
                 <li data-toggle="collapse" className="collapsed"
@@ -207,8 +199,12 @@ export default class DashboardNavigation extends Component {
                             </div>
                             <div className='form-group'>
                                 <input type="text" ref='user'
-                                    className='form-control'
+                                    className='form-control'                                 
+                                    list="users"
                                     placeholder='Search for a User' required />
+                                    <datalist id="users">
+                                    {allUsers}
+                                    </datalist>
                             </div>
 
                             <button type='submit'

@@ -14,7 +14,7 @@ export default class Welcome extends Component {
       <nav className="navbar navbar-inverse navbar-fixed-bottom"
         style={{ borderRadius: '0px' }}>
         <div className="container-fluid">
-          <a className="navbar-brand low-red" href="#">Andela</a>
+          <a className="navbar-brand low-red" href="/">Andela</a>
         </div>
         <div className="collapse navbar-collapse" id="myNavbar">
           <ul className="nav navbar-nav">

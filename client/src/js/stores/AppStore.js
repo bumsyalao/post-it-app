@@ -29,13 +29,42 @@ let allEmails = [];
 
 const AppStore = assign({}, EventEmitter.prototype, {
 
-  getAuth() {
+
+/**
+ * @description This method logs the user into the app
+ *
+ * @method getAuthenticatedState
+ *
+ * @memberof AppStore
+ *
+ * @returns { Boolean } returns a bool
+ */
+  getAuthenticatedState() {
     return authenticate;
   },
 
-  setAuth() {
+  /**
+ * @description This sets the authentication state to true
+ *
+ * @method setAuthenticatedState
+ *
+ * @memberof AppStore
+ *
+ * @returns { Boolean } returns True
+ */
+  setAuthenticatedState() {
     authenticate = true;
   },
+
+  /**
+ * @description This logs the user out of the app
+ *
+ * @method setAuthenticatedState
+ *
+ * @memberof AppStore
+ *
+ * @returns { Boolean } returns False
+ */
   setLogout() {
     authenticate = false;
   },
@@ -80,11 +109,11 @@ const AppStore = assign({}, EventEmitter.prototype, {
     allUsersNumberStore = number;
   },
 
-  getdatabaseUsers() {
+  getDatabaseUsers() {
     return databaseUsersStore;
   },
 
-  setdatabaseUsers(contacts) {
+  setDatabaseUsers(contacts) {
     databaseUsersStore = contacts;
   },
 
@@ -109,10 +138,6 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return groupsStore;
   },
 
-  saveGroup(group) {
-    groupsStore.push(group);
-  },
-
   setGroups(groups) {
     groupsStore = groups;
   },
@@ -125,13 +150,29 @@ const AppStore = assign({}, EventEmitter.prototype, {
     currentGroupStore = group;
   },
 
+/**
+ * @description This returns an array of users and messages in a group
+ *
+ * @method getGroupUsers
+ *
+ * @memberof AppStore
+ *
+ * @returns { Array } Returns an array of group messages
+ */
   getGroupUsers() {
     return groupUsersStore;
   },
 
-  addUserToGroup(users) {
-    groupUsersStore.push(users);
-  },
+
+/**
+ * @description This push 
+ *
+ * @method getGroupUsers
+ *
+ * @memberof AppStore
+ *
+ * @returns { Array } Returns an array of group messages
+ */
 
   setGroupUsers(users) {
     groupUsersStore = users;
@@ -210,14 +251,46 @@ const AppStore = assign({}, EventEmitter.prototype, {
     seenUsersStore = users;
   },
 
+/**
+ * @description AppStore emit event change
+ *
+ * @memberof AppStore
+ *
+ * @method emitChange
+ *
+ * @returns { void }
+ */
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
+  /**
+ * @description AppStore change listener. Listens to change from the store
+ * with respect to the listener in the component
+ *
+ * @param { Object } callback
+ *
+ * @method addChangeListener
+ *
+ * @memberof AppStore
+ *
+ * @returns {void}
+ */
   addChangeListener(callback) {
     this.on('change', callback);
   },
 
+/**
+ * @description Remove AppStore change listener
+ *
+ * @param { Object } callback
+ *
+ * @method removeChangeListener
+ *
+ * @memberof AppStore
+ *
+ * @returns { void }
+ */
   removeChangeListener(callback) {
     this.removeListener('change', callback);
   }
@@ -235,7 +308,7 @@ AppDispatcher.register((payload) => {
       break;
 
     case AppConstants.RECEIVE_CONTACT:
-      AppStore.setdatabaseUsers(action.contacts);
+      AppStore.setDatabaseUsers(action.contacts);
       AppStore.emit(CHANGE_EVENT);
       break;
 
@@ -251,7 +324,6 @@ AppDispatcher.register((payload) => {
 
 
     case AppConstants.SAVE_GROUP:
-      AppStore.saveGroup(action.group);
       AppAPI.saveGroup(action.group);
       AppStore.emit(CHANGE_EVENT);
       break;
@@ -272,7 +344,6 @@ AppDispatcher.register((payload) => {
       break;
 
     case AppConstants.SAVE_GROUP_USER:
-      AppStore.addUserToGroup(action.addUser);
       AppAPI.addUserToGroup(action.addUser);
       AppStore.emit(CHANGE_EVENT);
       break;
@@ -305,7 +376,7 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.RECEIVE_LOGIN:
       AppStore.saveUser(action.user);
-      AppStore.setAuth();
+      AppStore.setAuthenticatedState();
       AppStore.emit(CHANGE_EVENT);
       break;
 

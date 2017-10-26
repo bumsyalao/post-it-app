@@ -15,7 +15,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthenticated: AppStore.getAuth()
+      isAuthenticated: AppStore.getAuthenticatedState()
     };
     this.onChange = this
       .onChange
@@ -55,7 +55,7 @@ class Home extends Component {
      */
     onChange() {
       this.setState({
-        isAuthenticated: AppStore.getAuth()
+        isAuthenticated: AppStore.getAuthenticatedState()
       });
     }
 

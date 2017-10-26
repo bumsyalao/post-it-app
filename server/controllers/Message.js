@@ -115,9 +115,8 @@ class Message {
                 to: emails,
                 subject: 'New Message Received',
                 text: 'PostIt App ?',
-                html: `<p>Hello</p><h2>This is to notify you that a vey urgent 
-                message which may have a critical priority level has been 
-                posted in ${group} group</h2>`
+                html: `<p>Hello</p>This is to notify you that a 
+                message has been posted in ${group} group`
               };
               transporter.sendMail(mailOptions, () => {
               });
@@ -141,9 +140,8 @@ class Message {
               });
               number.forEach((entry) => {
                 nexmo.message.sendSms(
-                  'Post-It', entry, `Post-It App. This is to notify you that an
-                   urgent message which has a critical priority 
-                   level has been posted in ${group} group`
+                  'Post-It', entry, `Post-It App. This is to notify you that a
+                  message has been posted in ${group} group`
                 );
               });
             }

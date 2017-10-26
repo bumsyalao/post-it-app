@@ -17,7 +17,7 @@ export default class GoogleWelcome extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            databaseUsers: AppStore.getdatabaseUsers(),
+            databaseUsers: AppStore.getDatabaseUsers(),
             numbers: AppStore.getAllUsersNumber(),
             googleDetail: AppStore.getGoogleSignup()
         };

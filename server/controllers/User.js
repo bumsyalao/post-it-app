@@ -1,4 +1,5 @@
 import { firebase, usersRef } from './../config';
+import capitalizeFirstLetter from './../helpers/StringFormat';
 
 /**
  * class User: controls all user routes
@@ -33,14 +34,15 @@ class User {
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
         const uid = user.uid;
+        const displayName = capitalizeFirstLetter(userName);
         user.updateProfile({
-          displayName: userName
+          displayName
         });
         user.sendEmailVerification().then(() => {
-          usersRef.child(userName).set({
-            userName,
+          usersRef.child(displayName).set({
+            userName: displayName,
             password,
-            email: user.email,
+            email,
             uid,
             number
           });
@@ -274,30 +276,30 @@ class User {
  * @return {Object} response containing all users in the user database
  */
   static getAllUsers(req, res) {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
+    // const currentUser = firebase.auth().currentUser;
+    // if (currentUser) {
       usersRef.once('value', (snap) => {
         const userNames = [];
         snap.forEach((allUsers) => {
-          userNames.push(allUsers.val().userName);
+          userNames.push({ users: allUsers.val().userName });
         });
         if (userNames.length === 0) {
           res.status(404).json(
             { message: 'There are currently no users found' }
           );
         } else {
-          res.status(200).send(userNames);
+          res.status(200).json(userNames);
         }
       }).catch(() => {
         res.status(500).send({
           message: 'Internal Server Error'
         });
       });
-    } else {
-      res.status(401).send({
-        message: 'Access denied; You need to sign in'
-      });
-    }
+    // } else {
+    //   res.status(401).send({
+    //     message: 'Access denied; You need to sign in'
+    //   });
+    // }
   }
 
 
@@ -311,8 +313,8 @@ class User {
  * @return {Object} response containing all numbers in the user database
  */
   static getAllNumbers(req, res) {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
+    // const currentUser = firebase.auth().currentUser;
+    // if (currentUser) {
       usersRef.once('value', (snap) => {
         const numbers = [];
         snap.forEach((allNumbers) => {
@@ -330,14 +332,14 @@ class User {
           message: 'Internal Server Error'
         });
       });
-    } else {
-      res.status(401).send({
-        message: 'Access denied; You need to sign in'
-      });
-    }
+    // } else {
+    //   res.status(401).send({
+    //     message: 'Access denied; You need to sign in'
+    //   });
+    // }
   }
 
-    /**
+/**
  * @description: This method retrieves all emails in user database
  * route GET: user/getAllEmails
  *
@@ -347,8 +349,8 @@ class User {
  * @return {Object} response containing all emails in the user database
  */
   static getAllEmails(req, res) {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
+    // const currentUser = firebase.auth().currentUser;
+    // if (currentUser) {
       usersRef.once('value', (snap) => {
         const emails = [];
         snap.forEach((allEmails) => {
@@ -366,11 +368,11 @@ class User {
           message: 'Internal Server Error'
         });
       });
-    } else {
-      res.status(401).send({
-        message: 'Access denied; You need to sign in'
-      });
-    }
+    // } else {
+    //   res.status(401).send({
+    //     message: 'Access denied; You need to sign in'
+    //   });
+    // }
   }
 
   /**

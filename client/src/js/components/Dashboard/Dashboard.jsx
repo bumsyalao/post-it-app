@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
 
 import AppStore from '../../stores/AppStore';
-import AppActions from '../../actions/AppActions'
-import DashboardNavigation from './DashboardNavigation'
+import AppAPI from '../../utils/appAPI';
+import AppActions from '../../actions/AppActions';
+import DashboardNavigation from './DashboardNavigation';
 import SideBar from './SideBar';
 import Board from './Board'
-import WelcomeBoard from './WelcomeBoard'
+import WelcomeBoard from './WelcomeBoard';
 
 
 /**
@@ -25,9 +26,10 @@ export default class DashBoard extends Component {
       authed: false,
       user: AppStore.getUser(),
       contacts: AppStore.getGroupUsers(),
+      allUsers: AppStore.getContacts(),
       groups: AppStore.getGroups(),
       currentGroup: AppStore.getCurrentGroup(),
-      databaseUsers: AppStore.getdatabaseUsers(),
+      databaseUsers: AppStore.getDatabaseUsers(),
       notification: AppStore.getNotification()
     };
     this.onChange = this.onChange.bind(this)
@@ -44,14 +46,6 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   componentDidMount() {
-    if (!localStorage.takenTour) {
-      const timeout = setTimeout(() => {
-        introJs().start()
-        clearTimeout(timeout);
-      }, 3000);
-      localStorage.setItem('takenTour', true);
-    }
-
     AppStore.addChangeListener(this.onChange);
   }
 
@@ -84,8 +78,9 @@ export default class DashBoard extends Component {
       groups: AppStore.getGroups(),
       user: AppStore.getUser(),
       currentGroup: AppStore.getCurrentGroup(),
-      databaseUsers: AppStore.getdatabaseUsers(),
+      databaseUsers: AppStore.getDatabaseUsers(),
       notification: AppStore.getNotification(),
+      allUsers: AppStore.getContacts(),
     });
 
   }

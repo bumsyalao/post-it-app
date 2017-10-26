@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Message from './Message';
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
 import toastr from 'toastr';
-import moment from 'moment';
 
 /**
  * @description The Presentation component that servers all message activities

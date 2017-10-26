@@ -73,19 +73,19 @@ where <your_desired_port> is the port you want to use. So, if you want to use po
 ## Contributions
 PostIt welcomes contributions in form of pull requests, as main purpose of open sourcing is to make it better and easier to use.
 
-### Reporting Bugs
+#### Reporting Bugs
  If you find bugs in the application, create a `New Issue` with additional data, like your node/npm version or snippet of code and let me know about it.
 
-### Contact
+#### Contact
  If you need clarification on what is not clear, contact me via mail [ebuka.umeh@andela.com](mailto:ebuka.umeh@andela.com)
 
-### Pull requests
+#### Pull requests
 + Fork the repository and create a branch from `develop`.
 + If you have added or changed existing code, add unit tests!
 + Ensure that all unit tests passes.
 + Check that your code lints (Eslint)
 
-### Style guide
+#### Style guide
 + Use es6 syntax only
 + Use semicolons
 + 2 space indention (no tabs)
@@ -95,13 +95,13 @@ PostIt welcomes contributions in form of pull requests, as main purpose of open 
 + Do not use console.log, etc in code (expect debugging locally)
 + Always add exact versions of packages 3.2.0 instead of ^3.2.0
 
-### Branch Naming Convention
+#### Branch Naming Convention
 A sample of the branch naming convention is found on the [Branch Naming wiki page](https://github.com/Charpell/post-it-app/wiki/Branch-Naming-Convention)
 
-### Commit Message Convention
+#### Commit Message Convention
 A sample of the commit message convention is  found on the [Commit Message wiki page](https://github.com/Charpell/post-it-app/wiki/Commit-Message-Convention)
 
-### Pull Request Naming and Description Convention
+#### Pull Request Naming and Description Convention
 A sample of the pull request naming and description convention on the [Pull Request Naming and Description wiki page](https://github.com/Charpell/post-it-app/wiki/Pull-Request-Naming-and-Description-Convention)
 
 ## Author

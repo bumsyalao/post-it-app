@@ -50,7 +50,7 @@ describe('RECEIVE_LOGIN', () => {
 
   it('should get the authenticated state', () => {
     mockDispatcher(StoreMock);
-    const result = (AppStore.getAuth());
+    const result = (AppStore.getAuthenticatedState());
     expect(result).toBe(false);
   });
 

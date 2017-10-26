@@ -72,7 +72,6 @@ export default class Signup extends Component {
             numbers: AppStore.getAllUsersNumber(),
             googleUser: AppStore.getGoogleSignup()
         });
-
     }
 
     
@@ -88,27 +87,14 @@ export default class Signup extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        /**
-    * @method function
-    * 
-    * @param {any} string
-    *
-    * @memberof Signup
-    */
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
-
         const contact = {
-            username: userNameToUppercase,
+            username: this.refs.username.value.trim(),
             email: this.refs.email.value.trim(),
             password: this.refs.password.value.trim(),
             number: this.refs.number.value.trim()
         }
 
-        if (this.state.databaseUsers.includes(userNameToUppercase)) {
+        if (this.state.databaseUsers.includes(this.refs.username.value)) {
             toastr.error('The username already exist')
         } else if (this.state.numbers.includes(this.refs.number.value)) {
             toastr.error('The phone number already exist')
