@@ -1,5 +1,5 @@
 import { usersRef, groupRef, firebase } from './../config';
-import capitalizeFirstLetter from './../helpers/StringFormat';
+import capitalizeFirstLetter from './../helpers/capitalizeFirstLetter';
 
 
 /**

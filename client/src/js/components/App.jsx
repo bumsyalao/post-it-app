@@ -79,29 +79,26 @@ class App extends Component {
        * @memberof App
        */
     render() {
-        let expireInOneDay = moment().hours() + 24;
-        const todaysHour= moment().hours();
-        
-        if (todaysHour < expireInOneDay) {
+        var expireInOneDay = moment('10/15/2014 9:00', "M/D/YYYY H:mm").valueOf() + 360000;
+    
             if (this.state.authentication === true) {            
                 localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));
                 localStorage.setItem('expirationTime', JSON.stringify(expireInOneDay));            
             }
-        } else {
-          localStorage.clear()        
-        }
-
         let componentToMount;
         if (localStorage.getItem('user') == null) {
-            componentToMount = <div className="row">
-                                    <Navigation />
-                                    <div className="row">
-                                        <Routes isAuthenticated={this.state.authentication} />
-                                    </div>
-                                    <div className="row">
-                                        <Footer />
-                                    </div>
-                                </div>
+            componentToMount = 
+            <div className="row">
+                <Navigation />
+                <div className="row">
+                    <Routes 
+                    isAuthenticated={this.state.authentication} 
+                    />
+                </div>
+                <div className="row">
+                    <Footer />
+                </div>
+            </div>
         } else {
             componentToMount = <Dashboard />;
         }

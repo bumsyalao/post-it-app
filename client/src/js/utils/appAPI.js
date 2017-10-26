@@ -1,7 +1,7 @@
 import axios from 'axios';
 import toastr from 'toastr';
 
-import ToastError from '../helpers/ToastError';
+import ToastError from '../helpers/getToastError';
 import AppActions from '../actions/AppActions';
 
 

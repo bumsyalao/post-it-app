@@ -6,7 +6,7 @@
  *
  * @return { object } true if the parameter lenghts are greater than 1
  */
-const validStringLength = (userName, groupName) => {
+export const StringLength = (userName, groupName) => {
   if (userName.length >= 1 && groupName.length >= 1) {
     return true;
   }
@@ -21,7 +21,7 @@ const validStringLength = (userName, groupName) => {
  *
  * @return { object } true if the parameter is a character or a number
  */
-const validStringContent = (userName, groupName) => {
+export const StringContent = (userName, groupName) => {
   if (userName.match(/\W/) || groupName.match(/\W/)) {
     return false;
   }
@@ -29,7 +29,9 @@ const validStringContent = (userName, groupName) => {
 };
 
 
-module.exports = {
-  validStringLength,
-  validStringContent,
-};
+// module.exports = {
+//   validStringLength,
+//   validStringContent,
+// };
+
+// import { string, } from 'inputValidator'

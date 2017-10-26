@@ -1,5 +1,5 @@
 import { firebase, usersRef } from './../config';
-import capitalizeFirstLetter from './../helpers/StringFormat';
+import capitalizeFirstLetter from './../helpers/capitalizeFirstLetter';
 
 /**
  * class User: controls all user routes

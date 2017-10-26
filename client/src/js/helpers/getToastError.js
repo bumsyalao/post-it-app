@@ -7,9 +7,9 @@ import toastr from 'toastr';
  *
  * @param { * } error
  */
-const ToastError = (error) => {
+const getToastError = (error) => {
   const message = error.response.data.message;
   toastr.error(message);
 };
 
-export default ToastError;
+export default getToastError;

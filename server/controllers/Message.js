@@ -4,7 +4,7 @@ import Nexmo from 'nexmo';
 import moment from 'moment';
 
 import { usersRef, groupRef, firebase } from './../config';
-import { validStringLength } from './../helpers/validate.helper';
+import * as validate from './../helpers/validate.helper';
 
 
  /**
@@ -31,11 +31,11 @@ class Message {
         googleAuth = true;
       }
       if (currentUser || googleAuth) {
-        if (!(validStringLength(group, message))) {
+        if (!(validate.validStringLength(group, message))) {
           res.status(400).json(
             { message: 'The Message or Groupname field is invalid' }
           );
-        } else if (!(validStringLength(notification, priority))) {
+        } else if (!(validate.validStringLength(notification, priority))) {
           res.status(400).json(
             { message: 'The Notification or Priority field is invalid' }
           );

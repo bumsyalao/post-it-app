@@ -22,7 +22,7 @@ export default class Signup extends Component {
         super(props);
         this.state = {
             contacts: AppStore.getContacts(),
-            databaseUsers: AppStore.getdatabaseUsers(),
+            databaseUsers: AppStore.getDatabaseUsers(),
             emails: AppStore.getGroupEmails(),
             numbers: AppStore.getAllUsersNumber(),
             googleUser: AppStore.getGoogleSignup()
@@ -67,7 +67,7 @@ export default class Signup extends Component {
      */
     onChange() {
         this.setState({
-            databaseUsers: AppStore.getdatabaseUsers(),
+            databaseUsers: AppStore.getDatabaseUsers(),
             emails: AppStore.getGroupEmails(),
             numbers: AppStore.getAllUsersNumber(),
             googleUser: AppStore.getGoogleSignup()
