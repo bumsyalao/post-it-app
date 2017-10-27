@@ -1,11 +1,11 @@
 import axios from 'axios';
 import toastr from 'toastr';
 
-import ToastError from '../helpers/getToastError';
+import { getToastError } from './../helpers/utils';
 import AppActions from '../actions/AppActions';
 
 
-module.exports = {
+const AppAPI = {
 /**
    * @description describes an API call to the server for a post request
    * to register a user
@@ -25,7 +25,7 @@ module.exports = {
       AppActions.receiveLogin(user);
       toastr.success('Welcome,  An email will be sent to you.');
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
 
@@ -44,7 +44,7 @@ module.exports = {
     }).then((response) => {
       toastr.success(response.data.message);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
    /**
@@ -61,7 +61,7 @@ module.exports = {
       const groups = response.data;
       AppActions.receiveGroups(groups);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
    /**
@@ -78,7 +78,7 @@ module.exports = {
       const notification = response.data;
       AppActions.receiveNotification(notification);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
   /**
@@ -97,7 +97,7 @@ module.exports = {
     .then((response) => {
       toastr.success(response.data.message);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
   /**
@@ -119,7 +119,7 @@ module.exports = {
     .then((response) => {
       toastr.success(response.data.message);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
     /**
@@ -138,7 +138,7 @@ module.exports = {
     .then((response) => {
       AppActions.receiveSeenUsers(response.data);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
     /**
@@ -159,7 +159,7 @@ module.exports = {
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
   /**
@@ -170,7 +170,7 @@ module.exports = {
   setLogout() {
     return axios.post('/user/signout').then((response) => {
       toastr.success(response.data.message);
-    }).catch(ToastError);
+    }).catch(getToastError);
   },
 
   /**
@@ -192,7 +192,7 @@ module.exports = {
         AppActions.receiveMessages(messages);
         AppActions.receiveUser(users);
       })
-      .catch(ToastError);
+      .catch(getToastError);
   },
 
   /**
@@ -220,7 +220,7 @@ module.exports = {
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
   /**
@@ -236,7 +236,7 @@ module.exports = {
     }).then((response) => {
       toastr.success(response.data.message);
     })
-    .catch(ToastError);
+    .catch(getToastError);
   },
 
   /**
@@ -264,7 +264,7 @@ module.exports = {
         .then((response) => {
           AppActions.receiveNumber(response.data);
         })
-        .catch(ToastError);
+        .catch(getToastError);
   },
 
   /**
@@ -278,8 +278,9 @@ module.exports = {
         .then((response) => {
           AppActions.receiveEmails(response.data);
         })
-        .catch(ToastError);
+        .catch(getToastError);
   },
 
 };
 
+export default AppAPI;

@@ -1,5 +1,5 @@
 import { firebase, usersRef } from './../config';
-import capitalizeFirstLetter from './../helpers/capitalizeFirstLetter';
+import { capitalizeFirstLetter } from './../helpers/utils';
 
 /**
  * class User: controls all user routes
@@ -21,9 +21,9 @@ class User {
     req.check('userName', 'Username is required').notEmpty().matches(/\w/);
     req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
     req.check('email', 'Email is required').notEmpty();
-    req.check('email', 'Please put a valid email').isEmail();
+    req.check('email', 'The email address is badly formatted.').isEmail();
     req.check('password', 'Password is required').notEmpty();
-    req.check('password', 'Password must be a mininum of 6 character')
+    req.check('password', 'Password should be at least 6 characters')
     .isLength(6, 50);
 
     const errors = req.validationErrors();
@@ -137,7 +137,7 @@ class User {
     const { email, password } = req.body;
 
     req.check('email', 'Email is required').notEmpty();
-    req.check('email', 'Please put a valid email').isEmail();
+    req.check('email', 'The email address is badly formatted.').isEmail();
     req.check('password', 'Password is required').notEmpty();
     req.check('password', 'Password must be a mininum of 6 character')
     .isLength(6, 50);
@@ -157,7 +157,7 @@ class User {
           rootRef.once('value', () => {
             const groups = [];
             let group = {};
-            const groupRef = firebase.database().ref().child('users')
+            const groupRef = rootRef.child('users')
             .child(userName)
             .child('Groups');
             groupRef.once('value', (snap) => {
@@ -387,14 +387,12 @@ class User {
   static resetPassword(req, res) {
     const emailAddress = req.body.email;
     const auth = firebase.auth();
-
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
-      auth.sendPasswordResetEmail(emailAddress).then(() => {
-        res.status(200).json({
-          message: 'An email has been sent for password reset.'
-        });
-      }, (error) => {
+    auth.sendPasswordResetEmail(emailAddress)
+    .then(() => {
+      res.status(200).json({
+        message: 'An email has been sent for password reset.'
+      });
+    }).catch((error) => {
         const errorCode = error.code;
         if (errorCode === 'auth/invalid-email') {
           res.status(400).json({
@@ -402,15 +400,12 @@ class User {
           });
         } else if (errorCode === 'auth/user-not-found') {
           res.status(404).json({ message: 'Email address does not exist' });
+        } else {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
         }
-      }).catch(() => {
-        res.status(500).send({
-          message: 'Internal Server Error'
-        });
-      });
-    } else {
-      res.status(401).send({ message: 'Access denied; You need to sign in' });
-    }
+      })
   }
 
 }

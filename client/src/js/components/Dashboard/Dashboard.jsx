@@ -3,7 +3,7 @@ import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
 import moment from 'moment';
 
 import AppStore from '../../stores/AppStore';
-import AppAPI from '../../utils/appAPI';
+import AppAPI from '../../utils/AppAPI';
 import AppActions from '../../actions/AppActions';
 import DashboardNavigation from './DashboardNavigation';
 import SideBar from './SideBar';
@@ -47,13 +47,6 @@ export default class DashBoard extends Component {
    * @memberof DashBoard
    */
   componentDidMount() {
-    var todaysHour = moment('10/15/2014 9:00', "M/D/YYYY H:mm").valueOf();
-    const expireInOneDay = JSON.parse(localStorage.getItem('expireInOneDay'));
-    if (todaysHour > expireInOneDay) {
-        AppActions.logout()
-  }
-    console.log(todaysHour)
- 
     AppStore.addChangeListener(this.onChange);
   }
 

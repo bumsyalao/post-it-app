@@ -4,8 +4,8 @@ import toastr from 'toastr';
 import AppActions from '../actions/AppActions';
 import AppStore from '../stores/AppStore';
 import { firebaseAuth, firebase, provider } from '../../../../server/config';
-import { validateEmail } from '../helpers/validate.helper';
-
+import { validateEmail } from './../helpers/utils';
+import Input from './Input';
 
 
 /**
@@ -124,16 +124,18 @@ export default class Signup extends Component {
                         <div className="col-md-6 col-sm-6 col-xs-12">
                             <h3>Sign Up</h3>
                             <form onSubmit={this.handleSubmit}>
-                                <div className='form-group'>
-                                    <input type="text" ref='username' 
-                                    className='form-control' 
-                                    placeholder='Username' required />
-                                </div>
-                                <div className='form-group'>
-                                    <input type="text" ref='email' 
-                                    className='form-control' placeholder='Email' 
-                                    required />
-                                </div>
+                                <Input
+                                    type={'text'}
+                                    refs={'username'}
+                                    className={'form-control'}
+                                    placeholder={'Username'}                                  
+                                />
+                                <Input
+                                    type={'text'}
+                                    refs={'email'}
+                                    className={'form-control'}
+                                    placeholder={'Email'}
+                                />
                                 <div className='form-group'>
                                     <input type="text" ref='number' 
                                     className='form-control' 

@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
-import AppActions from '../actions/AppActions'
+import React, { Component } from 'react';
+import AppActions from '../actions/AppActions';
 import toastr from 'toastr';
-import GoogleButton from 'react-google-button'
+import GoogleButton from 'react-google-button';
 
-import AppStore from '../stores/AppStore'
-import AppAPI from '../utils/appAPI'
-import { firebaseAuth, firebase, provider } from '../../../../server/config'
-import { validateEmail } from '../helpers/validate.helper';
-import GoogleWelcome from './GoogleWelcome'
+import AppStore from '../stores/AppStore';
+import AppAPI from '../utils/AppAPI';
+import { firebaseAuth, firebase, provider } from '../../../../server/config';
+import { validateEmail } from '../helpers/utils';
+import GoogleWelcome from './GoogleWelcome';
+import Input from './Input';
 
 
 /**
@@ -23,14 +24,22 @@ class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emails: AppStore.getAllEmails(),
+      emails: [],
       googleComponent: false,
-      googleUser: AppStore.getGoogleSignup()
-    };
+      googleUser: null,
+      email: '',
+      password: ''
 
+    };
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleGoogleSignin = this.handleGoogleSignin.bind(this)
     this.onChange = this.onChange.bind(this)
+  }
+  handleChange(element) {
+    this.setState({
+      [element.target.name]: element.target.value
+    });
   }
 
   /**
@@ -69,17 +78,20 @@ class Signin extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const contact = {
-      email: this.refs.email.value.trim(),
-      password: this.refs.password.value.trim()
+      email: this.state.email,
+      password: this.state.password
     }
 
 
-    if (validateEmail(this.refs.email.value.trim())) {
+    if (validateEmail(this.state.email)) {
       AppActions.login(contact);
+      this.setState({
+        email: '',
+        passowrd: ''
+      })
     } else {
       toastr.error('Invalid Email Address')
     }
-
   }
 
   /**
@@ -153,18 +165,23 @@ class Signin extends Component {
       display =
         <div className='well col-md-8 col-md-offset-2'>
           <h3>Sign In</h3>
-
-          <form onSubmit={this.handleSubmit}>
-            <div className='form-group'>
-              <input type="text" ref='email' className='form-control'
-                placeholder='Email' required />
-            </div>
-            <div className='form-group'>
-              <input type="password" ref='password' className='form-control'
-                placeholder='Password' required />
-            </div>
+          <form onSubmit={this.handleSubmit}>         
+           <Input               
+              name="email"
+              type={'text'}
+              action={this.handleChange}
+              className={'form-control'}
+              placeholder={'Email'}                                  
+          />
+            <Input               
+              name="password"
+              type={'password'}
+              action={this.handleChange}
+              className={'form-control'}
+              placeholder={'Password'}                                  
+            />
             <div><a href="#/reset">Forgot Password?</a></div>
-            <div><a href="#/register">Don't have an account? Signup</a></div>
+            <div><a href="#/register">Don't have an account? Signup</a></div> 
             <button type='submit' onClick={this.addAlert}
               className='btn btn-primary'>Log in</button>
           </form>

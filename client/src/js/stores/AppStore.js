@@ -3,7 +3,7 @@ import assign from 'object-assign';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants from '../constants/AppConstants';
-import AppAPI from '../utils/appAPI';
+import AppAPI from '../utils/AppAPI';
 
 const CHANGE_EVENT = 'change';
 
@@ -69,6 +69,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
     authenticate = false;
   },
 
+  
   getLoggedInUser() {
     return loggedInUser;
   },
@@ -381,9 +382,7 @@ AppDispatcher.register((payload) => {
       break;
 
     case AppConstants.LOGOUT:
-      window.localStorage.removeItem('user');
-      window.localStorage.removeItem('photoURL');
-      window.localStorage.removeItem('groupName');
+      localStorage.clear();
       location.reload();
       AppStore.setLogout();
       AppAPI.setLogout();

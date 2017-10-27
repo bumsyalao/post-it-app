@@ -4,8 +4,6 @@ import Nexmo from 'nexmo';
 import moment from 'moment';
 
 import { usersRef, groupRef, firebase } from './../config';
-import * as validate from './../helpers/validate.helper';
-
 
  /**
  * class Group: This class controls all group routes
@@ -23,23 +21,27 @@ class Message {
  */
   static createMessage(req, res) {
     const { group, user, message, notification, priority } = req.body;
-    const currentUser = firebase.auth().currentUser;
-    let googleAuth = false;
 
-    usersRef.child(user).child('google').once('value', (snapshot) => {
-      if (snapshot.exists()) {
-        googleAuth = true;
-      }
-      if (currentUser || googleAuth) {
-        if (!(validate.validStringLength(group, message))) {
-          res.status(400).json(
-            { message: 'The Message or Groupname field is invalid' }
-          );
-        } else if (!(validate.validStringLength(notification, priority))) {
-          res.status(400).json(
-            { message: 'The Notification or Priority field is invalid' }
-          );
-        } else {
+    req.check('group', 'Group name is required').notEmpty().matches(/\w/);
+    req.check('user', 'Username is required').notEmpty().matches(/\w/);
+    req.check('message', 'Message is required').notEmpty().matches(/\w/);
+    req.check('notification', 'Notification is required').notEmpty()
+    .matches(/\w/);
+    req.check('priority', 'Priority name is required').notEmpty().matches(/\w/);
+
+    const errors = req.validationErrors();
+    if (errors) {
+      const errorMessage = errors[0].msg;
+      res.status(400).json({ errorMessage });
+    } else {
+      const currentUser = firebase.auth().currentUser;
+      let googleAuth = false;
+
+      usersRef.child(user).child('google').once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          googleAuth = true;
+        }
+        if (currentUser || googleAuth) {
           const messageKey = groupRef.child(group).child('Messages').push(
             {
               user,
@@ -146,11 +148,11 @@ class Message {
               });
             }
           });
+        } else {
+          res.status(401).send('Access denied; You need to sign in');
         }
-      } else {
-        res.status(401).send('Access denied; You need to sign in');
-      }
-    });
+      });
+    }
   }
 
     /**

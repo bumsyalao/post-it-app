@@ -1,5 +1,5 @@
 import { usersRef, groupRef, firebase } from './../config';
-import capitalizeFirstLetter from './../helpers/capitalizeFirstLetter';
+import { capitalizeFirstLetter } from './../helpers/utils';
 
 
 /**
@@ -223,6 +223,7 @@ class Group {
           const userRef = firebase.database().ref()
           .child('Groups').child(groupName)
           .child('Users');
+          
           userRef.once('value', (userSnapshot) => {
             let user = {};
             userSnapshot.forEach((data) => {
