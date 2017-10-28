@@ -16,7 +16,7 @@ const AppAPI = {
    */
   saveContact(contact) {
     return axios.post('/user/signup', {
-      userName: contact.username,
+      userName: contact.userName,
       email: contact.email,
       password: contact.password,
       number: contact.number
@@ -77,8 +77,7 @@ const AppAPI = {
     .then((response) => {
       const notification = response.data;
       AppActions.receiveNotification(notification);
-    })
-    .catch(getToastError);
+    });
   },
 
   /**
@@ -157,6 +156,7 @@ const AppAPI = {
     .then((response) => {
       const user = response.data.userData;
       AppActions.receiveLogin(user);
+      //console.log(response.data.myToken)
       toastr.success('Welcome To PostIt');
     })
     .catch(getToastError);

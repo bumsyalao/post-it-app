@@ -632,6 +632,7 @@ describe('EndPoint: Get all Emails from the Database', () => {
       .get('/users/allemails')
       .set('Accept', 'application/json')
       .end((err, res) => {
+        console.log(res, " I am jere")
         res.status.should.equal(200);
         res.body.should.be.a('array');
         res.body.should.have.lengthOf(14);

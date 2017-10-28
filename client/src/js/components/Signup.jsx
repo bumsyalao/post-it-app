@@ -21,17 +21,22 @@ export default class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            contacts: AppStore.getContacts(),
-            databaseUsers: AppStore.getDatabaseUsers(),
-            emails: AppStore.getGroupEmails(),
-            numbers: AppStore.getAllUsersNumber(),
-            googleUser: AppStore.getGoogleSignup()
+            contacts: [],
+            databaseUsers: [],
+            emails: [],
+            numbers: [],
+            googleUser: null,
+            username: '',
+            email: '',
+            number: '',
+            password: '',
+            verifyPassword: '',
 
         };
+        this.handleChange = this.handleChange.bind(this);
         this.onChange = this.onChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
-
 
     /**
      * @method componentDidMount
@@ -57,7 +62,19 @@ export default class Signup extends Component {
         AppStore.removeChangeListener(this.onChange);
     }
 
-
+    /**
+     * @description: controls inputs state
+    *
+    * @param {object} element the current element
+    *
+    * @return {void} void
+    */
+    handleChange(element) {
+        this.setState({
+            [element.target.name]: element.target.value
+        });
+    }
+    
     /**
      * @method onChange
      * 
@@ -88,20 +105,19 @@ export default class Signup extends Component {
         event.preventDefault();
 
         const contact = {
-            username: this.refs.username.value.trim(),
-            email: this.refs.email.value.trim(),
-            password: this.refs.password.value.trim(),
-            number: this.refs.number.value.trim()
+            userName: this.state.userName,
+            email: this.state.email,
+            password: this.state.password,
+            number: this.state.number
         }
 
-        if (this.state.databaseUsers.includes(this.refs.username.value)) {
+        if (this.state.databaseUsers.includes(this.state.userName)) {
             toastr.error('The username already exist')
-        } else if (this.state.numbers.includes(this.refs.number.value)) {
+        } else if (this.state.numbers.includes(this.state.number)) {
             toastr.error('The phone number already exist')
-        } else if (this.refs.password.value !== this.refs.verifyPassword.value) {
+        } else if (this.state.password !== this.state.verifyPassword) {
             toastr.error('Password does not match')
-
-        } else if (!validateEmail(this.refs.email.value)) {
+        } else if (!validateEmail(this.state.email)) {
             toastr.error('Invalid Email Address')
         } else {
             AppActions.saveContact(contact);
@@ -124,20 +140,23 @@ export default class Signup extends Component {
                         <div className="col-md-6 col-sm-6 col-xs-12">
                             <h3>Sign Up</h3>
                             <form onSubmit={this.handleSubmit}>
-                                <Input
+                                <Input               
+                                    name="userName"
                                     type={'text'}
-                                    refs={'username'}
+                                    action={this.handleChange}
                                     className={'form-control'}
                                     placeholder={'Username'}                                  
                                 />
-                                <Input
+                                <Input               
+                                    name="email"
                                     type={'text'}
-                                    refs={'email'}
+                                    action={this.handleChange}
                                     className={'form-control'}
-                                    placeholder={'Email'}
+                                    placeholder={'Email'}                                                                  
                                 />
                                 <div className='form-group'>
-                                    <input type="text" ref='number' 
+                                    <input type="text" name='number'
+                                    onChange={this.handleChange} 
                                     className='form-control' 
                                     placeholder='Phone Number: Ex 2348066098146' 
                                     pattern="[234][0-9]{12}" 
@@ -145,7 +164,8 @@ export default class Signup extends Component {
                                     required />
                                 </div>
                                 <div className='form-group'>
-                                    <input type="password" ref='password' 
+                                    <input type="password" name='password'
+                                    onChange={this.handleChange} 
                                     className='form-control' 
                                     placeholder='Password' 
                                     pattern="(?=.*\d).{6,}" 
@@ -153,13 +173,20 @@ export default class Signup extends Component {
                                     required />
                                 </div>
                                 <div className='form-group'>
-                                    <input type="password" ref='verifyPassword' 
+                                    <input 
+                                    type="password" 
+                                    name='verifyPassword'
+                                    onChange={this.handleChange} 
                                     className='form-control' 
                                     placeholder='Verify Password' 
-                                    pattern="(?=.*\d).{6,}" required />
+                                    pattern="(?=.*\d).{6,}" 
+                                    required />
                                 </div>
-                                <button type='submit' 
-                                className='btn btn-primary'>Submit</button>
+                                <button
+                                    type='submit' 
+                                    className='btn btn-primary'>
+                                    Submit
+                                </button>
                             </form>
                         </div>
                         <div className="col-sm-3"></div>

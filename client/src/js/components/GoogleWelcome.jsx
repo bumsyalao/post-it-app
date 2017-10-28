@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
-import toastr from 'toastr'
+import React, { Component } from 'react';
+import toastr from 'toastr';
 
-import AppStore from '../stores/AppStore'
-import AppActions from '../actions/AppActions'
+import AppStore from '../stores/AppStore';
+import AppActions from '../actions/AppActions';
+
+
 
 /**
  * @description Signs the user with Google
@@ -17,10 +19,12 @@ export default class GoogleWelcome extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            databaseUsers: AppStore.getDatabaseUsers(),
-            numbers: AppStore.getAllUsersNumber(),
+            databaseUsers: [],
+            numbers: [],
+            number: '',
             googleDetail: AppStore.getGoogleSignup()
         };
+        this.handleChange = this.handleChange.bind(this);
         this.onChange = this.onChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -49,7 +53,19 @@ export default class GoogleWelcome extends Component {
         AppStore.removeChangeListener(this.onChange);
     }
 
-    
+    /**
+    * description: controls inputs state
+    *
+    * @param {object} element the current element
+    *
+    * @return {void} void
+    */
+    handleChange(element) {
+        this.setState({
+            [element.target.name]: element.target.value
+        });
+    }
+
     /**
     * @description Makes an action call to Sign up a user with username, email, phone number  and password
 
@@ -62,19 +78,14 @@ export default class GoogleWelcome extends Component {
     handleSubmit(event) {
         event.preventDefault()
 
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-        const userNameToUppercase = capitalizeFirstLetter(this.refs.username.value);
-
         const contact = {
-            username: this.refs.username.value.trim(),
-            email: this.refs.email.value.trim(),
-            number: this.refs.number.value.trim(),
+            username: this.state.googleDetail.displayName,
+            email: this.state.googleDetail.email,
+            number: this.state.number,
             uid: this.state.googleDetail.uid,
             password: null
         }
-        if (this.state.numbers.includes(this.refs.number.value)) {
+        if (this.state.numbers.includes(this.state.number)) {
             toastr.error("The phone number already exist")
         } else {
             AppActions.googleSignup(contact);
@@ -90,7 +101,7 @@ export default class GoogleWelcome extends Component {
      */
     onChange() {
         this.setState({ 
-            databaseUsers: AppStore.getdatabaseUsers(),
+            databaseUsers: AppStore.getDatabaseUsers(),
             numbers: AppStore.getAllUsersNumber(),
             googleDetail: AppStore.getGoogleSignup()
         });
@@ -106,41 +117,32 @@ export default class GoogleWelcome extends Component {
      * @memberof GoogleWelcome
      */
     render() {
-        const email = this.state.googleDetail.email
-        const uid = this.state.googleDetail.uid
         const displayName = this.state.googleDetail.displayName
-        const photoURL = this.state.googleDetail.photoURL
         return (
             <div>
                 <h3> Welcome {displayName} </h3>
                 <p>One more step, we need your phone number</p>
                 <div className='well'>
                     <form onSubmit={this.handleSubmit}>
-                        <div className='form-group' >
-                            <input type="text" ref='username'
-                                className='form-control' value={displayName}
-                                placeholder='Username' required />
-                        </div>
                         <div className='form-group'>
-                            <input type="text" ref='email'
-                                className='form-control' value={email} required />
-                        </div>
-                        <div className='form-group'>
-                            <input type="text" ref='number'
+                            <input type="text" name='number'
                                 className='form-control'
+                                onChange={this.handleChange}
                                 placeholder='Phone Number: Ex 2348066098146'
                                 pattern="[234][0-9]{12}"
-                                title="It will contain only 13 numbers and must start with 234" required />
+                                title="It will contain only 13 numbers and must start with 234" 
+                                required 
+                            />
                         </div>
 
-                        <button type='submit' className='btn btn-primary'>Submit</button>
+                        <button 
+                            type='submit' 
+                            className='btn btn-primary'>
+                            Submit
+                        </button>
                     </form>
-
                 </div>
-
             </div>
-
         )
     }
-
 }

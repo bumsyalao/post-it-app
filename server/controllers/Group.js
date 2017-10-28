@@ -213,9 +213,9 @@ class Group {
             message = {
               id: data.key,
               user: data.val().user,
-              text: data.val().Message,
-              Time: data.val().Time,
-              Priority: data.val().Priority
+              text: data.val().message,
+              time: data.val().time,
+              priority: data.val().priority
             };
             messages.push(message);
           });
@@ -259,6 +259,10 @@ class Group {
       } else {
         res.status(401).send('Access denied; You need to sign in');
       }
+    }).catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
     });
   }
 

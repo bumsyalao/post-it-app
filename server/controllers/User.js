@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 import { firebase, usersRef } from './../config';
 import { capitalizeFirstLetter } from './../helpers/utils';
 
@@ -38,6 +40,13 @@ class User {
         user.updateProfile({
           displayName
         });
+        const myToken = jwt.sign({
+          displayName,
+          email
+        },
+        'process.env.TOKEN_SECRET',
+        { expiresIn: '1h' });
+
         user.sendEmailVerification().then(() => {
           usersRef.child(displayName).set({
             userName: displayName,
@@ -49,6 +58,7 @@ class User {
           res.status(201).send({
             message: 'Welcome to Post it app',
             userData: user,
+            myToken
           });
         });
       })
@@ -167,9 +177,18 @@ class User {
                 };
                 groups.push(group);
               });
+
+              const myToken = jwt.sign({
+                userName,
+                email
+              },
+              'process.env.TOKEN_SECRET',
+              { expiresIn: '1h' });
+
               res.status(200).send({
                 message: 'Welcome to Post it app',
                 userData: user,
+                myToken
               });
             });
           });
@@ -249,7 +268,13 @@ class User {
             notification = {
               notification: data.val()
             };
-            notifications.push(notification);
+            if (notification.length === 0) {
+              res.status(404).json(
+                { message: 'Notification' }
+              );
+            } else {
+              notifications.push(notification);
+            }
           });
           res.status(200).send(notifications);
         }).catch(() => {
@@ -281,7 +306,7 @@ class User {
       usersRef.once('value', (snap) => {
         const userNames = [];
         snap.forEach((allUsers) => {
-          userNames.push({ users: allUsers.val().userName });
+          userNames.push(allUsers.val().userName);
         });
         if (userNames.length === 0) {
           res.status(404).json(
@@ -393,19 +418,19 @@ class User {
         message: 'An email has been sent for password reset.'
       });
     }).catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/invalid-email') {
-          res.status(400).json({
-            message: 'The email address is badly formatted.'
-          });
-        } else if (errorCode === 'auth/user-not-found') {
-          res.status(404).json({ message: 'Email address does not exist' });
-        } else {
-          res.status(500).send({
-            message: 'Internal Server Error'
-          });
-        }
-      })
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        res.status(400).json({
+          message: 'The email address is badly formatted.'
+        });
+      } else if (errorCode === 'auth/user-not-found') {
+        res.status(404).json({ message: 'Email address does not exist' });
+      } else {
+        res.status(500).send({
+          message: 'Internal Server Error'
+        });
+      }
+    });
   }
 
 }

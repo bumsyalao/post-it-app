@@ -4,7 +4,7 @@ import AppActions from '../../actions/AppActions'
 
 
 /**
- * @description Component for displaying list of groups to Users
+ * @description Component for displaying list of groups a User belongs to
  * 
  * @class Groups
  * 

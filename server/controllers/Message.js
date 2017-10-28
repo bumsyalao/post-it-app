@@ -45,9 +45,9 @@ class Message {
           const messageKey = groupRef.child(group).child('Messages').push(
             {
               user,
-              Message: message,
-              Time: moment().format('h:mm a, MMM Do'),
-              Priority: priority,
+              message,
+              time: moment().format('h:mm a, MMM Do'),
+              priority
             }).key;
           groupRef.child(group)
           .child('Messages')

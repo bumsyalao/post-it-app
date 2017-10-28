@@ -12,6 +12,7 @@ const Input = (props) => ({
               pattern={props.pattern}
               value={props.value}
               onChange={props.action}
+              title={props.title}
               required        
             />
         </div>

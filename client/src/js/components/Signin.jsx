@@ -36,6 +36,14 @@ class Signin extends Component {
     this.handleGoogleSignin = this.handleGoogleSignin.bind(this)
     this.onChange = this.onChange.bind(this)
   }
+
+  /**
+  * @description: controls inputs state
+  *
+  * @param {object} element the current element
+  *
+  * @return {void} void
+  */
   handleChange(element) {
     this.setState({
       [element.target.name]: element.target.value
@@ -134,7 +142,7 @@ class Signin extends Component {
             googleComponent: true
           })
         }
-      });
+      }).catch(() => toastr.error('There was an error in Network connection'));
   }
 
   /**

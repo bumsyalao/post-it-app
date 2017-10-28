@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
-import { Modal } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Modal } from 'react-bootstrap';
 
-import AppActions from '../../actions/AppActions'
-import AppStore from '../../stores/AppStore'
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/AppStore';
+import MessageList from './MessageList'
 
 /**
  * @description This displays the message from the database
  * 
- * @class Message
- * 
- * @extends {Component}
+ * @extends { MessageBoard }
  */
 export default class Message extends Component {
   constructor(props) {
@@ -22,7 +21,6 @@ export default class Message extends Component {
     this.handleSeenMessage = this.handleSeenMessage.bind(this);
     this.handleClose = this.handleClose.bind(this)
   }
-
 
 
   /**
@@ -95,18 +93,10 @@ export default class Message extends Component {
   render() {
     return (
       <div>
-          <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1"><strong>{this.props.message.user}</strong>&nbsp;&nbsp; 
-                <small className="text-muted">{this.props.message.Time}</small>&nbsp;&nbsp;                 
-                <span onClick={this.handleSeenMessage} >  
-                  <span className="glyphicon glyphicon-user"></span>
-                </span>
-              </h5>
-            </div>
-            <p className="mb-1">{this.props.message.text}</p>
-          </a>
-
+        <MessageList 
+          {...this.props.message}
+          action={this.handleSeenMessage}
+        />
 
         <Modal show={this.state.showModal} onHide={this.handleClose}>
           <Modal.Header closeButton>

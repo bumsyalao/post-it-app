@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">1.94% </span>
+        <span class="strong">1.92% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/103</span>
+        <span class='fraction'>2/104</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/21</span>
+        <span class='fraction'>0/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">1.94% </span>
+        <span class="strong">1.92% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/103</span>
+        <span class='fraction'>2/104</span>
       </div>
     </div>
   </div>
@@ -310,7 +310,12 @@
 265
 266
 267
-268</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+268
+269
+270
+271
+272
+273</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -535,20 +540,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -556,6 +555,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -569,6 +575,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -792,9 +802,9 @@ class Group {
 <span class="cstat-no" title="statement not covered" >            message = {</span>
               id: data.key,
               user: data.val().user,
-              text: data.val().Message,
-              Time: data.val().Time,
-              Priority: data.val().Priority
+              text: data.val().message,
+              time: data.val().time,
+              priority: data.val().priority
             };
 <span class="cstat-no" title="statement not covered" >            messages.push(message);</span>
           });
@@ -802,6 +812,7 @@ class Group {
           c</span>onst userRef = <span class="cstat-no" title="statement not covered" >firebase.database().ref()
           .child('Groups').child(groupName)
           .child('Users');
+          
 <span class="cstat-no" title="statement not covered" >          userRef.once('value', <span class="fstat-no" title="function not covered" >(</span>userSnapshot) =&gt; {</span>
             l</span>et user = <span class="cstat-no" title="statement not covered" >{};
 <span class="cstat-no" title="statement not covered" >            userSnapshot.forEach(<span class="fstat-no" title="function not covered" >(</span>data) =&gt; {</span>
@@ -837,6 +848,10 @@ class Group {
       } else {
 <span class="cstat-no" title="statement not covered" >        res.status(401).send('Access denied; You need to sign in');</span>
       }
+    }).catch(<span class="fstat-no" title="function not covered" >() =&gt; </span>{
+<span class="cstat-no" title="statement not covered" >      res.status(500).send({</span>
+        message: 'Internal Server Error'
+      });
     });
   }
 &nbsp;
@@ -850,7 +865,7 @@ export default Group;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 27 2017 12:26:38 GMT+0100 (WAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Oct 28 2017 17:09:07 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

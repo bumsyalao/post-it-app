@@ -7,7 +7,7 @@ import AppAPI from '../../utils/AppAPI';
 import AppActions from '../../actions/AppActions';
 import DashboardNavigation from './DashboardNavigation';
 import SideBar from './SideBar';
-import Board from './Board'
+import MessageBoard from './MessageBoard'
 import WelcomeBoard from './WelcomeBoard';
 
 
@@ -106,17 +106,14 @@ export default class DashBoard extends Component {
         <div className="nav-side-menu" >
           <div
             className="brand"
-            data-intro='Welcome to PostIt, your current group will be displayed here'
-          >
+            data-intro='Welcome to PostIt, your current group will be displayed here'>
               {!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}
           </div>
           <i className="fa fa-bars fa-2x toggle-btn"
             data-toggle="collapse" data-target="#menu-content"></i>
           <div className="menu-list">
 
-
             <ul id="menu-content" className="menu-content collapse out">
-
               <li>
                 <a href="#">
                   <i className="fa fa-dashboard fa-lg"></i>&nbsp;
@@ -146,7 +143,7 @@ export default class DashBoard extends Component {
         </div>
         {!this.state.currentGroup ? <WelcomeBoard
           notification={this.state.notification} /> :
-          <Board contact={this.state.contacts}
+          <MessageBoard contact={this.state.contacts}
             emails={this.state.emails} numbers={this.state.numbers} />}
       </div>
     )
