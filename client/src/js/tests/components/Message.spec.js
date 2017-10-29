@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Message from '../../components/Dashboard/Message'
+import Message from '../../components/presentation/Message'
 import AppActions from '../../actions/AppActions'
 
 jest.mock('../../../../../server/config', () => ({
@@ -45,7 +45,7 @@ describe('Message component', () => {
         },
         preventDefault: () => jest.fn()
       };
-    const wrapper = mount(<Message />);
+    const wrapper = shallow(<Message />);
     wrapper.instance().refs.email.value = 'someemail@email.com';
     wrapper.instance().handleSeenMessage(event);
     expect(spyOnDispatcher).toHaveBeenCalled();

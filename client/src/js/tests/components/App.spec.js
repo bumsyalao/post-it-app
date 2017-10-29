@@ -2,34 +2,38 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-import App from '../../components/App';
-import Footer from '../../components/Footer';
-import Navigation from '../../components/Navigation';
-import Routes from '../../components/Routes';
-import Dashboard from '../../components/Dashboard/Dashboard'
+import App from '../../components/container/App';
+import Footer from '../../components/presentation/Footer';
+import Navigation from '../../components/presentation/Navigation';
+import Routes from '../../components/presentation/Routes';
+import Dashboard from '../../components/container/Dashboard'
+import localStorageMock from '../../../../../mock/LocalStorageMock';
+import AppStore from '../../stores/AppStore';
+
+window.localStorage = localStorageMock;
 
 jest.mock('../../../../../server/config', () => ({
-  }));
+}));
 
-describe('<App />', () => {
-    const event = {
-            user: 'ebuka',
-            authentication: true,
-            loggedInUser: [{ebuka:123},{andela:2333}],
-            groups: [{andela:'jfh'},{dex:'kakjh'}]
-      };
-      const onChange = jest.fn();
+describe('App Component', () => {
+    const newStateProperty = {
+        isAuthenticated: true,
+        userName: 'Ebuka'
+    };
+
+    const mock = jest.fn();
+    const getAuthenticatedStateSpy = jest.spyOn(AppStore, 'getAuthenticatedState');
+    const getLoggedInUserSpy = jest.spyOn(AppStore, 'getLoggedInUser');
+    
+    // afterEach(() => {
+    //     getAuthenticatedStateSpy.mockReset();
+    // });
+
     it('should contain a <Navigation /> for unauthenticated user', () => {
         const wrapper = shallow(<App />);
         expect(wrapper.find(Navigation)).toHaveLength(1);
-        wrapper.instance().componentDidMount();
-        wrapper.instance().componentUnmount();       
     });
 
-    // it('should contain a <Dashboard /> component', () => {
-    //     const wrapper = shallow(<App />);
-    //     expect(wrapper.find(Dashboard)).toHaveLength(1);
-    // });
 
     it('should contain a <Footer /> for unauthenticated user', () => {
         const wrapper = shallow(<App />);
@@ -43,19 +47,27 @@ describe('<App />', () => {
 
     it('should return initial default state inside a component', () => {
         const wrapper = shallow(<App />);
-        expect(wrapper.state().authentication).toEqual(false);
-        expect(wrapper.state().user).toEqual('');
-        expect(wrapper.state().loggedInUser.length).toEqual(0);
-        expect(wrapper.state().loggedInPicture.length).toEqual(0);
-        expect(wrapper.state().groups.length).toEqual(0);
+        expect(wrapper.state().isAuthenticated).toEqual(false);
+        expect(wrapper.state().userName.length).toEqual(0);
     });
 
-    it('should call onChange method', () => {
-        const wrapper = mount(<MemoryRouter><App event={event} onChange={onChange}/></MemoryRouter>);
-        console.log(wrapper.setState().nodes[0].props.children.props.onChange)
-        console.log(wrapper.instance().onChange())
-        wrapper.instance().onChange(event);
-        expect(wrapper.state().user).toEqual('ebuka');
-      });
+    it('should update the state of the app when the user logs in', function () {
+        const wrapper = mount(<MemoryRouter><App /></MemoryRouter>);
+        wrapper.setState(newStateProperty);
+        // localStorage.setItem('user', JSON.stringify(newStateProperty.userName));
+        expect(wrapper.state('isAuthenticated')).toEqual(true);
+        expect(wrapper.state('userName')).toEqual('Ebuka');
+        localStorage.setItem('user', JSON.stringify('Ebuka'));
+    });
+
+    it('should contain a <Dashboard /> component', () => {
+        const wrapper = shallow(<App />);
+        wrapper.setState(newStateProperty);
+        expect(wrapper.find(Dashboard)).toHaveLength(1);
+    });
+    
+    it('calls componentDidMount lifecycle method', () => {
+        expect(getAuthenticatedStateSpy).toHaveBeenCalledTimes(1);
+    });
 
 });

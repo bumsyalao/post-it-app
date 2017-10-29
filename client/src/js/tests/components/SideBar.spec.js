@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import SideBar from '../../components/Dashboard/SideBar'
+import SideBar from '../../components/container/SideBar'
 import AppActions from '../../actions/AppActions'
 
 jest.mock('../../../../../server/config', () => ({
@@ -25,7 +25,7 @@ describe('SideBar Component', () => {
   });
 
   it('should display the necessary elements', () => {
-    const wrapper = mount(<SideBar />);
+    const wrapper = shallow(<SideBar />);
     expect(wrapper.find('div').length).toBe(7);
     expect(wrapper.find('h2').length).toBe(1);
     expect(wrapper.find('h4').length).toBe(1);
@@ -43,7 +43,7 @@ it('It should expect getGroups Action to be called', () => {
         },
         preventDefault: () => jest.fn()
       };
-    const wrapper = mount(<SideBar />);
+    const wrapper = shallow(<SideBar />);
     wrapper.instance().refs.email.value = 'someemail@email.com';
     expect(spyOnDispatcher).toHaveBeenCalled();
 });

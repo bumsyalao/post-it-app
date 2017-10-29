@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import moment from 'moment';
 
-import Footer from './Footer'
-import Routes from './Routes'
-import AppStore from '../stores/AppStore'
-import { firebaseAuth, firebase } from '../../../../server/config'
-import Navigation from './Navigation'
-import Dashboard from './Dashboard/Dashboard'
-import AppActions from './../actions/AppActions'
+import Footer from '../presentation/Footer';
+import Routes from '../presentation/Routes'
+import AppStore from '../../stores/AppStore'
+import { firebaseAuth, firebase } from '../../../../../server/config'
+import Navigation from '../presentation/Navigation'
+import Dashboard from './Dashboard'
+import AppActions from './../../actions/AppActions'
 
 
 
@@ -24,11 +24,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            authentication: AppStore.getAuthenticatedState(),
-            user: AppStore.getUser(),
-            loggedInUser: AppStore.getLoggedInUser(),
-            loggedInPicture: AppStore.getLoggedInPicture(),
-            groups: AppStore.getGroups()
+            isAuthenticated: false,
+            userName: '',
         };
         this.onChange = this.onChange.bind(this)
     }
@@ -65,10 +62,10 @@ class App extends Component {
     * @memberof App
     */
     onChange() {
-        this.setState({ user: AppStore.getUser() });
-        this.setState({ authentication: AppStore.getAuthenticatedState() });
-        this.setState({ loggedInUser: AppStore.getLoggedInUser() });
-        this.setState({ groups: AppStore.getGroups() });
+        this.setState({ 
+            isAuthenticated: AppStore.getAuthenticatedState(),
+            userName: AppStore.getLoggedInUser(),
+        });
     }
 
     /**
@@ -79,26 +76,23 @@ class App extends Component {
        * @memberof App
        */
     render() {
-        var expireInOneDay = moment('10/15/2014 9:00', "M/D/YYYY H:mm").valueOf() + 360000;
-    
-            if (this.state.authentication === true) {            
-                localStorage.setItem('user', JSON.stringify(this.state.loggedInUser[0]));
-                localStorage.setItem('expirationTime', JSON.stringify(expireInOneDay));            
-            }
+        if (this.state.isAuthenticated === true) {
+            localStorage.setItem('user', JSON.stringify(this.state.userName[0]));
+        }
         let componentToMount;
         if (localStorage.getItem('user') == null) {
-            componentToMount = 
-            <div className="row">
-                <Navigation />
+            componentToMount =
                 <div className="row">
-                    <Routes 
-                    isAuthenticated={this.state.authentication} 
-                    />
+                    <Navigation />
+                    <div className="row">
+                        <Routes
+                            isAuthenticated={this.state.isAuthenticated}
+                        />
+                    </div>
+                    <div className="row">
+                        <Footer />
+                    </div>
                 </div>
-                <div className="row">
-                    <Footer />
-                </div>
-            </div>
         } else {
             componentToMount = <Dashboard />;
         }

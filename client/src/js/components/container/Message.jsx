@@ -3,8 +3,8 @@ import { Modal } from 'react-bootstrap';
 
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
-import MessageList from './MessageList';
-import ModalButton from './ModalButton';
+import MessageList from './../presentation/MessageList';
+import ModalButton from './../presentation/ModalButton';
 
 /**
  * @description This displays the message from the database

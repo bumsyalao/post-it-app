@@ -6,9 +6,9 @@ import AppStore from '../../stores/AppStore';
 import AppAPI from '../../utils/AppAPI';
 import AppActions from '../../actions/AppActions';
 import DashboardNavigation from './DashboardNavigation';
-import SideBar from './SideBar';
+import SideBar from './../presentation/SideBar';
 import MessageBoard from './MessageBoard'
-import WelcomeBoard from './WelcomeBoard';
+import WelcomeBoard from './../presentation/WelcomeBoard';
 
 
 /**
@@ -23,9 +23,9 @@ export default class DashBoard extends Component {
     super(props);
     this.state = {
       user: '',
-      contacts: [],
       allUsers: [],
       groups: [],
+      contacts: [],
       currentGroup: '',
       databaseUsers: [],
       notification: []
@@ -72,7 +72,7 @@ export default class DashBoard extends Component {
    */
   onChange() {
     this.setState({
-      contacts: AppStore.getGroupUsers(),
+      contacts: AppStore.getGroupUsers(),      
       groups: AppStore.getGroups(),
       user: AppStore.getUser(),
       currentGroup: AppStore.getCurrentGroup(),
@@ -124,7 +124,6 @@ export default class DashBoard extends Component {
               <br />
 
               <DashboardNavigation
-                contact={this.state.contacts}
                 group={this.state.groups}
                 user={this.state.user}
                 allUsers={this.state.databaseUsers}

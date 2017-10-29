@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 import Signin from './Signin'
-import Dashboard from "./Dashboard/Dashboard";
-import AppStore from '../stores/AppStore'
+import Dashboard from './Dashboard';
+import AppStore from './../../stores/AppStore';
 
 /**
  * @description It renders the Home page Component

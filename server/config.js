@@ -25,6 +25,6 @@ module.exports = {
   usersRef,
   groupRef,
   firebaseAuth,
-  provider,
+  provider
 };
 

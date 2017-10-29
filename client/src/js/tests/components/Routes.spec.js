@@ -14,7 +14,7 @@ describe('Routes Component', () => {
   });
 
   it('should display the necessary elements', () => {
-    const wrapper = mount(<Routes />);
+    const wrapper = shallow(<Routes />);
     expect(wrapper.find('div').length).toBe(7);
     expect(wrapper.find('h2').length).toBe(1);
     expect(wrapper.find('h4').length).toBe(1);

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Board component About component should render as expected 1`] = `
+exports[`ResetPassword component should render MessageBoard component 1`] = `
 <div
   className="container"
   id="main"

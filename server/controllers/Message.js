@@ -4,6 +4,7 @@ import Nexmo from 'nexmo';
 import moment from 'moment';
 
 import { usersRef, groupRef, firebase } from './../config';
+import { sendNotification } from '../helpers/utils';
 
  /**
  * class Group: This class controls all group routes
@@ -72,25 +73,27 @@ class Message {
               );
             });
 
-          const users = [];
-          const userRef = firebase.database()
-            .ref()
-            .child('Groups')
-            .child(group)
-            .child('Users');
-          userRef.once('value', (userSnapshot) => {
-            userSnapshot.forEach((data) => {
-              users.push(data.val());
-            });
-            users.forEach((entry) => {
-              if (entry === user) {
-                return;
-              }
-              const userDatabase = firebase.database();
-              userDatabase.ref(`/users/${entry}/Notifications`)
-              .child(notification).set(notification);
-            });
-          });
+          sendNotification(group, user, notification);
+
+          // const users = [];
+          // const userRef = firebase.database()
+          //   .ref()
+          //   .child('Groups')
+          //   .child(group)
+          //   .child('Users');
+          // userRef.once('value', (userSnapshot) => {
+          //   userSnapshot.forEach((data) => {
+          //     users.push(data.val());
+          //   });
+          //   users.forEach((entry) => {
+          //     if (entry === user) {
+          //       return;
+          //     }
+          //     const userDatabase = firebase.database();
+          //     userDatabase.ref(`/users/${entry}/Notifications`)
+          //     .child(notification).set(notification);
+          //   });
+          // });
 
           const email = [];
           const emailRef = firebase.database()
@@ -153,6 +156,28 @@ class Message {
         }
       });
     }
+  }
+
+  static sendNotification (group, user, notification) {
+    const users = [];
+    const userRef = firebase.database()
+      .ref()
+      .child('Groups')
+      .child(group)
+      .child('Users');
+    userRef.once('value', (userSnapshot) => {
+      userSnapshot.forEach((data) => {
+        users.push(data.val());
+      });
+      users.forEach((entry) => {
+        if (entry === user) {
+          return;
+        }
+        const userDatabase = firebase.database();
+        userDatabase.ref(`/users/${entry}/Notifications`)
+        .child(notification).set(notification);
+      });
+    });
   }
 
     /**

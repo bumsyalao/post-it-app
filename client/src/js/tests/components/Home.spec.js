@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Home from '../../components/Home'
+import Home from '../../components/presentation/Home'
 import Signin from '../../components/Signin'
 
 jest.mock('../../../../../server/config', () => ({

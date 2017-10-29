@@ -22,13 +22,14 @@ const ModalButton = (props) => ({
           <a href="#" onClick={this.props.openModal}>
             <i className="fa fa-globe fa-lg"></i>&nbsp; {props.menuName}</a>
         </li>
-
+      
         <Modal show={this.props.modalState} onHide={this.props.closeModal}>
+          
           <Modal.Header closeButton>
             <Modal.Title>{props.modalTitle}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.props.userData}
+            {this.props.children}
           </Modal.Body>
           <Modal.Footer>
             <a href="#/dashboard" onClick={this.props.closeModal}> Close</a>

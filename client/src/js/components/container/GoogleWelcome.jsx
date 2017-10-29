@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import toastr from 'toastr';
 
-import AppStore from '../stores/AppStore';
-import AppActions from '../actions/AppActions';
+import AppStore from '../../stores/AppStore';
+import AppActions from '../../actions/AppActions';
 
 
 
@@ -77,7 +77,6 @@ export default class GoogleWelcome extends Component {
     */
     handleSubmit(event) {
         event.preventDefault()
-
         const contact = {
             username: this.state.googleDetail.displayName,
             email: this.state.googleDetail.email,

@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/container/DashboardNavigation.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">components/container</a> DashboardNavigation.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">53.66% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>22/41</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">37.5% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>19/38</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Modal, Button, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
+import toastr from 'toastr'
+&nbsp;
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/AppStore';
+import GroupOptions from './../presentation/GroupOptions';
+import ModalButton from './../presentation/ModalButton';
+&nbsp;
+/**
+ * @description Displays the navigation of the dashboard
+ * 
+ * @class DashboardNavigation
+ * 
+ * @extends {Component}
+ */
+export default class DashboardNavigation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      createGroupModal: false,
+      addUserModal: false,
+      notificationModal: false,
+      groupName: '',
+      userName: '',
+      users: []
+    };
+&nbsp;
+    this.openModalUsers = this.openModalUsers.bind(this);
+    this.closeModalUsers = this.closeModalUsers.bind(this);
+    this.openModalGroup = this.openModalGroup.bind(this);
+    this.closeModalGroup = this.closeModalGroup.bind(this);
+    this.openModalNotification = this.openModalNotification.bind(this);
+    this.closeModalNotification = this.closeModalNotification.bind(this);
+    this.addUser = this.addUser.bind(this)
+    this.createGroup = this.createGroup.bind(this)
+    this.logout = this.logout.bind(this)
+    this.handleNotificationButton = this.handleNotificationButton.bind(this)
+    this.handleAddUserButton = this.handleAddUserButton.bind(this)
+  }
+&nbsp;
+  /**
+  * @description: Opens and closes a modal when the user clicks to create a Group
+  *
+  * @return {void} void
+  */
+  openModalGroup() {
+    console.log('called');
+    this.setState({ createGroupModal: true });
+  }
+<span class="fstat-no" title="function not covered" >  cl</span>oseModalGroup() {
+<span class="cstat-no" title="statement not covered" >    this.setState({ createGroupModal: false });</span>
+  }
+&nbsp;
+  /**
+  * @description: Opens and closes a modal when the user clicks to add a friend to a group
+  *
+  * @return {void} void
+  */
+<span class="fstat-no" title="function not covered" >  op</span>enModalUsers() {
+<span class="cstat-no" title="statement not covered" >    this.setState({ addUserModal: true });</span>
+  }
+<span class="fstat-no" title="function not covered" >  cl</span>oseModalUsers() {
+<span class="cstat-no" title="statement not covered" >    this.setState({ addUserModal: false });</span>
+  }
+&nbsp;
+&nbsp;
+  /**
+   * @description: Opens and closes a modal when the user want to view friends who have seen a message
+   *
+   * @return {void} void
+   */
+<span class="fstat-no" title="function not covered" >  op</span>enModalNotification() {
+<span class="cstat-no" title="statement not covered" >    this.setState({ notificationModal: true });</span>
+  }
+<span class="fstat-no" title="function not covered" >  cl</span>oseModalNotification() {
+<span class="cstat-no" title="statement not covered" >    this.setState({ notificationModal: false });</span>
+  }
+&nbsp;
+&nbsp;
+  /**
+  * @description Method for adding user to the group
+&nbsp;
+  * @param {object} event
+&nbsp;
+  * @returns {void}
+&nbsp;
+  * @memberof DashboardNavigation
+  */
+<span class="fstat-no" title="function not covered" >  cr</span>eateGroup(event) {
+<span class="cstat-no" title="statement not covered" >    console.log('I was here')</span>
+<span class="cstat-no" title="statement not covered" >    event.preventDefault()</span>
+    const group = <span class="cstat-no" title="statement not covered" >{</span>
+      groupName: this.refs.group.value.trim(),
+      userName: this.props.userName
+    }
+<span class="cstat-no" title="statement not covered" >    AppActions.saveGroup(group);</span>
+  }
+&nbsp;
+&nbsp;
+  /**
+  * @description Method for adding user to the group
+&nbsp;
+  * @param {object} event
+&nbsp;
+  * @returns {void}
+&nbsp;
+  * @memberof DashboardNavigation
+  */
+<span class="fstat-no" title="function not covered" >  ad</span>dUser(event) {
+<span class="cstat-no" title="statement not covered" >    console.log('yay we got here?')</span>
+<span class="cstat-no" title="statement not covered" >    event.preventDefault();</span>
+&nbsp;
+    const addUser = <span class="cstat-no" title="statement not covered" >{</span>
+      groupname: this.refs.type.value.trim(),
+      userName: this.refs.user.value
+    }
+<span class="cstat-no" title="statement not covered" >    if (this.refs.type.value === 'Groups') {</span>
+<span class="cstat-no" title="statement not covered" >      toastr.error("Select a Group name")</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      AppActions.saveGroupUser(addUser)</span>
+    }
+  }
+&nbsp;
+  /**
+    * @description Method for adding user to the group
+  
+    * @returns {void}
+  
+    * @memberof DashboardNavigation
+    */
+<span class="fstat-no" title="function not covered" >  ha</span>ndleAddUserButton() {
+<span class="cstat-no" title="statement not covered" >    AppActions.getGroups(this.props.userName)</span>
+  }
+&nbsp;
+  /**
+    * @description Method for getting notifications of a user
+    *
+    * @returns {void}
+    *
+    * @memberof DashboardNavigation
+    */
+<span class="fstat-no" title="function not covered" >  ha</span>ndleNotificationButton() {
+<span class="cstat-no" title="statement not covered" >    AppActions.getNotification(this.props.userName)</span>
+  }
+&nbsp;
+&nbsp;
+  /**
+  * @description Method for logging out Users
+&nbsp;
+  * @param {object} event
+&nbsp;
+  * @returns {void}
+  
+  * @memberof DashboardNavigation
+  */
+<span class="fstat-no" title="function not covered" >  lo</span>gout(event) {
+<span class="cstat-no" title="statement not covered" >    event.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >    AppActions.logout();</span>
+  }
+&nbsp;
+  /**
+   * @method render
+   * 
+   * @description Renders the Navigation component
+   * 
+   * @returns {String} The HTML markup for the Register
+   * 
+   * @memberof DashboardNavigation
+   */
+  render() {
+    const groupOptions = this.props.group.map((keyName, keyIndex) =&gt; &lt;GroupOptions keyName={keyName} key={keyIndex} /&gt;)
+    const notificationList = this.props.notification.map((keyName, keyIndex) =&gt; &lt;li key={keyIndex}&gt;{keyName.notification}&lt;/li&gt;)
+    const allUsers = this.props.allUsers.map((keyName, keyIndex) =&gt; &lt;option key={keyIndex}&gt;{keyName}&lt;/option&gt;)
+    return (
+      &lt;div&gt;
+        &lt;ModalButton
+          menuName={'Create Group'}
+          modalTitle={'Create a group'}
+          openModal={this.openModalGroup}
+          closeModal={this.closeModalGroup}
+          modalState={true}
+        &gt;
+          &lt;form onSubmit={this.createGroup}&gt;
+            &lt;div className='form-group'&gt;
+              &lt;input type="text" ref='group'
+                className='form-control' placeholder='GroupName'
+                required /&gt;
+            &lt;/div&gt;
+            &lt;button type='submit'
+              className='btn btn-primary'&gt;Submit&lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/ModalButton&gt;
+&nbsp;
+&nbsp;
+        &lt;ModalButton
+          menuName={'Add a friend'}
+          modalTitle={'Add a friend to your group'}
+          openModal={this.openModalUsers}
+          action={this.handleAddUserButton}
+          modalState={true}
+          closeModal={this.closeModalUsers}
+        &gt;
+          &lt;form onSubmit={this.addUser} className="whatever"&gt;
+            &lt;div className='form-group'&gt;
+              &lt;select className="form-control" ref="type"&gt;
+                &lt;option&gt;Groups&lt;/option&gt;
+                {groupOptions}
+              &lt;/select&gt;
+            &lt;/div&gt;
+            &lt;div className='form-group'&gt;
+              &lt;input type="text" ref='user'
+                className='form-control'
+                list="users"
+                placeholder='Search for a User' required /&gt;
+              &lt;datalist id="users"&gt;
+                {allUsers}
+              &lt;/datalist&gt;
+            &lt;/div&gt;
+&nbsp;
+            &lt;button type='submit'
+              className='btn btn-primary'&gt;Submit&lt;/button&gt;
+          &lt;/form &gt;
+        &lt;/ModalButton&gt;
+&nbsp;
+        &lt;ModalButton
+          menuName={'Notification'}
+          modalTitle={'Notifications'}
+          openModal={this.openModalNotification}
+          action={this.handleNotificationButton}
+          modalState={this.state.notificationModal}
+          closeModal={this.closeModalNotification}
+        &gt;
+          &lt;ul className='mylist'&gt;
+            {notificationList}
+          &lt;/ul&gt;
+        &lt;/ModalButton&gt;
+&nbsp;
+&nbsp;
+        &lt;ModalButton menuName={'Logout'} action={this.logout} /&gt;
+&nbsp;
+      &lt;/div&gt;
+&nbsp;
+    )
+  }
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 30 2017 19:49:40 GMT+0100 (WAT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Board from '../../components/Dashboard/Board';
+import Board from '../../components/container/Board';
 import LocalStorageMock from '../../../../../mock/LocalStorageMock'
 
 
@@ -13,8 +13,6 @@ describe('Board component', () => {
 
   it('should display the necessary elements', () => {
     const wrapper = shallow(<Board />);
-    wrapper.instance().componentDidMount();
-    wrapper.instance().componentWillUnmount();
     expect(wrapper.find('div').length).toBe(6);
     expect(wrapper.find('h2').length).toBe(1);
     expect(wrapper.find('h4').length).toBe(1);
@@ -33,7 +31,7 @@ describe('Board component', () => {
         },
         preventDefault: () => jest.fn()
       };
-    const wrapper = mount(<Board />);
+    const wrapper = shallow(<Board />);
     wrapper.instance().sendMessage(event);
     expect(spyOnDispatcher).toHaveBeenCalled();
 });
@@ -45,7 +43,7 @@ it('It should call onChange method', () => {
           value: 'value',
         },
       };
-    const wrapper = mount(<Board />);
+    const wrapper = shallow(<Board />);
     wrapper.instance().onChange(event);
 });
 

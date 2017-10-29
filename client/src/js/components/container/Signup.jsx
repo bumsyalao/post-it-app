@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import toastr from 'toastr';
 
-import AppActions from '../actions/AppActions';
-import AppStore from '../stores/AppStore';
-import { firebaseAuth, firebase, provider } from '../../../../server/config';
-import { validateEmail } from './../helpers/utils';
-import Input from './Input';
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/AppStore';
+import { firebaseAuth, firebase, provider } from '../../../../../server/config';
+import { validateEmail } from './../../helpers/utils';
+import Input from '../presentation/Input';
 
 
 /**

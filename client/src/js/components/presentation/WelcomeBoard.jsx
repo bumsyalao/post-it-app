@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import toastr from 'toastr';
-import moment from 'moment';
 
-import Message from './Message';
-import AppActions from '../../actions/AppActions';
-import AppStore from '../../stores/AppStore';
 
 /**
- * @description The Presentation component that servers all message activities
+ * @description The Default Page when the user logs in
  * 
- * @class MessageBoard
+ * @class WelcomeBoard
  * 
  * @extends {Component}
  */

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Navigation from '../../components/Navigation'
+import Navigation from '../../components/presentation/Navigation'
 
 
 jest.mock('../../../../../server/config', () => ({
@@ -15,7 +15,7 @@ describe('Navigation Component', () => {
   });
 
   it('should display the necessary elements', () => {
-    const wrapper = mount(<Navigation />);
+    const wrapper = shallow(<Navigation />);
     expect(wrapper.find('div').length).toBe(7);
     expect(wrapper.find('h2').length).toBe(1);
     expect(wrapper.find('h4').length).toBe(1);

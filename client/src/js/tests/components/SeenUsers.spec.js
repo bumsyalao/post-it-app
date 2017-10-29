@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import SeenUsers from '../../components/Dashboard/SeenUsers'
+import SeenUsers from '../../components/presentation/SeenUsers'
 
 
 describe('SeenUsers component', () => {

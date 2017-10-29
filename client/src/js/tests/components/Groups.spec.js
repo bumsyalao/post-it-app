@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Groups from '../../components/Dashboard/Groups'
+import Groups from '../../components/presentation/Groups'
 import AppActions from '../../actions/AppActions'
 
 jest.mock('../../../../../server/config', () => ({
@@ -42,7 +42,7 @@ describe('Groups component', () => {
         },
         preventDefault: () => jest.fn()
       };
-    const wrapper = mount(<Groups />);
+    const wrapper = shallow(<Groups />);
     wrapper.instance().refs.email.value = 'someemail@email.com';
     wrapper.instance().onClick(event);
     expect(spyOnDispatcher).toHaveBeenCalled();

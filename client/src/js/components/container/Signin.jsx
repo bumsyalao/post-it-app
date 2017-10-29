@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import AppActions from '../actions/AppActions';
 import toastr from 'toastr';
 import GoogleButton from 'react-google-button';
 
-import AppStore from '../stores/AppStore';
-import AppAPI from '../utils/AppAPI';
-import { firebaseAuth, firebase, provider } from '../../../../server/config';
-import { validateEmail } from '../helpers/utils';
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/AppStore';
+import AppAPI from '../../utils/AppAPI';
+import { firebase, provider }  from '../../../../../server/config';
+import { validateEmail } from '../../helpers/utils';
 import GoogleWelcome from './GoogleWelcome';
-import Input from './Input';
+import Input from '../presentation/Input';
 
 
 /**
@@ -113,12 +113,12 @@ class Signin extends Component {
 */
   handleGoogleSignin(event) {
     event.preventDefault();
-
     const firstName = (username) => {
       let result;
       result = username.split(' ');
       return (result[0])
     }
+       
     provider.addScope('profile');
     provider.addScope('email');
     firebase.auth().signInWithPopup(provider)
@@ -157,7 +157,6 @@ class Signin extends Component {
       emails: AppStore.getAllEmails(),
       googleUser: AppStore.getGoogleSignup()
     });
-
   }
 
   /**

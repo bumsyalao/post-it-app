@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import AppActions from '../actions/AppActions';
-import AppStore from '../stores/AppStore';
+import AppActions from '../../actions/AppActions';
+import AppStore from '../../stores/AppStore';
 
 /**
  * @description Resets the password of a user

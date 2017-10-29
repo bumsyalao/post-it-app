@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 
-import AppStore from '../stores/AppStore'
+import AppStore from '../../stores/AppStore'
 import Navigation from './Navigation'
-import Signin from './Signin'
-import Signup from './Signup';
-import Home from './Home';
-import Footer from './Footer'
-import ResetPassword from './ResetPassword'
-import GoogleWelcome from './GoogleWelcome'
-import DashBoard from './Dashboard/Dashboard'
-import SideBar from './Dashboard/SideBar'
-import { firebase } from '../../../../server/config';
+import Signin from '../container/Signin'
+import Signup from '../container/Signup';
+import Home from '../container/Home';
+import Footer from './Footer';
+import ResetPassword from '../container/ResetPassword';
+import GoogleWelcome from '../container/GoogleWelcome';
+import DashBoard from '../container/Dashboard';
+import SideBar from './SideBar';
+import { firebase } from '../../../../../server/config';
 
 
 /**

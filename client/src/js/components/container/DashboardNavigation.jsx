@@ -5,8 +5,8 @@ import toastr from 'toastr'
 
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
-import GroupOptions from './GroupOptions';
-import ModalButton from './ModalButton';
+import GroupOptions from './../presentation/GroupOptions';
+import ModalButton from './../presentation/ModalButton';
 
 /**
  * @description Displays the navigation of the dashboard
@@ -46,6 +46,7 @@ export default class DashboardNavigation extends Component {
   * @return {void} void
   */
   openModalGroup() {
+    console.log('called');
     this.setState({ createGroupModal: true });
   }
   closeModalGroup() {
@@ -65,11 +66,11 @@ export default class DashboardNavigation extends Component {
   }
 
 
- /**
-  * @description: Opens and closes a modal when the user want to view friends who have seen a message
-  *
-  * @return {void} void
-  */
+  /**
+   * @description: Opens and closes a modal when the user want to view friends who have seen a message
+   *
+   * @return {void} void
+   */
   openModalNotification() {
     this.setState({ notificationModal: true });
   }
@@ -88,6 +89,7 @@ export default class DashboardNavigation extends Component {
   * @memberof DashboardNavigation
   */
   createGroup(event) {
+    console.log('I was here')
     event.preventDefault()
     const group = {
       groupName: this.refs.group.value.trim(),
@@ -107,6 +109,7 @@ export default class DashboardNavigation extends Component {
   * @memberof DashboardNavigation
   */
   addUser(event) {
+    console.log('yay we got here?')
     event.preventDefault();
 
     const addUser = {
@@ -120,24 +123,24 @@ export default class DashboardNavigation extends Component {
     }
   }
 
-/**
-  * @description Method for adding user to the group
-
-  * @returns {void}
-
-  * @memberof DashboardNavigation
-  */
+  /**
+    * @description Method for adding user to the group
+  
+    * @returns {void}
+  
+    * @memberof DashboardNavigation
+    */
   handleAddUserButton() {
     AppActions.getGroups(this.props.userName)
   }
 
-/**
-  * @description Method for getting notifications of a user
-  *
-  * @returns {void}
-  *
-  * @memberof DashboardNavigation
-  */
+  /**
+    * @description Method for getting notifications of a user
+    *
+    * @returns {void}
+    *
+    * @memberof DashboardNavigation
+    */
   handleNotificationButton() {
     AppActions.getNotification(this.props.userName)
   }
@@ -172,57 +175,54 @@ export default class DashboardNavigation extends Component {
     const allUsers = this.props.allUsers.map((keyName, keyIndex) => <option key={keyIndex}>{keyName}</option>)
     return (
       <div>
-        <ModalButton 
+        <ModalButton
           menuName={'Create Group'}
           modalTitle={'Create a group'}
           openModal={this.openModalGroup}
           closeModal={this.closeModalGroup}
           modalState={this.state.createGroupModal}
-          userData=
-          {
-            <form onSubmit={this.createGroup}>
-              <div className='form-group'>
-                <input type="text" ref='group'
-                  className='form-control' placeholder='GroupName'
-                  required />
-              </div>
-              <button type='submit'
-                className='btn btn-primary'>Submit</button>
-            </form>
-          }
-        />
+        >
+          <form onSubmit={this.createGroup}>
+            <div className='form-group'>
+              <input type="text" ref='group'
+                className='form-control' placeholder='GroupName'
+                required />
+            </div>
+            <button type='submit'
+              className='btn btn-primary'>Submit</button>
+          </form>
+        </ModalButton>
+
 
         <ModalButton
           menuName={'Add a friend'}
           modalTitle={'Add a friend to your group'}
           openModal={this.openModalUsers}
           action={this.handleAddUserButton}
-          modalState={this.state.addUserModal}
-          closeModal={this.closeModalUsers}
-          userData=
-          {
-            <form onSubmit={this.addUser}>
-              <div className='form-group'>
-                <select className="form-control" ref="type">
-                  <option>Groups</option>
-                  {groupOptions}
-                </select>
-              </div>
-              <div className='form-group'>
-                <input type="text" ref='user'
-                  className='form-control'
-                  list="users"
-                  placeholder='Search for a User' required />
-                <datalist id="users">
-                  {allUsers}
-                </datalist>
-              </div>
+          modalState={this.state.createGroupModal}
+          closeModal={this.closeModalUsers} 
+        >
+          <form onSubmit={this.addUser} className="whatever">
+            <div className='form-group'>
+              <select className="form-control" ref="type">
+                <option>Groups</option>
+                {groupOptions}
+              </select>
+            </div>
+            <div className='form-group'>
+              <input type="text" ref='user'
+                className='form-control'
+                list="users"
+                placeholder='Search for a User' required />
+              <datalist id="users">
+                {allUsers}
+              </datalist>
+            </div>
 
-              <button type='submit'
-                className='btn btn-primary'>Submit</button>
-            </form >
-          }
-        />
+            <button type='submit'
+              className='btn btn-primary'>Submit</button>
+          </form >
+        </ModalButton>
 
         <ModalButton
           menuName={'Notification'}
@@ -231,13 +231,12 @@ export default class DashboardNavigation extends Component {
           action={this.handleNotificationButton}
           modalState={this.state.notificationModal}
           closeModal={this.closeModalNotification}
-          userData=
-          {
-            <ul className='mylist'>
-              {notificationList}
-            </ul>
-          }
-        />
+        >
+          <ul className='mylist'>
+            {notificationList}
+          </ul>
+        </ModalButton>
+
 
         <ModalButton menuName={'Logout'} action={this.logout} />
 

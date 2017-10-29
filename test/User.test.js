@@ -1,6 +1,7 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai');
 const request = require('supertest');
+import faker from 'faker';
 
 const app = require('../server/app');
 
@@ -9,9 +10,10 @@ const should = chai.should();
 const expect = chai.expect;
 const password = '123456';
 
+
 // describe('EndPoint: SignUp', () => {
 //   const userName = 'Kakashi';
-//   const email = 'fgru@gmail.com';
+//   const email = faker.internet.email(),;
 //   const number = '2348088098146';
 
 //   it('should return 200 when a user sign up successfully', (done) => {
@@ -25,7 +27,7 @@ const password = '123456';
 //         res.body.should.have.property('message')
 //         .eql('Welcome to Post it app');
 //         res.body.should.have.nested.property('userData.email')
-//         .eql('fgru@gmail.com');
+//         .eql(email);
 //         res.body.should.have.nested.property('userData.displayName')
 //         .eql('Kakashi');
 //         if (err) return done(err);
