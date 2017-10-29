@@ -10,19 +10,19 @@ import AppActions from '../../actions/AppActions'
  * 
  * @extends {Component}
  */
-export default class Groups extends Component {
+const Groups = (props) => ({
     render() {
-        const userName = JSON.parse(localStorage.getItem('user'));
         const group = {
             groupName: this.props.KeyName.groupName,
-            userName
+            userName: props.userName
         }
-        return (
+      return (
             <li onClick={() => AppActions.searchUserMessage(group)}>
-                <a href="#/dashboard" className="text-decoration">
-                    {this.props.KeyName.groupName}</a>
-            </li>
-        )
+            <a href="#/dashboard" className="text-decoration">
+                {this.props.KeyName.groupName}</a>
+        </li>
+      );
     }
-
-}
+  });
+  
+  export default Groups;

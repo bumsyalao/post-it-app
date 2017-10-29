@@ -3,7 +3,8 @@ import { Modal } from 'react-bootstrap';
 
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
-import MessageList from './MessageList'
+import MessageList from './MessageList';
+import ModalButton from './ModalButton';
 
 /**
  * @description This displays the message from the database
@@ -14,12 +15,12 @@ export default class Message extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seenMessage: AppStore.getSeenUsers(),
+      seenMessage: [],
       showModal: false,
     };
     this.onChange = this.onChange.bind(this)
     this.handleSeenMessage = this.handleSeenMessage.bind(this);
-    this.handleClose = this.handleClose.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
 
@@ -43,7 +44,7 @@ export default class Message extends Component {
     this.setState({ showModal: true })
   }
 
-  handleClose() {
+  closeModal() {
     this.setState({ showModal: false });
 
   }
@@ -98,13 +99,12 @@ export default class Message extends Component {
           action={this.handleSeenMessage}
         />
 
-        <Modal show={this.state.showModal} onHide={this.handleClose}>
+        <Modal show={this.state.showModal} onHide={this.closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Users who have Read Message</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ul className='mylist'>
-            
+            <ul className='mylist'>            
               {this.state.seenMessage ?
                 Object.keys(this.state.seenMessage).map(function (keyName, keyIndex) {
                   return <li key={keyIndex}>{keyName}</li>
@@ -114,7 +114,7 @@ export default class Message extends Component {
             </ul>
           </Modal.Body>
           <Modal.Footer>
-            <a href="#/dashboard" onClick={this.handleClose}> Close</a>
+            <a href="#/dashboard" onClick={this.closeModal}> Close</a>
           </Modal.Footer>
         </Modal>
 

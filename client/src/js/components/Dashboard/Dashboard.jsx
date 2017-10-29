@@ -14,8 +14,6 @@ import WelcomeBoard from './WelcomeBoard';
 /**
  * @description Creates a react Component
  * 
- * @export
- * 
  * @class DashBoard
  * 
  * @extends {Component}
@@ -24,14 +22,13 @@ export default class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authed: false,
-      user: AppStore.getUser(),
-      contacts: AppStore.getGroupUsers(),
-      allUsers: AppStore.getContacts(),
-      groups: AppStore.getGroups(),
-      currentGroup: AppStore.getCurrentGroup(),
-      databaseUsers: AppStore.getDatabaseUsers(),
-      notification: AppStore.getNotification()
+      user: '',
+      contacts: [],
+      allUsers: [],
+      groups: [],
+      currentGroup: '',
+      databaseUsers: [],
+      notification: []
     };
     this.onChange = this.onChange.bind(this)
   }
@@ -40,7 +37,7 @@ export default class DashBoard extends Component {
   /**
    * @method componentWillMount
    * 
-   * Adds an event Listener to the Store and fires when the component is fully mounted.
+   * @description Adds an event Listener to the Store and fires when the component is fully mounted.
    *
    * @return {void}
    * 
@@ -64,7 +61,7 @@ export default class DashBoard extends Component {
     AppStore.removeChangeListener(this.onChange);
   }
 
-    /**
+  /**
    * @method onChange
    * 
    * @description Monitors changes in the components and change the state
@@ -87,7 +84,6 @@ export default class DashBoard extends Component {
   }
 
 
-
   /**
    * @method render
    * 
@@ -107,7 +103,7 @@ export default class DashBoard extends Component {
           <div
             className="brand"
             data-intro='Welcome to PostIt, your current group will be displayed here'>
-              {!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}
+            {!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}
           </div>
           <i className="fa fa-bars fa-2x toggle-btn"
             data-toggle="collapse" data-target="#menu-content"></i>
@@ -133,21 +129,34 @@ export default class DashBoard extends Component {
                 user={this.state.user}
                 allUsers={this.state.databaseUsers}
                 notification={this.state.notification}
+                userName ={userName}
               />
               <br />
-              <SideBar contact={this.state.contacts} group={this.state.groups}
-                user={this.state.user} currentGroup={this.state.currentGroup} />
-            </ul>
 
+              <SideBar
+                contact={this.state.contacts}
+                group={this.state.groups}
+                user={this.state.user}
+                currentGroup={this.state.currentGroup}
+                userName ={userName}
+              />
+            </ul>
           </div>
         </div>
-        {!this.state.currentGroup ? <WelcomeBoard
-          notification={this.state.notification} /> :
-          <MessageBoard contact={this.state.contacts}
-            emails={this.state.emails} numbers={this.state.numbers} />}
+
+        {!this.state.currentGroup ?
+          <WelcomeBoard 
+           userName ={userName} 
+          /> 
+          :
+          <MessageBoard 
+            contact={this.state.contacts}
+            emails={this.state.emails} 
+            numbers={this.state.numbers}
+            userName ={userName}
+          />}
       </div>
     )
   }
-
 }
 

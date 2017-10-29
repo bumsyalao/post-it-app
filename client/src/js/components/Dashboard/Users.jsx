@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 
 /**
@@ -10,15 +10,16 @@ import React, {Component} from 'react'
  * 
  * @extends {Component}
  */
-export default class Users extends Component {
+const Users = (props) => ({
   render() {
-    return ( 
-        <li data-toggle="collapse" className="collapsed">
-            <a href="#"><i className="fa fa-globe fa-lg">
-              </i>&nbsp; {this.props.KeyName.userName}
-            </a>
-        </li>     
-
-    )
+    return (
+      <li data-toggle="collapse" className="collapsed">
+        <a href="#"><i className="fa fa-globe fa-lg">
+        </i>&nbsp; {this.props.KeyName.userName}
+        </a>
+      </li>
+    );
   }
-}
+});
+
+export default Users;

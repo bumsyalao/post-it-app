@@ -37,7 +37,6 @@ export default class DashboardNavigation extends Component {
     this.createGroup = this.createGroup.bind(this)
     this.logout = this.logout.bind(this)
     this.handleNotificationButton = this.handleNotificationButton.bind(this)
-    this.closeModal = this.closeModal.bind(this)
     this.handleAddUserButton = this.handleAddUserButton.bind(this)
   }
 
@@ -89,16 +88,10 @@ export default class DashboardNavigation extends Component {
   * @memberof DashboardNavigation
   */
   createGroup(event) {
-    const userName = JSON.parse(localStorage.getItem('user'));
     event.preventDefault()
-    function capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    const groupName = capitalizeFirstLetter(this.refs.group.value.trim())
     const group = {
-      groupName,
-      userName
+      groupName: this.refs.group.value.trim(),
+      userName: this.props.userName
     }
     AppActions.saveGroup(group);
   }
@@ -127,14 +120,26 @@ export default class DashboardNavigation extends Component {
     }
   }
 
+/**
+  * @description Method for adding user to the group
+
+  * @returns {void}
+
+  * @memberof DashboardNavigation
+  */
   handleAddUserButton() {
-    const userName = JSON.parse(localStorage.getItem('user'));
-    AppActions.getGroups(userName)
+    AppActions.getGroups(this.props.userName)
   }
 
+/**
+  * @description Method for getting notifications of a user
+  *
+  * @returns {void}
+  *
+  * @memberof DashboardNavigation
+  */
   handleNotificationButton() {
-    const userName = JSON.parse(localStorage.getItem('user'));
-    AppActions.getNotification(userName)
+    AppActions.getNotification(this.props.userName)
   }
 
 
@@ -162,13 +167,14 @@ export default class DashboardNavigation extends Component {
    * @memberof DashboardNavigation
    */
   render() {
-    const userName = JSON.parse(localStorage.getItem('user'));
     const groupOptions = this.props.group.map((keyName, keyIndex) => <GroupOptions keyName={keyName} key={keyIndex} />)
     const notificationList = this.props.notification.map((keyName, keyIndex) => <li key={keyIndex}>{keyName.notification}</li>)
     const allUsers = this.props.allUsers.map((keyName, keyIndex) => <option key={keyIndex}>{keyName}</option>)
     return (
       <div>
-        <ModalButton menuName={'Create Group'}
+        <ModalButton 
+          menuName={'Create Group'}
+          modalTitle={'Create a group'}
           openModal={this.openModalGroup}
           closeModal={this.closeModalGroup}
           modalState={this.state.createGroupModal}
@@ -188,6 +194,7 @@ export default class DashboardNavigation extends Component {
 
         <ModalButton
           menuName={'Add a friend'}
+          modalTitle={'Add a friend to your group'}
           openModal={this.openModalUsers}
           action={this.handleAddUserButton}
           modalState={this.state.addUserModal}
@@ -219,6 +226,7 @@ export default class DashboardNavigation extends Component {
 
         <ModalButton
           menuName={'Notification'}
+          modalTitle={'Notifications'}
           openModal={this.openModalNotification}
           action={this.handleNotificationButton}
           modalState={this.state.notificationModal}

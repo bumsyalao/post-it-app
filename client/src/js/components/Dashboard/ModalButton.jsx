@@ -25,7 +25,7 @@ const ModalButton = (props) => ({
 
         <Modal show={this.props.modalState} onHide={this.props.closeModal}>
           <Modal.Header closeButton>
-            <Modal.Title>{props.menuName}</Modal.Title>
+            <Modal.Title>{props.modalTitle}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {this.props.userData}

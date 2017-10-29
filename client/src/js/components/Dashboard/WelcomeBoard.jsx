@@ -13,21 +13,19 @@ import AppStore from '../../stores/AppStore';
  * 
  * @extends {Component}
  */
-export default class WelcomeBoard extends Component {
-
+const WelcomeBoard = (props) => ({
     render() {
-        let userName = JSON.parse(localStorage.getItem('user'));
         return (
             <div className="container" id="main">
                 <div className="row">
-                    <div className="col-md-12" data-intro='Message Board where every messages are posted and received. Happy Posting!' >
+                    <div className="col-md-12" >
                         <div className="viewMessageBoard">
                             <div className="container" >
                                 <div className="row">
                                     <div className="col-sm-3"></div>
-                                    <div className="col-md-6 col-sm-6 col-xs-12">                                       
+                                    <div className="col-md-6 col-sm-6 col-xs-12">
                                         <center>
-                                        <h3>Welcome {userName}</h3>
+                                            <h3>Welcome {this.props.userName}</h3>
                                         </center>
                                     </div>
                                 </div>
@@ -36,8 +34,8 @@ export default class WelcomeBoard extends Component {
                     </div>
                 </div>
             </div>
-
-        )
+        );
     }
+});
 
-}
+export default WelcomeBoard;
