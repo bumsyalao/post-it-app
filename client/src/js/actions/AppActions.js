@@ -13,10 +13,10 @@ const AppActions = {
    * @returns { void }
    *
    */
-  saveContact(contact) {
+  registerUser(userDetails) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.SAVE_CONTACT,
-      contact
+      actionType: AppConstants.SIGN_UP,
+      userDetails
     });
   },
 
@@ -31,27 +31,13 @@ const AppActions = {
    *
    * @returns { Object } returns registered user registration details
    */
-  receiveContact(contacts) {
+  receiveUsers(users) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.RECEIVE_CONTACT,
-      contacts
+      actionType: AppConstants.RECEIVE_USERS,
+      users
     });
   },
 
-    /**
-   * @description describes an action that makes
-   * API call to the server for a post request to get all numbers.
-   *
-   * @param { Object } number
-   *
-   * @returns { Object } returns an object containing list of numbers
-   */
-  receiveNumber(number) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.RECEIVE_ALLUSERS_NUMBER,
-      number
-    });
-  },
 
   /**
    * @description describes an action that makes
@@ -156,7 +142,7 @@ const AppActions = {
    *
    * @returns { void }
    */
-  saveMessage(message) {
+  postMessage(message) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.SAVE_MESSAGE,
       message
@@ -188,10 +174,10 @@ const AppActions = {
    *
    * @returns { void }
    */
-  login(contact) {
+  loginUser(userDetails) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.SIGN_IN,
-      contact
+      userDetails
     });
   },
 
@@ -236,7 +222,7 @@ const AppActions = {
    *
    * @returns { Object } returns user's google account details
    */
-  google(googleUser) {
+  googleLogin(googleUser) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.GOOGLE_LOGIN,
       googleUser
@@ -312,7 +298,7 @@ const AppActions = {
    *
    * @returns { Object } returns an object containing list of numbers
    */
-  receiveNumbers(numbers) {
+  receiveNumber(numbers) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RECEIVE_NUMBERS,
       numbers

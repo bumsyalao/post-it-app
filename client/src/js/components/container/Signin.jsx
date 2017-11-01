@@ -85,14 +85,13 @@ class Signin extends Component {
 */
   handleSubmit(event) {
     event.preventDefault();
-    const contact = {
+    const userDetails = {
       email: this.state.email,
       password: this.state.password
     }
 
-
     if (validateEmail(this.state.email)) {
-      AppActions.login(contact);
+      AppActions.loginUser(userDetails);
       this.setState({
         email: '',
         passowrd: ''
@@ -137,7 +136,7 @@ class Signin extends Component {
           AppActions.receiveLogin(googleUser);
           toastr.success('Welcome to PostIt')
         } else {
-          AppActions.google(googleUser);
+          AppActions.googleLogin(googleUser);
           this.setState({
             googleComponent: true
           })

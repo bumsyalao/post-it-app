@@ -72,7 +72,7 @@ export default class MessageBoard extends Component {
         }
 
         if (typeof message.text === 'string' && message.text.length > 0) {
-            AppActions.saveMessage(message);
+            AppActions.postMessage(message);
             this.refs.message.value = '';            
         }
     }

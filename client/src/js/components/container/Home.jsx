@@ -42,7 +42,7 @@ class Home extends Component {
 *
 * @memberof Home
 */
-  componentUnmount() {
+  componentWillUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
 

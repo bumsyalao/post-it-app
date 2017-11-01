@@ -94,9 +94,6 @@ const AppStore = assign({}, EventEmitter.prototype, {
   getContacts() {
     return contactsStore;
   },
-  saveContact(contact) {
-    contactsStore.push(contact);
-  },
 
   setContacts(contacts) {
     contactsStore = contacts;
@@ -106,16 +103,16 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return allUsersNumberStore;
   },
 
-  setAllUsersNumber(number) {
-    allUsersNumberStore = number;
+  setAllUsersNumber(numbers) {
+    allUsersNumberStore = numbers;
   },
 
   getDatabaseUsers() {
     return databaseUsersStore;
   },
 
-  setDatabaseUsers(contacts) {
-    databaseUsersStore = contacts;
+  setDatabaseUsers(users) {
+    databaseUsersStore = users;
   },
 
   getAllEmails() {
@@ -302,14 +299,13 @@ AppDispatcher.register((payload) => {
   const action = payload.action;
 
   switch (action.actionType) {
-    case AppConstants.SAVE_CONTACT:
-      AppStore.saveContact(action.contact);
-      AppAPI.saveContact(action.contact);
+    case AppConstants.SIGN_UP:
+      AppAPI.signUpUser(action.userDetails);
       AppStore.emit(CHANGE_EVENT);
       break;
 
-    case AppConstants.RECEIVE_CONTACT:
-      AppStore.setDatabaseUsers(action.contacts);
+    case AppConstants.RECEIVE_USERS:
+      AppStore.setDatabaseUsers(action.users);
       AppStore.emit(CHANGE_EVENT);
       break;
 
@@ -318,8 +314,8 @@ AppDispatcher.register((payload) => {
       AppStore.emit(CHANGE_EVENT);
       break;
 
-    case AppConstants.RECEIVE_ALLUSERS_NUMBER:
-      AppStore.setAllUsersNumber(action.number);
+    case AppConstants.RECEIVE_NUMBERS:
+      AppStore.setAllUsersNumber(action.numbers);
       AppStore.emit(CHANGE_EVENT);
       break;
 
@@ -351,7 +347,7 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.SAVE_MESSAGE:
       AppStore.saveMessages(action.message);
-      AppAPI.saveMessages(action.message);
+      AppAPI.postMessages(action.message);
       AppStore.emit(CHANGE_EVENT);
       break;
 
@@ -371,7 +367,7 @@ AppDispatcher.register((payload) => {
       break;
 
     case AppConstants.SIGN_IN:
-      AppAPI.login(action.contact);
+      AppAPI.login(action.userDetails);
       AppStore.emit(CHANGE_EVENT);
       break;
 

@@ -46,7 +46,6 @@ export default class DashboardNavigation extends Component {
   * @return {void} void
   */
   openModalGroup() {
-    console.log('called');
     this.setState({ createGroupModal: true });
   }
   closeModalGroup() {
@@ -89,7 +88,6 @@ export default class DashboardNavigation extends Component {
   * @memberof DashboardNavigation
   */
   createGroup(event) {
-    console.log('I was here')
     event.preventDefault()
     const group = {
       groupName: this.refs.group.value.trim(),
@@ -109,7 +107,6 @@ export default class DashboardNavigation extends Component {
   * @memberof DashboardNavigation
   */
   addUser(event) {
-    console.log('yay we got here?')
     event.preventDefault();
 
     const addUser = {
@@ -198,9 +195,9 @@ export default class DashboardNavigation extends Component {
           menuName={'Add a friend'}
           modalTitle={'Add a friend to your group'}
           openModal={this.openModalUsers}
-          action={this.handleAddUserButton}
-          modalState={this.state.createGroupModal}
           closeModal={this.closeModalUsers} 
+          action={this.handleAddUserButton}
+          modalState={this.state.addUserModal}
         >
           <form onSubmit={this.addUser} className="whatever">
             <div className='form-group'>

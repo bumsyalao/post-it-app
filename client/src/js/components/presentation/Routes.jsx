@@ -21,16 +21,13 @@ import { firebase } from '../../../../../server/config';
  * 
  * @returns {void} void
  */
-function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
-  return (
-    <Route
+const PrivateRoute = ({ component: Component, isAuthenticated }) =>
+  (<Route
       {...rest}
       render={(props) => isAuthenticated === true
         ? <Component {...props} />
         : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
-    />
-  )
-}
+    />)
 
 
 /**
@@ -40,16 +37,13 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
  * 
  * @returns {void} void
  */
-function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
-  return (
-    <Route
+const PublicRoute = ({ component: Component, isAuthenticated }) =>
+  (<Route
       {...rest}
       render={(props) => isAuthenticated === false
         ? <Component {...props} />
         : <Redirect to='/dashboard' />}
-    />
-  )
-}
+    />)
 
 
 /**

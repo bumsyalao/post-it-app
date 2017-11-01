@@ -36,8 +36,8 @@ jest.mock('../../../../../server/config', () => {
   };
 });
 
-const googleSpy = jest.spyOn(AppActions, 'google');
-const loginSpy = jest.spyOn(AppActions, 'login'); 
+const googleSpy = jest.spyOn(AppActions, 'googleLogin');
+const loginUserSpy = jest.spyOn(AppActions, 'loginUser'); 
 const getGoogleSignupSpy = jest.spyOn(AppStore, 'getGoogleSignup');
 const addChangeListenerSpy = jest.spyOn(AppStore, 'addChangeListener');
 
@@ -66,7 +66,7 @@ describe('Signin Component', () => {
       password: 'test'
     })
     wrapper.find('form').simulate('submit')
-    expect(loginSpy).toHaveBeenCalledTimes(1);
+    expect(loginUserSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should call componentDidMount lifecycle', () => {
@@ -78,6 +78,20 @@ describe('Signin Component', () => {
     expect(wrapper.find('Input').length).toEqual(2);
     expect(wrapper.find('button')).toHaveLength(1);
   })
+
+  it('expects the following functions defined', () => {
+    const event = {
+      target: {
+        name: 'name',
+        value: 'value',
+      },
+      preventDefault: () => jest.fn()
+    };
+    wrapper.instance().componentDidMount();
+    wrapper.instance().componentWillUnmount();
+    wrapper.instance().handleSubmit(event);
+    wrapper.instance().onChange();
+  });
 
   xit('should call firebase', () => {
     wrapper.find(GoogleButton).simulate('click');

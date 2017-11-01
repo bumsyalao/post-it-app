@@ -1,52 +1,38 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import SideBar from '../../components/container/SideBar'
-import AppActions from '../../actions/AppActions'
+
+import SideBar from '../../components/presentation/SideBar';
+import localStorageMock from '../../../../../mock/LocalStorageMock';
+import AppStore from '../../stores/AppStore';
+
+window.localStorage = localStorageMock;
 
 jest.mock('../../../../../server/config', () => ({
   }));
-jest.mock('../../actions/AppActions');
-
-
-let spyOnDispatcher;
-beforeEach(() => {
-    spyOnDispatcher = spyOn(AppActions, 'getGroups');
-});
-
-afterEach(() => {
-    spyOnDispatcher.mockReset();
-});
 
 describe('SideBar Component', () => {
-  it('It should render SideBar omponent', () => {
-    const tree = renderer.create(<SideBar />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+  const groups = [{ groupName: 'Andela' }];
+  const contacts = ['George', 'Phil', 'Odim'];
+  const currentGroup = 'Andela';
+  const userName = 'George';
+  let wrapper;
 
-  it('should display the necessary elements', () => {
-    const wrapper = shallow(<SideBar />);
-    expect(wrapper.find('div').length).toBe(7);
-    expect(wrapper.find('h2').length).toBe(1);
-    expect(wrapper.find('h4').length).toBe(1);
-    expect(wrapper.find('form').length).toBe(1);
-    expect(wrapper.find('input').length).toBe(1);
-    expect(wrapper.find('a').length).toBe(1);
-    expect(wrapper.find('br').length).toBe(3);
+  localStorage.setItem('user', JSON.stringify('Ebuka'));
+  const user = JSON.parse(localStorage.getItem('user'))
+ 
+  wrapper = mount( <SideBar
+      contact={contacts}
+      group={groups}
+      currentGroup={currentGroup}
+      user = {user} />
+      );
+
+  it('should display the necessary elements', () => {    
+    expect(wrapper.find('div').length).toBe(2);
+    expect(wrapper.find('a').length).toBe(6);
+    expect(wrapper.find('br').length).toBe(2);
+
 });
-
-it('It should expect getGroups Action to be called', () => {
-    const event = {
-        target: {
-          name: 'name',
-          value: 'value',
-        },
-        preventDefault: () => jest.fn()
-      };
-    const wrapper = shallow(<SideBar />);
-    wrapper.instance().refs.email.value = 'someemail@email.com';
-    expect(spyOnDispatcher).toHaveBeenCalled();
-});
-
 
 });

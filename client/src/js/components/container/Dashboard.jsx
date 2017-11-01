@@ -135,9 +135,7 @@ export default class DashBoard extends Component {
               <SideBar
                 contact={this.state.contacts}
                 group={this.state.groups}
-                user={this.state.user}
                 currentGroup={this.state.currentGroup}
-                userName ={userName}
               />
             </ul>
           </div>

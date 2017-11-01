@@ -77,13 +77,8 @@ export default class GoogleWelcome extends Component {
     */
     handleSubmit(event) {
         event.preventDefault()
-        const contact = {
-            username: this.state.googleDetail.displayName,
-            email: this.state.googleDetail.email,
-            number: this.state.number,
-            uid: this.state.googleDetail.uid,
-            password: null
-        }
+        const contact = { ...this.state.googleDetail, number: this.state.number }
+        
         if (this.state.numbers.includes(this.state.number)) {
             toastr.error("The phone number already exist")
         } else {
@@ -124,7 +119,7 @@ export default class GoogleWelcome extends Component {
                 <div className='well'>
                     <form onSubmit={this.handleSubmit}>
                         <div className='form-group'>
-                            <input type="text" name='number'
+                            <input type="number" name='number'
                                 className='form-control'
                                 onChange={this.handleChange}
                                 placeholder='Phone Number: Ex 2348066098146'

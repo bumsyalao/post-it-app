@@ -14,13 +14,9 @@ const AppAPI = {
    *
    * @returns { Object } returns registered user registration details
    */
-  saveContact(contact) {
-    return axios.post('/user/signup', {
-      userName: contact.userName,
-      email: contact.email,
-      password: contact.password,
-      number: contact.number
-    }).then((response) => {
+  signUpUser(userDetails) {
+    return axios.post('/user/signup', userDetails)
+    .then((response) => {
       const user = response.data.userData;
       AppActions.receiveLogin(user);
       toastr.success('Welcome,  An email will be sent to you.');
@@ -107,14 +103,8 @@ const AppAPI = {
    *
    * @returns { void }
    */
-  saveMessages(message) {
-    return axios.post('/group/user/message', {
-      group: message.group,
-      user: message.user,
-      message: message.text,
-      notification: message.notification,
-      priority: message.priority
-    })
+  postMessages(message) {
+    return axios.post('/group/user/message', message)
     .then((response) => {
       toastr.success(response.data.message);
     })
@@ -148,18 +138,14 @@ const AppAPI = {
    *
    * @returns { Object } returns registered user details
    */
-  login(contact) {
-    return axios.post('/user/signin', {
-      email: contact.email,
-      password: contact.password
-    })
+  login(userDetails) {
+    return axios.post('/user/signin', userDetails)
     .then((response) => {
       const user = response.data.userData;
       AppActions.receiveLogin(user);
-      //console.log(response.data.myToken)
       toastr.success('Welcome To PostIt');
     })
-    .catch(getToastError);
+    .catch(() => toastr.error('There was an error in Network connection'));
   },
 
   /**
@@ -204,11 +190,8 @@ const AppAPI = {
    * @returns { Object } returns registered user registration details
    */
   googleSignUp(googleUser) {
-    const userName = googleUser.username.replace(' ', '');
-    const email = googleUser.email;
-    const number = googleUser.number;
-    const uid = googleUser.uid;
-
+    const { displayName, email, uid, number } = googleUser;
+    const userName = displayName.replace(' ', '');
     return axios.post('/google/signup', {
       userName,
       email,
@@ -241,14 +224,14 @@ const AppAPI = {
 
   /**
    * @description describes an API call to the server for a get request
-   * to get all users.
+   * to get all users in a group.
    *
    * @returns { Object } returns an object containing list of users
    */
-  getContacts() {
+  getUsers() {
     return axios.get('/users/allusers')
-      .then((contacts) => {
-        AppActions.receiveContact(contacts.data);
+      .then((response) => {
+        AppActions.receiveUsers(response.data);
       })
  ;
   },

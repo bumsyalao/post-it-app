@@ -4,6 +4,9 @@ import { mount, shallow } from 'enzyme';
 import DashboardNavigation from '../../components/container/DashboardNavigation';
 import GroupOptions from './../../components/presentation/GroupOptions';
 import ModalButton from '../../components/presentation/ModalButton';
+import localStorageMock from '../../../../../mock/LocalStorageMock';
+
+window.localStorage = localStorageMock;
 
 describe('DashBoardNavigation.js', () => {
   const group = [{ groupName: 'Andela' }];
@@ -11,16 +14,9 @@ describe('DashBoardNavigation.js', () => {
   const notification = ['George has posted in Green group'];
   const userName = 'George';
   let wrapper;
-//   const newStateProperty = {
-//     createGroupModal: true,
-//     addUserModal: true,
-//     notificationModal: true,
-//     groupName: 'Pie',
-//     userName: 'George',
-//     users: ['Luke', 'John']
-// };
+
   beforeEach(() => {
-    console.log(document.body, 'wefafea')
+
   wrapper = mount( <DashboardNavigation
       group={group}
       allUsers={allUsers}
@@ -31,7 +27,6 @@ describe('DashBoardNavigation.js', () => {
   })
   it('test', () => {
     wrapper.setState({addUserModal: true});
-    console.log(wrapper.find(ModalButton).length, 'lenghts')
   })
 
   it('should have initial state inside the component', () => {
@@ -52,7 +47,6 @@ describe('DashBoardNavigation.js', () => {
   })
 
   it('should expect modals to be in the component', () => {
-   // expect(wrapper.props().group[0].groupName).toEqual('Andela')
     expect(wrapper.node.openModalUsers).toBeDefined();
     expect(wrapper.node.closeModalUsers).toBeDefined();
     expect(wrapper.node.openModalGroup).toBeDefined();
@@ -64,7 +58,31 @@ describe('DashBoardNavigation.js', () => {
     expect(wrapper.node.logout).toBeDefined();
     expect(wrapper.node.handleNotificationButton).toBeDefined();
     expect(wrapper.node.handleAddUserButton).toBeDefined();
-   })
+   });
+
+   it('should have all the method in the component defined', () => {
+    const event = {
+      target: {
+        name: 'name',
+        value: 'value',
+      },
+      preventDefault: () => jest.fn()
+    };
+    wrapper.instance().openModalGroup();
+    wrapper.instance().closeModalGroup();
+    wrapper.instance().openModalUsers();
+    wrapper.instance().closeModalUsers();
+    wrapper.instance().openModalNotification();
+    wrapper.instance().closeModalNotification();
+    wrapper.instance().createGroup(event);
+    wrapper.instance().addUser(event);
+    wrapper.instance().handleAddUserButton();
+    wrapper.instance().handleNotificationButton();
+    wrapper.instance().logout(event);
+  });
+
+   
+   
 
    it('should simulate a click', () => {
        const newStateProperty = {
@@ -99,15 +117,7 @@ describe('DashBoardNavigation.js', () => {
       );
       const modalButtons = component.find('ModalButton');
      expect(modalButtons).toHaveLength(4);
-    //  const mockCallBack = jest.fn()
-     
-    //  const button1 = shallow(<ModalButton openModal={mockCallBack}></ModalButton>)
-    // modalButtons.first().simulate('click')
-    //  expect(wrapper.state().createGroupModal).toEqual(true);
-    //  console.log(button1)
-    //  expect(wrapper.find('li')).toHaveLength(4);
-    //  expect(wrapper.find('button')).toHaveLength(0);
-     
+
   })
 
   it('should find the first modal component and open it', () => {

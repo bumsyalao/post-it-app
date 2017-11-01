@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
+
 import Groups from '../../components/presentation/Groups'
 import AppActions from '../../actions/AppActions'
 
@@ -16,6 +17,9 @@ spyOnDispatcher = jest.spyOn(AppActions, 'searchUserMessage');
 afterEach(() => {
 spyOnDispatcher.mockReset();
 });
+
+const groups = [{ groupName: 'Andela' }];
+const wrapper = mount(<Groups KeyName={allUsers} />)
 
 describe('Groups component', () => {
   it('It should render Groups component', () => {

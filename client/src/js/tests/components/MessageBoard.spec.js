@@ -11,6 +11,7 @@ window.localStorage = localStorageMock;
 
 const addChangeListenerSpy = jest.spyOn(AppStore, 'addChangeListener');
 
+
 describe('ResetPassword component', () => {
   it('should render MessageBoard component', () => {
     const tree = renderer.create(<MessageBoard />).toJSON();
@@ -18,7 +19,7 @@ describe('ResetPassword component', () => {
   });
 
   const wrapper = mount(<MessageBoard />);
-  
+
   it('should find all component rendered element', () => {
     expect(wrapper.find('div').length).toBe(6);
     expect(wrapper.find('form').length).toBe(1)
@@ -36,26 +37,9 @@ describe('ResetPassword component', () => {
   });
 
   it('should have all the method in the component to be defined', () => {
-    expect(wrapper.node.onChange).toBeDefined();
-    expect(wrapper.node.sendMessage).toBeDefined();
-  });
-
-  it('should expect saveMessage Action to be called', () => {
-    const wrapper = shallow(<MessageBoard />);
-    wrapper.setState({
-      group: 'Jame',
-      message: 'test'
-    })
-    const spyOnDispatcher = spyOn(AppActions, 'saveMessage');
-    const event = {
-      target: {
-        message: 'I am a message',
-      },
-      preventDefault: () => jest.fn()
-    };
-    
-    wrapper.instance().sendMessage(event);
-    expect(spyOnDispatcher).toHaveBeenCalled();
+    wrapper.instance().componentDidMount();
+    wrapper.instance().componentWillUnmount();
+    wrapper.instance().onChange();
   });
 
 });

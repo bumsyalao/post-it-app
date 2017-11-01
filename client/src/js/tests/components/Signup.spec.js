@@ -12,14 +12,14 @@ jest.mock('../../actions/AppActions');
 
 let spyOnDispatcher;
 beforeEach(() => {
-    spyOnDispatcher = spyOn(AppActions, 'saveContact');
+    spyOnDispatcher = spyOn(AppActions, 'registerUser');
 });
 
 afterEach(() => {
     spyOnDispatcher.mockReset();
 });
 
-const saveContactSpy = jest.spyOn(AppActions, 'saveContact');
+const registerUserSpy = jest.spyOn(AppActions, 'registerUser');
 const addChangeListenerSpy = jest.spyOn(AppStore, 'addChangeListener');
 
 

@@ -104,7 +104,7 @@ export default class Signup extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const contact = {
+        const userDetails = {
             userName: this.state.userName,
             email: this.state.email,
             password: this.state.password,
@@ -120,7 +120,7 @@ export default class Signup extends Component {
         } else if (!validateEmail(this.state.email)) {
             toastr.error('Invalid Email Address')
         } else {
-            AppActions.saveContact(contact);
+            AppActions.registerUser(userDetails);
         }
     }
 

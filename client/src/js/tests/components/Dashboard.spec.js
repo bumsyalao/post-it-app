@@ -34,29 +34,22 @@ describe('Dashboard Component', () => {
     databaseUsers: ['James', 'August'],
     notification: ['James posted in Andela Group']
   };
+  
+  const wrapper = shallow(<Dashboard />);
 
   it('should contain a <WelcomeBoard /> component', () => {
-    const wrapper = shallow(<Dashboard />);
     expect(wrapper.find(WelcomeBoard)).toHaveLength(1);
   });
 
   it('should contain a <SideBar /> component', () => {
-    const wrapper = shallow(<Dashboard />);
     expect(wrapper.find(SideBar)).toHaveLength(1);
   });
 
-  // it('should contain a <MessageBoard /> component', () => {
-  //   const wrapper = mount(<MemoryRouter><Dashboard/></MemoryRouter>);
-  //   expect(wrapper.find(MessageBoard)).toHaveLength(1);
-  // });
-
   it('should contain a <DashboardNavigation /> component', () => {
-    const wrapper = shallow(<Dashboard />);
     expect(wrapper.find(DashboardNavigation)).toHaveLength(1);
   });
 
   it('should return initial default state inside the component', () => {
-    const wrapper = shallow(<Dashboard />);
     expect(wrapper.state().user).toEqual('');
     expect(wrapper.state().allUsers.length).toEqual(0);
     expect(wrapper.state().currentGroup).toEqual('');
@@ -67,7 +60,6 @@ describe('Dashboard Component', () => {
 
   it('should contain a new state when the store has updated',
     () => {
-      const wrapper = shallow(<Dashboard />);
       wrapper.setState(newStateProperty);
       expect(wrapper.state('user')).toEqual('Ebuka');
       expect(wrapper.state().allUsers.length).toEqual(2);
@@ -76,5 +68,11 @@ describe('Dashboard Component', () => {
       expect(wrapper.state().groups.length).toEqual(2);
       expect(wrapper.state().notification.length).toEqual(1);
       expect(wrapper.find(MessageBoard)).toHaveLength(1);
+    });
+
+    it('expects the following functions defined', () => {
+      wrapper.instance().componentDidMount();
+      wrapper.instance().componentWillUnmount();
+      wrapper.instance().onChange();
     });
 });

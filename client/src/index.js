@@ -8,7 +8,7 @@ import main from './main.scss';
 import bootstrap from './js/vendors/bootstrap'
 import {firebaseAuth, firebase}from '../../server/config';
 
-AppAPI.getContacts();
+AppAPI.getUsers();
 AppAPI.getNumbers();
 AppAPI.getEmails()
 

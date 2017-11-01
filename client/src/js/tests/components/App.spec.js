@@ -24,10 +24,6 @@ describe('App Component', () => {
     const mock = jest.fn();
     const getAuthenticatedStateSpy = jest.spyOn(AppStore, 'getAuthenticatedState');
     const getLoggedInUserSpy = jest.spyOn(AppStore, 'getLoggedInUser');
-    
-    // afterEach(() => {
-    //     getAuthenticatedStateSpy.mockReset();
-    // });
 
     it('should contain a <Navigation /> for unauthenticated user', () => {
         const wrapper = shallow(<App />);
@@ -65,6 +61,13 @@ describe('App Component', () => {
         wrapper.setState(newStateProperty);
         expect(wrapper.find(Dashboard)).toHaveLength(1);
     });
+
+    it('should have all the method in the component to be defined', () => {
+        const wrapper = mount(<App />);
+        wrapper.instance().componentDidMount();
+        wrapper.instance().componentUnmount();
+        wrapper.instance().onChange();
+      });
     
     it('calls componentDidMount lifecycle method', () => {
         expect(getAuthenticatedStateSpy).toHaveBeenCalledTimes(1);
