@@ -23,7 +23,7 @@ const MessageList = (props) => ({
             </span>
           </h5>
         </div>
-        <p className="mb-1">{props.text}</p>
+        <p className="mb-1">{props.message}</p>
       </a>
     );
   }

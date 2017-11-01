@@ -65,13 +65,13 @@ export default class MessageBoard extends Component {
         const message = {
             user: userName.replace(" ", ""),
             group: this.state.currentGroup,
-            text: this.refs.message.value.trim(),
+            message: this.refs.message.value.trim(),
             time: moment().format('h:mm a, MMM Do'),
             notification: `${userName} posted in ${this.state.currentGroup} group`,
             priority: this.refs.type.value
         }
 
-        if (typeof message.text === 'string' && message.text.length > 0) {
+        if (typeof message.message === 'string' && message.message.length > 0) {
             AppActions.postMessage(message);
             this.refs.message.value = '';            
         }

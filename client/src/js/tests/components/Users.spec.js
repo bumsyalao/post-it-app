@@ -13,7 +13,7 @@ describe('Users component', () => {
   });
 
 
-  it('should get props from <SideBar /> component', () => {
+  it('should have initial props in the component', () => {
     expect(wrapper.props().KeyName).toEqual([{ userName: 'George' }])
   });
 

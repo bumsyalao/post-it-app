@@ -18,59 +18,50 @@ class Group {
   static createGroup(req, res) {
     const { group, userName } = req.body;
 
-    req.check('group', 'Group name is required').notEmpty().matches(/\w/);
-    req.check('userName', 'Username is required').notEmpty().matches(/\w/);
+    const currentUser = firebase.auth().currentUser;
+    let googleAuth = false;
 
-    const errors = req.validationErrors();
-    if (errors) {
-      const message = errors[0].msg;
-      res.status(400).json({ message });
-    } else {
-      const currentUser = firebase.auth().currentUser;
-      let googleAuth = false;
+    usersRef.child(userName).child('google')
+    .once('value', (googleSnapshot) => {
+      if (googleSnapshot.exists()) {
+        googleAuth = true;
+      }
+      if (currentUser || googleAuth) {
+        const groupName = capitalizeFirstLetter(group);
+        const userDatabase = firebase.database();
+        groupRef.child(groupName).once('value', (snapshot) => {
+          if (!snapshot.exists()) {
+            groupRef.child(groupName).child('Users').child(userName)
+              .set(userName);
+            groupRef.child(groupName).child('Users').child('Bot').set('Bot');
+            groupRef.child(groupName).child('Email').push('bot@postit.com');
+            groupRef.child(groupName).child('Number').push('2348066098141');
+            groupRef.child(groupName).child('Messages/Seen').push(null);
 
-      usersRef.child(userName).child('google')
-      .once('value', (googleSnapshot) => {
-        if (googleSnapshot.exists()) {
-          googleAuth = true;
-        }
-        if (currentUser || googleAuth) {
-          const groupName = capitalizeFirstLetter(group);
-          const db = firebase.database();
-          groupRef.child(groupName).once('value', (snapshot) => {
-            if (!snapshot.exists()) {
-              groupRef.child(groupName).child('Users').child(userName)
-                .set(userName);
-              groupRef.child(groupName).child('Users').child('Bot').set('Bot');
-              groupRef.child(groupName).child('Email').push('bot@postit.com');
-              groupRef.child(groupName).child('Number').push('2348066098141');
-              groupRef.child(groupName).child('Messages/Seen').push(null);
-  
-              db.ref(`/users/${userName}/Groups`).push({
+            userDatabase.ref(`/users/${userName}/Groups`).push({
+              groupName,
+              userName
+            }).then(() => {
+              res.status(201).json({
+                message: `Group ${groupName} created`,
                 groupName,
                 userName
-              }).then(() => {
-                res.status(201).json({
-                  message: `Group ${groupName} created`,
-                  groupName,
-                  userName
-                });
-              }).catch(() => {
-                res.status(500).json({ message: 'Internal server error' });
               });
-            } else {
-              res.status(409).json({ message: 'Group already exists' });
-            }
-          }).catch(() => {
-            res.status(500).json(
-              { message: 'Internal server error' }
-            );
-          });
-        } else {
-          res.status(401).send('Access denied; You need to sign in');
-        }
-      });
-    }
+            }).catch(() => {
+              res.status(500).json({ message: 'Internal server error' });
+            });
+          } else {
+            res.status(409).json({ message: 'Group already exists' });
+          }
+        }).catch(() => {
+          res.status(500).json(
+            { message: 'Internal server error' }
+          );
+        });
+      } else {
+        res.status(401).send('Access denied; You need to sign in');
+      }
+    });
   }
 
 
@@ -86,52 +77,43 @@ class Group {
   static addUserToGroup(req, res) {
     const { groupName, user } = req.body;
 
-    req.check('groupName', 'Group name is required').notEmpty().matches(/\w/);
-    req.check('user', 'Username is required').notEmpty().matches(/\w/);
-
-    const errors = req.validationErrors();
-    if (errors) {
-      const message = errors[0].msg;
-      res.status(400).json({ message });
-    } else {
-      const db = firebase.database();
-      usersRef.child(user).once('value', (snapshot) => {
-        if (snapshot.exists()) {
-          const userName = snapshot.val().userName;
-          const email = snapshot.val().email;
-          const number = snapshot.val().number;
-          db.ref(`/users/${user}/Groups`).push({
-            groupName
-          });
-
-          groupRef.child(groupName).once('value', (groupSnapshot) => {
-            if (groupSnapshot.exists()) {
-              groupRef.child(groupName).child('Users').child(userName)
-                .set(userName);
-              groupRef.child(groupName).child('Email').push(email);
-              groupRef.child(groupName).child('Number').push(number);
-            } else {
-              res.status(404).json({ message: 'Group dose not exists' });
-            }
-          })
-            .then(() => {
-              res.status(201).json({
-                message: 'User added successfully',
-                user,
-                groupName
-              });
-            });
-        } else {
-          res.status(404).json({
-            message: 'The User dose not exist'
-          });
-        }
-      }).catch(() => {
-        res.status(500).json({
-          message: 'Internal server error'
+    const userDatabase = firebase.database();
+    usersRef.child(user).once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        const userName = snapshot.val().userName;
+        const email = snapshot.val().email;
+        const number = snapshot.val().number;
+        userDatabase.ref(`/users/${user}/Groups`).push({
+          groupName
         });
+
+        groupRef.child(groupName).once('value', (groupSnapshot) => {
+          if (groupSnapshot.exists()) {
+            groupRef.child(groupName).child('Users').child(userName)
+              .set(userName);
+            groupRef.child(groupName).child('Email').push(email);
+            groupRef.child(groupName).child('Number').push(number);
+          } else {
+            res.status(404).json({ message: 'Group dose not exists' });
+          }
+        })
+          .then(() => {
+            res.status(201).json({
+              message: 'User added successfully',
+              user,
+              groupName
+            });
+          });
+      } else {
+        res.status(404).json({
+          message: 'The User dose not exist'
+        });
+      }
+    }).catch(() => {
+      res.status(500).json({
+        message: 'Internal server error'
       });
-    }
+    });
   }
 
 
@@ -213,7 +195,7 @@ class Group {
             message = {
               id: data.key,
               user: data.val().user,
-              text: data.val().message,
+              message: data.val().message,
               time: data.val().time,
               priority: data.val().priority
             };
@@ -251,8 +233,8 @@ class Group {
             messageIDs.push(data.key);
           });
           messageIDs.forEach((entry) => {
-            const db = firebase.database();
-            db.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
+            const userDatabase = firebase.database();
+            userDatabase.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
             .child(userName).set(userName);
           });
         });

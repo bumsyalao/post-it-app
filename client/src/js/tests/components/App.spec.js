@@ -24,25 +24,21 @@ describe('App Component', () => {
     const mock = jest.fn();
     const getAuthenticatedStateSpy = jest.spyOn(AppStore, 'getAuthenticatedState');
     const getLoggedInUserSpy = jest.spyOn(AppStore, 'getLoggedInUser');
+    const wrapper = shallow(<App />);
 
-    it('should contain a <Navigation /> for unauthenticated user', () => {
-        const wrapper = shallow(<App />);
+    it('should contain a <Navigation />', () => {
         expect(wrapper.find(Navigation)).toHaveLength(1);
     });
 
-
-    it('should contain a <Footer /> for unauthenticated user', () => {
-        const wrapper = shallow(<App />);
+    it('should contain a <Footer />', () => {
         expect(wrapper.find(Footer)).toHaveLength(1);
     });
 
-    it('should contain a <Routes /> for unauthenticated user', () => {
-        const wrapper = shallow(<App />);
+    it('should contain a <Routes />', () => {
         expect(wrapper.find(Routes)).toHaveLength(1);
     });
 
     it('should return initial default state inside a component', () => {
-        const wrapper = shallow(<App />);
         expect(wrapper.state().isAuthenticated).toEqual(false);
         expect(wrapper.state().userName.length).toEqual(0);
     });
@@ -50,27 +46,25 @@ describe('App Component', () => {
     it('should update the state of the app when the user logs in', function () {
         const wrapper = mount(<MemoryRouter><App /></MemoryRouter>);
         wrapper.setState(newStateProperty);
-        // localStorage.setItem('user', JSON.stringify(newStateProperty.userName));
+        localStorage.setItem('user', JSON.stringify(newStateProperty.userName));
         expect(wrapper.state('isAuthenticated')).toEqual(true);
         expect(wrapper.state('userName')).toEqual('Ebuka');
         localStorage.setItem('user', JSON.stringify('Ebuka'));
     });
 
     it('should contain a <Dashboard /> component', () => {
-        const wrapper = shallow(<App />);
         wrapper.setState(newStateProperty);
         expect(wrapper.find(Dashboard)).toHaveLength(1);
     });
 
     it('should have all the method in the component to be defined', () => {
-        const wrapper = mount(<App />);
-        wrapper.instance().componentDidMount();
+        console.log(wrapper.instance().componentDidMount());
         wrapper.instance().componentUnmount();
         wrapper.instance().onChange();
       });
     
     it('calls componentDidMount lifecycle method', () => {
-        expect(getAuthenticatedStateSpy).toHaveBeenCalledTimes(1);
+        expect(getAuthenticatedStateSpy).toHaveBeenCalledTimes(2);
     });
 
 });

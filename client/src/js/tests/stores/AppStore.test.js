@@ -1,5 +1,5 @@
 import AppStore from '../../stores/AppStore';
-import AppAPI from '../../utils/appAPI';
+import AppAPI from '../../utils/AppAPI';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import StoreMock from '../mocks/StoreMock';
 

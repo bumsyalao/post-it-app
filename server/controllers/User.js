@@ -19,70 +19,55 @@ class User {
  */
   static signup(req, res) {
     const { userName, password, email, number } = req.body;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      const uid = user.uid;
+      const displayName = capitalizeFirstLetter(userName);
+      user.updateProfile({
+        displayName
+      });
+      const myToken = jwt.sign({
+        displayName,
+        email
+      },
+      'process.env.TOKEN_SECRET',
+      { expiresIn: '1h' });
 
-    req.check('userName', 'Username is required').notEmpty().matches(/\w/);
-    req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
-    req.check('email', 'Email is required').notEmpty();
-    req.check('email', 'The email address is badly formatted.').isEmail();
-    req.check('password', 'Password is required').notEmpty();
-    req.check('password', 'Password should be at least 6 characters')
-    .isLength(6, 50);
-
-    const errors = req.validationErrors();
-    if (errors) {
-      const message = errors[0].msg;
-      res.status(400).json({ message });
+      user.sendEmailVerification().then(() => {
+        usersRef.child(displayName).set({
+          userName: displayName,
+          password,
+          email,
+          uid,
+          number
+        });
+        res.status(201).send({
+          message: 'Welcome to Post it app',
+          userData: user,
+          myToken
+        });
+      });
+    })
+  .catch((error) => {
+    const errorCode = error.code;
+    if (errorCode === 'auth/invalid-email') {
+      res.status(400).json({
+        message: 'The email address is badly formatted.'
+      });
+    } else if (errorCode === 'auth/weak-password') {
+      res.status(400).json({
+        message: 'Password should be at least 6 characters'
+      });
+    } else if (errorCode === 'auth/email-already-in-use') {
+      res.status(409).json({
+        message: 'The email address is already in use by another account.'
+      });
     } else {
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        const uid = user.uid;
-        const displayName = capitalizeFirstLetter(userName);
-        user.updateProfile({
-          displayName
-        });
-        const myToken = jwt.sign({
-          displayName,
-          email
-        },
-        'process.env.TOKEN_SECRET',
-        { expiresIn: '1h' });
-
-        user.sendEmailVerification().then(() => {
-          usersRef.child(displayName).set({
-            userName: displayName,
-            password,
-            email,
-            uid,
-            number
-          });
-          res.status(201).send({
-            message: 'Welcome to Post it app',
-            userData: user,
-            myToken
-          });
-        });
-      })
-    .catch((error) => {
-      const errorCode = error.code;
-      if (errorCode === 'auth/invalid-email') {
-        res.status(400).json({
-          message: 'The email address is badly formatted.'
-        });
-      } else if (errorCode === 'auth/weak-password') {
-        res.status(400).json({
-          message: 'Password should be at least 6 characters'
-        });
-      } else if (errorCode === 'auth/email-already-in-use') {
-        res.status(409).json({
-          message: 'The email address is already in use by another account.'
-        });
-      } else {
-        res.status(500).json({
-          message: 'Internal Server Error'
-        });
-      }
-    });
+      res.status(500).json({
+        message: 'Internal Server Error'
+      });
     }
+  });
   }
 
   /**
@@ -97,41 +82,29 @@ class User {
   static googleSignup(req, res) {
     const { userName, email, uid, number } = req.body;
 
-    req.check('userName', 'Username is required').notEmpty().matches(/\w/);
-    req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
-    req.check('email', 'Email is required').notEmpty();
-    req.check('email', 'Please put a valid email').isEmail();
-    req.check('uid', 'Uid is required').notEmpty().matches(/\w/);
-
-    const errors = req.validationErrors();
-    if (errors) {
-      const message = errors[0].msg;
-      res.status(400).json({ message });
-    } else {
-      usersRef.child(userName).once('value', (snapshot) => {
-        if (!snapshot.exists()) {
-          usersRef.child(userName).set({
-            userName,
-            email,
-            uid,
-            number,
-            google: true
-          });
-          res.status(201).json({
-            message: 'Welcome to Post it app',
-            displayName: userName
-          });
-        } else {
-          res.status(409).json({
-            message: 'Username already exist'
-          });
-        }
-      }).catch(() => {
-        res.status(500).json(
-          { message: 'Internal Server Error' }
-        );
-      });
-    }
+    usersRef.child(userName).once('value', (snapshot) => {
+      if (!snapshot.exists()) {
+        usersRef.child(userName).set({
+          userName,
+          email,
+          uid,
+          number,
+          google: true
+        });
+        res.status(201).json({
+          message: 'Welcome to Post it app',
+          displayName: userName
+        });
+      } else {
+        res.status(409).json({
+          message: 'Username already exist'
+        });
+      }
+    }).catch(() => {
+      res.status(500).json(
+        { message: 'Internal Server Error' }
+      );
+    });
   }
 
   /**
@@ -146,75 +119,63 @@ class User {
   static signin(req, res) {
     const { email, password } = req.body;
 
-    req.check('email', 'Email is required').notEmpty();
-    req.check('email', 'The email address is badly formatted.').isEmail();
-    req.check('password', 'Password is required').notEmpty();
-    req.check('password', 'Password must be a mininum of 6 character')
-    .isLength(6, 50);
-
-    const errors = req.validationErrors();
-    if (errors) {
-      const message = errors[0].msg;
-      res.status(400).json({ message });
-    } else {
-      firebase.auth()
-        .signInWithEmailAndPassword(email, password).then((user) => {
-          const userName = user.displayName;
-          const rootRef = firebase.database().ref()
-          .child('users')
+    firebase.auth()
+      .signInWithEmailAndPassword(email, password).then((user) => {
+        const userName = user.displayName;
+        const rootRef = firebase.database().ref()
+        .child('users')
+        .child(userName)
+        .child('Groups');
+        rootRef.once('value', () => {
+          const groups = [];
+          let group = {};
+          const groupRef = rootRef.child('users')
           .child(userName)
           .child('Groups');
-          rootRef.once('value', () => {
-            const groups = [];
-            let group = {};
-            const groupRef = rootRef.child('users')
-            .child(userName)
-            .child('Groups');
-            groupRef.once('value', (snap) => {
-              snap.forEach((data) => {
-                group = {
-                  groupName: data.val().groupName
-                };
-                groups.push(group);
-              });
+          groupRef.once('value', (snap) => {
+            snap.forEach((data) => {
+              group = {
+                groupName: data.val().groupName
+              };
+              groups.push(group);
+            });
 
-              const myToken = jwt.sign({
-                userName,
-                email
-              },
-              'process.env.TOKEN_SECRET',
-              { expiresIn: '1h' });
+            const myToken = jwt.sign({
+              userName,
+              email
+            },
+            'process.env.TOKEN_SECRET',
+            { expiresIn: '1h' });
 
-              res.status(200).send({
-                message: 'Welcome to Post it app',
-                userData: user,
-                myToken
-              });
+            res.status(200).send({
+              message: 'Welcome to Post it app',
+              userData: user,
+              myToken
             });
           });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          if (errorCode === 'auth/invalid-email') {
-            res.status(400).json({
-              message: 'The email address is badly formatted.'
-            });
-          } else if (errorCode === 'auth/user-not-found') {
-            res.status(404).json({
-              message: 'The email does not exist.'
-            });
-          } else if (errorCode === 'auth/wrong-password') {
-            res.status(404).json({
-              message:
-              'The password is invalid.'
-            });
-          } else {
-            res.status(500).json(
-              { message: 'Internal Server Error' }
-            );
-          }
         });
-    }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode === 'auth/invalid-email') {
+          res.status(400).json({
+            message: 'The email address is badly formatted.'
+          });
+        } else if (errorCode === 'auth/user-not-found') {
+          res.status(404).json({
+            message: 'The email does not exist.'
+          });
+        } else if (errorCode === 'auth/wrong-password') {
+          res.status(404).json({
+            message:
+            'The password is invalid.'
+          });
+        } else {
+          res.status(500).json(
+            { message: 'Internal Server Error' }
+          );
+        }
+      });
   }
 
   /**
@@ -303,7 +264,7 @@ class User {
   static getAllUsers(req, res) {
     // const currentUser = firebase.auth().currentUser;
     // if (currentUser) {
-      usersRef.once('value', (snap) => {
+    usersRef.once('value', (snap) => {
         const userNames = [];
         snap.forEach((allUsers) => {
           userNames.push(allUsers.val().userName);
@@ -340,7 +301,7 @@ class User {
   static getAllNumbers(req, res) {
     // const currentUser = firebase.auth().currentUser;
     // if (currentUser) {
-      usersRef.once('value', (snap) => {
+    usersRef.once('value', (snap) => {
         const numbers = [];
         snap.forEach((allNumbers) => {
           numbers.push(allNumbers.val().number);
@@ -376,7 +337,7 @@ class User {
   static getAllEmails(req, res) {
     // const currentUser = firebase.auth().currentUser;
     // if (currentUser) {
-      usersRef.once('value', (snap) => {
+    usersRef.once('value', (snap) => {
         const emails = [];
         snap.forEach((allEmails) => {
           emails.push(allEmails.val().email);

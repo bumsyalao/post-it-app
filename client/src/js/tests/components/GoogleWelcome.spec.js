@@ -19,7 +19,7 @@ uid: 23489008394542348900839454
 }
 
 jest.spyOn(AppStore, 'getGoogleSignup').mockReturnValue(googleDetail)
-// const toast = jest.spyOn(toastr, 'error').mockReturnValue("The phone number already exist")
+
 
 let spyOnDispatcher;
 beforeEach(() => {
@@ -48,8 +48,9 @@ it('should contain defined methods', () => {
 });
 
 it('It should display the necessary elements', () => {
-  const wrapper = shallow(<GoogleWelcome />);
   wrapper.instance().componentDidMount();
+  wrapper.instance().componentUnmount();
+  wrapper.instance().onChange();  
   expect(wrapper.find('div').length).toBe(3);
   expect(wrapper.find('form').length).toBe(1);
   expect(wrapper.find('input').length).toBe(1);

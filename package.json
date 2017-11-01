@@ -73,6 +73,7 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.9.0",
     "babel-register": "^6.26.0",
     "coveralls": "*",
     "css-loader": "^0.28.4",
