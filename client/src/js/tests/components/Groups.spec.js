@@ -14,7 +14,7 @@ const groups = [{ groupName: 'Andela' }];
 const wrapper = mount(<Groups KeyName={groups} />)
 
 describe('Groups component', () => {
-  it('should render Groups component', () => {
+  it('should create a snapshot of itself', () => {
     const tree = renderer.create(<Groups KeyName={groups} />).toJSON();
     expect(tree).toMatchSnapshot();
   });

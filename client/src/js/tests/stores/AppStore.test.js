@@ -1,5 +1,6 @@
 import AppStore from '../../stores/AppStore';
 import AppAPI from '../../utils/AppAPI';
+import AppConstants from '../../constants/AppConstants';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import StoreMock from '../mocks/StoreMock';
 
@@ -17,29 +18,46 @@ afterEach(() => {
 jest.mock('../../dispatcher/AppDispatcher');
 const mockDispatcher = AppDispatcher.register.mock.calls[0][0];
 
-describe('SIGN_UP', () => {
+describe('AppStore', () => {
   it('should register a callback with the dispatcher', () => {
     expect(mockDispatcher.length).toBe(1);
   });
 
-  xit('should get the vales and state of all methods', () => {
-    mockDispatcher(StoreMock);
-    AppAPI.getUsers({ user: 'Sly' });
-    const result = AppAPI.getUsers();
-    expect(result).toEqual([{ user: 'Sly' }]);
+  it('should return initial default state inside the component', () => {
+    expect(AppStore.getAuthenticatedState()).toEqual(false);
+    expect(AppStore.getLoggedInUser()).toEqual('');
+    expect(AppStore.getLoggedInPicture()).toEqual('');
+    expect(AppStore.getUser()).toEqual('');
+    expect(AppStore.getContacts()).toEqual([]);
+    expect(AppStore.getAllUsersNumber()).toEqual([]);
+    expect(AppStore.getDatabaseUsers()).toEqual([]);
+    expect(AppStore.getAllEmails()).toEqual([]);
+    expect(AppStore.getGoogleSignup()).toEqual(null);
+    expect(AppStore.getGroups()).toEqual([]);
+    expect(AppStore.getCurrentGroup()).toEqual('');
   });
-});
 
-describe('RECEIVE_CONTACT', () => {
-  it('should register a callback with the dispatcher', () => {
+  it('should have getAuthenticatedState State change', () => {
     expect(mockDispatcher.length).toBe(1);
+    AppStore.setAuthenticatedState();
+    expect(AppStore.getAuthenticatedState()).toEqual(true);
+    AppStore.setLogout();
   });
 
-  xit('should get the vales and state of all methods', () => {
-    mockDispatcher(StoreMock);
-    AppStore.setdatabaseUsers({ user: 'Sly' });
+  it('should get the vales and state of all methods', () => {
+    //mockDispatcher('nn');
+    const emitChange = jest.fn();
+    emitChange();
+    expect(AppDispatcher.register.mock.calls.length).toBe(1);
+    expect(emitChange).toHaveBeenCalled();
   });
 });
+
+  it('should get the vales and state of all methods', () => {
+    //mockDispatcher(StoreMock);
+    AppStore.setDatabaseUsers(['Jim', 'Hesky']);
+  });
+
 
 describe('RECEIVE_LOGIN', () => {
   it('should register a callback with the dispatcher', () => {

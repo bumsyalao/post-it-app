@@ -14,6 +14,5 @@ describe('Navigation Component', () => {
     expect(wrapper.find('ul').length).toBe(1);
     expect(wrapper.find('li').length).toBe(1);
     expect(wrapper.find('a').length).toBe(2);
-});
-
+  });
 });

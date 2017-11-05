@@ -13,6 +13,7 @@ export const getToastError = (error) => {
   toastr.error(message);
 };
 
+
 /**
  * @function validateEmail
  *

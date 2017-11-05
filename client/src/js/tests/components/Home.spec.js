@@ -8,7 +8,7 @@ jest.mock('../../../../../server/config', () => ({
   }));
 
 describe('Home', () => {
-  it('It should render Home component', () => {
+  it('should create a snapshot of itself', () => {
     const tree = renderer.create(<Home />).toJSON();
     expect(tree).toMatchSnapshot();
   });

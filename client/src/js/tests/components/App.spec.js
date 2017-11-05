@@ -26,19 +26,19 @@ describe('App Component', () => {
     const getLoggedInUserSpy = jest.spyOn(AppStore, 'getLoggedInUser');
     const wrapper = shallow(<App />);
 
-    it('should contain a <Navigation />', () => {
+    it('should contain a <Navigation /> component', () => {
         expect(wrapper.find(Navigation)).toHaveLength(1);
     });
 
-    it('should contain a <Footer />', () => {
+    it('should contain a <Footer /> component', () => {
         expect(wrapper.find(Footer)).toHaveLength(1);
     });
 
-    it('should contain a <Routes />', () => {
+    it('should contain a <Routes /> component', () => {
         expect(wrapper.find(Routes)).toHaveLength(1);
     });
 
-    it('should return initial default state inside a component', () => {
+    it('should return initial default state inside the component', () => {
         expect(wrapper.state().isAuthenticated).toEqual(false);
         expect(wrapper.state().userName.length).toEqual(0);
     });
@@ -58,7 +58,6 @@ describe('App Component', () => {
     });
 
     it('should have all the method in the component to be defined', () => {
-        console.log(wrapper.instance().componentDidMount());
         wrapper.instance().componentUnmount();
         wrapper.instance().onChange();
       });

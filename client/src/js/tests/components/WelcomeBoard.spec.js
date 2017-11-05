@@ -5,7 +5,7 @@ import WelcomeBoard from '../../components/presentation/WelcomeBoard'
 
 
 describe('WelcomeBoard component', () => {
-  it('WelcomeBoard component should render as expected', () => {
+  it('should create a snapshot of itself', () => {
     const tree = renderer.create(<WelcomeBoard />).toJSON();
     expect(tree).toMatchSnapshot();
   });

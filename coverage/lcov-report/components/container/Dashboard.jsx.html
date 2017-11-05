@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>7/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/5</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>10/10</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -224,8 +224,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -234,7 +234,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -248,7 +248,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -262,7 +262,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,7 +275,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -298,10 +298,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -382,9 +382,9 @@ import WelcomeBoard from './../presentation/WelcomeBoard';
  * @extends {Component}
  */
 export default class DashBoard extends Component {
-<span class="fstat-no" title="function not covered" >  co</span>nstructor(props) {
-<span class="cstat-no" title="statement not covered" >    super(props);</span>
-<span class="cstat-no" title="statement not covered" >    this.state = {</span>
+  constructor(props) {
+    super(props);
+    this.state = {
       user: '',
       allUsers: [],
       groups: [],
@@ -393,7 +393,7 @@ export default class DashBoard extends Component {
       databaseUsers: [],
       notification: []
     };
-<span class="cstat-no" title="statement not covered" >    this.onChange = this.onChange.bind(this)</span>
+    this.onChange = this.onChange.bind(this)
   }
 &nbsp;
 &nbsp;
@@ -406,8 +406,8 @@ export default class DashBoard extends Component {
    * 
    * @memberof DashBoard
    */
-<span class="fstat-no" title="function not covered" >  co</span>mponentDidMount() {
-<span class="cstat-no" title="statement not covered" >    AppStore.addChangeListener(this.onChange);</span>
+  componentDidMount() {
+    AppStore.addChangeListener(this.onChange);
   }
 &nbsp;
 &nbsp;
@@ -420,8 +420,8 @@ export default class DashBoard extends Component {
    * 
    * @memberof DashBoard
    */
-<span class="fstat-no" title="function not covered" >  co</span>mponentWillUnmount() {
-<span class="cstat-no" title="statement not covered" >    AppStore.removeChangeListener(this.onChange);</span>
+  componentWillUnmount() {
+    AppStore.removeChangeListener(this.onChange);
   }
 &nbsp;
   /**
@@ -433,8 +433,8 @@ export default class DashBoard extends Component {
    * 
    * @memberof DashBoard
    */
-<span class="fstat-no" title="function not covered" >  on</span>Change() {
-<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+  onChange() {
+    this.setState({
       contacts: AppStore.getGroupUsers(),      
       groups: AppStore.getGroups(),
       user: AppStore.getUser(),
@@ -456,11 +456,11 @@ export default class DashBoard extends Component {
    * 
    * @memberof DashBoard
    */
-<span class="fstat-no" title="function not covered" >  re</span>nder() {
-    let userName = <span class="cstat-no" title="statement not covered" >JSON.parse(localStorage.getItem('user'));</span>
-    let photoURL = <span class="cstat-no" title="statement not covered" >JSON.parse(localStorage.getItem('photoURL')) || null;</span>
-    { <span class="cstat-no" title="statement not covered" >photoURL ? photoURL : photoURL = 'https://history.indiana.edu/images/no-photo.jpg' </span>}
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  render() {
+    let userName = JSON.parse(localStorage.getItem('user'));
+    let photoURL = JSON.parse(localStorage.getItem('photoURL')) || null;
+    { photoURL ? <span class="branch-0 cbranch-no" title="branch not covered" >photoURL </span>: photoURL = 'https://history.indiana.edu/images/no-photo.jpg' }
+    return (
       &lt;div&gt;
         &lt;div className="nav-side-menu" &gt;
           &lt;div
@@ -526,7 +526,7 @@ export default class DashBoard extends Component {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 02 2017 18:04:28 GMT+0100 (WAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 04 2017 18:48:15 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

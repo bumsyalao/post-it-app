@@ -1,13 +1,11 @@
-import chaiHttp from 'chai-http';
 import chai from 'chai';
 import request from 'supertest';
 
-import app from './../server/app';
+import app from '../server/app';
 
-
-chai.use(chaiHttp);
 const should = chai.should();
 const expect = chai.expect;
+
 const email = 'newton@gmail.com';
 const password = '123456';
 

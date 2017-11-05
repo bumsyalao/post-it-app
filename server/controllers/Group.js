@@ -53,14 +53,14 @@ class Group {
           } else {
             res.status(409).json({ message: 'Group already exists' });
           }
-        }).catch(() => {
-          res.status(500).json(
-            { message: 'Internal server error' }
-          );
         });
       } else {
         res.status(401).send('Access denied; You need to sign in');
       }
+    }).catch(() => {
+      res.status(500).json(
+        { message: 'Internal server error' }
+      );
     });
   }
 
@@ -75,8 +75,9 @@ class Group {
  * @return {Object} response containing the added user
  */
   static addUserToGroup(req, res) {
-    const { groupName, user } = req.body;
+    const { groupName, newUser } = req.body;
 
+    const user = capitalizeFirstLetter(newUser);
     const userDatabase = firebase.database();
     usersRef.child(user).once('value', (snapshot) => {
       if (snapshot.exists()) {

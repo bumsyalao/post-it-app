@@ -10,18 +10,34 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to register a user
    *
-   * @param { Object } contact
+   * @param { Object } userDetails
    *
    * @returns { Object } returns registered user registration details
    */
   signUpUser(userDetails) {
-    return axios.post('/user/signup', userDetails)
+    return axios.post('/api/v1/user/signup', userDetails)
     .then((response) => {
       const user = response.data.userData;
       AppActions.receiveLogin(user);
       toastr.success('Welcome,  An email will be sent to you.');
-    })
-    .catch(getToastError);
+    }).catch(getToastError);
+  },
+
+  /**
+   * @description describes an API call to the server for a post request
+   * to login a user.
+   *
+   * @param { Object } userDetails
+   *
+   * @returns { Object } returns registered user details
+   */
+  login(userDetails) {
+    return axios.post('/api/v1/user/signin', userDetails)
+    .then((response) => {
+      const user = response.data.userData;
+      AppActions.receiveLogin(user);
+      toastr.success('Welcome To PostIt');
+    }).catch(getToastError);
   },
 
 
@@ -33,14 +49,13 @@ const AppAPI = {
    *
    * @returns { Object } returns notification message
    */
-  saveGroup(group) {
-    return axios.post('/group', {
-      group: group.groupName,
-      userName: group.userName
-    }).then((response) => {
+  createGroup(group) {
+    return axios.post('/api/v1/group', group).then((response) => {
       toastr.success(response.data.message);
-    })
-    .catch(getToastError);
+      if (response.data.message === `Group ${group.groupName} created`){
+        AppActions.closeModals(group.groupName);
+      }
+    }).catch(getToastError);
   },
 
    /**
@@ -52,12 +67,11 @@ const AppAPI = {
    * @returns { Object } returns an object containing user's group
    */
   getGroups(userName) {
-    return axios.get(`/group/${userName}`)
+    return axios.get(`/api/v1/group/${userName}`)
     .then((response) => {
       const groups = response.data;
       AppActions.receiveGroups(groups);
-    })
-    .catch(getToastError);
+    }).catch(getToastError);
   },
 
    /**
@@ -69,10 +83,14 @@ const AppAPI = {
    * @returns { Object } returns an object containing user's notificaions
    */
   getNotifications(userName) {
-    return axios.get(`/user/notification/${userName}`)
+    return axios.get(`/api/v1/user/notification/${userName}`)
     .then((response) => {
       const notification = response.data;
       AppActions.receiveNotification(notification);
+    }).catch((error) => {
+      if (error.response.status === 500) {
+        toastr.error('Sorry, an unexpected error occurred.');
+      }
     });
   },
 
@@ -85,14 +103,14 @@ const AppAPI = {
    * @returns { Object } returns a notification message
    */
   addUserToGroup(addUser) {
-    return axios.post('/group/groupName/user', {
-      groupName: addUser.groupname,
-      user: addUser.userName
-    })
+    return axios.post('/api/v1/group/groupName/user', addUser)
     .then((response) => {
       toastr.success(response.data.message);
-    })
-    .catch(getToastError);
+    }).catch((error) => {
+      if (error.response.status === 500) {
+        toastr.error('Sorry, an unexpected error occurred.');
+      }
+    });
   },
 
   /**
@@ -104,11 +122,14 @@ const AppAPI = {
    * @returns { void }
    */
   postMessages(message) {
-    return axios.post('/group/user/message', message)
+    return axios.post('/api/v1/group/user/message', message)
     .then((response) => {
       toastr.success(response.data.message);
-    })
-    .catch(getToastError);
+    }).catch((error) => {
+      if (error.response.status === 500) {
+        toastr.error('Sorry, an unexpected error occurred.');
+      }
+    });
   },
 
     /**
@@ -123,29 +144,14 @@ const AppAPI = {
   seenMessage(user) {
     const groupName = user.groupName;
     const messageID = user.messageID;
-    return axios.get(`/seen/${groupName}/${messageID}`)
+    return axios.get(`/api/v1/seen/${groupName}/${messageID}`)
     .then((response) => {
       AppActions.receiveSeenUsers(response.data);
-    })
-    .catch(getToastError);
-  },
-
-    /**
-   * @description describes an API call to the server for a post request
-   * to login a user.
-   *
-   * @param { Object } contact
-   *
-   * @returns { Object } returns registered user details
-   */
-  login(userDetails) {
-    return axios.post('/user/signin', userDetails)
-    .then((response) => {
-      const user = response.data.userData;
-      AppActions.receiveLogin(user);
-      toastr.success('Welcome To PostIt');
-    })
-    .catch(() => toastr.error('There was an error in Network connection'));
+    }).catch((error) => {
+      if (error.response.status === 500) {
+        toastr.error('Sorry, an unexpected error occurred.');
+      }
+    });
   },
 
   /**
@@ -154,9 +160,13 @@ const AppAPI = {
    * @returns { Object } returns registered user details
    */
   setLogout() {
-    return axios.post('/user/signout').then((response) => {
+    return axios.post('/api/v1/user/signout').then((response) => {
       toastr.success(response.data.message);
-    }).catch(getToastError);
+    }).catch((error) => {
+      if (error.response.status === 500) {
+        toastr.error('Sorry, an unexpected error occurred.');
+      }
+    });
   },
 
   /**
@@ -171,14 +181,17 @@ const AppAPI = {
   searchUserMessageInGroup(group) {
     const groupName = group.groupName;
     const user = group.userName;
-    return axios.get(`/groups/${groupName}/${user}`)
+    return axios.get(`/api/v1/groups/${groupName}/${user}`)
       .then((response) => {
         const messages = response.data.messages;
         const users = response.data.users;
         AppActions.receiveMessages(messages);
         AppActions.receiveUser(users);
-      })
-      .catch(getToastError);
+      }).catch((error) => {
+        if (error.response.status === 500) {
+          toastr.error('Sorry, an unexpected error occurred.');
+        }
+      });
   },
 
   /**
@@ -192,7 +205,7 @@ const AppAPI = {
   googleSignUp(googleUser) {
     const { displayName, email, uid, number } = googleUser;
     const userName = displayName.replace(' ', '');
-    return axios.post('/google/signup', {
+    return axios.post('/api/v1/google/signup', {
       userName,
       email,
       number,
@@ -215,11 +228,10 @@ const AppAPI = {
    * @returns { Object } returns a notification message
    */
   resetPassword(email) {
-    return axios.post('/user/reset', { email
+    return axios.post('/api/v1/user/reset', { email
     }).then((response) => {
       toastr.success(response.data.message);
-    })
-    .catch(getToastError);
+    }).catch(getToastError);
   },
 
   /**
@@ -229,11 +241,14 @@ const AppAPI = {
    * @returns { Object } returns an object containing list of users
    */
   getUsers() {
-    return axios.get('/users/allusers')
+    return axios.get('/api/v1/users/allusers')
       .then((response) => {
         AppActions.receiveUsers(response.data);
-      })
- ;
+      }).catch((error) => {
+        if (error.response.status === 500) {
+          toastr.error('Sorry, an unexpected error occurred.');
+        }
+      });
   },
 
   /**
@@ -243,11 +258,14 @@ const AppAPI = {
    * @returns { Object } returns an object containing list of numbers
    */
   getNumbers() {
-    return axios.get('/users/allnumbers')
+    return axios.get('/api/v1/users/allnumbers')
         .then((response) => {
           AppActions.receiveNumber(response.data);
-        })
-        .catch(getToastError);
+        }).catch((error) => {
+          if (error.response.status === 500) {
+            toastr.error('Sorry, an unexpected error occurred.');
+          }
+        });
   },
 
   /**
@@ -257,11 +275,14 @@ const AppAPI = {
    * @returns { Object } returns an object containing list of emails
    */
   getEmails() {
-    return axios.get('/users/allemails')
+    return axios.get('/api/v1/users/allemails')
         .then((response) => {
           AppActions.receiveEmails(response.data);
-        })
-        .catch(getToastError);
+        }).catch((error) => {
+          if (error.response.status === 500) {
+            toastr.error('Sorry, an unexpected error occurred.');
+          }
+        });
   },
 
 };

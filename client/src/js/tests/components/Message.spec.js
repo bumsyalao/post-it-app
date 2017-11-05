@@ -19,16 +19,23 @@ afterEach(() => {
 
 
 describe('Message component', () => {
-  const message = [{ message: 'I am a message' }];
-  const group = 'Andela';
+  const props = {
+    message: [{ message: 'I am a message' }],
+    group:'Andela'
+  }
 
 
-  it('should render Message component', () => {
+  it('should create a snapshot of itself', () => {
     const tree = renderer.create(<Message />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  const wrapper = mount(<Message message={message} group={group} />);
+  const wrapper = mount(<Message {...props} />);
+
+  it('should display the necessary elements', () => {
+    expect(wrapper.props().message).toEqual([{ message: 'I am a message' }])
+    expect(wrapper.props().group).toEqual('Andela')
+  });
 
   it('should display the necessary elements', () => {
     expect(wrapper.find('div').length).toBe(2);
@@ -42,9 +49,6 @@ describe('Message component', () => {
     wrapper.instance().componentWillUnmount();
     wrapper.instance().onChange();
     wrapper.instance().closeModal();
-    expect(wrapper.find('div').length).toBe(2);
-    expect(wrapper.find('p').length).toBe(1);
-    expect(wrapper.find('span').length).toBe(2);
   });
 
 

@@ -37,9 +37,17 @@ describe('ResetPassword component', () => {
   });
 
   it('should have all the method in the component to be defined', () => {
+    const event = {
+      target: {
+        name: 'name',
+        value: 'value',
+      },
+      preventDefault: () => jest.fn()
+    };
     wrapper.instance().componentDidMount();
     wrapper.instance().componentWillUnmount();
     wrapper.instance().onChange();
+    // wrapper.instance().sendMessage(event);
   });
 
 });

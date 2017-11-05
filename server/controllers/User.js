@@ -26,13 +26,6 @@ class User {
       user.updateProfile({
         displayName
       });
-      const myToken = jwt.sign({
-        displayName,
-        email
-      },
-      'process.env.TOKEN_SECRET',
-      { expiresIn: '1h' });
-
       user.sendEmailVerification().then(() => {
         usersRef.child(displayName).set({
           userName: displayName,
@@ -44,7 +37,6 @@ class User {
         res.status(201).send({
           message: 'Welcome to Post it app',
           userData: user,
-          myToken
         });
       });
     })
@@ -82,10 +74,11 @@ class User {
   static googleSignup(req, res) {
     const { userName, email, uid, number } = req.body;
 
+    const newUser = capitalizeFirstLetter(userName)
     usersRef.child(userName).once('value', (snapshot) => {
       if (!snapshot.exists()) {
         usersRef.child(userName).set({
-          userName,
+          userName: newUser,
           email,
           uid,
           number,
@@ -139,18 +132,9 @@ class User {
               };
               groups.push(group);
             });
-
-            const myToken = jwt.sign({
-              userName,
-              email
-            },
-            'process.env.TOKEN_SECRET',
-            { expiresIn: '1h' });
-
             res.status(200).send({
               message: 'Welcome to Post it app',
               userData: user,
-              myToken
             });
           });
         });
@@ -224,14 +208,14 @@ class User {
         .child(userName)
         .child('Notifications');
 
-        notificationRef.once('value', (snap) => {
-          snap.forEach((data) => {
+        notificationRef.once('value', (notificationSnapShot) => {
+          notificationSnapShot.forEach((notificationData) => {
             notification = {
-              notification: data.val()
+              notification: notificationData.val()
             };
             if (notification.length === 0) {
               res.status(404).json(
-                { message: 'Notification' }
+                { message: 'You currently do not have notification' }
               );
             } else {
               notifications.push(notification);
@@ -264,23 +248,23 @@ class User {
   static getAllUsers(req, res) {
     // const currentUser = firebase.auth().currentUser;
     // if (currentUser) {
-    usersRef.once('value', (snap) => {
-        const userNames = [];
-        snap.forEach((allUsers) => {
-          userNames.push(allUsers.val().userName);
-        });
-        if (userNames.length === 0) {
-          res.status(404).json(
-            { message: 'There are currently no users found' }
-          );
-        } else {
-          res.status(200).json(userNames);
-        }
-      }).catch(() => {
-        res.status(500).send({
-          message: 'Internal Server Error'
-        });
+    usersRef.once('value', (snapShot) => {
+      const userNames = [];
+      snapShot.forEach((allUsers) => {
+        userNames.push(allUsers.val().userName);
       });
+      if (userNames.length === 0) {
+        res.status(404).json(
+          { message: 'There are currently no users found' }
+        );
+      } else {
+        res.status(200).json(userNames);
+      }
+    }).catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
     // } else {
     //   res.status(401).send({
     //     message: 'Access denied; You need to sign in'
@@ -301,23 +285,23 @@ class User {
   static getAllNumbers(req, res) {
     // const currentUser = firebase.auth().currentUser;
     // if (currentUser) {
-    usersRef.once('value', (snap) => {
-        const numbers = [];
-        snap.forEach((allNumbers) => {
-          numbers.push(allNumbers.val().number);
-        });
-        if (numbers.length === 0) {
-          res.status(404).json(
-            { message: 'There are currently no numbers found' }
-          );
-        } else {
-          res.status(200).send(numbers);
-        }
-      }).catch(() => {
-        res.status(500).send({
-          message: 'Internal Server Error'
-        });
+    usersRef.once('value', (snapShot) => {
+      const numbers = [];
+      snapShot.forEach((allNumbers) => {
+        numbers.push(allNumbers.val().number);
       });
+      if (numbers.length === 0) {
+        res.status(404).json(
+          { message: 'There are currently no numbers found' }
+        );
+      } else {
+        res.status(200).send(numbers);
+      }
+    }).catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
     // } else {
     //   res.status(401).send({
     //     message: 'Access denied; You need to sign in'
@@ -337,9 +321,9 @@ class User {
   static getAllEmails(req, res) {
     // const currentUser = firebase.auth().currentUser;
     // if (currentUser) {
-    usersRef.once('value', (snap) => {
+    usersRef.once('value', (snapShot) => {
         const emails = [];
-        snap.forEach((allEmails) => {
+        snapShot.forEach((allEmails) => {
           emails.push(allEmails.val().email);
         });
         if (emails.length === 0) {
@@ -376,7 +360,7 @@ class User {
     auth.sendPasswordResetEmail(emailAddress)
     .then(() => {
       res.status(200).json({
-        message: 'An email has been sent for password reset.'
+        message: 'An email has been sent to your inbox for password reset.'
       });
     }).catch((error) => {
       const errorCode = error.code;

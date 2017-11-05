@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Message component should render Message component 1`] = `
+exports[`Message component should create a snapshot of itself 1`] = `
 <div>
   <a
     className="list-group-item list-group-item-action flex-column align-items-start"

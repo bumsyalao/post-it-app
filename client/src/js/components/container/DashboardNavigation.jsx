@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Modal, Button, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
-import toastr from 'toastr'
+import toastr from 'toastr';
+import axios from 'axios';
+import { getToastError } from '../../helpers/utils';
+import AppApi from '../../utils/AppAPI';
+
 
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
@@ -38,6 +42,9 @@ export default class DashboardNavigation extends Component {
     this.logout = this.logout.bind(this)
     this.handleNotificationButton = this.handleNotificationButton.bind(this)
     this.handleAddUserButton = this.handleAddUserButton.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    
   }
 
   /**
@@ -77,6 +84,54 @@ export default class DashboardNavigation extends Component {
     this.setState({ notificationModal: false });
   }
 
+  /**
+  * @description: controls inputs state
+  *
+  * @param {object} element the current element
+  *
+  * @return {void} void
+  */
+  handleChange(element) {
+    this.setState({
+      [element.target.name]: element.target.value
+    });
+  }
+
+    /**
+   * @method componentDidMount
+   * 
+   * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+   *
+   * @return {void}
+   * 
+   */
+  componentDidMount() {
+    AppStore.addChangeListener(this.onChange);
+  }
+
+  /**
+  * @method componentUnmount
+  *
+  * @description Removes event Listener from the Store
+  * 
+  */
+  componentUnmount() {
+      AppStore.removeChangeListener(this.onChange);
+  }
+
+  /**
+  * @method onChange
+  * 
+  * @description Monitors changes in the components and change the state
+  * 
+  */
+  onChange() {
+      this.setState({ 
+          groupName: AppStore.getModalState(),
+          //addUserModal: AppStore.getModalState(),
+      });
+  }
+
 
   /**
   * @description Method for adding user to the group
@@ -90,10 +145,16 @@ export default class DashboardNavigation extends Component {
   createGroup(event) {
     event.preventDefault()
     const group = {
-      groupName: this.refs.group.value.trim(),
+      group: this.refs.group.value.trim(),
       userName: this.props.userName
     }
-    AppActions.saveGroup(group);
+    axios.post('/api/v1/group', group).then((response) => {
+      toastr.success(response.data.message);
+      this.refs.group.value = '';
+      AppApi.getGroups(group.userName)
+      AppStore.saveGroupUsers({groupName:group.userName})
+    }).catch(getToastError);
+    //AppActions.saveGroup(group);
   }
 
 
@@ -110,13 +171,18 @@ export default class DashboardNavigation extends Component {
     event.preventDefault();
 
     const addUser = {
-      groupname: this.refs.type.value.trim(),
-      userName: this.refs.user.value
+      groupName: this.refs.type.value.trim(),
+      newUser: this.refs.user.value
     }
     if (this.refs.type.value === 'Groups') {
       toastr.error("Select a Group name")
     } else {
-      AppActions.saveGroupUser(addUser)
+      axios.post('/api/v1/group/groupName/user', addUser)
+      .then((response) => {
+        toastr.success(response.data.message);
+        this.refs.user.value = '';
+        AppStore.saveGroupUsers({userName:addUser.newUser})
+      }).catch(getToastError);
     }
   }
 
@@ -181,12 +247,20 @@ export default class DashboardNavigation extends Component {
         >
           <form onSubmit={this.createGroup}>
             <div className='form-group'>
-              <input type="text" ref='group'
-                className='form-control' placeholder='GroupName'
+              <input 
+                name="groupName"
+                type="text"
+                ref='group'
+                className='form-control'
+                placeholder='Group Name'
+                onChange={this.handleChange}
                 required />
             </div>
-            <button type='submit'
-              className='btn btn-primary'>Submit</button>
+            <button 
+              type='submit'
+              className='btn btn-primary'>
+              Submit
+            </button>
           </form>
         </ModalButton>
 
@@ -201,7 +275,9 @@ export default class DashboardNavigation extends Component {
         >
           <form onSubmit={this.addUser} className="whatever">
             <div className='form-group'>
-              <select className="form-control" ref="type">
+              <select 
+                className="form-control" 
+                ref="type">
                 <option>Groups</option>
                 {groupOptions}
               </select>

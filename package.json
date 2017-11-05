@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha --timeout 150000",
-    "jest": "jest --coverage",
+    "client-test": "jest --coverage",
     "start": "NODE_ENV=production babel-watch ./server/app",
     "dev": "webpack-dev-server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

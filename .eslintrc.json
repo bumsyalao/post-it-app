@@ -53,7 +53,8 @@
     "env": {
     "node": true,
     "es6": true,
-    "jest": true
+    "jest": true,
+    "browser": true
     },
     "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
     "arrow-body-style": ["error", "as-needed"]

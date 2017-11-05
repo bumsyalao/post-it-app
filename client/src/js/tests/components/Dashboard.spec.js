@@ -23,8 +23,6 @@ const mock = jest.fn();
 const getAuthenticatedStateSpy = jest.spyOn(AppStore, 'getUser');
 
 
-
-
 describe('Dashboard Component', () => {
   const newStateProperty = {
     user: 'Ebuka',
@@ -70,7 +68,7 @@ describe('Dashboard Component', () => {
       expect(wrapper.find(MessageBoard)).toHaveLength(1);
     });
 
-    it('expects the following functions defined', () => {
+    it('expects the following functions to be defined', () => {
       wrapper.instance().componentDidMount();
       wrapper.instance().componentWillUnmount();
       wrapper.instance().onChange();

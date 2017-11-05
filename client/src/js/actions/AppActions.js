@@ -8,7 +8,7 @@ const AppActions = {
    * API call to the server for a post request
    * to register a user
    *
-   * @param { Object } contact
+   * @param { Object } userDetails
    *
    * @returns { void }
    *
@@ -20,12 +20,12 @@ const AppActions = {
     });
   },
 
-    /**
+  /**
    * @description describes an action that makes
    * API call to the server for a post request
    * to receive a user details
    *
-   * @param { Object } contacts
+   * @param { Object } users
    *
    * @returns { void }
    *
@@ -170,7 +170,7 @@ const AppActions = {
    * an API call to the server for a post request
    * to login a user.
    *
-   * @param { Object } contact
+   * @param { Object } userDetails
    *
    * @returns { void }
    */
@@ -254,6 +254,19 @@ const AppActions = {
   logout() {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.LOGOUT
+    });
+  },
+
+  /**
+   * @description describes an action that makes
+   * an API call to the server to sign the user out
+   *
+   * @returns { Object } returns registered user details
+   */
+  closeModals(message) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.CLOSE_MODALS,
+      message
     });
   },
 

@@ -8,7 +8,7 @@ import AppAPI from '../utils/AppAPI';
 const CHANGE_EVENT = 'change';
 
 let userStore = '';
-let authenticate = false;
+let isAuthenticated = false;
 let contactsStore = [];
 let currentGroupStore = '';
 let messagesStore = [];
@@ -26,6 +26,7 @@ let googleSignUpStore = null;
 const loggedInUser = [];
 const loggedInPicture = [];
 let allEmails = [];
+let modalState = '';
 
 const AppStore = assign({}, EventEmitter.prototype, {
 
@@ -40,7 +41,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * @returns { Boolean } returns a bool
  */
   getAuthenticatedState() {
-    return authenticate;
+    return isAuthenticated;
   },
 
   /**
@@ -53,7 +54,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * @returns { Boolean } returns True
  */
   setAuthenticatedState() {
-    authenticate = true;
+    isAuthenticated = true;
   },
 
   /**
@@ -66,9 +67,17 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * @returns { Boolean } returns False
  */
   setLogout() {
-    authenticate = false;
+    isAuthenticated = false;
   },
 
+
+  getModalState() {
+    return modalState;
+  },
+
+  setModalState(message) {
+    modalState = message;
+  },
   
   getLoggedInUser() {
     return loggedInUser;
@@ -85,6 +94,8 @@ const AppStore = assign({}, EventEmitter.prototype, {
   saveUser(user) {
     userStore = user;
     loggedInUser.push(user.displayName);
+    localStorage.setItem('token',
+    JSON.stringify(user.stsTokenManager.accessToken));
   },
 
   setUser(user) {
@@ -136,8 +147,13 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return groupsStore;
   },
 
+  saveGroups(group) {
+    groupsStore.push(group);
+  },
+
   setGroups(groups) {
     groupsStore = groups;
+    console.log(groupsStore)
   },
 
   getCurrentGroup() {
@@ -161,7 +177,9 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return groupUsersStore;
   },
 
-
+  saveGroupUsers(user) {
+    groupUsersStore.push(user);
+  },
 /**
  * @description This push 
  *
@@ -321,7 +339,7 @@ AppDispatcher.register((payload) => {
 
 
     case AppConstants.SAVE_GROUP:
-      AppAPI.saveGroup(action.group);
+      AppAPI.createGroup(action.group);
       AppStore.emit(CHANGE_EVENT);
       break;
 
@@ -412,6 +430,11 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.NOTIFICATIONS:
       AppAPI.getNotifications(action.userName);
+      AppStore.emit(CHANGE_EVENT);
+      break;
+
+    case AppConstants.CLOSE_MODAL:
+      AppStore.setModalState(action.message);
       AppStore.emit(CHANGE_EVENT);
       break;
 

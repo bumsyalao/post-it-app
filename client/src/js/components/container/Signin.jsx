@@ -96,8 +96,6 @@ class Signin extends Component {
         email: '',
         passowrd: ''
       })
-    } else {
-      toastr.error('Invalid Email Address')
     }
   }
 

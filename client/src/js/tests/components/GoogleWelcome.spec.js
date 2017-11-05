@@ -12,22 +12,22 @@ jest.mock('../../../../../server/config', () => ({
 jest.mock('../../actions/AppActions');
 
 const googleDetail = {
-displayName: 'Kate',
-email: 'kate@gmail.com',
-number: 2348900839454,
-uid: 23489008394542348900839454
+  displayName: 'Kate',
+  email: 'kate@gmail.com',
+  number: 2348900839454,
+  uid: 23489008394542348900839454
 }
 
 jest.spyOn(AppStore, 'getGoogleSignup').mockReturnValue(googleDetail)
 
 
 let spyOnDispatcher;
-beforeEach(() => {
-spyOnDispatcher = spyOn(AppActions, 'googleSignup');
+  beforeEach(() => {
+  spyOnDispatcher = spyOn(AppActions, 'googleSignup');
 });
 
 afterEach(() => {
-spyOnDispatcher.mockReset();
+  spyOnDispatcher.mockReset();
 });
 
 const wrapper = mount(<GoogleWelcome />);
@@ -45,12 +45,12 @@ it('should contain defined methods', () => {
   expect(wrapper.node.handleChange).toBeDefined()
   expect(wrapper.node.onChange).toBeDefined()
   expect(wrapper.node.handleSubmit).toBeDefined()
-});
-
-it('It should display the necessary elements', () => {
   wrapper.instance().componentDidMount();
   wrapper.instance().componentUnmount();
   wrapper.instance().onChange();  
+});
+
+it('It should display the necessary elements', () => {
   expect(wrapper.find('div').length).toBe(3);
   expect(wrapper.find('form').length).toBe(1);
   expect(wrapper.find('input').length).toBe(1);

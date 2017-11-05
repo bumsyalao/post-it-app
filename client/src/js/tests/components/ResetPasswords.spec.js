@@ -18,7 +18,7 @@ afterEach(() => {
 });
 
 describe('ResetPassword component', () => {
-  it('It should ResetPassword Home component', () => {
+  it('should create a snapshot of itself', () => {
     const tree = renderer.create(<ResetPassword />).toJSON();
     expect(tree).toMatchSnapshot();
   });

@@ -9,25 +9,14 @@ import localStorageMock from '../../../../../mock/LocalStorageMock';
 window.localStorage = localStorageMock;
 
 describe('DashBoardNavigation.js', () => {
-  const group = [{ groupName: 'Andela' }];
-  const allUsers = ['George', 'Phil', 'Odim'];
-  const notification = ['George has posted in Green group'];
-  const userName = 'George';
-  let wrapper;
+  const props = {
+    group: [{ groupName: 'Andela' }],
+    allUsers: ['George', 'Phil', 'Odim'],
+    notification: ['George has posted in Green group'],
+    userName: 'George'
+  }
 
-  beforeEach(() => {
-
-  wrapper = mount( <DashboardNavigation
-      group={group}
-      allUsers={allUsers}
-      notification={notification}
-      userName={userName}/>
-      );
-
-  })
-  it('test', () => {
-    wrapper.setState({addUserModal: true});
-  })
+  const wrapper = mount( <DashboardNavigation {...props}/> );
 
   it('should have initial state inside the component', () => {
     expect(wrapper.state().createGroupModal).toEqual(false);
@@ -84,7 +73,7 @@ describe('DashBoardNavigation.js', () => {
    
    
 
-   it('should simulate a click', () => {
+   it('should be able to change state when an action is triggered', () => {
        const newStateProperty = {
           createGroupModal: true,
           addUserModal: true,
@@ -94,7 +83,6 @@ describe('DashBoardNavigation.js', () => {
           users: ['Luke', 'John']
       };
 
-    //wrapper.find('button').at(3).simulate('click');
     wrapper.setState(newStateProperty);
     expect(wrapper.state().createGroupModal).toEqual(true);
     expect(wrapper.state().addUserModal).toEqual(true);
@@ -106,87 +94,10 @@ describe('DashBoardNavigation.js', () => {
   })
  
 
-
-
-  it('should find initial components', () => {
-    const component = shallow( <DashboardNavigation
-      group={group}
-      allUsers={allUsers}
-      notification={notification}
-      userName={userName}/>
-      );
+  it('should contain 4 <ModalButton /> component', () => {
+    const component = shallow( <DashboardNavigation {...props}/>);
       const modalButtons = component.find('ModalButton');
      expect(modalButtons).toHaveLength(4);
-
   })
-
-  it('should find the first modal component and open it', () => {
-    const component = mount( <DashboardNavigation
-      group={group}
-      allUsers={allUsers}
-      notification={notification}
-      userName={userName}/>
-      );
-
-    const mockCallBack = jest.fn()  
-    const anchor = component.find('a').first();
-    anchor.simulate('click')
-    expect(component.state().createGroupModal).toEqual(true);
-    // console.log(component.state())
-
-    // console.log(component.find('a').length)
-
- 
-    // component.find('a').at(0).simulate('click')
-    // expect(component.state().createGroupModal).toEqual(false);
-    // console.log(component.state())
-  
-  })
-  it('should find the first modal component and open it', () => {
-    const component = shallow( <DashboardNavigation
-      group={group}
-      allUsers={allUsers}
-      notification={notification}
-      userName={userName}/>
-      );
-      component.find('form').at(2).simulate('click');
-      // const modalButtons = component.find(ModalButton);
-      
-      // console.log(modalButtons.length, 'whattt')
-      // console.log(component.find('.whatever').length, 'length of something we do care about')
-      // 
-      // console.log(component.find('ModalButton').at(1).children().at(1), 'whatever')
-      // console.log(component.find('div').children().at(1).props().userData.props.onSubmit({preventDefault: () => {}}), 'html')
-    // const mockCallBack = jest.fn()  
-    // const button = wrapper.find(ModalButton)
-    // console.log(button.html(), 'button');
-  })
-  // it('should find the first modal component and close it', () => {
-  //   const component = mount( <DashboardNavigation
-  //     group={group}
-  //     allUsers={allUsers}
-  //     notification={notification}
-  //     userName={userName}/>
-  //     );
-
-  //   const mockCallBack = jest.fn()  
-  //   const anchor = component.find('a').at(0).simulate('click')
-  //   expect(component.state().createGroupModal).toEqual(false);
-  //   console.log(component.state())
-  
-  // })
-
-  
-
-
-  // it('should return initial default prop inside the component', () => {
-  //   const wrapper = mount(<DashboardNavigation group={group}/>);
-  //   //expect(wrapper.props().userName).toEqual('');
-  //   console.log(wrapper.props())
-  //   // expect(wrapper.state().allUsers.length).toEqual(0);
-  //   // expect(wrapper.state().notification.length).toEqual(0);
-  //   // expect(wrapper.state().group.length).toEqual(0);
-  // });
-
 
 })

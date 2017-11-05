@@ -115,7 +115,7 @@ export default class Validate {
  */
   static addUserToGroup(req, res, next) {
     req.check('groupName', 'Group name is required').notEmpty().matches(/\w/);
-    req.check('user', 'Username is required').notEmpty().matches(/\w/);
+    req.check('newUser', 'Username is required').notEmpty().matches(/\w/);
 
     const errors = req.validationErrors();
     if (errors) {
@@ -124,7 +124,7 @@ export default class Validate {
     } else {
       next();
     }
-}
+  }
 
 
 /**

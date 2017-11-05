@@ -12,27 +12,27 @@ jest.mock('../../../../../server/config', () => ({
   }));
 
 describe('SideBar Component', () => {
-  const groups = [{ groupName: 'Andela' }];
-  const contacts = ['George', 'Phil', 'Odim'];
-  const currentGroup = 'Andela';
-  const userName = 'George';
-  let wrapper;
+  localStorage.setItem('user', JSON.stringify('Ebuka')); 
+  const props = {
+    group: [{ groupName: 'Andela' }],
+    contact: ['George', 'Phil', 'Odim'],
+    currentGroup: 'Andela',
+    user: JSON.parse(localStorage.getItem('user'))
+  }
 
-  localStorage.setItem('user', JSON.stringify('Ebuka'));
-  const user = JSON.parse(localStorage.getItem('user'))
- 
-  wrapper = mount( <SideBar
-      contact={contacts}
-      group={groups}
-      currentGroup={currentGroup}
-      user = {user} />
-      );
+
+  const wrapper = mount( <SideBar {...props} />);
 
   it('should display the necessary elements', () => {    
     expect(wrapper.find('div').length).toBe(2);
     expect(wrapper.find('a').length).toBe(6);
     expect(wrapper.find('br').length).toBe(2);
+  });
 
-});
-
+  it('should have initial props in the component', () => {    
+    expect(wrapper.props().group).toEqual([{ groupName: 'Andela' }])
+    expect(wrapper.props().contact).toEqual([ 'George', 'Phil', 'Odim' ])
+    expect(wrapper.props().currentGroup).toEqual('Andela')
+    expect(wrapper.props().user).toEqual('Ebuka')
+  });
 });
