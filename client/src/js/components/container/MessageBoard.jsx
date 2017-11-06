@@ -16,7 +16,6 @@ export default class MessageBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: '',
             currentGroup: '',
             messages: []
         };
@@ -90,7 +89,6 @@ export default class MessageBoard extends Component {
         this.setState({ 
             currentGroup: AppStore.getCurrentGroup(),
             messages: AppStore.getMessages(),
-            user: AppStore.getUser()
         });
     }
 

@@ -24,19 +24,16 @@ let archiveMessageStore = [];
 let seenUsersStore = [];
 let googleSignUpStore = null;
 const loggedInUser = [];
-const loggedInPicture = [];
+const profilePicture = [];
 let allEmails = [];
-let modalState = '';
 
 const AppStore = assign({}, EventEmitter.prototype, {
 
-
 /**
- * @description This method logs the user into the app
+ * @description describes a function that gets the authenticated state
+ * of the user
  *
  * @method getAuthenticatedState
- *
- * @memberof AppStore
  *
  * @returns { Boolean } returns a bool
  */
@@ -44,12 +41,10 @@ const AppStore = assign({}, EventEmitter.prototype, {
     return isAuthenticated;
   },
 
-  /**
+/**
  * @description This sets the authentication state to true
  *
  * @method setAuthenticatedState
- *
- * @memberof AppStore
  *
  * @returns { Boolean } returns True
  */
@@ -57,12 +52,10 @@ const AppStore = assign({}, EventEmitter.prototype, {
     isAuthenticated = true;
   },
 
-  /**
+/**
  * @description This logs the user out of the app
  *
- * @method setAuthenticatedState
- *
- * @memberof AppStore
+ * @method setLogout
  *
  * @returns { Boolean } returns False
  */
@@ -70,199 +63,326 @@ const AppStore = assign({}, EventEmitter.prototype, {
     isAuthenticated = false;
   },
 
-
-  getModalState() {
-    return modalState;
-  },
-
-  setModalState(message) {
-    modalState = message;
-  },
-  
+/**
+ * @description describes a function that fetches the current user logged in
+ *
+ * @method getLoggedInUser
+ *
+ * @returns { String } returns the current User's name
+ */
   getLoggedInUser() {
     return loggedInUser;
   },
 
-  getLoggedInPicture() {
-    return loggedInPicture;
-  },
-
-  getUser() {
-    return userStore;
-  },
-
+/**
+ * @description describes a function that save the user's detail in the
+ * localStorage
+ *
+ * @param { Object } user
+ *
+ * @method saveUser
+ *
+ * @returns { Void }
+ */
   saveUser(user) {
     userStore = user;
     loggedInUser.push(user.displayName);
-    localStorage.setItem('token',
-    JSON.stringify(user.stsTokenManager.accessToken));
   },
 
-  setUser(user) {
-    userStore = user;
-  },
-
+/**
+ * @description describes a function that returns list of users
+ *
+ * @method getContacts
+ *
+ * @returns { Object } returns list of users
+ */
   getContacts() {
     return contactsStore;
   },
 
+/**
+ * @description describes a function that fetches users
+ *
+ * @method setContacts
+ *
+ * @returns { Void }
+ */
   setContacts(contacts) {
     contactsStore = contacts;
   },
 
+/**
+ * @description describes a function that returns list of numbers
+ *
+ * @method getAllUsersNumber
+ *
+ * @returns { Object } returns list of numbers
+ */
   getAllUsersNumber() {
     return allUsersNumberStore;
   },
 
+/**
+ * @description describes a function that fetches numbers
+ *
+ * @method setAllUsersNumber
+ *
+ * @param { Object } numbers
+ *
+ * @returns { Void }
+ */
   setAllUsersNumber(numbers) {
     allUsersNumberStore = numbers;
   },
 
+/**
+ * @description describes a function that returns list of users in a group
+ *
+ * @method getDatabaseUsers
+ *
+ * @returns { Object } returns list of users from a group
+ */
   getDatabaseUsers() {
     return databaseUsersStore;
   },
 
+/**
+ * @description describes a function that fetches users in a group
+ *
+ * @method setDatabaseUsers
+ *
+ * @returns { Object } returns list of users in a group
+ */
   setDatabaseUsers(users) {
     databaseUsersStore = users;
   },
 
+/**
+ * @description describes a function that returns list of emails
+ *
+ * @method getAllEmails
+ * 
+ * @returns { Object } returns list of emails
+ */
   getAllEmails() {
     return allEmails;
   },
 
+/**
+ * @description describes a function that fetches emails
+ *
+ * @method setAllUsersNumber
+ *
+ * @returns { Object } returns list of emails
+ */
   setEmails(emails) {
     allEmails = emails;
   },
 
+/**
+ * @description describes a function that fetch the details signed in
+ * via google
+ *
+ * @method getGoogleSignup
+ * 
+ * @returns { Object } returns userdetails via google signup
+ */
   getGoogleSignup() {
     return googleSignUpStore;
   },
 
+/**
+ * @description describes a function that registers a user into the app
+ * via google signup
+ *
+ * @method setGoogleSignIn
+ *
+ * @param { Object } googleUser
+ *
+ * @returns { Void }
+ */
   setGoogleSignIn(googleUser) {
-    loggedInPicture.push(googleUser.photoURL);
+    profilePicture.push(googleUser.photoURL);
     googleSignUpStore = googleUser;
   },
 
+/**
+ * @description describes a function that returns groups the user belongs to
+ *
+ *
+ * @method getGroups
+ *
+ * @returns { Object } returns list of the user's group
+ */
   getGroups() {
     return groupsStore;
   },
 
-  saveGroups(group) {
-    groupsStore.push(group);
-  },
-
+/**
+ * @description describes a function that fetchs all the group the the user
+ * belongs to
+ *
+ * @method setGroups
+ *
+ * @param { Object } groups
+ *
+ * @returns { Void }
+ */
   setGroups(groups) {
     groupsStore = groups;
-    console.log(groupsStore)
   },
 
+/**
+ * @description describes a function that gets the user's current group
+ *
+ * @method getCurrentGroup
+ *
+ * @returns { Object } returns the current group
+ */
   getCurrentGroup() {
     return currentGroupStore;
   },
 
+/**
+ * @description describes a function that sets the user's current group
+ *
+ * @method setCurrentGroup
+ *
+ * @param { Object } group
+ *
+ * @returns { Void }
+ */
   setCurrentGroup(group) {
     currentGroupStore = group;
   },
 
 /**
- * @description This returns an array of users and messages in a group
+ * @description describes a function that gets object of users in a group
  *
  * @method getGroupUsers
  *
  * @memberof AppStore
  *
- * @returns { Array } Returns an array of group messages
+ * @returns { Object } returns an object of usersin a group
  */
   getGroupUsers() {
     return groupUsersStore;
   },
 
-  saveGroupUsers(user) {
-    groupUsersStore.push(user);
+
+  saveGroupUsers(users) {
+    groupUsersStore.push(users);
   },
 /**
- * @description This push 
+ * @description describes a function that saves the a user in a group
  *
- * @method getGroupUsers
+ * @method setGroupUsers
  *
  * @memberof AppStore
  *
- * @returns { Array } Returns an array of group messages
+ * @returns { Void }
  */
-
   setGroupUsers(users) {
     groupUsersStore = users;
   },
 
-  getGroupEmails() {
-    return groupEmailStore;
-  },
-
-  setGroupEmails(emails) {
-    groupEmailStore = emails;
-  },
-
-  getGroupNumbers() {
-    return groupNumbersStore;
-  },
-
-  setGroupNumbers(numbers) {
-    groupNumbersStore = numbers;
-  },
-
+/**
+ * @description describes a function that get messages in a group
+ *
+ * @method getMessages
+ *
+ * @memberof AppStore
+ *
+ * @returns { Object } Returns an object of group messages
+ */
   getMessages() {
     return messagesStore;
   },
 
+/**
+ * @description describes a function that saves messages in state
+ *
+ * @method saveMessages
+ *
+ * @memberof AppStore
+ *
+ * @param { Object } messages
+ *
+ * @returns { Void }
+ */
   saveMessages(message) {
     messagesStore.push(message);
   },
 
+/**
+ * @description describes a function that fetches messages in a group
+ *
+ * @method setMessages
+ *
+ * @memberof AppStore
+ *
+ * @param { Object } messages
+ *
+ * @returns { Void }
+ */
   setMessages(messages) {
     messagesStore = messages;
   },
 
+/**
+ * @description describes a function that get notification of a user
+ *
+ * @method getNotification
+ *
+ * @memberof AppStore
+ *
+ * @returns { Object } returns user's notification
+ */
   getNotification() {
     return notificationStore;
   },
 
-  setNotification(notify) {
-    notificationStore = notify;
+/**
+ * @description describes a function that fetches notification of a user
+ *
+ * @method setNotification
+ *
+ * @memberof AppStore
+ *
+ * @param { Object } notifications
+ *
+ * @returns { Void }
+ */
+  setNotification(notifications) {
+    notificationStore = notifications;
   },
 
-  getPersonalMessage() {
-    return personalMessageStore;
-  },
-
-  savePersonalMessage(message) {
-    personalMessageStore.push(message);
-  },
-
-  setPersonalMessage(message) {
-    personalMessageStore = message;
-  },
-
-  removeMessage(messageId) {
-    const index = personalMessageStore.findIndex(x => x.id === messageId);
-    personalMessageStore.splice(index, 1);
-  },
-
-  getArchiveMessage() {
-    return archiveMessageStore;
-  },
-
-  saveArchiveMessage(message) {
-    archiveMessageStore.push(message);
-  },
-
-  setArchiveMessage(message) {
-    archiveMessageStore = message;
-  },
-
+/**
+ * @description describes a function that get list users of who have read
+ * a message
+ *
+ * @method getSeenUsers
+ *
+ * @memberof AppStore
+ *
+ * @returns { Object } returns users
+ */
   getSeenUsers() {
     return seenUsersStore;
   },
 
+/**
+ * @description describes a function that fetches list of users of users
+ * who have read a message
+ *
+ * @method setSeenUsers
+ *
+ * @memberof AppStore
+ *
+ * @param { Object } users
+ *
+ * @returns { Void }
+ */
   setSeenUsers(users) {
     seenUsersStore = users;
   },
@@ -430,11 +550,6 @@ AppDispatcher.register((payload) => {
 
     case AppConstants.NOTIFICATIONS:
       AppAPI.getNotifications(action.userName);
-      AppStore.emit(CHANGE_EVENT);
-      break;
-
-    case AppConstants.CLOSE_MODAL:
-      AppStore.setModalState(action.message);
       AppStore.emit(CHANGE_EVENT);
       break;
 

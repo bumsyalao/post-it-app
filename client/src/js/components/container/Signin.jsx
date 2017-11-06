@@ -139,7 +139,7 @@ class Signin extends Component {
             googleComponent: true
           })
         }
-      }).catch(() => toastr.error('There was an error in Network connection'));
+      }).catch(() => toastr.error('There was an error in network connection'));
   }
 
   /**

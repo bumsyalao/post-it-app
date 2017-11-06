@@ -259,19 +259,6 @@ const AppActions = {
 
   /**
    * @description describes an action that makes
-   * an API call to the server to sign the user out
-   *
-   * @returns { Object } returns registered user details
-   */
-  closeModals(message) {
-    AppDispatcher.handleViewAction({
-      actionType: AppConstants.CLOSE_MODALS,
-      message
-    });
-  },
-
-    /**
-   * @description describes an action that makes
    * an API call to the server for a get request
    * to get all users.
    *

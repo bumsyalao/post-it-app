@@ -127,7 +127,7 @@ export default class DashboardNavigation extends Component {
   */
   onChange() {
       this.setState({ 
-          groupName: AppStore.getModalState(),
+          //groupName: AppStore.getModalState(),
           //addUserModal: AppStore.getModalState(),
       });
   }

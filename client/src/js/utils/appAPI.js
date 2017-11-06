@@ -52,9 +52,6 @@ const AppAPI = {
   createGroup(group) {
     return axios.post('/api/v1/group', group).then((response) => {
       toastr.success(response.data.message);
-      if (response.data.message === `Group ${group.groupName} created`){
-        AppActions.closeModals(group.groupName);
-      }
     }).catch(getToastError);
   },
 

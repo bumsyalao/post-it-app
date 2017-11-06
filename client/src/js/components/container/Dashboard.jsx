@@ -22,7 +22,6 @@ export default class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: '',
       allUsers: [],
       groups: [],
       contacts: [],
@@ -74,7 +73,6 @@ export default class DashBoard extends Component {
     this.setState({
       contacts: AppStore.getGroupUsers(),      
       groups: AppStore.getGroups(),
-      user: AppStore.getUser(),
       currentGroup: AppStore.getCurrentGroup(),
       databaseUsers: AppStore.getDatabaseUsers(),
       notification: AppStore.getNotification(),

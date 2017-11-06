@@ -26,7 +26,6 @@ describe('AppStore', () => {
   it('should return initial default state inside the component', () => {
     expect(AppStore.getAuthenticatedState()).toEqual(false);
     expect(AppStore.getLoggedInUser()).toEqual('');
-    expect(AppStore.getLoggedInPicture()).toEqual('');
     expect(AppStore.getUser()).toEqual('');
     expect(AppStore.getContacts()).toEqual([]);
     expect(AppStore.getAllUsersNumber()).toEqual([]);

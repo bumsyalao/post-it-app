@@ -177,11 +177,11 @@ class Group {
     const currentUser = firebase.auth().currentUser;
     let googleAuth = false;
 
-    usersRef.child(userName).child('google').once('value', (snapshot) => {
-      if (snapshot.exists()) {
-        googleAuth = true;
-      }
-      if (currentUser || googleAuth) {
+    // usersRef.child(userName).child('google').once('value', (snapshot) => {
+    //   if (snapshot.exists()) {
+    //     googleAuth = true;
+    //   }
+    //   if (currentUser || googleAuth) {
         const messages = [];
         const users = [];
         const messageRef = firebase.database()
@@ -238,11 +238,11 @@ class Group {
             userDatabase.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
             .child(userName).set(userName);
           });
-        });
-      } else {
-        res.status(401).send('Access denied; You need to sign in');
-      }
-    }).catch(() => {
+        })
+      // } else {
+      //   res.status(401).send('Access denied; You need to sign in');
+      // }
+    .catch(() => {
       res.status(500).send({
         message: 'Internal Server Error'
       });
