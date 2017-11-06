@@ -42,7 +42,6 @@ export default class DashboardNavigation extends Component {
     this.logout = this.logout.bind(this)
     this.handleNotificationButton = this.handleNotificationButton.bind(this)
     this.handleAddUserButton = this.handleAddUserButton.bind(this)
-    this.onChange = this.onChange.bind(this)
     this.handleChange = this.handleChange.bind(this);
     
   }
@@ -97,41 +96,6 @@ export default class DashboardNavigation extends Component {
     });
   }
 
-    /**
-   * @method componentDidMount
-   * 
-   * @description Adds an event Listener to the Store and fires when the component is fully mounted.
-   *
-   * @return {void}
-   * 
-   */
-  componentDidMount() {
-    AppStore.addChangeListener(this.onChange);
-  }
-
-  /**
-  * @method componentUnmount
-  *
-  * @description Removes event Listener from the Store
-  * 
-  */
-  componentUnmount() {
-      AppStore.removeChangeListener(this.onChange);
-  }
-
-  /**
-  * @method onChange
-  * 
-  * @description Monitors changes in the components and change the state
-  * 
-  */
-  onChange() {
-      this.setState({ 
-          //groupName: AppStore.getModalState(),
-          //addUserModal: AppStore.getModalState(),
-      });
-  }
-
 
   /**
   * @description Method for adding user to the group
@@ -148,13 +112,7 @@ export default class DashboardNavigation extends Component {
       group: this.refs.group.value.trim(),
       userName: this.props.userName
     }
-    axios.post('/api/v1/group', group).then((response) => {
-      toastr.success(response.data.message);
-      this.refs.group.value = '';
-      AppApi.getGroups(group.userName)
-      AppStore.saveGroupUsers({groupName:group.userName})
-    }).catch(getToastError);
-    //AppActions.saveGroup(group);
+    AppActions.saveGroup(group);
   }
 
 
@@ -177,12 +135,7 @@ export default class DashboardNavigation extends Component {
     if (this.refs.type.value === 'Groups') {
       toastr.error("Select a Group name")
     } else {
-      axios.post('/api/v1/group/groupName/user', addUser)
-      .then((response) => {
-        toastr.success(response.data.message);
-        this.refs.user.value = '';
-        AppStore.saveGroupUsers({userName:addUser.newUser})
-      }).catch(getToastError);
+      AppActions.saveGroupUser(addUser)
     }
   }
 

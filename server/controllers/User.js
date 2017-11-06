@@ -1,8 +1,7 @@
-import jwt from 'jsonwebtoken';
-
-import { firebase, usersRef } from './../config';
+import config from './../config';
 import { capitalizeFirstLetter } from './../helpers/utils';
 
+const { firebase, usersRef } = config;
 /**
  * class User: controls all user routes
  * @class

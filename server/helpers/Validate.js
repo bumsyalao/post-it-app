@@ -14,7 +14,8 @@ export default class Validate {
    * @return {Object} response containing the validation status
    */
   static validateSignUp(req, res, next) {
-    req.check('userName', 'Username is required').notEmpty().matches(/\w/);
+    req.check('userName', 'Username is required').notEmpty();
+    req.check('userName', 'Username is invalid').matches(/^[a-z0-9]+$/i);
     req.check('number', 'Phone number is required').notEmpty().matches(/\d/);
     req.check('email', 'Email is required').notEmpty();
     req.check('email', 'The email address is badly formatted.').isEmail();
@@ -91,7 +92,8 @@ export default class Validate {
  * @return {Object} response containing the validation status
  */
   static createGroup(req, res, next) {
-    req.check('group', 'Group name is required').notEmpty().matches(/\w/);
+    req.check('group', 'Group name is required').notEmpty();
+    req.check('group', 'Group name is invalid').matches(/^[a-z0-9]+$/i);
     req.check('userName', 'Username is required').notEmpty().matches(/\w/);
 
     const errors = req.validationErrors();
@@ -116,6 +118,8 @@ export default class Validate {
   static addUserToGroup(req, res, next) {
     req.check('groupName', 'Group name is required').notEmpty().matches(/\w/);
     req.check('newUser', 'Username is required').notEmpty().matches(/\w/);
+    req.check('newUser', 'Username is invalid').matches(/^[a-z0-9]+$/i);
+    
 
     const errors = req.validationErrors();
     if (errors) {

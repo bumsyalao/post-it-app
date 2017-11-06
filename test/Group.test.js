@@ -10,13 +10,13 @@
 // const password = '123456';
 
 // describe('Create Group', () => {
-//   const group = 'Fsghy';
+//   const group = 'Hnhn';
 //   const userName = 'Ebuka';
 
 //   it('should return status 200 when the user logs in',
 //   (done) => {
 //     request(app)
-//       .post('/user/signin')
+//       .post('/api/v1/user/signin')
 //       .send({ email, password })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
@@ -37,7 +37,7 @@
 
 //   it('should return status 400 when the group name is undefined', (done) => {
 //     request(app)
-//     .post('/group')
+//     .post('/api/v1/group')
 //     .send({ userName })
 //     .set('Accept', 'application/json')
 //     .end((err, res) => {
@@ -53,7 +53,7 @@
 
 //   it('should return status 400 for missing group name', (done) => {
 //     request(app)
-//     .post('/group')
+//     .post('/api/v1/group')
 //     .send({ group: '', userName })
 //     .set('Accept', 'application/json')
 //     .end((err, res) => {
@@ -69,7 +69,7 @@
 
 //   it('should return status 400 when the username is undefined', (done) => {
 //     request(app)
-//     .post('/group')
+//     .post('/api/v1/group')
 //     .send({ group, userName: '' })
 //     .set('Accept', 'application/json')
 //     .end((err, res) => {
@@ -85,7 +85,7 @@
 
 //   it('should return status 400 for missing user name', (done) => {
 //     request(app)
-//     .post('/group')
+//     .post('/api/v1/group')
 //     .send({ group })
 //     .set('Accept', 'application/json')
 //     .end((err, res) => {
@@ -101,7 +101,7 @@
 
 //   it('should return status 201 when a group is created', (done) => {
 //     request(app)
-//       .post('/group')
+//       .post('/api/v1/group')
 //       .send({ userName, group })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
@@ -110,7 +110,7 @@
 //         res.body.should.have.property('message');
 //         res.body.should.have.property('groupName');
 //         res.body.should.have.nested.property('groupName')
-//         .eql('Fsghy');
+//         .eql('Hnhn');
 //         res.body.should.have.nested.property('userName')
 //         .eql('Ebuka');
 //         if (err) return done(err);
@@ -120,7 +120,7 @@
 
 //   it('should return status 409 when a group already exist', (done) => {
 //     request(app)
-//       .post('/group')
+//       .post('/api/v1/group')
 //       .send({ userName, group: 'Exist' })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
@@ -138,8 +138,8 @@
 // describe('Add User to a Group', () => {
 //   it('should return status 201 when a user is added to a Group', (done) => {
 //     request(app)
-//       .post('/group/groupName/user')
-//       .send({ user: 'Jat', groupName: 'Facebook' })
+//       .post('/api/v1/group/groupName/user')
+//       .send({ newUser: 'Jat', groupName: 'Facebook' })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
 //         res.status.should.equal(201);
@@ -160,8 +160,8 @@
 
 //   it('should return status 404 if the group does not exist', (done) => {
 //     request(app)
-//       .post('/group/groupName/user')
-//       .send({ user: 'Jat', groupName: 'Book' })
+//       .post('/api/v1/group/groupName/user')
+//       .send({ newUser: 'Jat', groupName: 'Book' })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
 //         res.status.should.equal(404);
@@ -177,8 +177,8 @@
 //   it('should return status 404 when the user does not exist',
 //   (done) => {
 //     request(app)
-//       .post('/group/groupName/user')
-//       .send({ user: 'Mike', groupName: 'Facebook' })
+//       .post('/api/v1/group/groupName/user')
+//       .send({ newUser: 'Mike', groupName: 'Facebook' })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
 //         res.status.should.equal(404);
@@ -197,7 +197,7 @@
 //   it('should return status 200 when the all users and messages are retrived',
 //   (done) => {
 //     request(app)
-//       .get('/groups/:groupName/:user')
+//       .get('/api/v1/groups/:groupName/:user')
 //       .send({ groupName: 'FILE', user: 'Hh' })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
@@ -216,7 +216,7 @@
 //   it('should return status 200 when the user logs in',
 //   (done) => {
 //     request(app)
-//       .post('/user/signin')
+//       .post('/api/v1/user/signin')
 //       .send({ email, password })
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
@@ -236,12 +236,12 @@
 //   it('should return status 200 when all groups of a user is received',
 //   (done) => {
 //     request(app)
-//       .get('/group/Seun')
+//       .get('/api/v1/group/Seun')
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
 //         res.status.should.equal(200);
 //         res.body.should.be.a('array');
-//         res.body.should.have.lengthOf(30);
+//         res.body.should.have.lengthOf(32);
 //         if (err) return done(err);
 //         done();
 //       });
@@ -250,7 +250,7 @@
 //   it('should return status 200 when all groups of a user is received',
 //   (done) => {
 //     request(app)
-//       .get('/group/Temi')
+//       .get('/api/v1/group/Temi')
 //       .set('Accept', 'application/json')
 //       .end((err, res) => {
 //         res.status.should.equal(200);
