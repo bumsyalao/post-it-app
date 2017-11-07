@@ -218,7 +218,7 @@ describe('EndPoint: SignUp', () => {
 
 describe('SignIn Route', () => {
   const email = 'jat@gmail.com';
-  it.only('should successfully sign in a resgistered user',
+  it('should successfully sign in a resgistered user',
   (done) => {
     request(app)
       .post('/api/v1/user/signin')
@@ -346,7 +346,7 @@ describe('SignIn Route', () => {
       .send({ email, password: '123456ggh' })
       .set('Accept', 'application/json')
       .end((err, res) => {
-        res.status.should.equal(404);
+        res.status.should.equal(401);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
