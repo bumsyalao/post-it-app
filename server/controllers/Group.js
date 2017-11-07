@@ -1,19 +1,23 @@
-import { usersRef, groupRef, firebase } from './../config';
+import config from './../config';
 import { capitalizeFirstLetter } from './../helpers/utils';
+
+const { usersRef, groupRef, firebase } = config;
 
 
 /**
-* class Group: controls all group routes
-* @class
-*/
+  * @description: A class that controls all group  routes
+  *
+  * @class
+  */
 class Group {
-  /**
-    * @description This method creates a group for a user
-    *
-    * @param {Object} req requset object
-    * @param {Object} res response object
-    *
-    * @return {Object} response containing the created group
+/**
+  * @description This method creates a group for a user
+  * route POST: /api/v1/group
+  *
+  * @param {Object} req requset object
+  * @param {Object} res response object
+  *
+  * @return {Object} response containing the created group
 */
   static createGroup(req, res) {
     const { group, userName } = req.body;
@@ -67,7 +71,7 @@ class Group {
 
   /**
  * @description: This method adds the user to a group
- * route: POST: /groups/:groupName
+ * route: POST: api/v1/group/groupName/user
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -120,7 +124,6 @@ class Group {
 
   /**
 * @description: This method retrieves all groups the user belongs to
-* route: GET: /group/:userName
 *
 * @param {Object} req request object
 * @param {Object} res response object
@@ -163,7 +166,6 @@ class Group {
 
   /**
  * @description: This method retrieves all users and messages in a group
- * route: GET: /groups/:groupName
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -177,11 +179,11 @@ class Group {
     const currentUser = firebase.auth().currentUser;
     let googleAuth = false;
 
-    // usersRef.child(userName).child('google').once('value', (snapshot) => {
-    //   if (snapshot.exists()) {
-    //     googleAuth = true;
-    //   }
-    //   if (currentUser || googleAuth) {
+    usersRef.child(userName).child('google').once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        googleAuth = true;
+      }
+      if (currentUser || googleAuth) {
         const messages = [];
         const users = [];
         const messageRef = firebase.database()
@@ -235,14 +237,15 @@ class Group {
           });
           messageIDs.forEach((entry) => {
             const userDatabase = firebase.database();
-            userDatabase.ref(`/Groups/${groupName}/Messages/${entry}`).child('Seen')
+            userDatabase.ref(`/Groups/${groupName}/Messages/${entry}`)
+            .child('Seen')
             .child(userName).set(userName);
           });
-        })
-      // } else {
-      //   res.status(401).send('Access denied; You need to sign in');
-      // }
-    .catch(() => {
+        });
+      } else {
+        res.status(401).send('Access denied; You need to sign in');
+      }
+    }).catch(() => {
       res.status(500).send({
         message: 'Internal Server Error'
       });

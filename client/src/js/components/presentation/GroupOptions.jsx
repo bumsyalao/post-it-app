@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-import AppActions from '../../actions/AppActions'
 
 /**
- * @description Component for displaying list of group options to GroupOptions
- * 
- * @class GroupOptions
- * 
- * @extends {Component}
+ * @description describes a stateless component
+ * that renders all groups of a user
+ *
+ * @return { void }
+ *
+ * @function GroupOptions
  */
-const GroupOptions = (props) => ({
-    render() {
-        return (
+const GroupOptions = () => ({
+  render() {
+    return (
             <option>
                 {this.props.keyName.groupName}
             </option>
-        );
-    }
+    );
+  }
 });
 
 export default GroupOptions;

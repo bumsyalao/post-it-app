@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
 
 import AppActions from '../../actions/AppActions';
-import AppStore from '../../stores/AppStore';
 
 /**
  * @description Resets the password of a user
  *
  * @class ResetPassword
- * 
+ *
  * @extends {Component}
  */
 export default class ResetPassword extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          email: ''
-
-      };
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this)
-    }
+   /**
+   * @description Creates an instance of ResetPassword.
+   * bind methods and set initial state.
+	 *
+   * @memberof ResetPassword
+   *
+   * @param {object} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
     /**
     * @description: controls inputs state
@@ -28,25 +34,34 @@ export default class ResetPassword extends Component {
     *
     * @return {void} void
     */
-    handleChange(element) {
-      this.setState({
-          [element.target.name]: element.target.value
-      });
-    }
+  handleChange(element) {
+    this.setState({
+      [element.target.name]: element.target.value
+    });
+  }
 
-      /**
-     * @description Makes an Api Action to Reset Password
-     *
-     * @param {any} event
-     * 
-     * @memberof ResetPassword
-     */
-    handleSubmit(event) {
-      event.preventDefault();
-      const email = this.state.email
-      AppActions.resetPassword(email);
-    }
+  /**
+   * @description Makes an Api Action to Reset Password
+   *
+   * @param {any} event
+   *
+   * @return {void} void
+   *
+   * @memberof ResetPassword
+   */
+  handleSubmit(event) {
+    event.preventDefault();
+    const email = this.state.email;
+    AppActions.resetPassword(email);
+  }
 
+  /**
+	 * @description Render react component
+	 *
+	 * @memberof ResetOassword
+	 *
+	 * @return { jsx } rendered jsx element
+	 */
   render() {
     return (
       <div className='container'>
@@ -76,6 +91,6 @@ export default class ResetPassword extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

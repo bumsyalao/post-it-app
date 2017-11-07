@@ -7,20 +7,15 @@ import AppAPI from '../utils/AppAPI';
 
 const CHANGE_EVENT = 'change';
 
-let userStore = '';
 let isAuthenticated = false;
 let contactsStore = [];
 let currentGroupStore = '';
 let messagesStore = [];
 let groupsStore = [];
 let groupUsersStore = [];
-let groupEmailStore = [];
-let groupNumbersStore = [];
 let databaseUsersStore = [];
 let notificationStore = [];
-let personalMessageStore = [];
 let allUsersNumberStore = [];
-let archiveMessageStore = [];
 let seenUsersStore = [];
 let googleSignUpStore = null;
 const loggedInUser = [];
@@ -82,7 +77,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @method saveUser
  *
- * @returns { Void }
+ * @returns { void } void
  */
   saveUser(user) {
     userStore = user;
@@ -105,7 +100,9 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @method setContacts
  *
- * @returns { Void }
+ * @param { Object } contacts
+ *
+ * @returns { void } void
  */
   setContacts(contacts) {
     contactsStore = contacts;
@@ -129,7 +126,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } numbers
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setAllUsersNumber(numbers) {
     allUsersNumberStore = numbers;
@@ -151,6 +148,8 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @method setDatabaseUsers
  *
+ * @param { Object } users
+ *
  * @returns { Object } returns list of users in a group
  */
   setDatabaseUsers(users) {
@@ -161,7 +160,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * @description describes a function that returns list of emails
  *
  * @method getAllEmails
- * 
+ *
  * @returns { Object } returns list of emails
  */
   getAllEmails() {
@@ -172,6 +171,8 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * @description describes a function that fetches emails
  *
  * @method setAllUsersNumber
+ *
+ * @param { Object } emails
  *
  * @returns { Object } returns list of emails
  */
@@ -184,7 +185,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * via google
  *
  * @method getGoogleSignup
- * 
+ *
  * @returns { Object } returns userdetails via google signup
  */
   getGoogleSignup() {
@@ -199,7 +200,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } googleUser
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setGoogleSignIn(googleUser) {
     profilePicture.push(googleUser.photoURL);
@@ -226,7 +227,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } groups
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setGroups(groups) {
     groupsStore = groups;
@@ -250,7 +251,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } group
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setCurrentGroup(group) {
     currentGroupStore = group;
@@ -273,14 +274,17 @@ const AppStore = assign({}, EventEmitter.prototype, {
   saveGroupUsers(users) {
     groupUsersStore.push(users);
   },
+
 /**
  * @description describes a function that saves the a user in a group
  *
  * @method setGroupUsers
  *
+ * @param { Object } users
+ *
  * @memberof AppStore
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setGroupUsers(users) {
     groupUsersStore = users;
@@ -306,9 +310,9 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @memberof AppStore
  *
- * @param { Object } messages
+ * @param { Object } message
  *
- * @returns { Void }
+ * @returns { void } void
  */
   saveMessages(message) {
     messagesStore.push(message);
@@ -323,7 +327,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } messages
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setMessages(messages) {
     messagesStore = messages;
@@ -351,7 +355,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } notifications
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setNotification(notifications) {
     notificationStore = notifications;
@@ -381,7 +385,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  *
  * @param { Object } users
  *
- * @returns { Void }
+ * @returns { void } void
  */
   setSeenUsers(users) {
     seenUsersStore = users;
@@ -432,6 +436,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
   }
 
 });
+
 
 AppDispatcher.register((payload) => {
   const action = payload.action;

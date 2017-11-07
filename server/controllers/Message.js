@@ -1,16 +1,18 @@
 import moment from 'moment';
+import config from './../config';
+import { sendNotification, sendEmailNotification, sendSMSNotification }
+from '../helpers/utils';
 
-import { usersRef, groupRef, firebase } from './../config';
-import { sendNotification, sendEmailNotification, sendSMSNotification } from '../helpers/utils';
+const { usersRef, groupRef, firebase } = config;
 
- /**
- * class Group: This class controls all group routes
- * @class
- */
+/**
+  * @description: A class that controls all message routes
+  *
+  * @class
+  */
 class Message {
   /**
  * @description: creates a message and post it through
- *  route POST: /groupName/messages/
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -64,7 +66,6 @@ class Message {
 
     /**
  * @description: retrieves all users who have seen a message
- * route GET: group/getReadMessageUsers
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -94,4 +95,5 @@ class Message {
 }
 
 
-module.exports = Message;
+export default Message;
+

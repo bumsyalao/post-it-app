@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Modal, Button, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
 import toastr from 'toastr';
-import axios from 'axios';
-import { getToastError } from '../../helpers/utils';
-import AppApi from '../../utils/AppAPI';
 
 
 import AppActions from '../../actions/AppActions';
-import AppStore from '../../stores/AppStore';
 import GroupOptions from './../presentation/GroupOptions';
 import ModalButton from './../presentation/ModalButton';
 
 /**
  * @description Displays the navigation of the dashboard
- * 
+ *
  * @class DashboardNavigation
- * 
+ *
  * @extends {Component}
  */
 export default class DashboardNavigation extends Component {
+   /**
+   * @description Creates an instance of DashboardNavigation.
+   * bind methods and set initial state.
+	 *
+   * @memberof DashboardNavigation
+   *
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -37,48 +39,65 @@ export default class DashboardNavigation extends Component {
     this.closeModalGroup = this.closeModalGroup.bind(this);
     this.openModalNotification = this.openModalNotification.bind(this);
     this.closeModalNotification = this.closeModalNotification.bind(this);
-    this.addUser = this.addUser.bind(this)
-    this.createGroup = this.createGroup.bind(this)
-    this.logout = this.logout.bind(this)
-    this.handleNotificationButton = this.handleNotificationButton.bind(this)
-    this.handleAddUserButton = this.handleAddUserButton.bind(this)
+    this.addUser = this.addUser.bind(this);
+    this.createGroup = this.createGroup.bind(this);
+    this.logout = this.logout.bind(this);
+    this.handleNotificationButton = this.handleNotificationButton.bind(this);
+    this.handleAddUserButton = this.handleAddUserButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    
   }
 
   /**
-  * @description: Opens and closes a modal when the user clicks to create a Group
+  * @description: Opens a modal when the user clicks to create a Group
   *
   * @return {void} void
   */
   openModalGroup() {
     this.setState({ createGroupModal: true });
   }
+
+  /**
+  * @description: Close a modal when the user clicks on the close button
+  *
+  * @return {void} void
+  */
   closeModalGroup() {
     this.setState({ createGroupModal: false });
   }
 
   /**
-  * @description: Opens and closes a modal when the user clicks to add a friend to a group
+  * @description: Opens a modal when the user clicks to add a friend to a group
   *
   * @return {void} void
   */
   openModalUsers() {
     this.setState({ addUserModal: true });
   }
+
+  /**
+  * @description: Close a modal when the user clicks on the close button
+  *
+  * @return {void} void
+  */
   closeModalUsers() {
     this.setState({ addUserModal: false });
   }
 
 
   /**
-   * @description: Opens and closes a modal when the user want to view friends who have seen a message
+   * @description: Opens a modal when the user want to get notifications
    *
    * @return {void} void
    */
   openModalNotification() {
     this.setState({ notificationModal: true });
   }
+
+  /**
+   * @description: Close a modal when the user clicks on the close button
+   *
+   * @return {void} void
+   */
   closeModalNotification() {
     this.setState({ notificationModal: false });
   }
@@ -107,11 +126,11 @@ export default class DashboardNavigation extends Component {
   * @memberof DashboardNavigation
   */
   createGroup(event) {
-    event.preventDefault()
+    event.preventDefault();
     const group = {
       group: this.refs.group.value.trim(),
       userName: this.props.userName
-    }
+    };
     AppActions.saveGroup(group);
   }
 
@@ -131,23 +150,23 @@ export default class DashboardNavigation extends Component {
     const addUser = {
       groupName: this.refs.type.value.trim(),
       newUser: this.refs.user.value
-    }
+    };
     if (this.refs.type.value === 'Groups') {
-      toastr.error("Select a Group name")
+      toastr.error('Select a Group name');
     } else {
-      AppActions.saveGroupUser(addUser)
+      AppActions.saveGroupUser(addUser);
     }
   }
 
   /**
     * @description Method for adding user to the group
-  
+
     * @returns {void}
-  
+
     * @memberof DashboardNavigation
     */
   handleAddUserButton() {
-    AppActions.getGroups(this.props.userName)
+    AppActions.getGroups(this.props.userName);
   }
 
   /**
@@ -158,7 +177,7 @@ export default class DashboardNavigation extends Component {
     * @memberof DashboardNavigation
     */
   handleNotificationButton() {
-    AppActions.getNotification(this.props.userName)
+    AppActions.getNotification(this.props.userName);
   }
 
 
@@ -168,7 +187,7 @@ export default class DashboardNavigation extends Component {
   * @param {object} event
 
   * @returns {void}
-  
+
   * @memberof DashboardNavigation
   */
   logout(event) {
@@ -178,17 +197,23 @@ export default class DashboardNavigation extends Component {
 
   /**
    * @method render
-   * 
+   *
    * @description Renders the Navigation component
-   * 
+   *
    * @returns {String} The HTML markup for the Register
-   * 
+   *
    * @memberof DashboardNavigation
    */
   render() {
-    const groupOptions = this.props.group.map((keyName, keyIndex) => <GroupOptions keyName={keyName} key={keyIndex} />)
-    const notificationList = this.props.notification.map((keyName, keyIndex) => <li key={keyIndex}>{keyName.notification}</li>)
-    const allUsers = this.props.allUsers.map((keyName, keyIndex) => <option key={keyIndex}>{keyName}</option>)
+    const groupOptions = this.props.group.map((keyName, keyIndex) =>
+     <GroupOptions keyName={keyName} key={keyIndex} />);
+
+    const notificationList = this.props.notification.map((keyName, keyIndex) =>
+     <li key={keyIndex}>{keyName.notification}</li>);
+
+    const allUsers = this.props.allUsers.map((keyName, keyIndex) =>
+     <option key={keyIndex}>{keyName}</option>);
+
     return (
       <div>
         <ModalButton
@@ -200,7 +225,7 @@ export default class DashboardNavigation extends Component {
         >
           <form onSubmit={this.createGroup}>
             <div className='form-group'>
-              <input 
+              <input
                 name="groupName"
                 type="text"
                 ref='group'
@@ -209,7 +234,7 @@ export default class DashboardNavigation extends Component {
                 onChange={this.handleChange}
                 required />
             </div>
-            <button 
+            <button
               type='submit'
               className='btn btn-primary'>
               Submit
@@ -222,14 +247,14 @@ export default class DashboardNavigation extends Component {
           menuName={'Add a friend'}
           modalTitle={'Add a friend to your group'}
           openModal={this.openModalUsers}
-          closeModal={this.closeModalUsers} 
+          closeModal={this.closeModalUsers}
           action={this.handleAddUserButton}
           modalState={this.state.addUserModal}
         >
           <form onSubmit={this.addUser} className="whatever">
             <div className='form-group'>
-              <select 
-                className="form-control" 
+              <select
+                className="form-control"
                 ref="type">
                 <option>Groups</option>
                 {groupOptions}
@@ -268,7 +293,7 @@ export default class DashboardNavigation extends Component {
 
       </div>
 
-    )
+    );
   }
 
 }

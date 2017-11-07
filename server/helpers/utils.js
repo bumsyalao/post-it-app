@@ -2,7 +2,9 @@ import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
 import Nexmo from 'nexmo';
 
-import { firebase } from './../config';
+import config from './../config';
+
+const { firebase } = config;
 
 /**
  * @description: A function that change all character to lower case and

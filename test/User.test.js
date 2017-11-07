@@ -218,7 +218,7 @@ describe('EndPoint: SignUp', () => {
 
 describe('SignIn Route', () => {
   const email = 'jat@gmail.com';
-  it('should successfully sign in a resgistered user',
+  it.only('should successfully sign in a resgistered user',
   (done) => {
     request(app)
       .post('/api/v1/user/signin')
@@ -541,7 +541,7 @@ describe('Home Page', () => {
 
 
 describe('SignOut Route', () => {
-  it('should return status 200 when the user sign out', (done) => {
+  it('should successfully signed out the user from the app', (done) => {
     request(app)
       .post('/api/v1/user/signout')
       .set('Accept', 'application/json')
@@ -561,7 +561,7 @@ describe('EndPoint: Reset Password', () => {
   const invalidEmail = 'gfhr@gmail.com';
   const email = 'wesumeh@gmail.com';
 
-  it('should return 200 when a user logs in successfully', (done) => {
+  it('should successfully sign in a resgistered user', (done) => {
     request(app)
       .post('/api/v1/user/signin')
       .send({ email, password })
@@ -574,7 +574,7 @@ describe('EndPoint: Reset Password', () => {
   });
 
 
-  it('should return status 200 when the email is valid for reset', (done) => {
+  it('should successfully send the user an email to reset password', (done) => {
     request(app)
       .post('/api/v1/user/reset')
       .send({ email: 'wesumeh@gmail.com' })
@@ -591,7 +591,7 @@ describe('EndPoint: Reset Password', () => {
   });
 
 
-  it('should return status 404 if a email/user dose not exist', (done) => {
+  it('should return validation error if the email does not exist', (done) => {
     request(app)
       .post('/api/v1/user/reset')
       .send({ email: invalidEmail })
@@ -607,7 +607,8 @@ describe('EndPoint: Reset Password', () => {
       });
   });
 
-  it('should return status 400 for badly formatted email', (done) => {
+  it('should return validation error if the email is badly formatted',
+  (done) => {
     request(app)
       .post('/api/v1/user/reset')
       .send({ email: 'ebuka@' })
@@ -625,45 +626,77 @@ describe('EndPoint: Reset Password', () => {
 });
 
 
-describe('EndPoint: Get all Phone Numbers from the Database', () => {
-  it('should return status 200 when all users are returned', (done) => {
+describe('EndPoint: Phone Numbers', () => {
+  it('should successfully return numbers in user database', (done) => {
     request(app)
       .get('/api/v1/users/allnumbers')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(17);
+        res.body.should.have.lengthOf(18);
+        expect(res.body).include(
+          '2345677676878',
+          '2345677676338',
+          '2349055483634',
+          '2348066098146',
+          '2341231231232',
+          '2345666666666',
+          '2348081239880',
+          '2348088098146',
+          '2345677676878'
+        );
         if (err) return done(err);
         done();
       });
   });
 });
 
-describe('EndPoint: Get all Emails from the Database', () => {
-  it('should return status 200 when all emails are returned', (done) => {
+describe('EndPoint: Emails', () => {
+  it('should successfully return emails in user database', (done) => {
     request(app)
       .get('/api/v1/users/allemails')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(17);
+        res.body.should.have.lengthOf(18);
+        expect(res.body).include(
+          'wesumeh@gmail.com',
+          'emekasmithyu@gmal.com',
+          'jandoe@email.com',
+          'jat@gmail.com',
+          'Edythe31@gmail.com',
+          'ola@ola.com',
+          'quduskunle@gmail.com',
+          'shazily012@gmail.com',
+          'seun@gmail.com'
+        );
         if (err) return done(err);
         done();
       });
   });
 });
 
-describe('EndPoint: Get all Users from the Database', () => {
-  it('should return status 200 when all users are returned', (done) => {
+describe('EndPoint: Users', () => {
+  it('should successfully return the users in user database', (done) => {
     request(app)
       .get('/api/v1/users/allusers')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(17);
+        res.body.should.have.lengthOf(18);
+        expect(res.body).include(
+          'Abdul-Quddus',
+          'Gideon',
+          'Jandoe',
+          'Jat',
+          'Jundoe',
+          'Kakashi',
+          'Victor',
+          'Yank'
+        );
         if (err) return done(err);
         done();
       });
@@ -671,28 +704,40 @@ describe('EndPoint: Get all Users from the Database', () => {
 });
 
 
-describe('EndPoint: Get all Notification for a User', () => {
-  it('should return status 200 when all notifications are received', (done) => {
+describe('EndPoint: Notification', () => {
+  it('should successfully return the users notifications', (done) => {
     request(app)
       .get('/api/v1/user/notification/Jat')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(2);
+        res.body.should.have.lengthOf(3);
+        res.body.should.be.eql([
+        { notification: 'Ebuka posted in Age group' },
+        { notification: 'Newton has posted in Facebook group' },
+        { notification: 'Yank has posted in Facebook group' }
+        ]);
         if (err) return done(err);
         done();
       });
   });
 
-  it('should return status 200 when a googleUser logs in', (done) => {
+  it('should successfully create a new user via google signup', (done) => {
     request(app)
       .get('/api/v1/user/notification/Ebuka')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(6);
+        res.body.should.have.lengthOf(5);
+        res.body.should.be.eql([
+          { notification: 'Chap posted in Nnn group' },
+          { notification: 'Newton posted in An group' },
+          { notification: 'Newton posted in My group' },
+          { notification: 'Sasiliyu posted in Testersgroup group' },
+          { notification: 'Yank posted in Lll group' }
+        ]);
         if (err) return done(err);
         done();
       });

@@ -1,5 +1,5 @@
 /**
- * @description: validates the supplied req.body for each route
+ * @description: validates the input field of every route
  *
  * @class Validate
  */
@@ -119,7 +119,6 @@ export default class Validate {
     req.check('groupName', 'Group name is required').notEmpty().matches(/\w/);
     req.check('newUser', 'Username is required').notEmpty().matches(/\w/);
     req.check('newUser', 'Username is invalid').matches(/^[a-z0-9]+$/i);
-    
 
     const errors = req.validationErrors();
     if (errors) {

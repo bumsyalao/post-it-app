@@ -2,14 +2,16 @@ import config from './../config';
 import { capitalizeFirstLetter } from './../helpers/utils';
 
 const { firebase, usersRef } = config;
+
 /**
- * class User: controls all user routes
+ * @description: A class that controls all user routes
+ *
  * @class
  */
 class User {
-  /**
- * @description: This method creates a user account
- * route POST: user/signup
+/**
+ * @description: This method creates a new user
+ * route POST: /api/v1/user/signup
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -61,9 +63,9 @@ class User {
   });
   }
 
-  /**
- * @description: This method controls a user's registration via Google signup
- * route POST: /google/signup
+/**
+ * @description: This method creates a new user via google
+ * route POST: /api/v1/google/signup
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -100,8 +102,8 @@ class User {
   }
 
   /**
- * @description: This method controls a user's login
- * route POST: user/signin
+ * @description: This method logs in a registered user
+ * route POST: /api/v1/user/signin
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -149,7 +151,7 @@ class User {
             message: 'The email does not exist.'
           });
         } else if (errorCode === 'auth/wrong-password') {
-          res.status(404).json({
+          res.status(401).json({
             message:
             'The password is invalid.'
           });
@@ -161,15 +163,15 @@ class User {
       });
   }
 
-  /**
-      * The Sign Out method
-      * @description: This method logs the user out
-      *
-      * @param {null} req - User's Request
-      * @param {object} res - Server Response
-      *
-      * @return {object}  returns the user's details
-      */
+/**
+  * The Sign Out method
+  * @description: This method logs the user out
+  *
+  * @param {null} req - User's Request
+  * @param {object} res - Server Response
+  *
+  * @return {object}  returns the user's details
+  */
   static signout(req, res) {
     firebase.auth().signOut().then(() => {
       res.status(200).send({
@@ -182,9 +184,9 @@ class User {
     });
   }
 
-  /**
+/**
  * @description: This method retrieves user's notifications from database
- * route GET: user/getNotification
+ * route GET: /api/v1/user/getNotification
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -237,7 +239,7 @@ class User {
 
   /**
  * @description: This method retrieves all users in user database
- * route GET: user/getAllUsers
+ * route GET: /api/v1/user/getAllUsers
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -245,36 +247,36 @@ class User {
  * @return {Object} response containing all users in the user database
  */
   static getAllUsers(req, res) {
-    // const currentUser = firebase.auth().currentUser;
-    // if (currentUser) {
-    usersRef.once('value', (snapShot) => {
-      const userNames = [];
-      snapShot.forEach((allUsers) => {
-        userNames.push(allUsers.val().userName);
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser) {
+      usersRef.once('value', (snapShot) => {
+        const userNames = [];
+        snapShot.forEach((allUsers) => {
+          userNames.push(allUsers.val().userName);
+        });
+        if (userNames.length === 0) {
+          res.status(404).json(
+            { message: 'There are currently no users found' }
+          );
+        } else {
+          res.status(200).json(userNames);
+        }
+      }).catch(() => {
+        res.status(500).send({
+          message: 'Internal Server Error'
+        });
       });
-      if (userNames.length === 0) {
-        res.status(404).json(
-          { message: 'There are currently no users found' }
-        );
-      } else {
-        res.status(200).json(userNames);
-      }
-    }).catch(() => {
-      res.status(500).send({
-        message: 'Internal Server Error'
+    } else {
+      res.status(401).send({
+        message: 'Access denied; You need to sign in'
       });
-    });
-    // } else {
-    //   res.status(401).send({
-    //     message: 'Access denied; You need to sign in'
-    //   });
-    // }
+    }
   }
 
 
   /**
  * @description: This method retrieves all numbers in user database
- * route GET: user/getAllNumbers
+ * route GET: /api/v1/user/getAllNumbers
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -282,35 +284,35 @@ class User {
  * @return {Object} response containing all numbers in the user database
  */
   static getAllNumbers(req, res) {
-    // const currentUser = firebase.auth().currentUser;
-    // if (currentUser) {
-    usersRef.once('value', (snapShot) => {
-      const numbers = [];
-      snapShot.forEach((allNumbers) => {
-        numbers.push(allNumbers.val().number);
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser) {
+      usersRef.once('value', (snapShot) => {
+        const numbers = [];
+        snapShot.forEach((allNumbers) => {
+          numbers.push(allNumbers.val().number);
+        });
+        if (numbers.length === 0) {
+          res.status(404).json(
+            { message: 'There are currently no numbers found' }
+          );
+        } else {
+          res.status(200).send(numbers);
+        }
+      }).catch(() => {
+        res.status(500).send({
+          message: 'Internal Server Error'
+        });
       });
-      if (numbers.length === 0) {
-        res.status(404).json(
-          { message: 'There are currently no numbers found' }
-        );
-      } else {
-        res.status(200).send(numbers);
-      }
-    }).catch(() => {
-      res.status(500).send({
-        message: 'Internal Server Error'
+    } else {
+      res.status(401).send({
+        message: 'Access denied; You need to sign in'
       });
-    });
-    // } else {
-    //   res.status(401).send({
-    //     message: 'Access denied; You need to sign in'
-    //   });
-    // }
+    }
   }
 
 /**
  * @description: This method retrieves all emails in user database
- * route GET: user/getAllEmails
+ * route GET: /api/v1/user/getAllEmails
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -318,9 +320,9 @@ class User {
  * @return {Object} response containing all emails in the user database
  */
   static getAllEmails(req, res) {
-    // const currentUser = firebase.auth().currentUser;
-    // if (currentUser) {
-    usersRef.once('value', (snapShot) => {
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser) {
+      usersRef.once('value', (snapShot) => {
         const emails = [];
         snapShot.forEach((allEmails) => {
           emails.push(allEmails.val().email);
@@ -337,16 +339,17 @@ class User {
           message: 'Internal Server Error'
         });
       });
-    // } else {
-    //   res.status(401).send({
-    //     message: 'Access denied; You need to sign in'
-    //   });
-    // }
+    } else {
+      res.status(401).send({
+        message: 'Access denied; You need to sign in'
+      });
+    }
   }
 
   /**
- * @description: This method reset password of users
- * route: GET: /user/reset
+ * @description: This method reset password of a user
+ * route POST: /api/v1/user/reset
+ *
  *
  * @param {Object} req request object
  * @param {Object} res response object

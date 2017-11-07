@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react';
 
 
 /**
  * @description Displays the List of Users in a group
- * 
- * @param props 
- * 
+ *
+ * @param { props } props
+ *
  * @class Users
- * 
+ *
  * @extends {Component}
  */
-const Users = (props) => ({
+const Users = () => ({
   render() {
     return (
       <li data-toggle="collapse" className="collapsed">

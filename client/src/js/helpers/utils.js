@@ -23,6 +23,6 @@ export const getToastError = (error) => {
  *
  */
 export const validateEmail = (email) => {
-  const emailExpression = (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  const emailExpression = /([\w\.-]+)@([\w\.-]+)(\.[\w\.]+)/;
   return emailExpression.test(email);
 };

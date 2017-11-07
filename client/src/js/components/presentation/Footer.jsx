@@ -1,16 +1,14 @@
-import React, { Component } from 'react'
-
+import React from 'react';
 
 /**
  * @description This renders the footer Component
- * 
+ *
  * @class Welcome
- * 
+ *
  * @extends {Component}
  */
 const Footer = () => (
-  <nav className="navbar navbar-inverse navbar-fixed-bottom"
-    style={{ borderRadius: '0px' }}>
+  <nav className="navbar navbar-inverse navbar-fixed-bottom">
     <div className="container-fluid">
       <a className="navbar-brand low-red" href="/">Andela</a>
     </div>

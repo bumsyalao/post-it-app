@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * @description Navigation Component gives the user access to navigate around the app
- * 
+ * @description Navigation Component gives the user access to
+ * navigate around the app
+ *
  * @class Navigation
- * 
+ *
  * @extends {Component}
  */
 const Navigation = () => (

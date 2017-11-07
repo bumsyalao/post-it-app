@@ -2,14 +2,6 @@ import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppConstants from '../../constants/AppConstants';
 
-const test = {
-  userName: 'Gideon',
-  email: 'gideon@gmail.com',
-  password: '123456',
-  number: '1234567',
-  groupName: 'Andela',
-  message: 'This is a test message'
-};
 const displayName = 'Barak';
 const name = 'Barak Obama';
 const phoneNumber = '2348044675987';
@@ -45,7 +37,6 @@ afterEach(() => {
 });
 
 describe('PostIt AppActions', () => {
-
   it('should dispatch a view action of type SIGN_UP', () => {
     const userDetails = {
       name,
@@ -74,7 +65,6 @@ describe('PostIt AppActions', () => {
       userDetails
     });
   });
-  
 
   it('should dispatch a view action of type RECEIVE_LOGIN', () => {
     const user = {
@@ -145,7 +135,7 @@ describe('PostIt AppActions', () => {
       group
     });
   });
- 
+
   it('should dispatch a view action of type GET_GROUPS', () => {
     const userName = 'Ebuka';
     AppActions.getGroups(userName);
@@ -247,7 +237,7 @@ describe('PostIt AppActions', () => {
   });
 
   it('should dispatch a view action of type NOTIFICATIONS', () => {
-    const userName = 'Ebuka'
+    const userName = 'Ebuka';
     AppActions.getNotification(userName);
     expect(AppDispatcher.handleViewAction).toHaveBeenCalledWith({
       actionType: AppConstants.NOTIFICATIONS,

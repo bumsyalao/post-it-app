@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
-import moment from 'moment';
 
 import AppStore from '../../stores/AppStore';
-import AppAPI from '../../utils/AppAPI';
-import AppActions from '../../actions/AppActions';
 import DashboardNavigation from './DashboardNavigation';
 import SideBar from './../presentation/SideBar';
-import MessageBoard from './MessageBoard'
+import MessageBoard from './MessageBoard';
 import WelcomeBoard from './../presentation/WelcomeBoard';
 
 
 /**
- * @description Creates a react Component
- * 
+ * @description creates a class Dashboard as a react component
+ *
  * @class DashBoard
- * 
+ *
  * @extends {Component}
  */
 export default class DashBoard extends Component {
+   /**
+   * @description Creates an instance of DashBoard.
+   * bind methods and set initial state.
+	 *
+   * @memberof Signup
+   *
+   * @param {object} props
+   * */
   constructor(props) {
     super(props);
     this.state = {
@@ -29,17 +33,18 @@ export default class DashBoard extends Component {
       databaseUsers: [],
       notification: []
     };
-    this.onChange = this.onChange.bind(this)
+    this.onChange = this.onChange.bind(this);
   }
 
 
   /**
    * @method componentWillMount
-   * 
-   * @description Adds an event Listener to the Store and fires when the component is fully mounted.
+   *
+   * @description Adds an event Listener to the Store and fires when
+   *the component is fully mounted.
    *
    * @return {void}
-   * 
+   *
    * @memberof DashBoard
    */
   componentDidMount() {
@@ -49,11 +54,11 @@ export default class DashBoard extends Component {
 
   /**
    * @method componentWillUnmount
-   * 
+   *
    * @description Removes event Listener from the Store
    *
    * @return {void}
-   * 
+   *
    * @memberof DashBoard
    */
   componentWillUnmount() {
@@ -62,51 +67,46 @@ export default class DashBoard extends Component {
 
   /**
    * @method onChange
-   * 
-   * @description Monitors changes in the components and change the state
-   * 
+   *
+   * @description this method gets data from the store and sets to state
+   *
    * @return {void}
-   * 
+   *
    * @memberof DashBoard
    */
   onChange() {
     this.setState({
-      contacts: AppStore.getGroupUsers(),      
+      contacts: AppStore.getGroupUsers(),
       groups: AppStore.getGroups(),
       currentGroup: AppStore.getCurrentGroup(),
       databaseUsers: AppStore.getDatabaseUsers(),
       notification: AppStore.getNotification(),
       allUsers: AppStore.getContacts(),
     });
-
   }
 
 
   /**
-   * @method render
-   * 
    * @description Render the Dashboard component
-   * 
+   *
    * @returns {void}
-   * 
+   *
    * @memberof DashBoard
    */
   render() {
-    let userName = JSON.parse(localStorage.getItem('user'));
-    let photoURL = JSON.parse(localStorage.getItem('photoURL')) || null;
-    { photoURL ? photoURL : photoURL = 'https://history.indiana.edu/images/no-photo.jpg' }
+    const userName = JSON.parse(localStorage.getItem('user'));
+    const photoURL = JSON.parse(localStorage.getItem('photoURL')) ||
+    'https://history.indiana.edu/images/no-photo.jpg';
     return (
       <div>
         <div className="nav-side-menu" >
           <div
-            className="brand"
-            data-intro='Welcome to PostIt, your current group will be displayed here'>
+            className="brand">
             {!this.state.currentGroup ? 'PostIt' : this.state.currentGroup}
           </div>
           <i className="fa fa-bars fa-2x toggle-btn"
             data-toggle="collapse" data-target="#menu-content"></i>
           <div className="menu-list">
-
             <ul id="menu-content" className="menu-content collapse out">
               <li>
                 <a href="#">
@@ -140,18 +140,19 @@ export default class DashBoard extends Component {
         </div>
 
         {!this.state.currentGroup ?
-          <WelcomeBoard 
-           userName ={userName} 
-          /> 
+          <WelcomeBoard
+           userName ={userName}
+          />
           :
-          <MessageBoard 
+          <MessageBoard
             contact={this.state.contacts}
-            emails={this.state.emails} 
+            emails={this.state.emails}
             numbers={this.state.numbers}
             userName ={userName}
-          />}
+          />
+        }
       </div>
-    )
+    );
   }
 }
 
