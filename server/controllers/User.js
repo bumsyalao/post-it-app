@@ -1,5 +1,5 @@
 import config from './../config';
-import { capitalizeFirstLetter } from './../helpers/utils';
+import { capitalizeFirstLetter, queryUserDatabase } from './../helpers/utils';
 
 const { firebase, usersRef } = config;
 
@@ -75,7 +75,7 @@ class User {
   static googleSignup(req, res) {
     const { userName, email, uid, number } = req.body;
 
-    const newUser = capitalizeFirstLetter(userName)
+    const newUser = capitalizeFirstLetter(userName);
     usersRef.child(userName).once('value', (snapshot) => {
       if (!snapshot.exists()) {
         usersRef.child(userName).set({
@@ -113,54 +113,33 @@ class User {
   static signin(req, res) {
     const { email, password } = req.body;
 
-    firebase.auth()
-      .signInWithEmailAndPassword(email, password).then((user) => {
-        const userName = user.displayName;
-        const rootRef = firebase.database().ref()
-        .child('users')
-        .child(userName)
-        .child('Groups');
-        rootRef.once('value', () => {
-          const groups = [];
-          let group = {};
-          const groupRef = rootRef.child('users')
-          .child(userName)
-          .child('Groups');
-          groupRef.once('value', (snap) => {
-            snap.forEach((data) => {
-              group = {
-                groupName: data.val().groupName
-              };
-              groups.push(group);
-            });
-            res.status(200).send({
-              message: 'Welcome to Post it app',
-              userData: user,
-            });
-          });
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      res.status(200).send({
+        message: 'Welcome to Post it app',
+        userData: user,
+      });
+    }).catch((error) => {
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        res.status(400).json({
+          message: 'The email address is badly formatted.'
         });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/invalid-email') {
-          res.status(400).json({
-            message: 'The email address is badly formatted.'
-          });
-        } else if (errorCode === 'auth/user-not-found') {
-          res.status(404).json({
-            message: 'The email does not exist.'
-          });
-        } else if (errorCode === 'auth/wrong-password') {
-          res.status(401).json({
-            message:
+      } else if (errorCode === 'auth/user-not-found') {
+        res.status(404).json({
+          message: 'The email does not exist.'
+        });
+      } else if (errorCode === 'auth/wrong-password') {
+        res.status(401).json({
+          message:
             'The password is invalid.'
-          });
-        } else {
-          res.status(500).json(
+        });
+      } else {
+        res.status(500).json(
             { message: 'Internal Server Error' }
           );
-        }
-      });
+      }
+    });
   }
 
 /**
@@ -195,161 +174,75 @@ class User {
  */
   static getNotification(req, res) {
     const userName = req.params.user;
-    const currentUser = firebase.auth().currentUser;
-    let googleAuth = false;
+    const notifications = [];
+    const notificationRef = firebase.database().ref().child('users')
+    .child(userName)
+    .child('Notifications');
 
-    usersRef.child(userName).child('google').once('value', (snapshot) => {
-      if (snapshot.exists()) {
-        googleAuth = true;
-      }
-      if (currentUser || googleAuth) {
-        const notifications = [];
-        let notification = {};
-        const notificationRef = firebase.database().ref().child('users')
-        .child(userName)
-        .child('Notifications');
-
-        notificationRef.once('value', (notificationSnapShot) => {
-          notificationSnapShot.forEach((notificationData) => {
-            notification = {
-              notification: notificationData.val()
-            };
-            if (notification.length === 0) {
-              res.status(404).json(
-                { message: 'You currently do not have notification' }
-              );
-            } else {
-              notifications.push(notification);
-            }
-          });
-          res.status(200).send(notifications);
-        }).catch(() => {
-          res.status(500).send({
-            message: 'Internal Server Error'
-          });
+    notificationRef.once('value', (notificationSnapShot) => {
+      notificationSnapShot.forEach((notificationData) => {
+        notifications.push({
+          notification: notificationData.val()
         });
+      });
+      if (notifications.length === 0) {
+        res.status(200).json(
+          { message: 'You currently do not have notification' }
+        );
       } else {
-        res.status(401).send({
-          message: 'Access denied; You need to sign in'
-        });
+        res.status(200).send(notifications);
       }
+    }).catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
     });
   }
 
 
   /**
  * @description: This method retrieves all users in user database
- * route GET: /api/v1/user/getAllUsers
+ * route GET: /api/v1/user/getUsers
  *
  * @param {Object} req request object
  * @param {Object} res response object
  *
  * @return {Object} response containing all users in the user database
  */
-  static getAllUsers(req, res) {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
-      usersRef.once('value', (snapShot) => {
-        const userNames = [];
-        snapShot.forEach((allUsers) => {
-          userNames.push(allUsers.val().userName);
-        });
-        if (userNames.length === 0) {
-          res.status(404).json(
-            { message: 'There are currently no users found' }
-          );
-        } else {
-          res.status(200).json(userNames);
-        }
-      }).catch(() => {
-        res.status(500).send({
-          message: 'Internal Server Error'
-        });
-      });
-    } else {
-      res.status(401).send({
-        message: 'Access denied; You need to sign in'
-      });
-    }
+  static getUsers(req, res) {
+    queryUserDatabase('userName', res);
   }
 
 
   /**
  * @description: This method retrieves all numbers in user database
- * route GET: /api/v1/user/getAllNumbers
+ * route GET: /api/v1/user/getNumbers
  *
  * @param {Object} req request object
  * @param {Object} res response object
  *
  * @return {Object} response containing all numbers in the user database
  */
-  static getAllNumbers(req, res) {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
-      usersRef.once('value', (snapShot) => {
-        const numbers = [];
-        snapShot.forEach((allNumbers) => {
-          numbers.push(allNumbers.val().number);
-        });
-        if (numbers.length === 0) {
-          res.status(404).json(
-            { message: 'There are currently no numbers found' }
-          );
-        } else {
-          res.status(200).send(numbers);
-        }
-      }).catch(() => {
-        res.status(500).send({
-          message: 'Internal Server Error'
-        });
-      });
-    } else {
-      res.status(401).send({
-        message: 'Access denied; You need to sign in'
-      });
-    }
+  static getNumbers(req, res) {
+    queryUserDatabase('number', res);
   }
 
 /**
  * @description: This method retrieves all emails in user database
- * route GET: /api/v1/user/getAllEmails
+ * route GET: /api/v1/user/getEmails
  *
  * @param {Object} req request object
  * @param {Object} res response object
  *
  * @return {Object} response containing all emails in the user database
  */
-  static getAllEmails(req, res) {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
-      usersRef.once('value', (snapShot) => {
-        const emails = [];
-        snapShot.forEach((allEmails) => {
-          emails.push(allEmails.val().email);
-        });
-        if (emails.length === 0) {
-          res.status(404).json(
-            { message: 'There are currently no emails found' }
-          );
-        } else {
-          res.status(200).send(emails);
-        }
-      }).catch(() => {
-        res.status(500).send({
-          message: 'Internal Server Error'
-        });
-      });
-    } else {
-      res.status(401).send({
-        message: 'Access denied; You need to sign in'
-      });
-    }
+  static getEmails(req, res) {
+    queryUserDatabase('email', res);
   }
 
   /**
  * @description: This method reset password of a user
  * route POST: /api/v1/user/reset
- *
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -358,8 +251,7 @@ class User {
  */
   static resetPassword(req, res) {
     const emailAddress = req.body.email;
-    const auth = firebase.auth();
-    auth.sendPasswordResetEmail(emailAddress)
+    firebase.auth().sendPasswordResetEmail(emailAddress)
     .then(() => {
       res.status(200).json({
         message: 'An email has been sent to your inbox for password reset.'

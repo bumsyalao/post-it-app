@@ -1,7 +1,7 @@
 import axios from 'axios';
 import toastr from 'toastr';
 
-import { getToastError } from './../helpers/utils';
+import { getClientErrors, getServerErrors } from './../helpers/utils';
 import AppActions from '../actions/AppActions';
 
 
@@ -20,7 +20,7 @@ const AppAPI = {
       const user = response.data.userData;
       AppActions.receiveLogin(user);
       toastr.success('Welcome,  An email will be sent to you.');
-    }).catch(getToastError);
+    }).catch(getServerErrors);
   },
 
   /**
@@ -37,7 +37,7 @@ const AppAPI = {
       const user = response.data.userData;
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
-    }).catch(getToastError);
+    }).catch(getServerErrors);
   },
 
 
@@ -52,7 +52,7 @@ const AppAPI = {
   createGroup(group) {
     return axios.post('/api/v1/group', group).then((response) => {
       toastr.success(response.data.message);
-    }).catch(getToastError);
+    }).catch(getClientErrors);
   },
 
    /**
@@ -68,7 +68,7 @@ const AppAPI = {
     .then((response) => {
       const groups = response.data;
       AppActions.receiveGroups(groups);
-    }).catch(getToastError);
+    }).catch(getClientErrors);
   },
 
    /**
@@ -84,11 +84,7 @@ const AppAPI = {
     .then((response) => {
       const notification = response.data;
       AppActions.receiveNotification(notification);
-    }).catch((error) => {
-      if (error.response.status === 500) {
-        toastr.error('Sorry, an unexpected error occurred.');
-      }
-    });
+    }).catch(getClientErrors);
   },
 
   /**
@@ -103,11 +99,7 @@ const AppAPI = {
     return axios.post('/api/v1/group/groupName/user', addUser)
     .then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      if (error.response.status === 500) {
-        toastr.error('Sorry, an unexpected error occurred.');
-      }
-    });
+    }).catch(getClientErrors);
   },
 
   /**
@@ -122,11 +114,7 @@ const AppAPI = {
     return axios.post('/api/v1/group/user/message', message)
     .then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      if (error.response.status === 500) {
-        toastr.error('Sorry, an unexpected error occurred.');
-      }
-    });
+    }).catch(getClientErrors);
   },
 
     /**
@@ -144,11 +132,7 @@ const AppAPI = {
     return axios.get(`/api/v1/seen/${groupName}/${messageID}`)
     .then((response) => {
       AppActions.receiveSeenUsers(response.data);
-    }).catch((error) => {
-      if (error.response.status === 500) {
-        toastr.error('Sorry, an unexpected error occurred.');
-      }
-    });
+    }).catch(getClientErrors);
   },
 
   /**
@@ -159,11 +143,7 @@ const AppAPI = {
   setLogout() {
     return axios.post('/api/v1/user/signout').then((response) => {
       toastr.success(response.data.message);
-    }).catch((error) => {
-      if (error.response.status === 500) {
-        toastr.error('Sorry, an unexpected error occurred.');
-      }
-    });
+    }).catch(getClientErrors);
   },
 
   /**
@@ -184,11 +164,7 @@ const AppAPI = {
         const users = response.data.users;
         AppActions.receiveMessages(messages);
         AppActions.receiveUser(users);
-      }).catch((error) => {
-        if (error.response.status === 500) {
-          toastr.error('Sorry, an unexpected error occurred.');
-        }
-      });
+      }).catch(getClientErrors);
   },
 
   /**
@@ -213,7 +189,7 @@ const AppAPI = {
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
     })
-    .catch(getToastError);
+    .catch(getServerErrors);
   },
 
   /**
@@ -228,7 +204,7 @@ const AppAPI = {
     return axios.post('/api/v1/user/reset', { email
     }).then((response) => {
       toastr.success(response.data.message);
-    }).catch(getToastError);
+    }).catch(getClientErrors);
   },
 
   /**
@@ -238,14 +214,10 @@ const AppAPI = {
    * @returns { Object } returns an object containing list of users
    */
   getUsers() {
-    return axios.get('/api/v1/users/allusers')
+    return axios.get('/api/v1/users/users')
       .then((response) => {
         AppActions.receiveUsers(response.data);
-      }).catch((error) => {
-        if (error.response.status === 500) {
-          toastr.error('Sorry, an unexpected error occurred.');
-        }
-      });
+      }).catch(getClientErrors);
   },
 
   /**
@@ -255,14 +227,10 @@ const AppAPI = {
    * @returns { Object } returns an object containing list of numbers
    */
   getNumbers() {
-    return axios.get('/api/v1/users/allnumbers')
+    return axios.get('/api/v1/users/numbers')
         .then((response) => {
           AppActions.receiveNumber(response.data);
-        }).catch((error) => {
-          if (error.response.status === 500) {
-            toastr.error('Sorry, an unexpected error occurred.');
-          }
-        });
+        }).catch(getClientErrors);
   },
 
   /**
@@ -272,14 +240,10 @@ const AppAPI = {
    * @returns { Object } returns an object containing list of emails
    */
   getEmails() {
-    return axios.get('/api/v1/users/allemails')
+    return axios.get('/api/v1/users/emails')
         .then((response) => {
           AppActions.receiveEmails(response.data);
-        }).catch((error) => {
-          if (error.response.status === 500) {
-            toastr.error('Sorry, an unexpected error occurred.');
-          }
-        });
+        }).catch(getClientErrors);
   },
 
 };

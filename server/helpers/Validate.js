@@ -1,9 +1,37 @@
+import config from './../config';
+
+const { firebase } = config;
+
 /**
  * @description: validates the input field of every route
  *
  * @class Validate
  */
 export default class Validate {
+
+  /**
+   * @description: decribes a middleware that checks if the user has been
+   * authenticated
+   *
+   * @function isAuthenticated
+   *
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @param {Function} next callback function
+   *
+   * @return {Object} response containing the validation status
+   */
+  static isAuthenticated (req, res, next) {
+    const currentUser = firebase.auth().currentUser;
+
+    if (currentUser) {
+      next();
+    } else {
+      res.status(401).send({
+        message: 'Access denied; You need to sign in'
+      });
+    }
+  }
   /**
    * @description: validates the sign up
    *
@@ -154,7 +182,7 @@ export default class Validate {
     } else {
       next();
     }
-}
+  }
 
 
 }

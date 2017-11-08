@@ -1,5 +1,6 @@
 import config from './../config';
-import { capitalizeFirstLetter } from './../helpers/utils';
+import { capitalizeFirstLetter, saveUserHasSeenMessage }
+from './../helpers/utils';
 
 const { usersRef, groupRef, firebase } = config;
 
@@ -22,46 +23,34 @@ class Group {
   static createGroup(req, res) {
     const { group, userName } = req.body;
 
-    const currentUser = firebase.auth().currentUser;
-    let googleAuth = false;
+    const groupName = capitalizeFirstLetter(group);
+    const userDatabase = firebase.database();
+    groupRef.child(groupName).once('value', (snapshot) => {
+      if (!snapshot.exists()) {
+        groupRef.child(groupName).child('Users').child(userName)
+          .set(userName);
+        groupRef.child(groupName).child('Users').child('Bot').set('Bot');
+        groupRef.child(groupName).child('Email').push('bot@postit.com');
+        groupRef.child(groupName).child('Number').push('2348066098141');
+        groupRef.child(groupName).child('Messages/Seen').push(null);
 
-    usersRef.child(userName).child('google')
-    .once('value', (googleSnapshot) => {
-      if (googleSnapshot.exists()) {
-        googleAuth = true;
-      }
-      if (currentUser || googleAuth) {
-        const groupName = capitalizeFirstLetter(group);
-        const userDatabase = firebase.database();
-        groupRef.child(groupName).once('value', (snapshot) => {
-          if (!snapshot.exists()) {
-            groupRef.child(groupName).child('Users').child(userName)
-              .set(userName);
-            groupRef.child(groupName).child('Users').child('Bot').set('Bot');
-            groupRef.child(groupName).child('Email').push('bot@postit.com');
-            groupRef.child(groupName).child('Number').push('2348066098141');
-            groupRef.child(groupName).child('Messages/Seen').push(null);
-
-            userDatabase.ref(`/users/${userName}/Groups`).push({
-              groupName,
-              userName
-            }).then(() => {
-              res.status(201).json({
-                message: `Group ${groupName} created`,
-                groupName,
-                userName
-              });
-            }).catch(() => {
-              res.status(500).json({ message: 'Internal server error' });
-            });
-          } else {
-            res.status(409).json({ message: 'Group already exists' });
-          }
+        userDatabase.ref(`/users/${userName}/Groups`).push({
+          groupName,
+          userName
+        }).then(() => {
+          res.status(201).json({
+            message: `Group ${groupName} created`,
+            groupName,
+            userName
+          });
+        }).catch(() => {
+          res.status(500).json({ message: 'Internal server error' });
         });
       } else {
-        res.status(401).send('Access denied; You need to sign in');
+        res.status(409).json({ message: 'Group already exists' });
       }
-    }).catch(() => {
+    })
+    .catch(() => {
       res.status(500).json(
         { message: 'Internal server error' }
       );
@@ -102,19 +91,20 @@ class Group {
             res.status(404).json({ message: 'Group dose not exists' });
           }
         })
-          .then(() => {
-            res.status(201).json({
-              message: 'User added successfully',
-              user,
-              groupName
-            });
+        .then(() => {
+          res.status(201).json({
+            message: 'User added successfully',
+            user,
+            groupName
           });
+        });
       } else {
         res.status(404).json({
           message: 'The User dose not exist'
         });
       }
-    }).catch(() => {
+    })
+    .catch(() => {
       res.status(500).json({
         message: 'Internal server error'
       });
@@ -132,40 +122,31 @@ class Group {
 */
   static getGroups(req, res) {
     const userName = req.params.userName;
-    const currentUser = firebase.auth().currentUser;
-    let googleAuth = false;
-
-    usersRef.child(userName).child('google').once('value', (snapshot) => {
-      if (snapshot.exists()) {
-        googleAuth = true;
-      }
-      if (currentUser || googleAuth) {
-        const groups = [];
-        let group = {};
-        usersRef
-        .child(userName)
-        .child('Groups')
-        .once('value', (snap) => {
-          snap.forEach((data) => {
-            group = {
-              groupName: data.val().groupName
-            };
-            groups.push(group);
-          });
-          res.status(200).send(groups);
-        }).catch(() => {
-          res.status(500).send({
-            message: 'Internal Server Error'
-          });
+    const groups = [];
+    usersRef.child(userName).child('Groups')
+    .once('value', (snap) => {
+      snap.forEach((data) => {
+        groups.push({
+          groupName: data.val().groupName
         });
+      });
+      if (groups.length === 0) {
+        res.status(200).json(
+          { message: 'You currently do not belong to a group' }
+        );
       } else {
-        res.status(401).send('Access denied; You need to sign in');
+        res.status(200).send(groups);
       }
+    }).catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
     });
   }
 
   /**
- * @description: This method retrieves all users and messages in a group
+ * @description: This method retrieves all users and messages in a group.
+ * It will also save user who have read a message
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -176,76 +157,39 @@ class Group {
     const groupName = req.params.groupName;
     const userName = req.params.user;
 
-    const currentUser = firebase.auth().currentUser;
-    let googleAuth = false;
+    const messages = [];
+    const users = [];
 
-    usersRef.child(userName).child('google').once('value', (snapshot) => {
-      if (snapshot.exists()) {
-        googleAuth = true;
-      }
-      if (currentUser || googleAuth) {
-        const messages = [];
-        const users = [];
-        const messageRef = firebase.database()
-          .ref()
-          .child('Groups')
-          .child(groupName)
-          .child('Messages')
-          .limitToLast(14);
-        messageRef.once('value', (snap) => {
-          let message = {};
-          snap.forEach((data) => {
-            message = {
-              id: data.key,
-              user: data.val().user,
-              message: data.val().message,
-              time: data.val().time,
-              priority: data.val().priority
-            };
-            messages.push(message);
-          });
+    groupRef.child(groupName).child('Messages').limitToLast(14)
+    .once('value', (snap) => {
+      snap.forEach((data) => {
+        messages.push({
+          id: data.key,
+          user: data.val().user,
+          message: data.val().message,
+          time: data.val().time,
+          priority: data.val().priority
+        });
+      });
 
-          const userRef = firebase.database().ref()
-          .child('Groups').child(groupName)
-          .child('Users');
-          
-          userRef.once('value', (userSnapshot) => {
-            let user = {};
-            userSnapshot.forEach((data) => {
-              user = {
-                userName: data.val()
-              };
-              users.push(user);
-            });
-
-            res.status(200).json({
-              message: `Getting Messages and Users in ${groupName} database`,
-              messages,
-              users
-            });
+      groupRef.child(groupName).child('Users')
+      .once('value', (userSnapshot) => {
+        userSnapshot.forEach((data) => {
+          users.push({
+            userName: data.val()
           });
         });
-        const messageIDRef = firebase.database()
-        .ref()
-        .child('Groups')
-        .child(groupName)
-        .child('Messages');
-        messageIDRef.once('value', (snap) => {
-          const messageIDs = [];
-          snap.forEach((data) => {
-            messageIDs.push(data.key);
-          });
-          messageIDs.forEach((entry) => {
-            const userDatabase = firebase.database();
-            userDatabase.ref(`/Groups/${groupName}/Messages/${entry}`)
-            .child('Seen')
-            .child(userName).set(userName);
-          });
+
+        saveUserHasSeenMessage(groupName, userName);
+
+        res.status(200).json({
+          message: `Getting Messages and Users in ${groupName} database`,
+          messages,
+          users
         });
-      } else {
-        res.status(401).send('Access denied; You need to sign in');
-      }
-    }).catch(() => {
+      });
+    })
+    .catch(() => {
       res.status(500).send({
         message: 'Internal Server Error'
       });

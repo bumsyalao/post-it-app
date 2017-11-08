@@ -4,7 +4,7 @@ import Nexmo from 'nexmo';
 
 import config from './../config';
 
-const { firebase } = config;
+const { firebase, usersRef } = config;
 
 /**
  * @description: A function that change all character to lower case and
@@ -139,3 +139,73 @@ export const sendSMSNotification = (group, priority) => {
   });
 };
 
+/**
+ * @description: A function that saves users who have read a message
+ *
+ * @function saveUserHasSeenMessage
+ *
+ * @return {void}
+ *
+ * @param {String} groupName
+ * @param {String} userName
+ */
+export const saveUserHasSeenMessage = (groupName, userName) => {
+  const messageIDRef = firebase.database()
+  .ref()
+  .child('Groups')
+  .child(groupName)
+  .child('Messages');
+  messageIDRef.once('value', (snap) => {
+    const messageIDs = [];
+    snap.forEach((data) => {
+      messageIDs.push(data.key);
+    });
+    messageIDs.forEach((entry) => {
+      const userDatabase = firebase.database();
+      userDatabase.ref(`/Groups/${groupName}/Messages/${entry}`)
+      .child('Seen')
+      .child(userName).set(userName);
+    });
+  });
+};
+
+/**
+ * @description: A function that retrieves users or numbers or emails
+ * from user database
+ *
+ * @function queryUserDatabase
+ *
+ * @return { object } retrieves users or numbers or emails from user database
+ *
+ * @param { String } userData
+ * @param {Object} res response object
+ */
+export const queryUserDatabase = (userData, res) => {
+  usersRef.once('value', (snapShot) => {
+    const userdetails = [];
+    if (userData === 'userName') {
+      snapShot.forEach((userInfo) => {
+        userdetails.push(userInfo.val().userName);
+      });
+    } else if (userData === 'number') {
+      snapShot.forEach((userInfo) => {
+        userdetails.push(userInfo.val().number);
+      });
+    } else {
+      snapShot.forEach((userInfo) => {
+        userdetails.push(userInfo.val().email);
+      });
+    }
+    if (userdetails.length === 0) {
+      res.status(200).json(
+        { message: `There are currently no ${userData} found` }
+      );
+    } else {
+      res.status(200).json(userdetails);
+    }
+  }).catch(() => {
+    res.status(500).send({
+      message: 'Internal Server Error'
+    });
+  });
+};

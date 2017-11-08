@@ -144,7 +144,7 @@ const AppActions = {
    */
   postMessage(message) {
     AppDispatcher.handleViewAction({
-      actionType: AppConstants.SAVE_MESSAGE,
+      actionType: AppConstants.POST_MESSAGE,
       message
     });
   },

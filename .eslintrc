@@ -83,7 +83,8 @@
     "jest": true,
     "no-unused-vars": false,
     "localStorage": true,
-    "location": true
+    "location": true,
+    "document": true
   },
   "parser": "babel-eslint",
   "parserOptions": {

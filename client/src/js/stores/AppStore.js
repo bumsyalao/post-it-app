@@ -18,7 +18,6 @@ let notificationStore = [];
 let allUsersNumberStore = [];
 let seenUsersStore = [];
 let googleSignUpStore = null;
-const loggedInUser = [];
 const profilePicture = [];
 let allEmails = [];
 
@@ -58,16 +57,6 @@ const AppStore = assign({}, EventEmitter.prototype, {
     isAuthenticated = false;
   },
 
-/**
- * @description describes a function that fetches the current user logged in
- *
- * @method getLoggedInUser
- *
- * @returns { String } returns the current User's name
- */
-  getLoggedInUser() {
-    return loggedInUser;
-  },
 
 /**
  * @description describes a function that save the user's detail in the
@@ -80,8 +69,7 @@ const AppStore = assign({}, EventEmitter.prototype, {
  * @returns { void } void
  */
   saveUser(user) {
-    userStore = user;
-    loggedInUser.push(user.displayName);
+    localStorage.setItem('user', JSON.stringify(user.displayName));
   },
 
 /**
@@ -488,7 +476,7 @@ AppDispatcher.register((payload) => {
       AppStore.emit(CHANGE_EVENT);
       break;
 
-    case AppConstants.SAVE_MESSAGE:
+    case AppConstants.POST_MESSAGE:
       AppStore.saveMessages(action.message);
       AppAPI.postMessages(action.message);
       AppStore.emit(CHANGE_EVENT);

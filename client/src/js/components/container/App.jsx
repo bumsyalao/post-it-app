@@ -27,7 +27,6 @@ class App extends Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      userName: '',
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -71,7 +70,6 @@ class App extends Component {
   onChange() {
     this.setState({
       isAuthenticated: AppStore.getAuthenticatedState(),
-      userName: AppStore.getLoggedInUser(),
     });
   }
 
@@ -83,12 +81,9 @@ class App extends Component {
      *  @return { jsx } rendered jsx element
      */
   render() {
-    if (this.state.isAuthenticated === true) {
-      localStorage.setItem('user', JSON.stringify(this.state.userName[0]));
-    }
-    let componentToMount;
-    if (localStorage.getItem('user') == null) {
-      componentToMount =
+    return (
+      <div>
+      {localStorage.getItem('user') == null ?
         <div className="row">
           <Navigation />
             <div className="row">
@@ -99,13 +94,8 @@ class App extends Component {
             <div className="row">
               <Footer />
             </div>
-        </div>;
-    } else {
-      componentToMount = <Dashboard />;
-    }
-    return (
-      <div>
-        {componentToMount}
+        </div> :
+       <Dashboard />};
       </div>
     );
   }
