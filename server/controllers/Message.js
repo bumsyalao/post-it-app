@@ -1,6 +1,6 @@
 import moment from 'moment';
 import config from './../config';
-import { sendNotification, sendEmailNotification, sendSMSNotification }
+import { sendInAppNotification, sendEmailNotification, sendSMSNotification }
 from '../helpers/utils';
 
 const { groupRef } = config;
@@ -49,13 +49,13 @@ class Message {
         );
       });
 
-    sendNotification(group, user, notification);
+    sendInAppNotification(group, user, notification);
     sendEmailNotification(group, priority);
     sendSMSNotification(group, priority);
   }
 
 
-    /**
+/**
  * @description: retrieves all users who have seen a message
  *
  * @param {Object} req request object
@@ -63,7 +63,7 @@ class Message {
  *
  * @return {Object} response containing all users who have seen a message
  */
-  static getReadMessageUsers(req, res) {
+  static getUsersSeenAMessage(req, res) {
     const { groupName, messageID } = req.params;
     const numberOfUsers = [];
 
@@ -82,7 +82,7 @@ class Message {
         );
       } else {
         res.status(200).json({
-          message: 'Users in Group Sent',
+          message: 'Users who have read this message',
           users,
           groupName,
           messageID

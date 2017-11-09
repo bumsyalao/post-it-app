@@ -13,14 +13,14 @@ import ModalButton from '../presentation/ModalButton';
  * @extends {Component}
  */
 export default class Message extends Component {
-   /**
-   * @description Creates an instance of Message.
-   * bind methods and set initial state.
-	 *
-   * @memberof Message
-   *
-   * @param {object} props
-   */
+  /**
+  * @description Creates an instance of Message.
+  * bind methods and set initial state.
+  *
+  * @memberof Message
+  *
+  * @param {object} props
+  */
   constructor(props) {
     super(props);
     this.state = {
@@ -123,14 +123,14 @@ export default class Message extends Component {
           closeModal={this.closeModal}
           modalState={this.state.showModal}
         >
-      <ul className='mylist'>
-      {this.state.seenMessage ?
-        Object.keys(this.state.seenMessage).map((keyName, keyIndex) =>
-          <li key={keyIndex}>{keyName}</li>) :
-        <li className='mylist'>Empty</li>
-      }
-    </ul>
-      </ModalButton>
+          <ul className='mylist'>
+            {this.state.seenMessage ?
+              Object.keys(this.state.seenMessage).map((keyName, keyIndex) =>
+                <li key={keyIndex}>{keyName}</li>) :
+              <li className='mylist'>Empty</li>
+            }
+          </ul>
+        </ModalButton>
       </div>
     );
   }

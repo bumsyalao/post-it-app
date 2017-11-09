@@ -4,10 +4,11 @@ import GoogleButton from 'react-google-button';
 
 import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
-import { firebase, provider } from '../../../../../server/config';
+import config from '../../../../../server/config';
 import { validateEmail } from '../../helpers/utils';
 import GoogleWelcome from './GoogleWelcome';
 import Input from '../presentation/Input';
+const { firebase, provider } = config;
 
 
 /**
@@ -20,14 +21,14 @@ import Input from '../presentation/Input';
  * @extends {Component}
  */
 class Signin extends Component {
-   /**
-   * @description Creates an instance of Signin.
-   * bind methods and set initial state.
-	 *
-   * @memberof Signin
-   *
-   * @param {object} props
-   */
+  /**
+  * @description Creates an instance of Signin.
+  * bind methods and set initial state.
+  *
+  * @memberof Signin
+  *
+  * @param {object} props
+  */
   constructor(props) {
     super(props);
     this.state = {
@@ -130,7 +131,6 @@ class Signin extends Component {
       .then((result) => {
         const { photoURL, uid, email } = result.user;
         const displayName = firstName(result.user.displayName);
-        localStorage.setItem('photoURL', JSON.stringify(photoURL));
         const googleUser = {
           displayName,
           email,
@@ -181,20 +181,20 @@ class Signin extends Component {
         <div className='well col-md-8 col-md-offset-2'>
           <h3>Sign In</h3>
           <form onSubmit={this.handleSubmit}>
-           <Input
+            <Input
               name="email"
               type={'text'}
               action={this.handleChange}
               className={'form-control'}
               placeholder={'Email'}
-           />
-           <Input
+            />
+            <Input
               name="password"
               type={'password'}
               action={this.handleChange}
               className={'form-control'}
               placeholder={'Password'}
-           />
+            />
             <div><a href="#/reset">Forgot Password?</a></div>
             <div><a href="#/register">Don't have an account? Signup</a></div>
             <button type='submit' onClick={this.addAlert}
@@ -202,9 +202,9 @@ class Signin extends Component {
           </form>
 
           <GoogleButton
-						className="google-button"
-						onClick={this.handleGoogleSignin}
-					/>
+            className="google-button"
+            onClick={this.handleGoogleSignin}
+          />
         </div>;
     } else {
       display = < GoogleWelcome />;

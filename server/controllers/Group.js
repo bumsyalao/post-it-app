@@ -47,7 +47,7 @@ class Group {
           res.status(500).json({ message: 'Internal server error' });
         });
       } else {
-        res.status(409).json({ message: 'Group already exists' });
+        res.status(409).json({ message: 'Group already exist' });
       }
     })
     .catch(() => {
@@ -88,7 +88,7 @@ class Group {
             groupRef.child(groupName).child('Email').push(email);
             groupRef.child(groupName).child('Number').push(number);
           } else {
-            res.status(404).json({ message: 'Group dose not exists' });
+            res.status(404).json({ message: 'Group does not exist' });
           }
         })
         .then(() => {
@@ -100,7 +100,7 @@ class Group {
         });
       } else {
         res.status(404).json({
-          message: 'The User dose not exist'
+          message: 'The User does not exist'
         });
       }
     })
@@ -183,7 +183,7 @@ class Group {
         saveUserHasSeenMessage(groupName, userName);
 
         res.status(200).json({
-          message: `Getting Messages and Users in ${groupName} database`,
+          message: `Messages and Users in ${groupName} database`,
           messages,
           users
         });

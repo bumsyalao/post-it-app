@@ -7,9 +7,9 @@ import AppActions from '../../actions/AppActions';
  * @description describes a stateless component
  * that renders all groups of a user
  *
- * @param { props } props
+ * @param {props} props
  *
- * @return { void } void
+ * @return {void} void
  *
  * @function Groups
  */

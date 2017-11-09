@@ -1,7 +1,7 @@
+import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
 import Nexmo from 'nexmo';
-
 import config from './../config';
 
 const { firebase, usersRef } = config;
@@ -12,9 +12,9 @@ const { firebase, usersRef } = config;
  *
  * @function capitalizeFirstLetter
  *
- * @return { object } a string in lowercase and the First letter in Capital
+ * @return {Object} a string in lowercase and the First letter in Capital
  *
- * @param { String } character
+ * @param {String} character
  */
 export const capitalizeFirstLetter = (character) => {
   const string = character.toLowerCase();
@@ -27,13 +27,13 @@ export const capitalizeFirstLetter = (character) => {
  *
  * @function sendNotification
  *
- * @return { void }
+ * @return {void}
  *
- * @param { String } group
- * @param { String } user
- * @param { String } notification
+ * @param {String} group
+ * @param {String} user
+ * @param {String} notification
  */
-export const sendNotification = (group, user, notification) => {
+export const sendInAppNotification = (group, user, notification) => {
   const users = [];
   const userRef = firebase.database()
     .ref()
@@ -61,10 +61,10 @@ export const sendNotification = (group, user, notification) => {
  *
  * @function sendEmailNotification
  *
- * @return { object } a string in lowercase and the First letter in Capital
+ * @return {Object} a string in lowercase and the First letter in Capital
  *
- * @param { String } group
- * @param { String } priority
+ * @param {String} group
+ * @param {String} priority
  */
 export const sendEmailNotification = (group, priority) => {
   const email = [];
@@ -92,8 +92,27 @@ export const sendEmailNotification = (group, priority) => {
         to: emails,
         subject: 'New Message Received',
         text: 'PostIt App ?',
-        html: `<p>Hello</p>This is to notify you that a 
-        message has been posted in ${group} group`
+        html: `
+        <div style="width: 100%; background-color: #f2f2f2; padding: 2%;">
+        <div style="width: 60%; background-color: white; margin: auto;">
+          <div style="height:40px; background-color: #2e353d ; width:100%">
+            <center><h2 style="padding-top: 7px; color: #f2f2f2;">Post-it</h2>
+            </center>
+          </div>
+          <div style="padding: 4%">
+            <div class="row">
+              <p>This email has been sent to you because you have a message
+               from Post-iT</p>
+              <p>Please follow this link to log in: <a style="background-color: 
+              #2e353d; padding: 5px;cursor: pointer; color: #f2f2f2;
+               text-decoration: none;" 
+              href="post-it-app35.herokuapp.com">Go to Post-it</a></p>
+              <div style="border-top: 3px solid #2e353d ;"></div>
+              <p style="font-weight: bold; color: #2e353d ">The PostIt Team</p>
+            </div>
+          </div>
+        </div>
+      </div>`
       };
       transporter.sendMail(mailOptions, () => {
       });
@@ -110,8 +129,8 @@ export const sendEmailNotification = (group, priority) => {
  *
  * @return { object } a string in lowercase and the First letter in Capital
  *
- * @param { String } group
- * @param { String } priority
+ * @param {String} group
+ * @param {String} priority
  */
 export const sendSMSNotification = (group, priority) => {
   const number = [];
@@ -175,9 +194,9 @@ export const saveUserHasSeenMessage = (groupName, userName) => {
  *
  * @function queryUserDatabase
  *
- * @return { object } retrieves users or numbers or emails from user database
+ * @return {Object} retrieves users or numbers or emails from user database
  *
- * @param { String } userData
+ * @param {String} userData
  * @param {Object} res response object
  */
 export const queryUserDatabase = (userData, res) => {
@@ -208,4 +227,22 @@ export const queryUserDatabase = (userData, res) => {
       message: 'Internal Server Error'
     });
   });
+};
+
+/**
+ * @description: generate a login token
+ *
+ * @function createToken
+ *
+ * @return {String} the generated token
+ *
+ * @param {String} userName to generate token
+ */
+export const createToken = (userName) => {
+  const myToken = jwt.sign({
+    displayName: userName
+  },
+  process.env.TOKEN_SECRET,
+  { expiresIn: '24h' });
+  return myToken;
 };

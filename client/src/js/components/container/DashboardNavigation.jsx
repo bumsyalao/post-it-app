@@ -200,8 +200,6 @@ export default class DashboardNavigation extends Component {
    *
    * @description Renders the Navigation component
    *
-   * @returns {String} The HTML markup for the Register
-   *
    * @memberof DashboardNavigation
    */
   render() {
@@ -261,13 +259,16 @@ export default class DashboardNavigation extends Component {
               </select>
             </div>
             <div className='form-group'>
+
               <input type="text" ref='user'
                 className='form-control'
                 list="users"
                 placeholder='Search for a User' required />
+
               <datalist id="users">
                 {allUsers}
               </datalist>
+              
             </div>
 
             <button type='submit'

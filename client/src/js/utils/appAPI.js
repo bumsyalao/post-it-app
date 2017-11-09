@@ -1,7 +1,7 @@
 import axios from 'axios';
 import toastr from 'toastr';
 
-import { getClientErrors, getServerErrors } from './../helpers/utils';
+import { getClientErrors } from './../helpers/utils';
 import AppActions from '../actions/AppActions';
 
 
@@ -10,34 +10,36 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to register a user
    *
-   * @param { Object } userDetails
+   * @param {Object} userDetails
    *
-   * @returns { Object } returns registered user registration details
+   * @returns {Object} returns registered user registration details
    */
   signUpUser(userDetails) {
     return axios.post('/api/v1/user/signup', userDetails)
     .then((response) => {
       const user = response.data.userData;
+      localStorage.setItem('token', response.data.myToken);
       AppActions.receiveLogin(user);
       toastr.success('Welcome,  An email will be sent to you.');
-    }).catch(getServerErrors);
+    }).catch(getClientErrors);
   },
 
   /**
    * @description describes an API call to the server for a post request
    * to login a user.
    *
-   * @param { Object } userDetails
+   * @param {Object} userDetails
    *
-   * @returns { Object } returns registered user details
+   * @returns {Object} returns registered user details
    */
   login(userDetails) {
     return axios.post('/api/v1/user/signin', userDetails)
     .then((response) => {
       const user = response.data.userData;
+      localStorage.setItem('token', response.data.myToken);
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
-    }).catch(getServerErrors);
+    }).catch(getClientErrors);
   },
 
 
@@ -45,9 +47,9 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to save a user's group
    *
-   * @param { Object } group
+   * @param {Object} group
    *
-   * @returns { Object } returns notification message
+   * @returns {Object} returns notification message
    */
   createGroup(group) {
     return axios.post('/api/v1/group', group).then((response) => {
@@ -59,12 +61,13 @@ const AppAPI = {
    * @description describes an API call to the server for a get request
    * to get all the groups that a user belong to.
    *
-   * @param { Object } userName
+   * @param {Object} userName
    *
-   * @returns { Object } returns an object containing user's group
+   * @returns {Object} returns an object containing user's group
    */
   getGroups(userName) {
-    return axios.get(`/api/v1/group/${userName}`)
+    return axios.get(`/api/v1/group/${userName}`,
+    { headers: { authorization: localStorage.getItem('token') } })
     .then((response) => {
       const groups = response.data;
       AppActions.receiveGroups(groups);
@@ -75,9 +78,9 @@ const AppAPI = {
    * @description describes an API call to the server for a get request
    * to get a user's notification.
    *
-   * @param { Object } userName
+   * @param {Object} userName
    *
-   * @returns { Object } returns an object containing user's notificaions
+   * @returns {Object} returns an object containing user's notificaions
    */
   getNotifications(userName) {
     return axios.get(`/api/v1/user/notification/${userName}`)
@@ -91,9 +94,9 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to save a user into a group.
    *
-   * @param { Object } addUser
+   * @param {Object} addUser
    *
-   * @returns { Object } returns a notification message
+   * @returns {Object} returns a notification message
    */
   addUserToGroup(addUser) {
     return axios.post('/api/v1/group/groupName/user', addUser)
@@ -106,9 +109,9 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to save a message.
    *
-   * @param { Object } message
+   * @param {Object} message
    *
-   * @returns { void }
+   * @returns {void}
    */
   postMessages(message) {
     return axios.post('/api/v1/group/user/message', message)
@@ -121,9 +124,9 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to save a message.
    *
-   * @param { Object } user
+   * @param {Object} user
    *
-   * @returns { Object } returns an object containing list of users who
+   * @returns {Object} returns an object containing list of users who
    * have seen a message
    */
   seenMessage(user) {
@@ -138,7 +141,7 @@ const AppAPI = {
   /**
    * @description describes an API call to the server to sign the user out
    *
-   * @returns { Object } returns registered user details
+   * @returns {Object} returns registered user details
    */
   setLogout() {
     return axios.post('/api/v1/user/signout').then((response) => {
@@ -171,9 +174,9 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to register a user with a google account
    *
-   * @param { Object } googleUser
+   * @param {Object} googleUser
    *
-   * @returns { Object } returns registered user registration details
+   * @returns {Object} returns registered user registration details
    */
   googleSignUp(googleUser) {
     const { displayName, email, uid, number } = googleUser;
@@ -189,16 +192,16 @@ const AppAPI = {
       AppActions.receiveLogin(user);
       toastr.success('Welcome To PostIt');
     })
-    .catch(getServerErrors);
+    .catch(getClientErrors);
   },
 
   /**
    * @description describes an API call to the server for a post request
    * to reset a user's password.
    *
-   * @param { Object } email
+   * @param {Object} email
    *
-   * @returns { Object } returns a notification message
+   * @returns {Object} returns a notification message
    */
   resetPassword(email) {
     return axios.post('/api/v1/user/reset', { email
@@ -211,7 +214,7 @@ const AppAPI = {
    * @description describes an API call to the server for a get request
    * to get all users in a group.
    *
-   * @returns { Object } returns an object containing list of users
+   * @returns {Object} returns an object containing list of users
    */
   getUsers() {
     return axios.get('/api/v1/users/users')
@@ -224,7 +227,7 @@ const AppAPI = {
    * @description describes an API call to the server for a post request
    * to get all numbers.
    *
-   * @returns { Object } returns an object containing list of numbers
+   * @returns {Object} returns an object containing list of numbers
    */
   getNumbers() {
     return axios.get('/api/v1/users/numbers')
@@ -237,7 +240,7 @@ const AppAPI = {
    * @description describes an API call to the server for a get request
    * to get all emails.
    *
-   * @returns { Object } returns an object containing list of emails
+   * @returns {Object} returns an object containing list of emails
    */
   getEmails() {
     return axios.get('/api/v1/users/emails')

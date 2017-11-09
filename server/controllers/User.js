@@ -1,5 +1,7 @@
+import jwt from 'jsonwebtoken';
+
 import config from './../config';
-import { capitalizeFirstLetter, queryUserDatabase } from './../helpers/utils';
+import { capitalizeFirstLetter, queryUserDatabase, createToken } from './../helpers/utils';
 
 const { firebase, usersRef } = config;
 
@@ -35,9 +37,12 @@ class User {
           uid,
           number
         });
+        const myToken = createToken(displayName);
+
         res.status(201).send({
           message: 'Welcome to Post it app',
           userData: user,
+          myToken
         });
       });
     })
@@ -85,9 +90,12 @@ class User {
           number,
           google: true
         });
+        const myToken = createToken(userName);
+
         res.status(201).json({
           message: 'Welcome to Post it app',
-          displayName: userName
+          displayName: userName,
+          myToken
         });
       } else {
         res.status(409).json({
@@ -115,9 +123,13 @@ class User {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then((user) => {
+      const displayName = user.displayName;
+      const myToken = createToken(displayName);
+
       res.status(200).send({
         message: 'Welcome to Post it app',
         userData: user,
+        myToken
       });
     }).catch((error) => {
       const errorCode = error.code;
@@ -130,9 +142,8 @@ class User {
           message: 'The email does not exist.'
         });
       } else if (errorCode === 'auth/wrong-password') {
-        res.status(401).json({
-          message:
-            'The password is invalid.'
+        res.status(404).json({
+          message: 'The password is invalid.'
         });
       } else {
         res.status(500).json(

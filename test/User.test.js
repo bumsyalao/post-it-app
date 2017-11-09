@@ -15,7 +15,7 @@ describe('EndPoint: SignUp', () => {
   const email = faker.internet.email();
   const number = '2348088098146';
 
-  it('should successfully create a new user', (done) => {
+  it.only('should successfully create a new user', (done) => {
     request(app)
       .post('/api/v1/user/signup')
       .send({ userName, password, email, number })
@@ -27,8 +27,7 @@ describe('EndPoint: SignUp', () => {
         .eql('Welcome to Post it app');
         res.body.should.have.nested.property('userData.email')
         .eql(email.toLowerCase());
-        res.body.should.have.nested.property('userData.displayName')
-        .eql('Kakashi');
+        expect(res.body.userData.displayName).eql('Kakashi');
         if (err) return done(err);
         done();
       });
@@ -346,7 +345,7 @@ describe('SignIn Route', () => {
       .send({ email, password: '123456ggh' })
       .set('Accept', 'application/json')
       .end((err, res) => {
-        res.status.should.equal(401);
+        res.status.should.equal(404);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
@@ -629,7 +628,7 @@ describe('EndPoint: Reset Password', () => {
 describe('EndPoint: Phone Numbers', () => {
   it('should successfully return numbers in user database', (done) => {
     request(app)
-      .get('/api/v1/users/allnumbers')
+      .get('/api/v1/users/numbers')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
@@ -655,7 +654,7 @@ describe('EndPoint: Phone Numbers', () => {
 describe('EndPoint: Emails', () => {
   it('should successfully return emails in user database', (done) => {
     request(app)
-      .get('/api/v1/users/allemails')
+      .get('/api/v1/users/emails')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
@@ -681,7 +680,7 @@ describe('EndPoint: Emails', () => {
 describe('EndPoint: Users', () => {
   it('should successfully return the users in user database', (done) => {
     request(app)
-      .get('/api/v1/users/allusers')
+      .get('/api/v1/users/users')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
@@ -712,11 +711,12 @@ describe('EndPoint: Notification', () => {
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(3);
+        res.body.should.have.lengthOf(4);
         res.body.should.be.eql([
         { notification: 'Ebuka posted in Age group' },
         { notification: 'Newton has posted in Facebook group' },
-        { notification: 'Yank has posted in Facebook group' }
+        { notification: 'Yank has posted in Facebook group' },
+        { notification: 'ibrahim posted in My group group' }
         ]);
         if (err) return done(err);
         done();
@@ -730,9 +730,10 @@ describe('EndPoint: Notification', () => {
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(5);
+        res.body.should.have.lengthOf(6);
         res.body.should.be.eql([
           { notification: 'Chap posted in Nnn group' },
+          { notification: 'Kinuthia posted in Blue group' },
           { notification: 'Newton posted in An group' },
           { notification: 'Newton posted in My group' },
           { notification: 'Sasiliyu posted in Testersgroup group' },

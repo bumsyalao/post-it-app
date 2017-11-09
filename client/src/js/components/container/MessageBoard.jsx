@@ -13,14 +13,14 @@ import AppStore from '../../stores/AppStore';
  * @extends {Component}
  */
 export default class MessageBoard extends Component {
-    /**
-   * @description Creates an instance of MessageBoard.
-   * bind methods and set initial state.
-   *
-   * @memberof MessageBoard
-   *
-   * @param {object} props
-   */
+  /**
+ * @description Creates an instance of MessageBoard.
+ * bind methods and set initial state.
+ *
+ * @memberof MessageBoard
+ *
+ * @param {object} props
+ */
   constructor(props) {
     super(props);
     this.state = {
@@ -31,44 +31,44 @@ export default class MessageBoard extends Component {
     this.sendMessage = this.sendMessage.bind(this);
   }
 
-    /**
-    * @method componentDidMount
-    *
-    * @description Adds an event Listener to the Store and fires when
-    *the component is fully mounted.
-    *
-    * @return {void}
-    *
-    * @memberof Board
-    */
+  /**
+  * @method componentDidMount
+  *
+  * @description Adds an event Listener to the Store and fires when
+  *the component is fully mounted.
+  *
+  * @return {void}
+  *
+  * @memberof Board
+  */
   componentDidMount() {
     AppStore.addChangeListener(this.onChange);
   }
 
 
-    /**
-    * @method componentWillUnmount
-    *
-    * @description Removes event Listener from the Store
-    * @return {void}
-    *
-    * @memberof MessageBoard
-    */
+  /**
+  * @method componentWillUnmount
+  *
+  * @description Removes event Listener from the Store
+  * @return {void}
+  *
+  * @memberof MessageBoard
+  */
   componentWillUnmount() {
     AppStore.removeChangeListener(this.onChange);
   }
 
 
-    /**
-    * @description Makes an action call to Sign up a user with username,
-    *email, phone number  and password
-    *
-    * @param {object} event
-    *
-    * @returns {void}
-    *
-    * @memberof MessageBoard
-    */
+  /**
+  * @description Makes an action call to Sign up a user with username,
+  *email, phone number  and password
+  *
+  * @param {object} event
+  *
+  * @returns {void}
+  *
+  * @memberof MessageBoard
+  */
   sendMessage(event) {
     event.preventDefault();
     const userName = JSON.parse(localStorage.getItem('user'));
@@ -87,15 +87,15 @@ export default class MessageBoard extends Component {
     }
   }
 
- /**
-   * @method onChange
-   *
-   * @description Monitors changes in the components and change the state
-   *
-   * @return {void}
-   *
-   * @memberof MessageBoard
-   */
+  /**
+    * @method onChange
+    *
+    * @description Monitors changes in the components and change the state
+    *
+    * @return {void}
+    *
+    * @memberof MessageBoard
+    */
   onChange() {
     this.setState({
       currentGroup: AppStore.getCurrentGroup(),
@@ -103,47 +103,47 @@ export default class MessageBoard extends Component {
     });
   }
 
-/**
-   * @method render
-   *
-   * @description Render the MessageBoard component
-   *
-   * @returns {void}
-   *
-   * @memberof MessageBoard
-   */
+  /**
+     * @method render
+     *
+     * @description Render the MessageBoard component
+     *
+     * @returns {void}
+     *
+     * @memberof MessageBoard
+     */
   render() {
     return (
-        <div className="container" id="main">
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="viewMessageMessageBoard">
-                        {
-                            this.state.messages.map((message, index) => (
-                                    <Message message={message} key={index}
-                                        group={this.state.currentGroup} />
-                                ))
-                        }
-                    </div>
-
-                    <div className="sendMessageDiv">
-                        <form onSubmit={this.sendMessage}>
-                            <div className="form-group col-sm-2">
-                                <select ref="type" className="form-control"
-                                    id="exampleFormControlSelect1">
-                                    <option>Normal</option>
-                                    <option>Urgent</option>
-                                    <option>Critical</option>
-                                </select>
-                            </div>
-                            <input ref='message'
-                                className="col-sm-10 sendMessageInput"
-                                placeholder='Enter a message' />
-                        </form>
-                    </div>
-                </div>
+      <div className="container" id="main">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="viewMessageMessageBoard">
+              {
+                this.state.messages.map((message, index) => (
+                  <Message message={message} key={index}
+                    group={this.state.currentGroup} />
+                ))
+              }
             </div>
+
+            <div className="sendMessageDiv">
+              <form onSubmit={this.sendMessage}>
+                <div className="form-group col-sm-2">
+                  <select ref="type" className="form-control"
+                    id="exampleFormControlSelect1">
+                    <option>Normal</option>
+                    <option>Urgent</option>
+                    <option>Critical</option>
+                  </select>
+                </div>
+                <input ref='message'
+                  className="col-sm-10 sendMessageInput"
+                  placeholder='Enter a message' />
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     );
   }
 }

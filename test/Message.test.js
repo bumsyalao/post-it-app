@@ -138,7 +138,7 @@ describe('Create Message', () => {
 });
 
 describe('EndPoint: Read Message', () => {
-  it('should successfully return all notifications of a user',
+  it('should return empty object if no user has read a message',
   (done) => {
     const groupName = 'Lll';
     const messageID = '-KyFtHJMfy45vGEpW5kL';
@@ -150,7 +150,25 @@ describe('EndPoint: Read Message', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
-        .eql('Users in Group Sent');
+        .eql('No user has read this message');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should successfully return all users who have read a message',
+  (done) => {
+    const groupName = 'Lll';
+    const messageID = '-KyWIibYf7MwLHaXEnN1';
+    request(app)
+      .get(`/api/v1/seen/${groupName}/${messageID}`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message')
+        .eql('Users who have read this message');
         res.body.should.have.property('users');
         expect('users').to.have.lengthOf(5);
         res.body.should.have.property('groupName');
@@ -158,7 +176,7 @@ describe('EndPoint: Read Message', () => {
         .eql('Lll');
         res.body.should.have.property('messageID');
         res.body.should.have.nested.property('messageID')
-        .eql('-KyFtHJMfy45vGEpW5kL');
+        .eql('-KyWIibYf7MwLHaXEnN1');
         if (err) return done(err);
         done();
       });

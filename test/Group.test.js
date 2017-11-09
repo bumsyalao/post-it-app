@@ -10,7 +10,7 @@ const email = 'jat@gmail.com';
 const password = '123456';
 
 describe('Create Group', () => {
-  const group = 'Songla';
+  const group = 'Bnu';
   const userName = 'Ebuka';
 
   it('should successfully sign in a resgistered user',
@@ -110,7 +110,7 @@ describe('Create Group', () => {
         res.body.should.have.property('message');
         res.body.should.have.property('groupName');
         res.body.should.have.nested.property('groupName')
-        .eql('Songla');
+        .eql('Bnu');
         res.body.should.have.nested.property('userName')
         .eql('Ebuka');
         if (err) return done(err);
@@ -128,7 +128,7 @@ describe('Create Group', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
-        .eql('Group already exists');
+        .eql('Group already exist');
         if (err) return done(err);
         done();
       });
@@ -144,13 +144,10 @@ describe('Add User to a Group', () => {
       .end((err, res) => {
         res.status.should.equal(201);
         res.body.should.be.a('object');
-        res.body.should.have.property('message');
         res.body.should.have.property('message')
         .eql('User added successfully');
-        res.body.should.have.property('user');
         res.body.should.have.property('user')
         .eql('Jat');
-        res.body.should.have.property('groupName');
         res.body.should.have.property('groupName')
         .eql('Facebook');
         if (err) return done(err);
@@ -168,7 +165,7 @@ describe('Add User to a Group', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
-        .eql('Group dose not exists');
+        .eql('Group does not exist');
         if (err) return done(err);
         done();
       });
@@ -185,7 +182,7 @@ describe('Add User to a Group', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message')
-        .eql('The User dose not exist');
+        .eql('The User does not exist');
         if (err) return done(err);
         done();
       });
@@ -197,59 +194,27 @@ describe('EndPoint: Users and Messages in a Group',
   it('should successfully return all users and messages in a group',
   (done) => {
     request(app)
-      .get('/api/v1/groups/:groupName/:user')
-      .send({ groupName: 'FILE', user: 'Hh' })
+      .get('/api/v1/groups/Lll/Yank')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
-        res.body.should.have.property('message')
-        .eql('Getting Messages and Users in :groupName database');
-        if (err) return done(err);
-        done();
-      });
-  });
-});
-
-describe('EndPoint: Get all Groups of a User', () => {
-  it('should successfully sign in a resgistered user',
-  (done) => {
-    request(app)
-      .post('/api/v1/user/signin')
-      .send({ email, password })
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('message')
-        .eql('Welcome to Post it app');
-        res.body.should.have.nested.property('userData.email')
-        .eql('jat@gmail.com');
-        res.body.should.have.nested.property('userData.displayName')
-        .eql('Jat');
-        if (err) return done(err);
-        done();
-      });
-  });
-
-  it('should successfully get all groups of a user',
-  (done) => {
-    request(app)
-      .get('/api/v1/group/Yank')
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        res.status.should.equal(200);
-        res.body.should.be.a('array');
-        res.body.should.have.lengthOf(6);
-        res.body.should.be.eql([
-          { groupName: 'Lll' },
-          { groupName: 'Ann' },
-          { groupName: 'Bnbt' },
-          { groupName: 'Bvbv' },
-          { groupName: 'Yuio' },
-          { groupName: 'Wan' }
-        ]);
+        res.body.should.have.nested.property('message')
+        .eql('Messages and Users in Lll database');
+        res.body.should.have.nested.property('messages')
+        .eql([{ id: '-KyV-ysWPX3-u1fE-Aro',
+          user: 'Yank',
+          message: 'Mess',
+          time: '10:02 am, Nov 9th',
+          priority: 'Urgent' },
+        { id: '-KyWIibYf7MwLHaXEnN1',
+          user: 'Yank',
+          message: 'hfikg',
+          time: '4:03 pm, Nov 9th',
+          priority: 'Normal' }]);
+        res.body.should.have.nested.property('users')
+          .eql([{ userName: 'Chap' }, { userName: 'Yank' }]);
         if (err) return done(err);
         done();
       });

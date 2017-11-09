@@ -3,6 +3,7 @@ import User from './controllers/User';
 import Group from './controllers/Group';
 import Message from './controllers/Message';
 import Validate from './helpers/Validate';
+import jwtTokenValidation from './helpers/jwtTokenValidation';
 
 const router = express.Router();
 
@@ -19,8 +20,8 @@ User.signout);
 router.post('/api/v1/user/reset/', Validate.isAuthenticated,
 User.resetPassword);
 
-router.post('/api/v1/group', Validate.isAuthenticated, Validate.createGroup,
-Group.createGroup);
+router.post('/api/v1/group', Validate.isAuthenticated,
+Validate.createGroup, Group.createGroup);
 
 router.post('/api/v1/group/groupName/user', Validate.isAuthenticated,
 Validate.addUserToGroup, Group.addUserToGroup);
@@ -28,7 +29,7 @@ Validate.addUserToGroup, Group.addUserToGroup);
 router.post('/api/v1/group/user/message/', Validate.isAuthenticated,
 Validate.createMessage, Message.createMessage);
 
-router.get('/api/v1/group/:userName', Validate.isAuthenticated,
+router.get('/api/v1/group/:userName', jwtTokenValidation,
 Group.getGroups);
 
 router.get('/api/v1/user/notification/:user', Validate.isAuthenticated,
@@ -47,6 +48,6 @@ router.get('/api/v1/users/emails/', Validate.isAuthenticated,
 User.getEmails);
 
 router.get('/api/v1/seen/:groupName/:messageID', Validate.isAuthenticated,
-Message.getReadMessageUsers);
+Message.getUsersSeenAMessage);
 
 export default router;
