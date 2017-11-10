@@ -10,6 +10,8 @@ import MessageBoard from '../../components/container/MessageBoard';
 import SideBar from '../../components/presentation/SideBar';
 import WelcomeBoard from '../../components/presentation/WelcomeBoard';
 import localStorageMock from '../../../../../mock/LocalStorageMock';
+import { newObjectProperty } from '../mocks/seed';
+
 
 window.localStorage = localStorageMock;
 
@@ -23,15 +25,6 @@ const mock = jest.fn();
 
 
 describe('Dashboard Component', () => {
-  const newStateProperty = {
-    user: 'Ebuka',
-    allUsers: ['John', 'August'],
-    groups: ['Andela', 'BookStore'],
-    currentGroup: 'Andela',
-    databaseUsers: ['James', 'August'],
-    notification: ['James posted in Andela Group']
-  };
-
   const wrapper = shallow(<Dashboard />);
 
   it('should contain a <WelcomeBoard /> component', () => {
@@ -55,7 +48,7 @@ describe('Dashboard Component', () => {
 
   it('should contain a new state when the store has updated',
     () => {
-      wrapper.setState(newStateProperty);
+      wrapper.setState(newObjectProperty);
       expect(wrapper.state('user')).toEqual('Ebuka');
       expect(wrapper.state().currentGroup).toEqual('Andela');
       expect(wrapper.state().groups.length).toEqual(2);

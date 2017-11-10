@@ -16,13 +16,13 @@ import AppActions from '../../actions/AppActions';
 const Groups = props => ({
   render() {
     const group = {
-      groupName: this.props.KeyName.groupName,
+      groupName: this.props.keyName.groupName,
       userName: props.userName
     };
     return (
       <li onClick={() => AppActions.searchUserMessage(group)}>
       <a href="#/dashboard" className="text-decoration">
-          {this.props.KeyName.groupName}</a>
+          {this.props.keyName.groupName}</a>
       </li>
     );
   }

@@ -6,17 +6,17 @@ import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
 
 jest.mock('../../../../../server/config', () => ({
-  }));
+}));
 jest.mock('../../actions/AppActions');
 
 
 let spyOnDispatcher;
 beforeEach(() => {
-    spyOnDispatcher = spyOn(AppActions, 'registerUser');
+  spyOnDispatcher = spyOn(AppActions, 'registerUser');
 });
 
 afterEach(() => {
-    spyOnDispatcher.mockReset();
+  spyOnDispatcher.mockReset();
 });
 
 const registerUserSpy = jest.spyOn(AppActions, 'registerUser');
@@ -24,7 +24,6 @@ const addChangeListenerSpy = jest.spyOn(AppStore, 'addChangeListener');
 
 
 describe('Signup Component', () => {
-
   const wrapper = mount(<Signup />);
   it('should have an empty initial state in the component ', () => {
     expect(wrapper.state().emails).toHaveLength(0);
@@ -46,9 +45,8 @@ describe('Signup Component', () => {
   });
 
   it('should have all the method in the component to be defined', () => {
-    expect(wrapper.find('div')).toHaveLength(11)
-    expect(wrapper.find('form')).toHaveLength(1)
-    
+    expect(wrapper.find('div')).toHaveLength(11);
+    expect(wrapper.find('form')).toHaveLength(1);
   });
 
   it('should sign up a user', () => {
@@ -58,13 +56,12 @@ describe('Signup Component', () => {
       email: 'testemail@email.com',
       password: '123456',
       verifyPassword: '123456'
-    })
-    wrapper.find('form').simulate('submit')
+    });
+    wrapper.find('form').simulate('submit');
     expect(spyOnDispatcher).toHaveBeenCalledTimes(1);
   });
 
   it('should call componentDidMount lifecycle', () => {
     expect(addChangeListenerSpy).toHaveBeenCalled();
   });
-
 });

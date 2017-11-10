@@ -1,6 +1,6 @@
 ## Post-it-app
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://choosealicense.com/licenses/mit/)
-[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=Chore/second-feedback-implementation)](https://travis-ci.org/Charpell/post-it-app) [![Coverage Status](https://coveralls.io/repos/github/Charpell/post-it-app/badge.svg?branch=Chore/second-feedback-implementation)](https://coveralls.io/github/Charpell/post-it-app?branch=Chore/second-feedback-implementation)
+[![Build Status](https://travis-ci.org/Charpell/post-it-app.svg?branch=Chore/second-feedback-implementation)](https://travis-ci.org/Charpell/post-it-app) 
 [![Code Climate](https://codeclimate.com/github/Charpell/post-it-app/badges/gpa.svg)](https://codeclimate.com/github/Charpell/post-it-app)
 
 PostIt is a simple application that allows friends and colleagues create groups for notifications. The application is hosted online on [link](https://post-it-app35.herokuapp.com/)

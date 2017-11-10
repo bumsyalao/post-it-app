@@ -5,4 +5,8 @@ before_install:
   - travis_wait npm install
 after_script:
   - npm test
-  - npm run client-test
+env:
+ CODECLIMATE_REPO_TOKEN: 6801acfdc8b02318ca3d8e7a8fa9a6bd115787a2e44cce0bbc75069255b9e57b
+
+after_success:
+  - npm run coverage

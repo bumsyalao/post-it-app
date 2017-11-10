@@ -24,7 +24,7 @@ class User {
     const { userName, password, email, number } = req.body;
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((user) => {
-      const uid = user.uid;
+      const { uid } = user;
       const displayName = capitalizeFirstLetter(userName);
       user.updateProfile({
         displayName
@@ -69,7 +69,7 @@ class User {
   }
 
 /**
- * @description: This method creates a new user via google
+ * @description: This method creates a new user using a google account
  * route POST: /api/v1/google/signup
  *
  * @param {Object} req request object
@@ -160,7 +160,7 @@ class User {
   * @param {null} req - User's Request
   * @param {object} res - Server Response
   *
-  * @return {object}  returns the user's details
+  * @return {void}  void
   */
   static signout(req, res) {
     firebase.auth().signOut().then(() => {
@@ -212,13 +212,13 @@ class User {
 
 
   /**
- * @description: This method retrieves all users in user database
+ * @description: This method retrieves users in user database
  * route GET: /api/v1/user/getUsers
  *
  * @param {Object} req request object
  * @param {Object} res response object
  *
- * @return {Object} response containing all users in the user database
+ * @return {Object} response containing users in the user database
  */
   static getUsers(req, res) {
     queryUserDatabase('userName', res);
@@ -226,26 +226,26 @@ class User {
 
 
   /**
- * @description: This method retrieves all numbers in user database
+ * @description: This method retrieves numbers in user database
  * route GET: /api/v1/user/getNumbers
  *
  * @param {Object} req request object
  * @param {Object} res response object
  *
- * @return {Object} response containing all numbers in the user database
+ * @return {Object} response containing numbers in the user database
  */
   static getNumbers(req, res) {
     queryUserDatabase('number', res);
   }
 
 /**
- * @description: This method retrieves all emails in user database
+ * @description: This method retrieves emails in user database
  * route GET: /api/v1/user/getEmails
  *
  * @param {Object} req request object
  * @param {Object} res response object
  *
- * @return {Object} response containing all emails in the user database
+ * @return {Object} response containing emails in the user database
  */
   static getEmails(req, res) {
     queryUserDatabase('email', res);

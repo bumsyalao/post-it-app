@@ -15,7 +15,7 @@ const Users = () => ({
     return (
       <li data-toggle="collapse" className="collapsed">
         <a href="#"><i className="fa fa-globe fa-lg">
-        </i>&nbsp; {this.props.KeyName.userName}
+        </i>&nbsp; {this.props.keyName.userName}
         </a>
       </li>
     );

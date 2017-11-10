@@ -29,16 +29,16 @@ class Home extends Component {
       .bind(this);
   }
 
-  /**
-    * @method componentDidMount
-    *
-    * @description Adds an event Listener to the Store and fires when the
-    * component is fully mounted.
-    *
-    * @return {void}
-    *
-    * @memberof Home
-    */
+/**
+  * @method componentDidMount
+  *
+  * @description Adds an event Listener to the Store and fires when the
+  * component is fully mounted.
+  *
+  * @return {void}
+  *
+  * @memberof Home
+  */
   componentDidMount() {
     AppStore.addChangeListener(this.onChange);
   }

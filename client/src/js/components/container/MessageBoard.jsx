@@ -61,7 +61,7 @@ export default class MessageBoard extends Component {
 
   /**
   * @description Makes an action call to Sign up a user with username,
-  *email, phone number  and password
+  * email, phone number  and password
   *
   * @param {object} event
   *
@@ -87,15 +87,15 @@ export default class MessageBoard extends Component {
     }
   }
 
-  /**
-    * @method onChange
-    *
-    * @description Monitors changes in the components and change the state
-    *
-    * @return {void}
-    *
-    * @memberof MessageBoard
-    */
+/**
+  * @method onChange
+  *
+  * @description Monitors changes in the components and change the state
+  *
+  * @return {void}
+  *
+  * @memberof MessageBoard
+  */
   onChange() {
     this.setState({
       currentGroup: AppStore.getCurrentGroup(),
@@ -103,15 +103,15 @@ export default class MessageBoard extends Component {
     });
   }
 
-  /**
-     * @method render
-     *
-     * @description Render the MessageBoard component
-     *
-     * @returns {void}
-     *
-     * @memberof MessageBoard
-     */
+/**
+   * @method render
+   *
+   * @description Render the MessageBoard component
+   *
+   * @returns {void}
+   *
+   * @memberof MessageBoard
+   */
   render() {
     return (
       <div className="container" id="main">

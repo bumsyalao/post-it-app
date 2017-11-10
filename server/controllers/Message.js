@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 import config from './../config';
 import { sendInAppNotification, sendEmailNotification, sendSMSNotification }
 from '../helpers/utils';
@@ -12,7 +13,7 @@ const { groupRef } = config;
   */
 class Message {
   /**
- * @description: creates a message and post it through
+ * @description: describe a function that let users create a message
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -77,8 +78,10 @@ class Message {
       });
 
       if (numberOfUsers.length === 0) {
-        res.status(200).json(
-          { message: 'No user has read this message' }
+        res.status(200).json({
+          message: 'No user has read this message',
+          users: []
+        }
         );
       } else {
         res.status(200).json({

@@ -15,7 +15,7 @@ describe('EndPoint: SignUp', () => {
   const email = faker.internet.email();
   const number = '2348088098146';
 
-  it.only('should successfully create a new user', (done) => {
+  it('should successfully create a new user', (done) => {
     request(app)
       .post('/api/v1/user/signup')
       .send({ userName, password, email, number })
@@ -573,10 +573,11 @@ describe('EndPoint: Reset Password', () => {
   });
 
 
-  it('should successfully send the user an email to reset password', (done) => {
+  it('should successfully send the user an email to reset password',
+  (done) => {
     request(app)
       .post('/api/v1/user/reset')
-      .send({ email: 'wesumeh@gmail.com' })
+      .send({ email: 'yank@gmail.com' })
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
@@ -723,20 +724,21 @@ describe('EndPoint: Notification', () => {
       });
   });
 
-  it('should successfully create a new user via google signup', (done) => {
+  it('should successfully return the users notifications', (done) => {
     request(app)
       .get('/api/v1/user/notification/Ebuka')
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.should.be.a('array');
-        res.body.should.have.lengthOf(6);
+        res.body.should.have.lengthOf(7);
         res.body.should.be.eql([
           { notification: 'Chap posted in Nnn group' },
           { notification: 'Kinuthia posted in Blue group' },
           { notification: 'Newton posted in An group' },
           { notification: 'Newton posted in My group' },
           { notification: 'Sasiliyu posted in Testersgroup group' },
+          { notification: 'Yank posted in Ann group' },
           { notification: 'Yank posted in Lll group' }
         ]);
         if (err) return done(err);

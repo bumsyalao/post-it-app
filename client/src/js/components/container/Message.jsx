@@ -6,7 +6,7 @@ import MessageList from './../presentation/MessageList';
 import ModalButton from '../presentation/ModalButton';
 
 /**
- * @description the component displays message on thr dashboard
+ * @description the component displays message on the dashboard
  *
  * @class Message
  *
